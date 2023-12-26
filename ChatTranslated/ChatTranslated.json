@@ -1,0 +1,12 @@
+{
+    "Author": "kelvin124124",
+    "Name": "ChatTranslated",
+    "Punchline": "Ingame chat translator.",
+    "Description": "Ingame chat translator.\n/pcopy to open main window",
+    "InternalName": "ChatTranslated",
+    "ApplicableVersion": "any",
+    "Tags": [
+        "chat",
+        "translate"
+    ]
+}

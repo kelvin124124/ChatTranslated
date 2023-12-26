@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="Dalamud.Plugin.Bootstrap.targets" />
+
+  <PropertyGroup>
+    <Authors>kelvin124124</Authors>
+    <Company></Company>
+    <Version>0.0.0.1</Version>
+    <Description>In-game chat translator.</Description>
+    <Copyright></Copyright>
+    <PackageProjectUrl>https://github.com/kelvin124124/ChatTranslated</PackageProjectUrl>
+    <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+</Project>
