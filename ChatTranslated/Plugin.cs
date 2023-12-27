@@ -25,6 +25,7 @@ namespace ChatTranslated
             Service.configuration.Initialize(pluginInterface);
 
             _ = pluginInterface.Create<Service>();
+            _ = pluginInterface.Create<ChatHandler>();
             Service.plugin = this;
             Service.configWindow = new ConfigWindow(this);
             Service.mainWindow = new MainWindow(this);
@@ -39,12 +40,6 @@ namespace ChatTranslated
             {
                 HelpMessage = "Open Chat Translated main window."
             });
-        }
-
-        public static void OutputChatLine(SeString message)
-        {
-            var sb = new SeStringBuilder().AddUiForeground("[CT] ", 58).Append(message);
-            Service.chatGui.Print(new XivChatEntry { Message = sb.BuiltString });
         }
 
         public void Dispose()

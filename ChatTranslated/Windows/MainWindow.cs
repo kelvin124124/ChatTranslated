@@ -2,6 +2,8 @@ using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
 using System.Numerics;
+using ChatTranslated.Utils;
+using Dalamud.Game.Text.SeStringHandling;
 
 namespace ChatTranslated.Windows;
 
@@ -9,20 +11,17 @@ public class MainWindow : Window, IDisposable
 {
     private readonly Plugin plugin;
 
-    // temporary solution
     private string outputText = ""; // Holds the text for the output field
     private string inputText = "";  // Holds the text for the input field
 
     public MainWindow(Plugin plugin) : base(
-        "My Amazing Window", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse)
+        "Chat Translated", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse)
     {
         SizeConstraints = new WindowSizeConstraints
         {
             MinimumSize = new Vector2(375, 330),
             MaximumSize = new Vector2(float.MaxValue, float.MaxValue)
         };
-
-        this.plugin = plugin;
     }
 
     public void Dispose()
@@ -55,9 +54,9 @@ public class MainWindow : Window, IDisposable
         PrintToOutput($"You entered: {input}\n");
     }
 
-    public void PrintToOutput(string text)
+    public void PrintToOutput(SeString message)
     {
         // Append the given text to the output field
-        outputText += text;
+        outputText += message.TextValue + "\n"; // Update to use SeString's TextValue
     }
 }
