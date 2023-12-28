@@ -16,9 +16,9 @@ namespace ChatTranslated
         }
         public Mode SelectedMode { get; set; } = Mode.LibreTranslate;
 
-        internal string SERVER = "**";
+        internal string SERVER = "https://translate.kelpcc.com/translate";
         internal string SERVER_SECRET = "";
-        internal string OPENAI_API_KEY = "";
+        internal string OPENAI_API_KEY = "sk-YOUR_API_KEY";
 
         // the below exist just to make saving less cumbersome
         [NonSerialized]

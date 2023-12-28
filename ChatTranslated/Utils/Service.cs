@@ -1,4 +1,5 @@
 using ChatTranslated.Windows;
+using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;

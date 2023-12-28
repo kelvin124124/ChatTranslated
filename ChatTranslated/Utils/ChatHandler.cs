@@ -1,5 +1,8 @@
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ChatTranslated.Utils
 {
@@ -14,7 +17,12 @@ namespace ChatTranslated.Utils
         {
             if (10 <= (uint)type && (uint)type <= 15)
             {
-                Service.translator.Translate(sender.TextValue, message.TextValue);
+                PlayerPayload? playerPayload;
+                playerPayload = sender.Payloads.SingleOrDefault(x => x is PlayerPayload) as PlayerPayload;
+
+                string playerName = playerPayload?.PlayerName ?? sender.ToString();
+
+                Service.translator.Translate(playerName, message.TextValue);
             }
         }
 

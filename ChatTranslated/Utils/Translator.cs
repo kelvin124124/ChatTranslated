@@ -12,29 +12,39 @@ namespace ChatTranslated.Utils
         public Translator() { }
         public async void Translate(string sender, string message)
         {
+            message = Sanitize(message);
+            Service.mainWindow.PrintToOutput($"Debug - sanitized str: {message}");
+            string translatedText = "";
             switch (Service.configuration.SelectedMode)
             {
                 case Configuration.Mode.LibreTranslate:
-                    await LibreTranslate(sender, message, Service.configuration.SERVER);
-                    return;
+                    translatedText = await LibreTranslate(message);
+                    break;
                 case Configuration.Mode.GPT4Beta:
-                    await ServerTranslate(sender, message);
-                    return;
+                    translatedText = await ServerTranslate(message);
+                    break;
                 case Configuration.Mode.OpenAIAPI:
-                    await OpenAITranslate(sender, message);
-                    return;
+                    translatedText = await OpenAITranslate(message);
+                    break;
             }
+            Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
+            return;
         }
 
-        private async Task LibreTranslate(string sender, string message, string SERVER)
+        private string Sanitize(string input)
         {
-            string apiUrl = SERVER;
+            var regex = new Regex(@"[\uE000-\uF8FF]+", RegexOptions.Compiled);
+            return regex.Replace(input, "");
+        }
+
+        private async Task<string> LibreTranslate(string message)
+        {
             var client = new HttpClient();
 
             var requestData = new
             {
                 q = message,
-                source = "ja",
+                source = "auto",
                 target = "en",
                 format = "text",
                 api_key = ""
@@ -44,41 +54,38 @@ namespace ChatTranslated.Utils
 
             try
             {
-                var response = await client.PostAsync(apiUrl, content);
+                var response = await client.PostAsync(Service.configuration.SERVER, content);
                 if (response.IsSuccessStatusCode)
                 {
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     var match = Regex.Match(jsonResponse, @"""translatedText""\s*:\s*""(.*?)""", RegexOptions.Compiled).Groups[1].Value.ToString();
-                    Service.mainWindow.PrintToOutput($"{sender}: {match}");
-                    return;
+                    return match;
                 }
                 Service.pluginLog.Warning("Error: API request failed");
-                Service.mainWindow.PrintToOutput($"Error: API request failed\n{sender}: {message}");
-                return;
+                return message;
             }
             catch (Exception ex)
             {
                 Service.pluginLog.Warning($"Error: {ex.Message}");
-                Service.mainWindow.PrintToOutput($"Error: {ex.Message}\n{sender}: {message}");
-                return;
+                return message;
             }
         }
 
-        private async Task ServerTranslate(string sender, string message)
+        private async Task<string> ServerTranslate(string message)
         {
-            Service.mainWindow.PrintToOutput($"Error: Not yet supprted.\n{sender}: {message}");
-            return;
+            Service.mainWindow.PrintToOutput($"Error: Not yet supprted.");
+            return message;
         }
 
-        private async Task OpenAITranslate(string sender, string message)
+        private async Task<string> OpenAITranslate(string message)
         {
-            Service.mainWindow.PrintToOutput($"Error: Not yet supprted.\n{sender}: {message}");
-            return;
+            Service.mainWindow.PrintToOutput($"Error: Not yet supprted.");
+            return message;
         }
 
         public void Dispose()
         {
-
+            // do nothing
         }
     }
 }
