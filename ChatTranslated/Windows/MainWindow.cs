@@ -2,8 +2,6 @@ using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
 using System.Numerics;
-using ChatTranslated.Utils;
-using Dalamud.Game.Text.SeStringHandling;
 
 namespace ChatTranslated.Windows;
 
@@ -15,13 +13,12 @@ public class MainWindow : Window, IDisposable
     private string inputText = "";  // Holds the text for the input field
 
     public MainWindow(Plugin plugin) : base(
-        "Chat Translated", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse)
+        "Chat Translated",
+        ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
+        ImGuiWindowFlags.NoScrollWithMouse)
     {
-        SizeConstraints = new WindowSizeConstraints
-        {
-            MinimumSize = new Vector2(375, 330),
-            MaximumSize = new Vector2(float.MaxValue, float.MaxValue)
-        };
+        Size = new Vector2(360, 250);
+        SizeCondition = ImGuiCond.Always;
     }
 
     public void Dispose()
@@ -32,12 +29,11 @@ public class MainWindow : Window, IDisposable
     public override void Draw()
     {
         // Output text field
-        ImGui.BeginChild("outputField", new Vector2(-1, -50), false, ImGuiWindowFlags.HorizontalScrollbar);
-        ImGui.TextUnformatted(outputText);
+        ImGui.BeginChild("outputField", new Vector2(-1, -60), false, ImGuiWindowFlags.HorizontalScrollbar);
+        ImGui.InputTextMultiline("##output", ref outputText, 10000, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
         ImGui.EndChild();
 
         // Input text field with send button
-        ImGui.AlignTextToFramePadding();
         ImGui.InputText("##input", ref inputText, 100);
         ImGui.SameLine();
         if (ImGui.Button("Send"))
@@ -54,9 +50,9 @@ public class MainWindow : Window, IDisposable
         PrintToOutput($"You entered: {input}\n");
     }
 
-    public void PrintToOutput(SeString message)
+    public void PrintToOutput(string message)
     {
         // Append the given text to the output field
-        outputText += message.TextValue + "\n"; // Update to use SeString's TextValue
+        outputText = outputText + message + "\n";
     }
 }

@@ -6,6 +6,7 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
 
 namespace ChatTranslated
 {
@@ -13,19 +14,21 @@ namespace ChatTranslated
     {
         public static string Name => "ChatTranslated";
         private const string CommandName = "/pchat";
-        public Configuration Configuration { get; init; }
-        public WindowSystem WindowSystem = new("ChatTranslated");
+
+        public WindowSystem WindowSystem { get; } = new("ChatTranslated");
 
         public Plugin(
-            [RequiredVersion("1.0")] DalamudPluginInterface pluginInterface)
+            [RequiredVersion("1.0")] DalamudPluginInterface pluginInterface,
+            [RequiredVersion("1.0")] ICommandManager commandManager)
         {
             Service.pluginInterface = pluginInterface;
+            Service.commandManager = commandManager;
 
             Service.configuration = pluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
             Service.configuration.Initialize(pluginInterface);
 
             _ = pluginInterface.Create<Service>();
-            _ = pluginInterface.Create<ChatHandler>();
+
             Service.plugin = this;
             Service.configWindow = new ConfigWindow(this);
             Service.mainWindow = new MainWindow(this);
@@ -36,15 +39,27 @@ namespace ChatTranslated
             pluginInterface.UiBuilder.Draw += DrawUI;
             pluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
 
+            Service.translator = new Translator();
+            Service.chatHandler = new ChatHandler();
+
             Service.commandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
             {
                 HelpMessage = "Open Chat Translated main window."
             });
         }
 
+        public static void OutputChatLine(SeString message)
+        {
+            var sb = new SeStringBuilder().AddUiForeground("[CT] ", 58).Append(message);
+            Service.chatGui.Print(new XivChatEntry { Message = sb.BuiltString });
+        }
+
         public void Dispose()
         {
-            WindowSystem.RemoveAllWindows();
+            WindowSystem?.RemoveAllWindows();
+
+            Service.chatHandler?.Dispose();
+            Service.translator?.Dispose();
 
             Service.configWindow.Dispose();
             Service.mainWindow.Dispose();
@@ -53,6 +68,11 @@ namespace ChatTranslated
 
         private void OnCommand(string command, string args)
         {
+            if (args == "config")
+            {
+                Service.configWindow.IsOpen = true;
+                return;
+            }
             Service.mainWindow.IsOpen = true;
         }
 

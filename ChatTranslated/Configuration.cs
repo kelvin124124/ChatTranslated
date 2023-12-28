@@ -8,7 +8,17 @@ namespace ChatTranslated
     public class Configuration : IPluginConfiguration
     {
         public int Version { get; set; } = 0;
-        public bool enabled { get; set; } = true;
+        public enum Mode
+        {
+            LibreTranslate,
+            GPT4Beta,
+            OpenAIAPI
+        }
+        public Mode SelectedMode { get; set; } = Mode.LibreTranslate;
+
+        internal string SERVER = "**";
+        internal string SERVER_SECRET = "";
+        internal string OPENAI_API_KEY = "";
 
         // the below exist just to make saving less cumbersome
         [NonSerialized]
