@@ -7,39 +7,37 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Utils
 {
-    internal class Translator
+    internal class Translator : IDisposable
     {
-        public Translator() { }
-        public async void Translate(string sender, string message)
+        private static readonly HttpClient HttpClient = new HttpClient();
+        
+        private const string DefaultContentType = "application/json";
+
+        private static readonly Regex TranslatedRegex = new Regex(@"""translatedText""\s*:\s*""(.*?)""", RegexOptions.Compiled);
+
+        public async Task Translate(string sender, string message)
         {
-            message = Sanitize(message);
-            Service.mainWindow.PrintToOutput($"Debug - sanitized str: {message}");
-            string translatedText = "";
+            string translatedText = message;
+
             switch (Service.configuration.SelectedMode)
             {
                 case Configuration.Mode.LibreTranslate:
-                    translatedText = await LibreTranslate(message);
+                    translatedText = await LibreTranslate(message).ConfigureAwait(false);
                     break;
                 case Configuration.Mode.GPT4Beta:
-                    translatedText = await ServerTranslate(message);
+                    translatedText = ServerTranslate(message);
                     break;
                 case Configuration.Mode.OpenAIAPI:
-                    translatedText = await OpenAITranslate(message);
+                    translatedText = OpenAITranslate(message);
                     break;
             }
-            Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
-            return;
-        }
 
-        private string Sanitize(string input)
-        {
-            var regex = new Regex(@"[\uE000-\uF8FF]+", RegexOptions.Compiled);
-            return regex.Replace(input, "");
+            Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
         }
 
         private async Task<string> LibreTranslate(string message)
         {
-            var client = new HttpClient();
+            Service.pluginLog.Information($"LibreTranslate - Message: {message}");
 
             var requestData = new
             {
@@ -50,42 +48,52 @@ namespace ChatTranslated.Utils
                 api_key = ""
             };
 
-            var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
+            var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType);
 
-            try
+            int attempt = 0;
+
+            while (attempt < Service.configuration.maxAttempts)
             {
-                var response = await client.PostAsync(Service.configuration.SERVER, content);
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    var jsonResponse = await response.Content.ReadAsStringAsync();
-                    var match = Regex.Match(jsonResponse, @"""translatedText""\s*:\s*""(.*?)""", RegexOptions.Compiled).Groups[1].Value.ToString();
-                    return match;
+                    var response = await HttpClient.PostAsync(Service.configuration.SERVER, content).ConfigureAwait(false);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        var match = TranslatedRegex.Match(jsonResponse).Groups[1].Value;
+
+                        Service.pluginLog.Information($"LibreTranslate - Match: {match}");
+                        return match;
+                    }
                 }
-                Service.pluginLog.Warning("Error: API request failed");
-                return message;
+                catch (Exception ex)
+                {
+                    Service.pluginLog.Warning($"LibreTranslate - Error: {ex.Message}");
+                }
+
+                attempt++;
             }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Warning($"Error: {ex.Message}");
-                return message;
-            }
+
+            Service.pluginLog.Warning("LibreTranslate - Warning: API request failed");
+            return message; // Return original message if all retries fail
         }
 
-        private async Task<string> ServerTranslate(string message)
+
+        private string ServerTranslate(string message)
         {
-            Service.mainWindow.PrintToOutput($"Error: Not yet supprted.");
+            Service.mainWindow.PrintToOutput("ServerTranslate - Error: Not yet supported.");
             return message;
         }
 
-        private async Task<string> OpenAITranslate(string message)
+        private string OpenAITranslate(string message)
         {
-            Service.mainWindow.PrintToOutput($"Error: Not yet supprted.");
+            Service.mainWindow.PrintToOutput("OpenAITranslate - Error: Not yet supported.");
             return message;
         }
 
         public void Dispose()
         {
-            // do nothing
+            HttpClient?.Dispose();
         }
     }
 }

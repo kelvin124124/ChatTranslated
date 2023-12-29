@@ -16,6 +16,8 @@ namespace ChatTranslated
         }
         public Mode SelectedMode { get; set; } = Mode.LibreTranslate;
 
+        public int maxAttempts = 2;
+
         internal string SERVER = "https://translate.kelpcc.com/translate";
         internal string SERVER_SECRET = "";
         internal string OPENAI_API_KEY = "sk-YOUR_API_KEY";
