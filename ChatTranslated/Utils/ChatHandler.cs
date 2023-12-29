@@ -20,11 +20,11 @@ namespace ChatTranslated.Utils
             {
                 PlayerPayload? playerPayload;
                 playerPayload = sender.Payloads.SingleOrDefault(x => x is PlayerPayload) as PlayerPayload;
-                string playerName =  playerPayload?.PlayerName ?? sender.ToString();
+                string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
 
                 string _message = Sanitize(message.TextValue);
 
-                Task.Run(() => Service.translator.Translate(playerName, _message));
+                Task.Run(() => Translator.Translate(playerName, _message));
             }
         }
 

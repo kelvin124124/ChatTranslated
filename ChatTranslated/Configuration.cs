@@ -16,7 +16,8 @@ namespace ChatTranslated
         }
         public Mode SelectedMode { get; set; } = Mode.LibreTranslate;
 
-        public int maxAttempts = 2;
+        public int maxAttempts = 3;
+        public int waitTime = 200;
 
         internal string SERVER = "https://translate.kelpcc.com/translate";
         internal string SERVER_SECRET = "";

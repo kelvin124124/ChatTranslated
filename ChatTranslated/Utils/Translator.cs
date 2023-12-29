@@ -9,13 +9,13 @@ namespace ChatTranslated.Utils
 {
     internal class Translator : IDisposable
     {
-        private static readonly HttpClient HttpClient = new HttpClient();
+        private static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
         
         private const string DefaultContentType = "application/json";
 
         private static readonly Regex TranslatedRegex = new Regex(@"""translatedText""\s*:\s*""(.*?)""", RegexOptions.Compiled);
 
-        public async Task Translate(string sender, string message)
+        public static async Task Translate(string sender, string message)
         {
             string translatedText = message;
 
@@ -35,7 +35,7 @@ namespace ChatTranslated.Utils
             Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
         }
 
-        private async Task<string> LibreTranslate(string message)
+        private static async Task<string> LibreTranslate(string message)
         {
             Service.pluginLog.Information($"LibreTranslate - Message: {message}");
 
@@ -70,7 +70,7 @@ namespace ChatTranslated.Utils
                 {
                     Service.pluginLog.Warning($"LibreTranslate - Error: {ex.Message}");
                 }
-
+                await Task.Delay(Service.configuration.waitTime);
                 attempt++;
             }
 
@@ -79,13 +79,13 @@ namespace ChatTranslated.Utils
         }
 
 
-        private string ServerTranslate(string message)
+        private static string ServerTranslate(string message)
         {
             Service.mainWindow.PrintToOutput("ServerTranslate - Error: Not yet supported.");
             return message;
         }
 
-        private string OpenAITranslate(string message)
+        private static string OpenAITranslate(string message)
         {
             Service.mainWindow.PrintToOutput("OpenAITranslate - Error: Not yet supported.");
             return message;
