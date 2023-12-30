@@ -68,11 +68,18 @@ namespace ChatTranslated
 
         private void OnCommand(string command, string args)
         {
-            if (args == "config")
+            switch (args)
             {
-                Service.configWindow.IsOpen = true;
-                return;
+                case "config":
+                    Service.configWindow.IsOpen = true;
+                    return;
+                case "on":
+                case "off":
+                    Service.configuration.ChatIntergration = args == "on";
+                    Service.configuration.Save();
+                    return;
             }
+
             Service.mainWindow.IsOpen = true;
         }
 

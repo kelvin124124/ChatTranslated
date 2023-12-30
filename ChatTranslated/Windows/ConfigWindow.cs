@@ -17,7 +17,7 @@ public class ConfigWindow : Window, IDisposable
         ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
         ImGuiWindowFlags.NoScrollWithMouse)
     {
-        Size = new Vector2(360, 120);
+        Size = new Vector2(360, 160);
         SizeCondition = ImGuiCond.Always;
 
         configuration = Service.configuration;
@@ -27,6 +27,14 @@ public class ConfigWindow : Window, IDisposable
 
     public override void Draw()
     {
+        // Enabled
+        bool _ChatIntergration = configuration.ChatIntergration;
+        if (ImGui.Checkbox("Chat Intergration", ref _ChatIntergration))
+        {
+            configuration.ChatIntergration = _ChatIntergration;
+            configuration.Save();
+        }
+
         // Mode selection
         ImGui.AlignTextToFramePadding();
         ImGui.Text("Mode");

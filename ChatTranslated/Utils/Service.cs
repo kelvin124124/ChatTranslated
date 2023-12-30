@@ -1,5 +1,4 @@
 using ChatTranslated.Windows;
-using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -18,6 +17,7 @@ namespace ChatTranslated.Utils
         [PluginService] public static DalamudPluginInterface pluginInterface { get; set; } = null!;
         [PluginService] public static IChatGui chatGui { get; private set; } = null!;
         [PluginService] public static IPluginLog pluginLog { get; private set; } = null!;
+        [PluginService] public static IClientState clientState { get; private set; } = null!;
         [PluginService] public static ICommandManager commandManager { get; set; } = null!;
     }
 }

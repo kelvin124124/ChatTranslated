@@ -10,7 +10,7 @@ namespace ChatTranslated.Utils
     internal class Translator : IDisposable
     {
         private static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
-        
+
         private const string DefaultContentType = "application/json";
 
         private static readonly Regex TranslatedRegex = new Regex(@"""translatedText""\s*:\s*""(.*?)""", RegexOptions.Compiled);
@@ -33,6 +33,10 @@ namespace ChatTranslated.Utils
             }
 
             Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
+            if (Service.configuration.ChatIntergration)
+            {
+                Plugin.OutputChatLine($"{sender}: {message} || {translatedText}");
+            }
         }
 
         private static async Task<string> LibreTranslate(string message)
@@ -77,7 +81,6 @@ namespace ChatTranslated.Utils
             Service.pluginLog.Warning("LibreTranslate - Warning: API request failed");
             return message; // Return original message if all retries fail
         }
-
 
         private static string ServerTranslate(string message)
         {

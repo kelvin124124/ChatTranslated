@@ -15,6 +15,7 @@ namespace ChatTranslated
             OpenAIAPI
         }
         public Mode SelectedMode { get; set; } = Mode.LibreTranslate;
+        public bool ChatIntergration { get; set; } = false;
 
         public int maxAttempts = 3;
         public int waitTime = 200;

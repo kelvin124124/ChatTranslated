@@ -22,6 +22,11 @@ namespace ChatTranslated.Utils
                 playerPayload = sender.Payloads.SingleOrDefault(x => x is PlayerPayload) as PlayerPayload;
                 string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
 
+                if (type == XivChatType.TellOutgoing && Service.clientState.LocalPlayer != null)
+                {
+                    playerName = Sanitize(Service.clientState.LocalPlayer.Name.ToString());
+                }
+
                 string _message = Sanitize(message.TextValue);
 
                 Task.Run(() => Translator.Translate(playerName, _message));
