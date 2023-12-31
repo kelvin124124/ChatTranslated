@@ -59,7 +59,6 @@ namespace ChatTranslated
             WindowSystem?.RemoveAllWindows();
 
             Service.chatHandler?.Dispose();
-            Service.translator?.Dispose();
 
             Service.configWindow.Dispose();
             Service.mainWindow.Dispose();
@@ -74,8 +73,11 @@ namespace ChatTranslated
                     Service.configWindow.IsOpen = true;
                     return;
                 case "on":
+                    Service.configuration.ChatIntergration = true;
+                    Service.configuration.Save();
+                    return;
                 case "off":
-                    Service.configuration.ChatIntergration = args == "on";
+                    Service.configuration.ChatIntergration = false;
                     Service.configuration.Save();
                     return;
             }

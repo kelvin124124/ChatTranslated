@@ -50,12 +50,12 @@ public class ConfigWindow : Window, IDisposable
 
         // Credentials
         ImGui.AlignTextToFramePadding();
-        ImGui.Text($"Current server url: {Service.configuration.SERVER}");
+        ImGui.Text($"Current server url: {Service.configuration.LIBRETRANSLATE_API}");
         ImGui.InputText("##Server", ref inputText, 100);
         ImGui.SameLine();
         if (ImGui.Button("Save"))
         {
-            Service.configuration.SERVER = inputText;
+            Service.configuration.LIBRETRANSLATE_API = inputText;
             Service.pluginLog.Information($"Server set to {inputText}");
             inputText = ""; // Clear the input field after sending
         }

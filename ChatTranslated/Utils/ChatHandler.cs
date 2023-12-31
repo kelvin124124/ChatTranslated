@@ -29,7 +29,7 @@ namespace ChatTranslated.Utils
 
                 string _message = Sanitize(message.TextValue);
 
-                Task.Run(() => Translator.Translate(playerName, _message));
+                Task.Run(() => Translator.Translate(playerName, _message, Service.configuration));
             }
         }
 

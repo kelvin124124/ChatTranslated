@@ -11,8 +11,8 @@ namespace ChatTranslated
         public enum Mode
         {
             LibreTranslate,
-            GPT4Beta,
-            OpenAIAPI
+            GPT3_Proxy,
+            OpenAI_API
         }
         public Mode SelectedMode { get; set; } = Mode.LibreTranslate;
         public bool ChatIntergration { get; set; } = false;
@@ -20,8 +20,11 @@ namespace ChatTranslated
         public int maxAttempts = 3;
         public int waitTime = 200;
 
-        internal string SERVER = "https://translate.kelpcc.com/translate";
-        internal string SERVER_SECRET = "";
+        internal string LIBRETRANSLATE_API = "https://translate.kelpcc.com/translate";
+        internal string LIBRETRANSLATE_API_KEY = "";
+        internal string PROXY_API = "https://api.pawan.krd/v1/chat/completions";
+        internal string PROXY_API_KEY = "pk-YOUR_API_KEY";
+        internal string OPENAI_API = "https://api.openai.com/v1/chat/completions";
         internal string OPENAI_API_KEY = "sk-YOUR_API_KEY";
 
         // the below exist just to make saving less cumbersome
