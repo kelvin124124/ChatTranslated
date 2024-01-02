@@ -22,16 +22,24 @@ namespace ChatTranslated.Utils
         {
             if (10 <= (uint)type && (uint)type <= 15)
             {
-                // return if message is entirely auto-translate
-                // return if message does not contain non-English characters
-                if (AutoTranslateRegex.IsMatch(message.TextValue)) return;
-                if (!NonEnglishRegex.IsMatch(message.TextValue)) return;
-
                 PlayerPayload? playerPayload;
                 playerPayload = sender.Payloads.SingleOrDefault(x => x is PlayerPayload) as PlayerPayload;
                 string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
 
-                if (type == XivChatType.TellOutgoing && Service.clientState.LocalPlayer != null)
+                // return if message is entirely auto-translate
+                // return if message does not contain non-English characters
+                // return if message is from self
+                if (AutoTranslateRegex.IsMatch(message.TextValue)
+                    || !NonEnglishRegex.IsMatch(message.TextValue)
+                    || playerName == Sanitize(Service.clientState?.LocalPlayer?.Name.ToString() ?? ""))
+                {
+                    Service.pluginLog.Debug("Message filtered.");
+                    Service.mainWindow.PrintToOutput($"{playerName}: {message}");
+                    return;
+                };
+
+                // fix outgoing tell messages
+                if (type == XivChatType.TellOutgoing && Service.clientState?.LocalPlayer != null)
                 {
                     playerName = Sanitize(Service.clientState.LocalPlayer.Name.ToString());
                 }
