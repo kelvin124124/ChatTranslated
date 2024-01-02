@@ -36,7 +36,7 @@ namespace ChatTranslated.Utils
 
             Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
 
-            if (Service.configuration.ChatIntergration)
+            if (Service.configuration.ChatIntergration && translatedText.Length<50)
             {
                 Plugin.OutputChatLine($"{sender}: {message} || {translatedText}");
             }
@@ -81,17 +81,23 @@ namespace ChatTranslated.Utils
                 throw new HttpRequestException($"Request to LibreTranslate API failed with status code: {response.StatusCode}");
             }
 
-            var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var match = LibreTranslateRegex.Match(jsonResponse).Groups[1].Value;
-
-            return match;
+            string jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (LibreTranslateRegex.IsMatch(jsonResponse))
+            {
+                string match = LibreTranslateRegex.Match(jsonResponse).Groups[1].Value;
+                return match;
+            }
+            else 
+            { 
+                return jsonResponse.ToString(); 
+            }
         }
 
         private static async Task<string> ProxyTranslate(string message)
         {
             var requestData = new
             {
-                model = MODEL,
+                model = PROXY_MODEL,
                 max_tokens = 500,
                 messages = new[]
                 {
@@ -111,13 +117,20 @@ namespace ChatTranslated.Utils
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}");
+                throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}\n" +
+                    $"{response}");
             }
 
-            var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var match = GPTRegex.Match(jsonResponse).Groups[1].Value.Trim();
-
-            return match;
+            string jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            if (LibreTranslateRegex.IsMatch(jsonResponse))
+            {
+                string match = LibreTranslateRegex.Match(jsonResponse).Groups[1].Value;
+                return match;
+            }
+            else
+            {
+                return jsonResponse.ToString();
+            }
         }
 
 
@@ -145,7 +158,8 @@ namespace ChatTranslated.Utils
 
             if (!response.IsSuccessStatusCode)
             {
-                throw new HttpRequestException($"Request to OpenAI API failed with status code: {response.StatusCode}");
+                throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}\n" +
+                    $"{response}");
             }
 
             var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

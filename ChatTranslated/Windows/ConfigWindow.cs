@@ -10,7 +10,7 @@ namespace ChatTranslated.Windows;
 public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
-    private string inputText = "";
+    private string apiKeyInput = "";
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
@@ -45,19 +45,46 @@ public class ConfigWindow : Window, IDisposable
         if (ImGui.Combo("##ModeCombo", ref selectedMode, Enum.GetNames(typeof(Mode)), 3))
         {
             configuration.SelectedMode = (Mode)selectedMode;
+            UpdateApiKeyInput();
             configuration.Save();
         }
 
-        // Credentials
-        ImGui.AlignTextToFramePadding();
-        ImGui.Text($"Current server url: {LIBRETRANSLATE_API}");
-        ImGui.InputText("##Server", ref inputText, 100);
+        // API Key Input
+        ImGui.Text("API Key");
+        ImGui.InputText("##APIKey", ref apiKeyInput, 256);
         ImGui.SameLine();
-        if (ImGui.Button("Save"))
+        if (ImGui.Button("Save")) SaveApiKey();
+    }
+
+    private void UpdateApiKeyInput()
+    {
+        switch (configuration.SelectedMode)
         {
-            LIBRETRANSLATE_API = inputText;
-            Service.pluginLog.Information($"Server set to {inputText}");
-            inputText = ""; // Clear the input field after sending
+            case Mode.LibreTranslate:
+                apiKeyInput = LIBRETRANSLATE_API_KEY;
+                break;
+            case Mode.GPT3_Proxy:
+                apiKeyInput = PROXY_API_KEY;
+                break;
+            case Mode.OpenAI_API:
+                apiKeyInput = OPENAI_API_KEY;
+                break;
         }
+    }
+    private void SaveApiKey()
+    {
+        switch (configuration.SelectedMode)
+        {
+            case Mode.LibreTranslate:
+                LIBRETRANSLATE_API_KEY = apiKeyInput;
+                break;
+            case Mode.GPT3_Proxy:
+                PROXY_API_KEY = apiKeyInput;
+                break;
+            case Mode.OpenAI_API:
+                OPENAI_API_KEY = apiKeyInput;
+                break;
+        }
+        configuration.Save();
     }
 }

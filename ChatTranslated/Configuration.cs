@@ -19,7 +19,7 @@ namespace ChatTranslated
         public bool ChatIntergration { get; set; } = true;
 
         internal static int MAX_ATTEMPTS = 3;
-        internal static int WAIT_TIME = 500;
+        internal static int WAIT_TIME = 100;
 
         internal static string LIBRETRANSLATE_API = "https://translate.kelpcc.com/translate";
         internal static string LIBRETRANSLATE_API_KEY = "";
@@ -29,11 +29,13 @@ namespace ChatTranslated
         internal static string OPENAI_API = "https://api.openai.com/v1/chat/completions";
         internal static string OPENAI_API_KEY = "sk-YOUR_API_KEY";
 
+        // gpt-3.5-turbo or gpt-4
         internal static string MODEL = "gpt-3.5-turbo";
+        internal static string PROXY_MODEL = "pai-001-light";
         internal static string PROMPT = "Process this MMORPG chat message from FFXIV:\n" +
             "1. Determine the language.\n" +
             "2. Translate into English.\n" +
-            "3. Enclose the translation in ***[TRANSLATED]*** and ***[/TRANSLATED]***.";
+            "3. Enclose the translation in ***[TRANSLATED]*** AND ***[/TRANSLATED]***.";
 
         // the below exist just to make saving less cumbersome
         [NonSerialized]

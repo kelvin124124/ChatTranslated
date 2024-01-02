@@ -10,8 +10,11 @@ namespace ChatTranslated.Utils
     internal class ChatHandler
     {
         private static readonly Regex AutoTranslateRegex = new Regex(@"^\uE040\u0020.*\u0020\uE041$", RegexOptions.Compiled);
-        private static readonly Regex NonEnglishRegex = new Regex(@"[^\u0020-\u007E]+", RegexOptions.Compiled);
+        private static readonly Regex NonEnglishRegex = new Regex(@"[^\u0020-\u007E\uFF01-\uFF5E]+", RegexOptions.Compiled);
         private static readonly Regex SpecialCharacterRegex = new Regex(@"[\uE000-\uF8FF]+", RegexOptions.Compiled);
+
+        private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお願いします[\u3002\uFF01!]*", RegexOptions.Compiled);
+        private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
 
         public ChatHandler()
         {
@@ -22,9 +25,14 @@ namespace ChatTranslated.Utils
         {
             if (10 <= (uint)type && (uint)type <= 15)
             {
-                PlayerPayload? playerPayload;
-                playerPayload = sender.Payloads.SingleOrDefault(x => x is PlayerPayload) as PlayerPayload;
+                var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
                 string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
+
+                // fix outgoing tell messages
+                if (type == XivChatType.TellOutgoing && Service.clientState?.LocalPlayer != null)
+                {
+                    playerName = Sanitize(Service.clientState.LocalPlayer.Name.ToString());
+                }
 
                 // return if message is entirely auto-translate
                 // return if message does not contain non-English characters
@@ -33,19 +41,21 @@ namespace ChatTranslated.Utils
                     || !NonEnglishRegex.IsMatch(message.TextValue)
                     || playerName == Sanitize(Service.clientState?.LocalPlayer?.Name.ToString() ?? ""))
                 {
-                    Service.pluginLog.Debug("Message filtered.");
-                    Service.mainWindow.PrintToOutput($"{playerName}: {message}");
+                    Service.pluginLog.Debug("Message filtered by standard rules.");
                     return;
                 };
 
-                // fix outgoing tell messages
-                if (type == XivChatType.TellOutgoing && Service.clientState?.LocalPlayer != null)
+                // JP players like to use these, so filter them
+                if (JPWelcomeRegex.IsMatch(message.TextValue) || JPByeRegex.IsMatch(message.TextValue))
                 {
-                    playerName = Sanitize(Service.clientState.LocalPlayer.Name.ToString());
+                    string response = JPWelcomeRegex.IsMatch(message.TextValue) ? "Let's do it!" : "Good game!";
+                    Service.pluginLog.Debug($"{response} message filtered.");
+                    Service.mainWindow.PrintToOutput($"{playerName}: {response}");
+                    Plugin.OutputChatLine($"{playerName}: {response}");
+                    return;
                 }
 
                 string _message = Sanitize(message.TextValue);
-
                 Task.Run(() => Translator.Translate(playerName, _message));
             }
         }
