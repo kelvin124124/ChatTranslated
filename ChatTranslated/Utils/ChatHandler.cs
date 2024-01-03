@@ -53,7 +53,7 @@ namespace ChatTranslated.Utils
                     Plugin.OutputChatLine($"{playerName}: Let's do it!");
                     return;
                 }
-                if (JPByeRegex.IsMatch(message.TextValue)) 
+                if (JPByeRegex.IsMatch(message.TextValue))
                 {
                     Service.pluginLog.Debug($"Bye message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: Good game!");

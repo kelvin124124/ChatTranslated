@@ -1,3 +1,5 @@
+using GTranslate.Results;
+using GTranslate.Translators;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -5,8 +7,6 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using GTranslate.Results;
-using GTranslate.Translators;
 using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Utils
@@ -17,7 +17,7 @@ namespace ChatTranslated.Utils
         private static readonly GoogleTranslator GTranslator = new GoogleTranslator();
 
         private const string DefaultContentType = "application/json";
-        private static readonly Regex GPTRegex = new Regex(@"\*\*\*\[TRANSLATED\]\*\*\*([\s\S]*?)\*\*\*\[/TRANSLATED\]\*\*\*");
+        private static readonly Regex GPTRegex = new Regex(@"\[TRANSLATED\]\n?([\s\S]*?)\n?\[/TRANSLATED\]", RegexOptions.Compiled);
 
         public static async Task Translate(string sender, string message)
         {
@@ -26,31 +26,18 @@ namespace ChatTranslated.Utils
             switch (Service.configuration.SelectedMode)
             {
                 case Mode.MachineTranslate:
-                    translatedText = await Translate(message);
+                    translatedText = await MachineTranslate(message);
                     break;
                 case Mode.OpenAI_API:
-                    translatedText = await Translate(message);
+                    translatedText = await OpenAITranslate(message);
                     break;
             }
 
             Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
 
-            if (Service.configuration.ChatIntergration && translatedText.Length<50)
+            if (Service.configuration.ChatIntergration && translatedText.Length < 500)
             {
                 Plugin.OutputChatLine($"{sender}: {message} || {translatedText}");
-            }
-        }
-
-        private static async Task<string> Translate(string message)
-        {
-            switch (Service.configuration.SelectedMode)
-            {
-                case Mode.MachineTranslate:
-                    return await MachineTranslate(message);
-                case Mode.OpenAI_API:
-                    return await OpenAITranslate(message);
-                default:
-                    return message;
             }
         }
 
@@ -83,20 +70,20 @@ namespace ChatTranslated.Utils
                     Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {OPENAI_API_KEY}" } }
                 };
 
-                var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
-
-                if (!response.IsSuccessStatusCode)
-                {
-                    throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}\n" +
-                        $"{response}");
-                }
-
                 try
                 {
+                    var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}\n" +
+                            $"{response}");
+                    }
+
                     var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var match = GPTRegex.Match(jsonResponse).Groups[1].Value.Trim();
 
-                    return match; 
+                    return match;
                 }
                 catch (Exception ex)
                 {

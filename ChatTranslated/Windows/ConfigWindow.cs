@@ -10,7 +10,7 @@ namespace ChatTranslated.Windows;
 public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
-    private string apiKeyInput = "";
+    private string apiKeyInput = "sk-YOUR-API-KEY";
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
@@ -52,7 +52,7 @@ public class ConfigWindow : Window, IDisposable
         ImGui.Text("OpenAI API Key");
         ImGui.InputText("##APIKey", ref apiKeyInput, 256);
         ImGui.SameLine();
-        if (ImGui.Button("Save")) 
+        if (ImGui.Button("Save"))
         {
             OPENAI_API_KEY = apiKeyInput;
             configuration.Save();
