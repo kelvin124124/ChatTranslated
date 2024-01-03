@@ -35,7 +35,7 @@ namespace ChatTranslated.Utils
                 }
 
                 // return if message is entirely auto-translate
-                // return if message is English (does not contain non-English characters)
+                // return if message is in English (does not contain non-English characters)
                 // return if message is from self
                 if (AutoTranslateRegex.IsMatch(message.TextValue)
                     || !NonEnglishRegex.IsMatch(message.TextValue)
