@@ -9,7 +9,7 @@ namespace ChatTranslated.Utils
 {
     internal class ChatHandler
     {
-        private static readonly Regex AutoTranslateRegex = new Regex(@"^\uE040\u0020.*\u0020\uE041$", RegexOptions.Compiled);
+        private static readonly Regex AutoTranslateRegex = new Regex(@"^\uE040\u0020?.*\u0020?\uE041$", RegexOptions.Compiled);
         private static readonly Regex NonEnglishRegex = new Regex(@"[^\u0020-\u007E\uFF01-\uFF5E]+", RegexOptions.Compiled);
         private static readonly Regex SpecialCharacterRegex = new Regex(@"[\uE000-\uF8FF]+", RegexOptions.Compiled);
 
@@ -35,7 +35,7 @@ namespace ChatTranslated.Utils
                 }
 
                 // return if message is entirely auto-translate
-                // return if message does not contain non-English characters
+                // return if message is English (does not contain non-English characters)
                 // return if message is from self
                 if (AutoTranslateRegex.IsMatch(message.TextValue)
                     || !NonEnglishRegex.IsMatch(message.TextValue)
@@ -50,14 +50,14 @@ namespace ChatTranslated.Utils
                 {
                     Service.pluginLog.Debug($"Welcome message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
-                    Plugin.OutputChatLine($"{playerName}: Let's do it!");
+                    if (Service.configuration.ChatIntergration) Plugin.OutputChatLine($"{playerName}: Let's do it!");
                     return;
                 }
                 if (JPByeRegex.IsMatch(message.TextValue))
                 {
                     Service.pluginLog.Debug($"Bye message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
-                    Plugin.OutputChatLine($"{playerName}: Good game!");
+                    if (Service.configuration.ChatIntergration) Plugin.OutputChatLine($"{playerName}: Good game!");
                     return;
                 }
 
