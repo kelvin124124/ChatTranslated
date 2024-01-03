@@ -10,7 +10,7 @@ namespace ChatTranslated.Windows;
 public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
-    private string apiKeyInput = "sk-YOUR-API-KEY";
+    private string apiKeyInput = OPENAI_API_KEY ?? "sk-YOUR-API-KEY";
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
