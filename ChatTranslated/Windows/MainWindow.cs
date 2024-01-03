@@ -9,6 +9,7 @@ public class MainWindow : Window, IDisposable
 {
     private string outputText = ""; // Holds the text for the output field
     private string inputText = "";  // Holds the text for the input field
+    private Vector2 buttonSize = new Vector2(50, 20); // Size of the Send button
 
     public MainWindow(Plugin plugin) : base(
         "Chat Translated",
@@ -29,12 +30,19 @@ public class MainWindow : Window, IDisposable
         // Output text field
         ImGui.BeginChild("outputField", new Vector2(-1, -60), false, ImGuiWindowFlags.HorizontalScrollbar);
         ImGui.InputTextMultiline("##output", ref outputText, 10000, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
+        ImGui.SetScrollHereY(1.0f); // Scroll to bottom
         ImGui.EndChild();
 
+        ImGui.Separator();
+
         // Input text field with send button
+        ImGui.Text("Input:");
+        ImGui.SameLine();
+
         ImGui.InputText("##input", ref inputText, 100);
         ImGui.SameLine();
-        if (ImGui.Button("Send"))
+
+        if (ImGui.Button("Send", buttonSize))
         {
             ProcessInput(inputText);
             inputText = ""; // Clear the input field after sending
