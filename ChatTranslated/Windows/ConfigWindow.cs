@@ -42,49 +42,20 @@ public class ConfigWindow : Window, IDisposable
 
         int selectedMode = (int)configuration.SelectedMode;
 
-        if (ImGui.Combo("##ModeCombo", ref selectedMode, Enum.GetNames(typeof(Mode)), 3))
+        if (ImGui.Combo("##ModeCombo", ref selectedMode, Enum.GetNames(typeof(Mode)), 2))
         {
             configuration.SelectedMode = (Mode)selectedMode;
-            UpdateApiKeyInput();
             configuration.Save();
         }
 
         // API Key Input
-        ImGui.Text("API Key");
+        ImGui.Text("OpenAI API Key");
         ImGui.InputText("##APIKey", ref apiKeyInput, 256);
         ImGui.SameLine();
-        if (ImGui.Button("Save")) SaveApiKey();
-    }
-
-    private void UpdateApiKeyInput()
-    {
-        switch (configuration.SelectedMode)
+        if (ImGui.Button("Save")) 
         {
-            case Mode.LibreTranslate:
-                apiKeyInput = LIBRETRANSLATE_API_KEY;
-                break;
-            case Mode.GPT3_Proxy:
-                apiKeyInput = PROXY_API_KEY;
-                break;
-            case Mode.OpenAI_API:
-                apiKeyInput = OPENAI_API_KEY;
-                break;
+            OPENAI_API_KEY = apiKeyInput;
+            configuration.Save();
         }
-    }
-    private void SaveApiKey()
-    {
-        switch (configuration.SelectedMode)
-        {
-            case Mode.LibreTranslate:
-                LIBRETRANSLATE_API_KEY = apiKeyInput;
-                break;
-            case Mode.GPT3_Proxy:
-                PROXY_API_KEY = apiKeyInput;
-                break;
-            case Mode.OpenAI_API:
-                OPENAI_API_KEY = apiKeyInput;
-                break;
-        }
-        configuration.Save();
     }
 }

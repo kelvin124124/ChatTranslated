@@ -46,12 +46,18 @@ namespace ChatTranslated.Utils
                 };
 
                 // JP players like to use these, so filter them
-                if (JPWelcomeRegex.IsMatch(message.TextValue) || JPByeRegex.IsMatch(message.TextValue))
+                if (JPWelcomeRegex.IsMatch(message.TextValue))
                 {
-                    string response = JPWelcomeRegex.IsMatch(message.TextValue) ? "Let's do it!" : "Good game!";
-                    Service.pluginLog.Debug($"{response} message filtered.");
-                    Service.mainWindow.PrintToOutput($"{playerName}: {response}");
-                    Plugin.OutputChatLine($"{playerName}: {response}");
+                    Service.pluginLog.Debug($"Welcome message filtered.");
+                    Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
+                    Plugin.OutputChatLine($"{playerName}: Let's do it!");
+                    return;
+                }
+                if (JPByeRegex.IsMatch(message.TextValue)) 
+                {
+                    Service.pluginLog.Debug($"Bye message filtered.");
+                    Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
+                    Plugin.OutputChatLine($"{playerName}: Good game!");
                     return;
                 }
 

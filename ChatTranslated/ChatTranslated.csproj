@@ -12,4 +12,8 @@
     <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="GTranslate" Version="2.1.6" />
+  </ItemGroup>
 </Project>
