@@ -15,6 +15,7 @@ namespace ChatTranslated.Utils
 
         private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお願いします[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
+        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ)\b", RegexOptions.Compiled);
 
         public ChatHandler()
         {
@@ -50,14 +51,24 @@ namespace ChatTranslated.Utils
                 {
                     Service.pluginLog.Debug($"Welcome message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
-                    if (Service.configuration.ChatIntergration) Plugin.OutputChatLine($"{playerName}: Let's do it!");
+                    if (Service.configuration.ChatIntergration) 
+                        Plugin.OutputChatLine($"{playerName}: {message} || Let's do it!");
                     return;
                 }
                 if (JPByeRegex.IsMatch(message.TextValue))
                 {
                     Service.pluginLog.Debug($"Bye message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
-                    if (Service.configuration.ChatIntergration) Plugin.OutputChatLine($"{playerName}: Good game!");
+                    if (Service.configuration.ChatIntergration) 
+                        Plugin.OutputChatLine($"{playerName}: {message} || Good game!");
+                    return;
+                }
+                if (JPDomaRegex.IsMatch(message.TextValue))
+                {
+                    Service.pluginLog.Debug($"Doma message filtered.");
+                    Service.mainWindow.PrintToOutput($"{playerName}: It's okay!");
+                    if (Service.configuration.ChatIntergration)
+                        Plugin.OutputChatLine($"{playerName}: {message} || It's okay!");
                     return;
                 }
 
