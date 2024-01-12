@@ -1,6 +1,5 @@
 using ChatTranslated.Utils;
 using Dalamud.Configuration;
-using Dalamud.Plugin;
 using System;
 
 namespace ChatTranslated

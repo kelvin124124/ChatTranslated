@@ -52,7 +52,7 @@ namespace ChatTranslated.Utils
                 {
                     Service.pluginLog.Debug($"Welcome message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
-                    if (Service.configuration.ChatIntergration) 
+                    if (Service.configuration.ChatIntergration)
                         Plugin.OutputChatLine($"{playerName}: {message} || Let's do it!");
                     return;
                 }
@@ -60,7 +60,7 @@ namespace ChatTranslated.Utils
                 {
                     Service.pluginLog.Debug($"Bye message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
-                    if (Service.configuration.ChatIntergration) 
+                    if (Service.configuration.ChatIntergration)
                         Plugin.OutputChatLine($"{playerName}: {message} || Good game!");
                     return;
                 }

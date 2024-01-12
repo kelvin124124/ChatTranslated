@@ -1,4 +1,3 @@
-using GTranslate.Results;
 using GTranslate.Translators;
 using System;
 using System.Net;

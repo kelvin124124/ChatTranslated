@@ -9,9 +9,6 @@ using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
-using FFXIVClientStructs.FFXIV.Client.UI.Agent;
-using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ChatTranslated
@@ -63,11 +60,11 @@ namespace ChatTranslated
 
         private unsafe void OpenGameObjectContextMenu(GameObjectContextMenuOpenArgs args)
         {
-            if (args.ParentAddonName == "LookingForGroupDetail") 
+            if (args.ParentAddonName == "LookingForGroupDetail")
                 args.AddCustomItem(gameObjectContextMenuItem);
         }
 
-        private void TranslatePF(GameObjectContextMenuItemSelectedArgs args) 
+        private void TranslatePF(GameObjectContextMenuItemSelectedArgs args)
         {
             Task.Run(() => Translator.Translate("PF", args?.Text?.ToString() ?? "null"));
         }
