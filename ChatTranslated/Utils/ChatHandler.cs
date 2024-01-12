@@ -15,7 +15,7 @@ namespace ChatTranslated.Utils
 
         private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお願いします[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
-        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ)\b", RegexOptions.Compiled);
+        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ|どんまい)\b", RegexOptions.Compiled);
 
         public ChatHandler()
         {
@@ -42,6 +42,7 @@ namespace ChatTranslated.Utils
                     || !NonEnglishRegex.IsMatch(message.TextValue)
                     || playerName == Sanitize(Service.clientState?.LocalPlayer?.Name.ToString() ?? ""))
                 {
+                    Service.mainWindow.PrintToOutput($"{playerName}: {message}");
                     Service.pluginLog.Debug("Message filtered by standard rules.");
                     return;
                 };

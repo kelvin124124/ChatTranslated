@@ -1,12 +1,18 @@
 using ChatTranslated.Utils;
 using ChatTranslated.Windows;
+using Dalamud.ContextMenu;
 using Dalamud.Game.Command;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
+using FFXIVClientStructs.FFXIV.Client.UI.Agent;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ChatTranslated
 {
@@ -14,6 +20,9 @@ namespace ChatTranslated
     {
         public static string Name => "ChatTranslated";
         private const string CommandName = "/pchat";
+
+        public readonly DalamudContextMenu contextMenu;
+        private readonly GameObjectContextMenuItem gameObjectContextMenuItem;
 
         public WindowSystem WindowSystem { get; } = new("ChatTranslated");
 
@@ -25,7 +34,6 @@ namespace ChatTranslated
             Service.commandManager = commandManager;
 
             Service.configuration = pluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
-            Service.configuration.Initialize(pluginInterface);
 
             _ = pluginInterface.Create<Service>();
 
@@ -42,10 +50,26 @@ namespace ChatTranslated
             Service.translator = new Translator();
             Service.chatHandler = new ChatHandler();
 
+            contextMenu = new DalamudContextMenu(pluginInterface);
+            gameObjectContextMenuItem = new GameObjectContextMenuItem(
+                new SeString(new TextPayload("Translate")), TranslatePF, true);
+            contextMenu.OnOpenGameObjectContextMenu += OpenGameObjectContextMenu;
+
             Service.commandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
             {
                 HelpMessage = "Open Chat Translated main window."
             });
+        }
+
+        private unsafe void OpenGameObjectContextMenu(GameObjectContextMenuOpenArgs args)
+        {
+            if (args.ParentAddonName == "LookingForGroupDetail") 
+                args.AddCustomItem(gameObjectContextMenuItem);
+        }
+
+        private void TranslatePF(GameObjectContextMenuItemSelectedArgs args) 
+        {
+            Task.Run(() => Translator.Translate("PF", args?.Text?.ToString() ?? "null"));
         }
 
         public static void OutputChatLine(SeString message)
@@ -59,6 +83,9 @@ namespace ChatTranslated
             WindowSystem?.RemoveAllWindows();
 
             Service.chatHandler?.Dispose();
+
+            contextMenu.OnOpenGameObjectContextMenu -= OpenGameObjectContextMenu;
+            contextMenu.Dispose();
 
             Service.configWindow.Dispose();
             Service.mainWindow.Dispose();

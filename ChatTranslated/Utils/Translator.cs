@@ -49,51 +49,46 @@ namespace ChatTranslated.Utils
 
         private static async Task<string> OpenAITranslate(string message)
         {
-            int attempt = 0;
-            while (attempt < 3)
+            var requestData = new
             {
-                var requestData = new
+                model = MODEL,
+                max_tokens = 500,
+                messages = new[]
                 {
-                    model = MODEL,
-                    max_tokens = 500,
-                    messages = new[]
-                    {
-                        new { role = "system", content = PROMPT },
-                        new { role = "user", content = message }
-                    }
-                };
-
-                var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType);
-                var request = new HttpRequestMessage(HttpMethod.Post, OPENAI_API)
-                {
-                    Content = content,
-                    Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {OPENAI_API_KEY}" } }
-                };
-
-                try
-                {
-                    var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}\n" +
-                            $"{response}");
-                    }
-
-                    var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var match = GPTRegex.Match(jsonResponse).Groups[1].Value.Trim();
-
-                    return match;
+                    new { role = "system", content = PROMPT },
+                    new { role = "user", content = message }
                 }
-                catch (Exception ex)
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType);
+            var request = new HttpRequestMessage(HttpMethod.Post, OPENAI_API)
+            {
+                Content = content,
+                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {OPENAI_API_KEY}" } }
+            };
+
+            try
+            {
+                var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+
+                if (!response.IsSuccessStatusCode)
                 {
-                    Service.pluginLog.Warning($"Translation Error: {ex.Message}");
-                    await Task.Delay(500);
-                    attempt++;
+                    throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}\n" +
+                        $"{response}");
                 }
+
+                var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var match = GPTRegex.Match(jsonResponse).Groups[1].Value.Trim();
+
+                return match;
             }
-            Service.pluginLog.Warning("Translation failed after retries.");
-            return message;
+            catch (Exception ex)
+            {
+                Service.pluginLog.Warning($"Error: {ex.Message}, falling back to machine translate.");
+            }
+
+            string str = await MachineTranslate(message);
+            return str;
         }
     }
 }
