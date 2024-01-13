@@ -13,7 +13,7 @@ namespace ChatTranslated.Utils
     internal class Translator
     {
         private static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
-        private static readonly GoogleTranslator GTranslator = new GoogleTranslator();
+        private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2();
         private static readonly BingTranslator BingTranslator = new BingTranslator();
 
         private const string DefaultContentType = "application/json";
@@ -43,22 +43,22 @@ namespace ChatTranslated.Utils
 
         private static async Task<string> MachineTranslate(string message)
         {
-            try 
-            { 
+            try
+            {
                 var result = await GTranslator.TranslateAsync(message, "English");
                 return result.Translation;
             }
             catch (Exception GTex)
             {
-                Service.pluginLog.Warning($"Warn: {GTex.Message}, falling back to Bing Translate.");
-                try 
+                Service.pluginLog.Info($"Google Translate: {GTex.Message}, falling back to Bing Translate.");
+                try
                 {
                     var result = await BingTranslator.TranslateAsync(message, "English");
                     return result.Translation;
                 }
                 catch (Exception BTex)
                 {
-                    Service.pluginLog.Error($"Error: {BTex.Message}, returning original message.");
+                    Service.pluginLog.Error($"Error: {BTex.Message}, both translator failed, returning original message.");
                     return message;
                 }
             }
