@@ -59,7 +59,7 @@ public class ConfigWindow : Window, IDisposable
                 Translator.OPENAI_API_KEY = apiKeyInput;
             }
 
-            ImGui.TextColored(new Vector4(1, 0, 0, 1), 
+            ImGui.TextColored(new Vector4(1, 0, 0, 1),
                 "Warning: API key is not saved and must be re-entered after reboot for safety reasons.");
         }
     }

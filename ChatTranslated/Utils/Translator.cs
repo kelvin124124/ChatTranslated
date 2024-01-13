@@ -68,49 +68,48 @@ namespace ChatTranslated.Utils
 
         private static async Task<string> OpenAITranslate(string message)
         {
-            if (OPENAI_API_KEY == null)
+            if (OPENAI_API_KEY != null)
             {
-                Service.pluginLog.Warning("Error: OpenAI API Key not set.");
-                return message;
-            }
-
-            var requestData = new
-            {
-                model = MODEL,
-                max_tokens = 500,
-                messages = new[]
+                var requestData = new
                 {
+                    model = MODEL,
+                    max_tokens = 500,
+                    messages = new[]
+    {
                     new { role = "system", content = PROMPT },
                     new { role = "user", content = message }
                 }
-            };
+                };
 
-            var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType);
-            var request = new HttpRequestMessage(HttpMethod.Post, OPENAI_API)
-            {
-                Content = content,
-                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {OPENAI_API_KEY}" } }
-            };
-
-            try
-            {
-                var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
-
-                if (!response.IsSuccessStatusCode)
+                var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType);
+                var request = new HttpRequestMessage(HttpMethod.Post, OPENAI_API)
                 {
-                    throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}\n" +
-                        $"{response}");
+                    Content = content,
+                    Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {OPENAI_API_KEY}" } }
+                };
+
+                try
+                {
+                    var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+
+                    if (!response.IsSuccessStatusCode)
+                    {
+                        throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}\n" +
+                            $"{response}");
+                    }
+
+                    var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var match = GPTRegex.Match(jsonResponse).Groups[1].Value.Trim();
+
+                    return match;
                 }
-
-                var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var match = GPTRegex.Match(jsonResponse).Groups[1].Value.Trim();
-
-                return match;
+                catch (Exception ex)
+                {
+                    Service.pluginLog.Warning($"Warn: {ex.Message}, falling back to machine translate.");
+                }
             }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Warning($"Warn: {ex.Message}, falling back to machine translate.");
-            }
+            else
+                Service.pluginLog.Warning("Warn: API key is null, falling back to machine translate.");
 
             string str = await MachineTranslate(message);
             return str;
