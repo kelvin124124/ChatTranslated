@@ -14,6 +14,7 @@ namespace ChatTranslated.Utils
     {
         private static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
         private static readonly GoogleTranslator GTranslator = new GoogleTranslator();
+        private static readonly BingTranslator BingTranslator = new BingTranslator();
 
         private const string DefaultContentType = "application/json";
         private static readonly Regex GPTRegex = new Regex(@"\[TRANSLATED\]\n?([\s\S]*?)\n?\[/TRANSLATED\]", RegexOptions.Compiled);
@@ -42,8 +43,25 @@ namespace ChatTranslated.Utils
 
         private static async Task<string> MachineTranslate(string message)
         {
-            var result = await GTranslator.TranslateAsync(message, "English");
-            return result.Translation;
+            try 
+            { 
+                var result = await GTranslator.TranslateAsync(message, "English");
+                return result.Translation;
+            }
+            catch (Exception GTex)
+            {
+                Service.pluginLog.Warning($"Warn: {GTex.Message}, falling back to Bing Translate.");
+                try 
+                {
+                    var result = await BingTranslator.TranslateAsync(message, "English");
+                    return result.Translation;
+                }
+                catch (Exception BTex)
+                {
+                    Service.pluginLog.Error($"Error: {BTex.Message}, returning original message.");
+                    return message;
+                }
+            }
         }
 
         private static async Task<string> OpenAITranslate(string message)
@@ -83,7 +101,7 @@ namespace ChatTranslated.Utils
             }
             catch (Exception ex)
             {
-                Service.pluginLog.Warning($"Error: {ex.Message}, falling back to machine translate.");
+                Service.pluginLog.Warning($"Warn: {ex.Message}, falling back to machine translate.");
             }
 
             string str = await MachineTranslate(message);

@@ -24,7 +24,7 @@ namespace ChatTranslated.Utils
 
         private void OnChatMessage(XivChatType type, uint _, ref SeString sender, ref SeString message, ref bool _1)
         {
-            if (10 <= (uint)type && (uint)type <= 15)
+            if ((10 <= (uint)type && (uint)type <= 15) || ((uint)type == 30))
             {
                 var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
                 string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
