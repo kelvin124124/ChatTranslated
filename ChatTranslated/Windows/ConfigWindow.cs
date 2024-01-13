@@ -10,7 +10,7 @@ namespace ChatTranslated.Windows;
 public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
-    private string apiKeyInput = OPENAI_API_KEY ?? "sk-YOUR-API-KEY";
+    private string apiKeyInput = Translator.OPENAI_API_KEY ?? "sk-YOUR-API-KEY";
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
@@ -49,13 +49,18 @@ public class ConfigWindow : Window, IDisposable
         }
 
         // API Key Input
-        ImGui.Text("OpenAI API Key");
-        ImGui.InputText("##APIKey", ref apiKeyInput, 256);
-        ImGui.SameLine();
-        if (ImGui.Button("Save"))
+        if (configuration.SelectedMode == Mode.OpenAI_API)
         {
-            OPENAI_API_KEY = apiKeyInput;
-            configuration.Save();
+            ImGui.Text("OpenAI API Key ");
+            ImGui.InputText("##APIKey", ref apiKeyInput, 256);
+            ImGui.SameLine();
+            if (ImGui.Button("Apply"))
+            {
+                Translator.OPENAI_API_KEY = apiKeyInput;
+            }
+
+            ImGui.TextColored(new Vector4(1, 0, 0, 1), 
+                "Warning: API key is not saved and must be re-entered after reboot for safety reasons.");
         }
     }
 }

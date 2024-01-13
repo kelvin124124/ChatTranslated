@@ -17,8 +17,7 @@ namespace ChatTranslated
 
         public bool ChatIntergration { get; set; } = true;
 
-        internal static string OPENAI_API = "https://api.openai.com/v1/chat/completions";
-        internal static string? OPENAI_API_KEY;
+        public static string OPENAI_API = "https://api.openai.com/v1/chat/completions";
 
         // gpt-3.5-turbo or gpt-4 / gpt-4-turbo (VERY expensive)
         internal static string MODEL = "gpt-3.5-turbo";

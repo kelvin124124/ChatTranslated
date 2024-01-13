@@ -16,6 +16,8 @@ namespace ChatTranslated.Utils
         private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2();
         private static readonly BingTranslator BingTranslator = new BingTranslator();
 
+        internal static string? OPENAI_API_KEY;
+
         private const string DefaultContentType = "application/json";
         private static readonly Regex GPTRegex = new Regex(@"\[TRANSLATED\]\n?([\s\S]*?)\n?\[/TRANSLATED\]", RegexOptions.Compiled);
 
@@ -66,6 +68,12 @@ namespace ChatTranslated.Utils
 
         private static async Task<string> OpenAITranslate(string message)
         {
+            if (OPENAI_API_KEY == null)
+            {
+                Service.pluginLog.Warning("Error: OpenAI API Key not set.");
+                return message;
+            }
+
             var requestData = new
             {
                 model = MODEL,
