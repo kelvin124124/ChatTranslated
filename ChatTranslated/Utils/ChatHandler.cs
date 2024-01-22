@@ -1,6 +1,7 @@
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -17,6 +18,19 @@ namespace ChatTranslated.Utils
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ|どんまい)\b", RegexOptions.Compiled);
 
+        // (uint)type, UIcolor
+        private static readonly Dictionary<uint, ushort> ColorDictionary = new()
+        {
+            { 10, 1 }, // say
+            { 11, 577 }, // shout
+            { 12, 508 }, // incoming tell
+            { 13, 508 }, // outgoing tell
+            { 14, 35 }, // party
+            { 15, 577 }, // alliance
+            { 30, 535 }, // yell
+        };
+
+
         public ChatHandler()
         {
             Service.chatGui.ChatMessage += OnChatMessage;
@@ -24,7 +38,9 @@ namespace ChatTranslated.Utils
 
         private void OnChatMessage(XivChatType type, uint _, ref SeString sender, ref SeString message, ref bool _1)
         {
-            if ((10 <= (uint)type && (uint)type <= 15) || ((uint)type == 30))
+            uint chatType = (uint)type;
+
+            if ((10 <= chatType && chatType <= 15) || (chatType == 30))
             {
                 var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
                 string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
@@ -73,8 +89,10 @@ namespace ChatTranslated.Utils
                     return;
                 }
 
+                ushort color = ColorDictionary.TryGetValue(chatType, out var key) ? key : (ushort)1;
                 string _message = Sanitize(message.TextValue);
-                Task.Run(() => Translator.Translate(playerName, _message));
+
+                Task.Run(() => Translator.Translate(playerName, _message, color));
             }
         }
 

@@ -69,9 +69,9 @@ namespace ChatTranslated
             Task.Run(() => Translator.Translate("PF", args?.Text?.ToString() ?? "null"));
         }
 
-        public static void OutputChatLine(SeString message)
+        public static void OutputChatLine(SeString message, ushort color = 1)
         {
-            var sb = new SeStringBuilder().AddUiForeground("[CT] ", 58).Append(message);
+            var sb = new SeStringBuilder().AddUiForeground($"[CT] {message.TextValue}", color);
             Service.chatGui.Print(new XivChatEntry { Message = sb.BuiltString });
         }
 
