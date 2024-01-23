@@ -13,8 +13,8 @@ namespace ChatTranslated.Utils
     internal class Translator
     {
         private static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
-        private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2();
-        private static readonly BingTranslator BingTranslator = new BingTranslator();
+        private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2(HttpClient);
+        private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
 
         internal static string? OPENAI_API_KEY;
 
