@@ -46,10 +46,12 @@ namespace ChatTranslated.Utils
                 string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
 
                 // fix outgoing tell messages
-                if (type == XivChatType.TellOutgoing && Service.clientState?.LocalPlayer != null)
+                if (chatType == 13 && Service.clientState?.LocalPlayer != null)
                 {
                     playerName = Sanitize(Service.clientState.LocalPlayer.Name.ToString());
                 }
+
+                ushort color = ColorDictionary.TryGetValue(chatType, out var key) ? key : (ushort)1;
 
                 // return if message is entirely auto-translate
                 // return if message is in English (does not contain non-English characters)
@@ -69,7 +71,7 @@ namespace ChatTranslated.Utils
                     Service.pluginLog.Debug($"Welcome message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
                     if (Service.configuration.ChatIntergration)
-                        Plugin.OutputChatLine($"{playerName}: {message} || Let's do it!");
+                        Plugin.OutputChatLine($"{playerName}: {message} || Let's do it!", color);
                     return;
                 }
                 if (JPByeRegex.IsMatch(message.TextValue))
@@ -77,7 +79,7 @@ namespace ChatTranslated.Utils
                     Service.pluginLog.Debug($"Bye message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
                     if (Service.configuration.ChatIntergration)
-                        Plugin.OutputChatLine($"{playerName}: {message} || Good game!");
+                        Plugin.OutputChatLine($"{playerName}: {message} || Good game!", color);
                     return;
                 }
                 if (JPDomaRegex.IsMatch(message.TextValue))
@@ -85,11 +87,10 @@ namespace ChatTranslated.Utils
                     Service.pluginLog.Debug($"Doma message filtered.");
                     Service.mainWindow.PrintToOutput($"{playerName}: It's okay!");
                     if (Service.configuration.ChatIntergration)
-                        Plugin.OutputChatLine($"{playerName}: {message} || It's okay!");
+                        Plugin.OutputChatLine($"{playerName}: {message} || It's okay!", color);
                     return;
                 }
 
-                ushort color = ColorDictionary.TryGetValue(chatType, out var key) ? key : (ushort)1;
                 string _message = Sanitize(message.TextValue);
 
                 Task.Run(() => Translator.Translate(playerName, _message, color));
