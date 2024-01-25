@@ -14,9 +14,9 @@ namespace ChatTranslated.Utils
         private static readonly Regex NonEnglishRegex = new Regex(@"[^\u0020-\u007E\uFF01-\uFF5E]+", RegexOptions.Compiled);
         private static readonly Regex SpecialCharacterRegex = new Regex(@"[\uE000-\uF8FF]+", RegexOptions.Compiled);
 
-        private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお願いします[\u3002\uFF01!]*", RegexOptions.Compiled);
+        private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
-        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ|どんまい)\b", RegexOptions.Compiled);
+        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ|どんまい)\b", RegexOptions.Compiled); 
 
         // (uint)type, UIcolor
         private static readonly Dictionary<uint, ushort> ColorDictionary = new()
@@ -25,7 +25,7 @@ namespace ChatTranslated.Utils
             { 11, 577 }, // shout
             { 12, 508 }, // incoming tell
             { 13, 508 }, // outgoing tell
-            { 14, 35 }, // party
+            { 14, 37 }, // party
             { 15, 577 }, // alliance
             { 30, 535 }, // yell
         };
