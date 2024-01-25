@@ -71,7 +71,7 @@ namespace ChatTranslated
 
         public static void OutputChatLine(SeString message, ushort color = 1)
         {
-            var sb = new SeStringBuilder().AddUiForeground($"[CT] {message.TextValue}", color);
+            var sb = new SeStringBuilder().AddUiForeground("[CT] ", color).Append(message.TextValue);
             Service.chatGui.Print(new XivChatEntry { Message = sb.BuiltString });
         }
 
