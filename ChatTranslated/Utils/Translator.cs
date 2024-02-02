@@ -43,6 +43,22 @@ namespace ChatTranslated.Utils
             }
         }
 
+        public static void TranslateFrDe(string sender, string message, ushort color = 1) 
+        {
+            try
+            {
+                string language = GTranslator.DetectLanguageAsync(message).Result.Name;
+                if (language == "fr" || language == "de") {
+                    _ = Task.Run(() => Translate(sender, message, color));
+                }
+            }
+            catch (Exception ex)
+            {
+                Service.pluginLog.Warning($"Warn: Failed to detect language. {ex}");
+            }
+            return;
+        }
+
         private static async Task<string> MachineTranslate(string message)
         {
             try

@@ -16,7 +16,7 @@ namespace ChatTranslated.Utils
 
         private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
-        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ|どんまい)\b", RegexOptions.Compiled); 
+        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ|どんまい)(です)?[\u3002\uFF01!]*\b", RegexOptions.Compiled); 
 
         // (uint)type, UIcolor
         private static readonly Dictionary<uint, ushort> ColorDictionary = new()
@@ -57,7 +57,6 @@ namespace ChatTranslated.Utils
                 // return if message is in English (does not contain non-English characters)
                 // return if message is from self
                 if (AutoTranslateRegex.IsMatch(message.TextValue)
-                    || !NonEnglishRegex.IsMatch(message.TextValue)
                     || playerName == Sanitize(Service.clientState?.LocalPlayer?.Name.ToString() ?? ""))
                 {
                     Service.mainWindow.PrintToOutput($"{playerName}: {message}");
@@ -65,35 +64,46 @@ namespace ChatTranslated.Utils
                     return;
                 };
 
-                // JP players like to use these, so filter them
-                if (JPWelcomeRegex.IsMatch(message.TextValue))
-                {
-                    Service.pluginLog.Debug($"Welcome message filtered.");
-                    Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
-                    if (Service.configuration.ChatIntergration)
-                        Plugin.OutputChatLine($"{playerName}: {message} || Let's do it!", color);
-                    return;
-                }
-                if (JPByeRegex.IsMatch(message.TextValue))
-                {
-                    Service.pluginLog.Debug($"Bye message filtered.");
-                    Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
-                    if (Service.configuration.ChatIntergration)
-                        Plugin.OutputChatLine($"{playerName}: {message} || Good game!", color);
-                    return;
-                }
-                if (JPDomaRegex.IsMatch(message.TextValue))
-                {
-                    Service.pluginLog.Debug($"Doma message filtered.");
-                    Service.mainWindow.PrintToOutput($"{playerName}: It's okay!");
-                    if (Service.configuration.ChatIntergration)
-                        Plugin.OutputChatLine($"{playerName}: {message} || It's okay!", color);
-                    return;
-                }
-
                 string _message = Sanitize(message.TextValue);
 
-                Task.Run(() => Translator.Translate(playerName, _message, color));
+                // Message contains only English characters
+                if (!NonEnglishRegex.IsMatch(message.TextValue)) 
+                {
+                    // Translate French and German, reutrn if message English
+                    Task.Run(() => Translator.TranslateFrDe(playerName, _message, color));
+                }
+                else 
+                {
+                    // likely Japanese
+                    // JP players like to use these, so filter them
+                    if (JPWelcomeRegex.IsMatch(message.TextValue))
+                    {
+                        Service.pluginLog.Debug($"Welcome message filtered.");
+                        Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
+                        if (Service.configuration.ChatIntergration)
+                            Plugin.OutputChatLine($"{playerName}: {message} || Let's do it!", color);
+                        return;
+                    }
+                    if (JPByeRegex.IsMatch(message.TextValue))
+                    {
+                        Service.pluginLog.Debug($"Bye message filtered.");
+                        Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
+                        if (Service.configuration.ChatIntergration)
+                            Plugin.OutputChatLine($"{playerName}: {message} || Good game!", color);
+                        return;
+                    }
+                    if (JPDomaRegex.IsMatch(message.TextValue))
+                    {
+                        Service.pluginLog.Debug($"Doma message filtered.");
+                        Service.mainWindow.PrintToOutput($"{playerName}: It's okay!");
+                        if (Service.configuration.ChatIntergration)
+                            Plugin.OutputChatLine($"{playerName}: {message} || It's okay!", color);
+                        return;
+                    }
+
+                    // Normal translate operation
+                    Task.Run(() => Translator.Translate(playerName, _message, color)); 
+                }
             }
         }
 
