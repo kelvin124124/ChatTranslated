@@ -2,7 +2,7 @@
     "Author": "kelvin124124",
     "Name": "ChatTranslated",
     "Punchline": "Ingame chat translator.",
-    "Description": "Ingame chat translator.\n/pchat config to open config window",
+    "Description": "Ingame chat translator.\n\"/pchat config\" to open config window.",
     "InternalName": "ChatTranslated",
     "ApplicableVersion": "any",
     "Tags": [

@@ -17,7 +17,7 @@ public class ConfigWindow : Window, IDisposable
         ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
         ImGuiWindowFlags.NoScrollWithMouse)
     {
-        Size = new Vector2(360, 160);
+        Size = new Vector2(360, 170);
         SizeCondition = ImGuiCond.Always;
 
         configuration = Service.configuration;
@@ -60,7 +60,7 @@ public class ConfigWindow : Window, IDisposable
             }
 
             ImGui.TextColored(new Vector4(1, 0, 0, 1),
-                "Warning: API key is not saved and must be re-entered after reboot for safety reasons.");
+                "Warning: API key is not saved and must be re-entered \nafter reboot for safety reasons.");
         }
     }
 }

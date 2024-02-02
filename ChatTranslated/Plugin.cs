@@ -54,7 +54,7 @@ namespace ChatTranslated
 
             Service.commandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
             {
-                HelpMessage = "Open Chat Translated main window."
+                HelpMessage = "Open Chat Translated main window. \"/pchat config\" open config window."
             });
         }
 
@@ -71,7 +71,7 @@ namespace ChatTranslated
 
         public static void OutputChatLine(SeString message, ushort color = 1)
         {
-            var sb = new SeStringBuilder().AddUiForeground("[CT] ", color).Append(message.TextValue);
+            var sb = new SeStringBuilder().AddUiForeground($"[CT] {message.TextValue}", color);
             Service.chatGui.Print(new XivChatEntry { Message = sb.BuiltString });
         }
 
