@@ -14,4 +14,6 @@
 ```/pchat off``` to turn off chat integration
 
 ## To-do(s) 🎯
-Detect and filter chat macros
+Detect and translate French and German  
+Detect and filter chat macros  
+Provide context when using OpenAI API
