@@ -1,6 +1,7 @@
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -11,8 +12,9 @@ namespace ChatTranslated.Utils
     internal class ChatHandler
     {
         private static readonly Regex AutoTranslateRegex = new Regex(@"^\uE040\u0020?.*\u0020?\uE041$", RegexOptions.Compiled);
-        private static readonly Regex NonEnglishRegex = new Regex(@"[^\u0020-\u007E\uFF01-\uFF5E]+", RegexOptions.Compiled);
         private static readonly Regex SpecialCharacterRegex = new Regex(@"[\uE000-\uF8FF]+", RegexOptions.Compiled);
+
+        private static readonly Regex NonEnglishRegex = new Regex(@"[^\u0020-\u007E\uFF01-\uFF5E]+", RegexOptions.Compiled);
 
         private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
@@ -30,6 +32,7 @@ namespace ChatTranslated.Utils
             { 30, 535 }, // yell
         };
 
+        private readonly Dictionary<string, DateTime> lastMessageTime = new Dictionary<string, DateTime>();
 
         public ChatHandler()
         {
@@ -45,6 +48,21 @@ namespace ChatTranslated.Utils
                 var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
                 string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
 
+                // Filter macros
+                var now = DateTime.Now;
+                if (lastMessageTime.TryGetValue(playerName, out var lastMsgTime))
+                {
+                    if ((now - lastMsgTime).TotalMilliseconds < 50)
+                    {
+                        Service.mainWindow.PrintToOutput($"{playerName}: {message}");
+                        if (Service.configuration.ChatIntergration)
+                            Plugin.OutputChatLine("Macro filtered.");
+                        Service.pluginLog.Debug("Macro filtered.");
+                        return;
+                    }
+                }
+                lastMessageTime[playerName] = now;
+
                 // fix outgoing tell messages
                 if (chatType == 13 && Service.clientState?.LocalPlayer != null)
                 {
@@ -54,7 +72,6 @@ namespace ChatTranslated.Utils
                 ushort color = ColorDictionary.TryGetValue(chatType, out var key) ? key : (ushort)1;
 
                 // return if message is entirely auto-translate
-                // return if message is in English (does not contain non-English characters)
                 // return if message is from self
                 if (AutoTranslateRegex.IsMatch(message.TextValue)
                     || playerName == Sanitize(Service.clientState?.LocalPlayer?.Name.ToString() ?? ""))
@@ -69,7 +86,7 @@ namespace ChatTranslated.Utils
                 // Message contains only English characters
                 if (!NonEnglishRegex.IsMatch(message.TextValue)) 
                 {
-                    // Translate French and German, reutrn if message English
+                    // Translate French and German, reutrn if message is in English
                     Task.Run(() => Translator.TranslateFrDe(playerName, _message, color));
                 }
                 else 
