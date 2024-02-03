@@ -1,4 +1,5 @@
 using GTranslate.Translators;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Net;
 using System.Net.Http;
@@ -18,7 +19,7 @@ namespace ChatTranslated.Utils
 
 
         private const string DefaultContentType = "application/json";
-        private static readonly Regex GPTRegex = new Regex(@"\[TRANSLATED\]\n?([\s\S]*?)\n?\[/TRANSLATED\]", RegexOptions.Compiled);
+        private static readonly Regex GPTRegex = new Regex(@"\[TRANSLATED\]\n*([\s\S]*?)\n*\[/TRANSLATED\]", RegexOptions.Compiled);
 
         public static async Task Translate(string sender, string message, ushort color = 1)
         {
@@ -42,12 +43,13 @@ namespace ChatTranslated.Utils
             }
         }
 
-        public static void TranslateFrDe(string sender, string message, ushort color = 1) 
+        public static void TranslateFrDe(string sender, string message, ushort color = 1)
         {
             try
             {
                 string language = GTranslator.DetectLanguageAsync(message).Result.Name;
-                if (language == "fr" || language == "de") {
+                if (language == "fr" || language == "de")
+                {
                     _ = Task.Run(() => Translate(sender, message, color));
                 }
             }
@@ -88,7 +90,7 @@ namespace ChatTranslated.Utils
                 var requestData = new
                 {
                     model = MODEL,
-                    max_tokens = 500,
+                    max_tokens = 800,
                     messages = new[]
                     {
                     new { role = "system", content = PROMPT },
@@ -114,7 +116,7 @@ namespace ChatTranslated.Utils
                     }
 
                     var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var match = GPTRegex.Match(jsonResponse).Groups[1].Value.Trim();
+                    var match = GPTRegex.Match(JObject.Parse(jsonResponse)["choices"][0]["message"]["content"].ToString()).Groups[1].Value.Trim();
 
                     return match;
                 }

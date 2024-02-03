@@ -32,13 +32,13 @@ public class ConfigWindow : Window, IDisposable
             configuration.ChatIntergration = _ChatIntergration;
             configuration.Save();
         }
-        
+
         if (ImGui.Checkbox("Translate French and German", ref _TranslateFrDe))
         {
             configuration.TranslateFrDe = _TranslateFrDe;
             configuration.Save();
         }
-        ImGui.Text("Note: make translations slower.");
+        ImGui.Text("    Note: make translations slower.");
 
         // Mode selection
         ImGui.AlignTextToFramePadding();
@@ -57,7 +57,7 @@ public class ConfigWindow : Window, IDisposable
         if (configuration.SelectedMode == Mode.OpenAI_API)
         {
             ImGui.Text("OpenAI API Key ");
-            ImGui.InputText("##APIKey", ref apiKeyInput, 50);
+            ImGui.InputText("##APIKey", ref apiKeyInput, 100);
             ImGui.SameLine();
             if (ImGui.Button("Apply"))
             {
@@ -75,16 +75,24 @@ public class ConfigWindow : Window, IDisposable
             if (ImGui.BeginPopupModal("Confirmation"))
             {
                 ImGui.Text("Warning: API key will be stored as plain text in plugin configuration, " +
-                           "\nany malware or third party plugins may have access to the key. Proceed?");
+                           "\nany malware or third party plugins may have access to the key. \nProceed?");
 
-                if (ImGui.Button("Yes"))
+                ImGui.Separator();
+
+                float windowWidth = ImGui.GetWindowWidth();
+                float buttonSize = ImGui.CalcTextSize("Yes").X + ImGui.GetStyle().FramePadding.X * 2;
+
+                ImGui.SetCursorPosX((windowWidth - buttonSize * 2 - ImGui.GetStyle().ItemSpacing.X) * 0.5f);
+                if (ImGui.Button("Yes", new Vector2(buttonSize, 0)))
                 {
                     configuration.warned = true;
                     OPENAI_API_KEY = apiKeyInput;
                     ImGui.CloseCurrentPopup();
                 }
+
                 ImGui.SameLine();
-                if (ImGui.Button("No"))
+
+                if (ImGui.Button("No", new Vector2(buttonSize, 0)))
                 {
                     apiKeyInput = "sk-YOUR-API-KEY";
                     ImGui.CloseCurrentPopup();
@@ -94,8 +102,9 @@ public class ConfigWindow : Window, IDisposable
             }
 
             ImGui.TextColored(new Vector4(1, 0, 0, 1),
-                "Warning: API key stored as plain text in plugin configuration, " +
-                "\nany malware or third party plugins may have access to the key.");
+                "Warning: " +
+                "\nAPI key stored as plain text in plugin configuration, " +
+                "\nany malware or third party plugins may have access to \nthe key.");
         }
 
     }

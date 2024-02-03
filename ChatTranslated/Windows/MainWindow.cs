@@ -28,7 +28,7 @@ public class MainWindow : Window, IDisposable
     {
         // Output text field
         ImGui.BeginChild("outputField", new Vector2(-1, -30), false, ImGuiWindowFlags.HorizontalScrollbar);
-        ImGui.InputTextMultiline("##output", ref outputText, 10000, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
+        ImGui.InputTextMultiline("##output", ref outputText, 50000, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
         ImGui.SetScrollHereY(1.0f); // Scroll to bottom
         ImGui.EndChild();
 
@@ -52,14 +52,12 @@ public class MainWindow : Window, IDisposable
 
     private void ProcessInput(string input)
     {
-        // Placeholder for input processing logic
-        // For now, just prints the input text to the output window
-        PrintToOutput($"You entered: {input}");
+        // Do nothing (for now)
     }
 
     public void PrintToOutput(string message)
     {
         // Append the given text to the output field
-        outputText = outputText + message + "\n";
+        outputText = outputText + $"[{DateTime.Now.ToString("HH:mm")}] " + message + "\n";
     }
 }

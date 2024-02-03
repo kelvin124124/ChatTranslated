@@ -18,7 +18,7 @@ namespace ChatTranslated.Utils
 
         private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
-        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ|どんまい)(です)?[\u3002\uFF01!]*\b", RegexOptions.Compiled); 
+        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ|どんまい)(です)?[\u3002\uFF01!]*\b", RegexOptions.Compiled);
 
         // (uint)type, UIcolor
         private static readonly Dictionary<uint, ushort> ColorDictionary = new()
@@ -52,7 +52,7 @@ namespace ChatTranslated.Utils
                 var now = DateTime.Now;
                 if (lastMessageTime.TryGetValue(playerName, out var lastMsgTime))
                 {
-                    if ((now - lastMsgTime).TotalMilliseconds < 50)
+                    if ((now - lastMsgTime).TotalMilliseconds < 200)
                     {
                         Service.mainWindow.PrintToOutput($"{playerName}: {message}");
                         if (Service.configuration.ChatIntergration)
@@ -60,6 +60,7 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug("Macro filtered.");
                         return;
                     }
+                    else { Service.pluginLog.Debug((now - lastMsgTime).ToString()); }
                 }
                 lastMessageTime[playerName] = now;
 
@@ -84,12 +85,12 @@ namespace ChatTranslated.Utils
                 string _message = Sanitize(message.TextValue);
 
                 // Possible FrDe message
-                if (Service.configuration.TranslateFrDe && !NonEnglishRegex.IsMatch(message.TextValue)) 
+                if (Service.configuration.TranslateFrDe && !NonEnglishRegex.IsMatch(message.TextValue))
                 {
                     // Translate French and German, reutrn if message is in English
                     Task.Run(() => Translator.TranslateFrDe(playerName, _message, color));
                 }
-                else 
+                else
                 {
                     // likely Japanese
                     // JP players like to use these, so filter them
@@ -119,7 +120,7 @@ namespace ChatTranslated.Utils
                     }
 
                     // Normal translate operation
-                    Task.Run(() => Translator.Translate(playerName, _message, color)); 
+                    Task.Run(() => Translator.Translate(playerName, _message, color));
                 }
             }
         }
