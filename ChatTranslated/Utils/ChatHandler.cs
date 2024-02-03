@@ -67,18 +67,17 @@ namespace ChatTranslated.Utils
                 };
 
                 // Filter macros
-                var now = DateTime.Now;
                 if (lastMessageTime.TryGetValue(playerName, out var lastMsgTime))
                 {
-                    if ((now - lastMsgTime).TotalMilliseconds < 600)
+                    var interval = (DateTime.Now - lastMsgTime).TotalMilliseconds;
+                    lastMessageTime[playerName] = DateTime.Now;
+                    if (interval < 600)
                     {
                         Service.mainWindow.PrintToOutput($"{playerName}: {message}");
-                        Service.pluginLog.Debug($"Macro filtered. {(now - lastMsgTime).TotalMilliseconds}ms");
-                        lastMessageTime[playerName] = now;
+                        Service.pluginLog.Debug($"Macro filtered. {interval}ms");
                         return;
                     }
                 }
-                lastMessageTime[playerName] = now;
 
                 string _message = Sanitize(message.TextValue);
 
