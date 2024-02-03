@@ -116,7 +116,7 @@ namespace ChatTranslated.Utils
                     }
 
                     var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var match = GPTRegex.Match(JObject.Parse(jsonResponse)["choices"][0]["message"]["content"].ToString()).Groups[1].Value.Trim();
+                    var match = GPTRegex.Match(JObject.Parse(jsonResponse)["choices"]![0]!["message"]!["content"]!.ToString()).Groups[1].Value.Trim();
 
                     return match;
                 }
