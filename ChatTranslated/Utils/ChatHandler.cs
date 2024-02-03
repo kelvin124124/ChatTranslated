@@ -48,22 +48,6 @@ namespace ChatTranslated.Utils
                 var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
                 string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
 
-                // Filter macros
-                var now = DateTime.Now;
-                if (lastMessageTime.TryGetValue(playerName, out var lastMsgTime))
-                {
-                    if ((now - lastMsgTime).TotalMilliseconds < 200)
-                    {
-                        Service.mainWindow.PrintToOutput($"{playerName}: {message}");
-                        if (Service.configuration.ChatIntergration)
-                            Plugin.OutputChatLine("Macro filtered.");
-                        Service.pluginLog.Debug("Macro filtered.");
-                        return;
-                    }
-                    else { Service.pluginLog.Debug((now - lastMsgTime).ToString()); }
-                }
-                lastMessageTime[playerName] = now;
-
                 // fix outgoing tell messages
                 if (chatType == 13 && Service.clientState?.LocalPlayer != null)
                 {
@@ -81,6 +65,20 @@ namespace ChatTranslated.Utils
                     Service.pluginLog.Debug("Message filtered by standard rules.");
                     return;
                 };
+
+                // Filter macros
+                var now = DateTime.Now;
+                if (lastMessageTime.TryGetValue(playerName, out var lastMsgTime))
+                {
+                    if ((now - lastMsgTime).TotalMilliseconds < 600)
+                    {
+                        Service.mainWindow.PrintToOutput($"{playerName}: {message}");
+                        Service.pluginLog.Debug($"Macro filtered. {(now - lastMsgTime).TotalMilliseconds}ms");
+                        lastMessageTime[playerName] = now;
+                        return;
+                    }
+                }
+                lastMessageTime[playerName] = now;
 
                 string _message = Sanitize(message.TextValue);
 
