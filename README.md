@@ -13,7 +13,5 @@
 ```/pchat on``` to print translated text to your chat if you don't want an extra UI  
 ```/pchat off``` to turn off chat integration
 
-## To-do(s) 🎯
-Detect and translate French and German  
-Detect and filter chat macros  
+## To-do(s) 🎯 
 Provide context when using OpenAI API
