@@ -91,10 +91,10 @@ namespace ChatTranslated.Utils
                     model = MODEL,
                     max_tokens = 500,
                     messages = new[]
-    {
+                    {
                     new { role = "system", content = PROMPT },
                     new { role = "user", content = message }
-                }
+                    }
                 };
 
                 var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType);

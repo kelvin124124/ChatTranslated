@@ -17,7 +17,7 @@ public class ConfigWindow : Window, IDisposable
         ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
         ImGuiWindowFlags.NoScrollWithMouse)
     {
-        Size = new Vector2(360, 170);
+        Size = new Vector2(360, 200);
         SizeCondition = ImGuiCond.Always;
 
         configuration = Service.configuration;
@@ -29,11 +29,19 @@ public class ConfigWindow : Window, IDisposable
     {
         // Enabled
         bool _ChatIntergration = configuration.ChatIntergration;
+        bool _TranslateFrDe = configuration.TranslateFrDe;
         if (ImGui.Checkbox("Chat Intergration", ref _ChatIntergration))
         {
             configuration.ChatIntergration = _ChatIntergration;
             configuration.Save();
         }
+        
+        if (ImGui.Checkbox("Translate French and German", ref _TranslateFrDe))
+        {
+            configuration.TranslateFrDe = _TranslateFrDe;
+            configuration.Save();
+        }
+        ImGui.Text("Note: make translations slower.");
 
         // Mode selection
         ImGui.AlignTextToFramePadding();

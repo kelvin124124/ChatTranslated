@@ -7,8 +7,8 @@ namespace ChatTranslated.Windows;
 
 public class MainWindow : Window, IDisposable
 {
-    private string outputText = ""; // Holds the text for the output field
-    private string inputText = "";  // Holds the text for the input field
+    internal string outputText = ""; // Holds the text for the output field
+    internal string inputText = "";  // Holds the text for the input field
 
     public MainWindow(Plugin plugin) : base(
         "Chat Translated",

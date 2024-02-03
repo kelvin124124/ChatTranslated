@@ -83,8 +83,8 @@ namespace ChatTranslated.Utils
 
                 string _message = Sanitize(message.TextValue);
 
-                // Message contains only English characters
-                if (!NonEnglishRegex.IsMatch(message.TextValue)) 
+                // Possible FrDe message
+                if (Service.configuration.TranslateFrDe && !NonEnglishRegex.IsMatch(message.TextValue)) 
                 {
                     // Translate French and German, reutrn if message is in English
                     Task.Run(() => Translator.TranslateFrDe(playerName, _message, color));
