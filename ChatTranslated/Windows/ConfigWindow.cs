@@ -10,16 +10,13 @@ namespace ChatTranslated.Windows;
 public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
-    private string apiKeyInput = Translator.OPENAI_API_KEY ?? "sk-YOUR-API-KEY";
+    private string apiKeyInput = OPENAI_API_KEY ?? "sk-YOUR-API-KEY";
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
-        ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
+        ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
         ImGuiWindowFlags.NoScrollWithMouse)
     {
-        Size = new Vector2(360, 200);
-        SizeCondition = ImGuiCond.Always;
-
         configuration = Service.configuration;
     }
 
@@ -60,15 +57,46 @@ public class ConfigWindow : Window, IDisposable
         if (configuration.SelectedMode == Mode.OpenAI_API)
         {
             ImGui.Text("OpenAI API Key ");
-            ImGui.InputText("##APIKey", ref apiKeyInput, 256);
+            ImGui.InputText("##APIKey", ref apiKeyInput, 50);
             ImGui.SameLine();
             if (ImGui.Button("Apply"))
             {
-                Translator.OPENAI_API_KEY = apiKeyInput;
+                if (configuration.warned)
+                {
+                    // hope nothing bad happens
+                    OPENAI_API_KEY = apiKeyInput;
+                }
+                else
+                {
+                    ImGui.OpenPopup("Confirmation");
+                }
+            }
+
+            if (ImGui.BeginPopupModal("Confirmation"))
+            {
+                ImGui.Text("Warning: API key will be stored as plain text in plugin configuration, " +
+                           "\nany malware or third party plugins may have access to the key. Proceed?");
+
+                if (ImGui.Button("Yes"))
+                {
+                    configuration.warned = true;
+                    OPENAI_API_KEY = apiKeyInput;
+                    ImGui.CloseCurrentPopup();
+                }
+                ImGui.SameLine();
+                if (ImGui.Button("No"))
+                {
+                    apiKeyInput = "sk-YOUR-API-KEY";
+                    ImGui.CloseCurrentPopup();
+                }
+
+                ImGui.EndPopup();
             }
 
             ImGui.TextColored(new Vector4(1, 0, 0, 1),
-                "Warning: API key is not saved and must be re-entered \nafter reboot for safety reasons.");
+                "Warning: API key stored as plain text in plugin configuration, " +
+                "\nany malware or third party plugins may have access to the key.");
         }
+
     }
 }

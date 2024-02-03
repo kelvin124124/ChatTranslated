@@ -16,7 +16,6 @@ namespace ChatTranslated.Utils
         private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2(HttpClient);
         private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
 
-        internal static string? OPENAI_API_KEY;
 
         private const string DefaultContentType = "application/json";
         private static readonly Regex GPTRegex = new Regex(@"\[TRANSLATED\]\n?([\s\S]*?)\n?\[/TRANSLATED\]", RegexOptions.Compiled);
