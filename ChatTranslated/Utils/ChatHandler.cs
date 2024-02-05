@@ -18,7 +18,7 @@ namespace ChatTranslated.Utils
 
         private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
-        private static readonly Regex JPDomaRegex = new Regex(@"\b(どま|ドマ|どんまい)(です)?[\u3002\uFF01!]*\b", RegexOptions.Compiled);
+        private static readonly Regex JPDomaRegex = new Regex(@"\b(どまい?|ドマ|どんまい)(です)?[\u3002\uFF01!]*\b", RegexOptions.Compiled);
 
         // (uint)type, UIcolor
         private static readonly Dictionary<uint, ushort> ColorDictionary = new()
@@ -86,14 +86,17 @@ namespace ChatTranslated.Utils
 
                 string _message = Sanitize(message.TextValue);
 
+                bool isEnglishChar = !NonEnglishRegex.IsMatch(message.TextValue);
                 // Possible FrDe message
-                if (Service.configuration.TranslateFrDe && !NonEnglishRegex.IsMatch(message.TextValue))
+                if (Service.configuration.TranslateFrDe && isEnglishChar)
                 {
                     // Translate French and German, reutrn if message is in English
                     Task.Run(() => Translator.TranslateFrDe(playerName, _message, color));
                 }
                 else
                 {
+                    if (isEnglishChar) return;
+
                     // likely Japanese
                     // JP players like to use these, so filter them
                     if (JPWelcomeRegex.IsMatch(message.TextValue))

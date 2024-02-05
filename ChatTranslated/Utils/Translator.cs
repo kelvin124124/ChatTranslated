@@ -45,10 +45,12 @@ namespace ChatTranslated.Utils
 
         public static void TranslateFrDe(string sender, string message, ushort color = 1)
         {
+            Service.pluginLog.Info($"TranslatFrDe: {message}");
             try
             {
                 string language = GTranslator.DetectLanguageAsync(message).Result.Name;
-                if (language == "fr" || language == "de")
+                Service.pluginLog.Info($"language: {language}");
+                if (language == "French" || language == "German")
                 {
                     _ = Task.Run(() => Translate(sender, message, color));
                 }
@@ -111,7 +113,7 @@ namespace ChatTranslated.Utils
 
                     if (!response.IsSuccessStatusCode)
                     {
-                        throw new HttpRequestException($"Request to Proxy API failed with status code: {response.StatusCode}\n" +
+                        throw new HttpRequestException($"Request to API failed with status code: {response.StatusCode}\n" +
                             $"{response}");
                     }
 
