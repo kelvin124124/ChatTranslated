@@ -1,3 +1,4 @@
+using Dalamud.Game.Text;
 using GTranslate.Translators;
 using Newtonsoft.Json.Linq;
 using System;
@@ -21,7 +22,7 @@ namespace ChatTranslated.Utils
         private const string DefaultContentType = "application/json";
         private static readonly Regex GPTRegex = new Regex(@"\[TRANSLATED\]\n*([\s\S]*?)\n*\[/TRANSLATED\]", RegexOptions.Compiled);
 
-        public static async Task Translate(string sender, string message, ushort chatType = 1)
+        public static async Task Translate(string sender, string message, XivChatType type = XivChatType.Say)
         {
             string translatedText = message;
 
@@ -39,11 +40,11 @@ namespace ChatTranslated.Utils
 
             if (Service.configuration.ChatIntegration && translatedText.Length < 500)
             {
-                Plugin.OutputChatLine($"[CT] {sender}: {message} || {translatedText}", chatType);
+                Plugin.OutputChatLine($"[CT] {sender}: {message} || {translatedText}", type);
             }
         }
 
-        public static void TranslateFrDe(string sender, string message, ushort color = 1)
+        public static void TranslateFrDe(string sender, string message, XivChatType type = XivChatType.Say)
         {
             Service.pluginLog.Info($"TranslatFrDe: {message}");
             try
@@ -52,7 +53,7 @@ namespace ChatTranslated.Utils
                 Service.pluginLog.Info($"language: {language}");
                 if (language == "French" || language == "German")
                 {
-                    _ = Task.Run(() => Translate(sender, message, color));
+                    _ = Task.Run(() => Translate(sender, message, type));
                 }
             }
             catch (Exception ex)

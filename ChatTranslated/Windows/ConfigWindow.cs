@@ -1,7 +1,9 @@
 using ChatTranslated.Utils;
+using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
+using System.Linq;
 using System.Numerics;
 using static ChatTranslated.Configuration;
 
@@ -33,12 +35,37 @@ public class ConfigWindow : Window, IDisposable
             configuration.Save();
         }
 
+        // Translate language selection
         if (ImGui.Checkbox("Translate French and German", ref _TranslateFrDe))
         {
             configuration.TranslateFrDe = _TranslateFrDe;
             configuration.Save();
         }
         ImGui.Text("    Note: make translations slower.");
+
+        // Translate channel selection
+        // stolen from Linguist 
+        var types = Enum.GetValues<XivChatType>().Skip(4);
+
+        foreach (var type in types)
+        {
+            var typeEnable = Service.configuration.ChatTypes.Contains(type);
+            if (ImGui.Checkbox(type.ToString(), ref typeEnable))
+            {
+                if (typeEnable)
+                {
+                    if (!Service.configuration.ChatTypes.Contains(type))
+                        Service.configuration.ChatTypes.Add(type);
+                }
+                else
+                {
+                    if (Service.configuration.ChatTypes.Contains(type))
+                        Service.configuration.ChatTypes.Remove(type);
+                }
+
+                Service.configuration.Save();
+            }
+        }
 
         // Mode selection
         ImGui.AlignTextToFramePadding();

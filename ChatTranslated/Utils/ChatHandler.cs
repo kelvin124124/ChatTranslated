@@ -29,15 +29,14 @@ namespace ChatTranslated.Utils
 
         private void OnChatMessage(XivChatType type, uint _, ref SeString sender, ref SeString message, ref bool _1)
         {
-            ushort chatType = (ushort)type;
 
-            if ((10 <= chatType && chatType <= 15) || (chatType == 30))
+            if (Service.configuration.ChatTypes.Contains(type))
             {
                 var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
                 string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
 
                 // fix outgoing tell messages
-                if (chatType == 13 && Service.clientState?.LocalPlayer != null)
+                if (type == XivChatType.TellOutgoing && Service.clientState?.LocalPlayer != null)
                 {
                     playerName = Sanitize(Service.clientState.LocalPlayer.Name.ToString());
                 }
@@ -77,7 +76,7 @@ namespace ChatTranslated.Utils
                 if (Service.configuration.TranslateFrDe && isEnglishChar)
                 {
                     // Translate French and German, reutrn if message is in English
-                    Task.Run(() => Translator.TranslateFrDe(playerName, _message, chatType));
+                    Task.Run(() => Translator.TranslateFrDe(playerName, _message, type));
                 }
                 else
                 {
@@ -90,7 +89,7 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug($"Welcome message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
                         if (Service.configuration.ChatIntegration)
-                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || Let's do it!", chatType);
+                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || Let's do it!", type);
                         return;
                     }
                     if (JPByeRegex.IsMatch(message.TextValue))
@@ -98,7 +97,7 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug($"Bye message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
                         if (Service.configuration.ChatIntegration)
-                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || Good game!", chatType);
+                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || Good game!", type);
                         return;
                     }
                     if (JPDomaRegex.IsMatch(message.TextValue))
@@ -106,12 +105,12 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug($"Doma message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: It's okay!");
                         if (Service.configuration.ChatIntegration)
-                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || It's okay!", chatType);
+                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || It's okay!", type);
                         return;
                     }
 
                     // Normal translate operation
-                    Task.Run(() => Translator.Translate(playerName, _message, chatType));
+                    Task.Run(() => Translator.Translate(playerName, _message, type));
                 }
             }
         }

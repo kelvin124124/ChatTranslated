@@ -1,6 +1,8 @@
 using ChatTranslated.Utils;
 using Dalamud.Configuration;
+using Dalamud.Game.Text;
 using System;
+using System.Collections.Generic;
 
 namespace ChatTranslated
 {
@@ -17,6 +19,13 @@ namespace ChatTranslated
 
         public bool ChatIntegration { get; set; } = true;
         public bool TranslateFrDe { get; set; } = false;
+
+        public ICollection<XivChatType> ChatTypes { get; set; } = new List<XivChatType>
+        {
+            XivChatType.CrossParty,
+            XivChatType.Party,
+            XivChatType.Alliance
+        };
 
         public static string OPENAI_API = "https://api.openai.com/v1/chat/completions";
         internal static string? OPENAI_API_KEY;
