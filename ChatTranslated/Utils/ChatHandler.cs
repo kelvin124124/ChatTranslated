@@ -29,6 +29,8 @@ namespace ChatTranslated.Utils
 
         private void OnChatMessage(XivChatType type, uint _, ref SeString sender, ref SeString message, ref bool _1)
         {
+            if (sender.TextValue.Contains("[CT]"))
+                return;
 
             if (Service.configuration.ChatTypes.Contains(type))
             {
@@ -89,7 +91,7 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug($"Welcome message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
                         if (Service.configuration.ChatIntegration)
-                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || Let's do it!", type);
+                            Plugin.OutputChatLine(playerName, $"{message} || Let's do it!", type);
                         return;
                     }
                     if (JPByeRegex.IsMatch(message.TextValue))
@@ -97,7 +99,7 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug($"Bye message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
                         if (Service.configuration.ChatIntegration)
-                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || Good game!", type);
+                            Plugin.OutputChatLine(playerName, $"{message} || Good game!", type);
                         return;
                     }
                     if (JPDomaRegex.IsMatch(message.TextValue))
@@ -105,7 +107,7 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug($"Doma message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: It's okay!");
                         if (Service.configuration.ChatIntegration)
-                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || It's okay!", type);
+                            Plugin.OutputChatLine(playerName, $"{message} || It's okay!", type);
                         return;
                     }
 

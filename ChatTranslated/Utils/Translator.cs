@@ -40,7 +40,7 @@ namespace ChatTranslated.Utils
 
             if (Service.configuration.ChatIntegration && translatedText.Length < 500)
             {
-                Plugin.OutputChatLine($"[CT] {sender}: {message} || {translatedText}", type);
+                Plugin.OutputChatLine(sender, $"{message} || {translatedText}", type);
             }
         }
 
