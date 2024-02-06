@@ -20,18 +20,6 @@ namespace ChatTranslated.Utils
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPDomaRegex = new Regex(@"\b(どまい?|ドマ|どんまい)(です)?[\u3002\uFF01!]*\b", RegexOptions.Compiled);
 
-        // (uint)type, UIcolor
-        private static readonly Dictionary<uint, ushort> ColorDictionary = new()
-        {
-            { 10, 1 }, // say
-            { 11, 577 }, // shout
-            { 12, 508 }, // incoming tell
-            { 13, 508 }, // outgoing tell
-            { 14, 37 }, // party
-            { 15, 577 }, // alliance
-            { 30, 535 }, // yell
-        };
-
         private readonly Dictionary<string, DateTime> lastMessageTime = new Dictionary<string, DateTime>();
 
         public ChatHandler()
@@ -41,7 +29,7 @@ namespace ChatTranslated.Utils
 
         private void OnChatMessage(XivChatType type, uint _, ref SeString sender, ref SeString message, ref bool _1)
         {
-            uint chatType = (uint)type;
+            ushort chatType = (ushort)type;
 
             if ((10 <= chatType && chatType <= 15) || (chatType == 30))
             {
@@ -54,8 +42,6 @@ namespace ChatTranslated.Utils
                     playerName = Sanitize(Service.clientState.LocalPlayer.Name.ToString());
                 }
 
-                ushort color = ColorDictionary.TryGetValue(chatType, out var key) ? key : (ushort)1;
-
                 // return if message is entirely auto-translate
                 // return if message is from self
                 if (AutoTranslateRegex.IsMatch(message.TextValue)
@@ -67,7 +53,7 @@ namespace ChatTranslated.Utils
                 };
 
                 // Filter macros
-                var now  = DateTime.Now;
+                var now = DateTime.Now;
                 if (lastMessageTime.TryGetValue(playerName, out var lastMsgTime))
                 {
                     var interval = (now - lastMsgTime).TotalMilliseconds;
@@ -79,7 +65,7 @@ namespace ChatTranslated.Utils
                         return;
                     }
                 }
-                else 
+                else
                 {
                     lastMessageTime[playerName] = now;
                 }
@@ -91,7 +77,7 @@ namespace ChatTranslated.Utils
                 if (Service.configuration.TranslateFrDe && isEnglishChar)
                 {
                     // Translate French and German, reutrn if message is in English
-                    Task.Run(() => Translator.TranslateFrDe(playerName, _message, color));
+                    Task.Run(() => Translator.TranslateFrDe(playerName, _message, chatType));
                 }
                 else
                 {
@@ -104,7 +90,7 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug($"Welcome message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
                         if (Service.configuration.ChatIntegration)
-                            Plugin.OutputChatLine($"{playerName}: {message} || Let's do it!", color);
+                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || Let's do it!", chatType);
                         return;
                     }
                     if (JPByeRegex.IsMatch(message.TextValue))
@@ -112,7 +98,7 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug($"Bye message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
                         if (Service.configuration.ChatIntegration)
-                            Plugin.OutputChatLine($"{playerName}: {message} || Good game!", color);
+                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || Good game!", chatType);
                         return;
                     }
                     if (JPDomaRegex.IsMatch(message.TextValue))
@@ -120,12 +106,12 @@ namespace ChatTranslated.Utils
                         Service.pluginLog.Debug($"Doma message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: It's okay!");
                         if (Service.configuration.ChatIntegration)
-                            Plugin.OutputChatLine($"{playerName}: {message} || It's okay!", color);
+                            Plugin.OutputChatLine($"[CT] {playerName}: {message} || It's okay!", chatType);
                         return;
                     }
 
                     // Normal translate operation
-                    Task.Run(() => Translator.Translate(playerName, _message, color));
+                    Task.Run(() => Translator.Translate(playerName, _message, chatType));
                 }
             }
         }

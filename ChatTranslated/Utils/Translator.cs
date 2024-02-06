@@ -21,7 +21,7 @@ namespace ChatTranslated.Utils
         private const string DefaultContentType = "application/json";
         private static readonly Regex GPTRegex = new Regex(@"\[TRANSLATED\]\n*([\s\S]*?)\n*\[/TRANSLATED\]", RegexOptions.Compiled);
 
-        public static async Task Translate(string sender, string message, ushort color = 1)
+        public static async Task Translate(string sender, string message, ushort chatType = 1)
         {
             string translatedText = message;
 
@@ -39,7 +39,7 @@ namespace ChatTranslated.Utils
 
             if (Service.configuration.ChatIntegration && translatedText.Length < 500)
             {
-                Plugin.OutputChatLine($"{sender}: {message} || {translatedText}", color);
+                Plugin.OutputChatLine($"[CT] {sender}: {message} || {translatedText}", chatType);
             }
         }
 

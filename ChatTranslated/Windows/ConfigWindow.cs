@@ -80,9 +80,9 @@ public class ConfigWindow : Window, IDisposable
                 ImGui.Separator();
 
                 float windowWidth = ImGui.GetWindowWidth();
-                float buttonSize = ImGui.CalcTextSize("Yes").X + ImGui.GetStyle().FramePadding.X * 2;
+                float buttonSize = ImGui.CalcTextSize("Yes").X + (ImGui.GetStyle().FramePadding.X * 2);
 
-                ImGui.SetCursorPosX((windowWidth - buttonSize * 2 - ImGui.GetStyle().ItemSpacing.X) * 0.5f);
+                ImGui.SetCursorPosX((windowWidth - (buttonSize * 2) - ImGui.GetStyle().ItemSpacing.X) * 0.5f);
                 if (ImGui.Button("Yes", new Vector2(buttonSize, 0)))
                 {
                     configuration.warned = true;
