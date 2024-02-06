@@ -15,7 +15,7 @@ namespace ChatTranslated
         }
         public Mode SelectedMode { get; set; } = Mode.MachineTranslate;
 
-        public bool ChatIntergration { get; set; } = true;
+        public bool ChatIntegration { get; set; } = true;
         public bool TranslateFrDe { get; set; } = false;
 
         public static string OPENAI_API = "https://api.openai.com/v1/chat/completions";

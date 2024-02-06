@@ -37,7 +37,7 @@ namespace ChatTranslated.Utils
 
             Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
 
-            if (Service.configuration.ChatIntergration && translatedText.Length < 500)
+            if (Service.configuration.ChatIntegration && translatedText.Length < 500)
             {
                 Plugin.OutputChatLine($"{sender}: {message} || {translatedText}", color);
             }

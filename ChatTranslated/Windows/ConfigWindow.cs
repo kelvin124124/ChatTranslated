@@ -25,11 +25,11 @@ public class ConfigWindow : Window, IDisposable
     public override void Draw()
     {
         // Enabled
-        bool _ChatIntergration = configuration.ChatIntergration;
+        bool _ChatIntegration = configuration.ChatIntegration;
         bool _TranslateFrDe = configuration.TranslateFrDe;
-        if (ImGui.Checkbox("Chat Intergration", ref _ChatIntergration))
+        if (ImGui.Checkbox("Chat Integration", ref _ChatIntegration))
         {
-            configuration.ChatIntergration = _ChatIntergration;
+            configuration.ChatIntegration = _ChatIntegration;
             configuration.Save();
         }
 

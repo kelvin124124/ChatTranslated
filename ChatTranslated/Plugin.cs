@@ -97,11 +97,11 @@ namespace ChatTranslated
                     Service.configWindow.IsOpen = true;
                     return;
                 case "on":
-                    Service.configuration.ChatIntergration = true;
+                    Service.configuration.ChatIntegration = true;
                     Service.configuration.Save();
                     return;
                 case "off":
-                    Service.configuration.ChatIntergration = false;
+                    Service.configuration.ChatIntegration = false;
                     Service.configuration.Save();
                     return;
             }

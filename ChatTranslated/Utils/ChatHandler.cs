@@ -103,7 +103,7 @@ namespace ChatTranslated.Utils
                     {
                         Service.pluginLog.Debug($"Welcome message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: Let's do it!");
-                        if (Service.configuration.ChatIntergration)
+                        if (Service.configuration.ChatIntegration)
                             Plugin.OutputChatLine($"{playerName}: {message} || Let's do it!", color);
                         return;
                     }
@@ -111,7 +111,7 @@ namespace ChatTranslated.Utils
                     {
                         Service.pluginLog.Debug($"Bye message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: Good game!");
-                        if (Service.configuration.ChatIntergration)
+                        if (Service.configuration.ChatIntegration)
                             Plugin.OutputChatLine($"{playerName}: {message} || Good game!", color);
                         return;
                     }
@@ -119,7 +119,7 @@ namespace ChatTranslated.Utils
                     {
                         Service.pluginLog.Debug($"Doma message filtered.");
                         Service.mainWindow.PrintToOutput($"{playerName}: It's okay!");
-                        if (Service.configuration.ChatIntergration)
+                        if (Service.configuration.ChatIntegration)
                             Plugin.OutputChatLine($"{playerName}: {message} || It's okay!", color);
                         return;
                     }
