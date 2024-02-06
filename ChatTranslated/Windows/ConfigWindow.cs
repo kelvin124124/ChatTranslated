@@ -1,8 +1,10 @@
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
+using Dalamud.Interface.Utility.Table;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using static ChatTranslated.Configuration;
@@ -16,9 +18,9 @@ public class ConfigWindow : Window, IDisposable
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
-        ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
-        ImGuiWindowFlags.NoScrollWithMouse)
+        ImGuiWindowFlags.AlwaysAutoResize)
     {
+        Size = new Vector2(400, 500);
         configuration = Service.configuration;
     }
 
@@ -43,16 +45,41 @@ public class ConfigWindow : Window, IDisposable
         }
         ImGui.Text("    Note: make translations slower.");
 
-        // Translate channel selection
-        // stolen from Linguist 
-        var types = Enum.GetValues<XivChatType>().Skip(4);
 
-        foreach (var type in types)
+        // Translate channel selection
+        if (ImGui.CollapsingHeader("Channel Selection", ImGuiTreeNodeFlags.None))
         {
-            var typeEnable = Service.configuration.ChatTypes.Contains(type);
-            if (ImGui.Checkbox(type.ToString(), ref typeEnable))
+            ImGui.Columns(3, "chatTypeColumns", false);
+
+            ImGui.SetColumnWidth(0, 125);
+            ImGui.SetColumnWidth(1, 100);
+            ImGui.SetColumnWidth(2, 175);
+
+            DrawChatTypeGroup(Service.configuration.genericChatTypes);
+            ImGui.NextColumn();
+
+            DrawChatTypeGroup(Service.configuration.lsChatTypes);
+            ImGui.NextColumn();
+
+            DrawChatTypeGroup(Service.configuration.cwlsChatTypes);
+
+            ImGui.Columns(1);
+        }
+
+        void DrawChatTypeGroup(IEnumerable<XivChatType> chatTypes)
+        {
+            foreach (var type in chatTypes)
             {
-                if (typeEnable)
+                UpdateChannelConfig(type);
+            }
+        }
+
+        void UpdateChannelConfig(XivChatType type)
+        {
+            var typeEnabled = Service.configuration.ChatTypes.Contains(type);
+            if (ImGui.Checkbox(type.ToString(), ref typeEnabled))
+            {
+                if (typeEnabled)
                 {
                     if (!Service.configuration.ChatTypes.Contains(type))
                         Service.configuration.ChatTypes.Add(type);

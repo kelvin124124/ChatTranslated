@@ -28,7 +28,8 @@ public class MainWindow : Window, IDisposable
     {
         // Output text field
         ImGui.BeginChild("outputField", new Vector2(-1, -30), false, ImGuiWindowFlags.HorizontalScrollbar);
-        ImGui.InputTextMultiline("##output", ref outputText, 50000, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
+        //ImGui.InputTextMultiline("##output", ref outputText, 50000, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
+        ImGui.TextWrapped(outputText);
         ImGui.SetScrollHereY(1.0f); // Scroll to bottom
         ImGui.EndChild();
 
