@@ -76,7 +76,7 @@ namespace ChatTranslated
             {
                 Type = type,
                 Name = "[CT] " + sender,
-                Message = message
+                Message = new SeStringBuilder().AddUiForeground(50).Append(message).Build()
             });
         }
 
