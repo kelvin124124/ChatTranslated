@@ -14,8 +14,8 @@ public class ConfigWindow : Window, IDisposable
     private readonly Configuration configuration;
     private string apiKeyInput = OPENAI_API_KEY ?? "sk-YOUR-API-KEY";
 
-    public static readonly List<XivChatType> genericChatTypes =
-    [
+    public static readonly List<XivChatType> genericChatTypes = new List<XivChatType>
+    {
         XivChatType.Say,
         XivChatType.Shout,
         XivChatType.TellIncoming,
@@ -26,9 +26,9 @@ public class ConfigWindow : Window, IDisposable
         XivChatType.Yell,
         XivChatType.CrossParty,
         XivChatType.PvPTeam,
-    ];
-    public static readonly List<XivChatType> lsChatTypes =
-    [
+    };
+    public static readonly List<XivChatType> lsChatTypes = new List<XivChatType>
+    {
         XivChatType.Ls1,
         XivChatType.Ls2,
         XivChatType.Ls3,
@@ -37,9 +37,9 @@ public class ConfigWindow : Window, IDisposable
         XivChatType.Ls6,
         XivChatType.Ls7,
         XivChatType.Ls8,
-    ];
-    public static readonly List<XivChatType> cwlsChatTypes =
-    [
+    };
+    public static readonly List<XivChatType> cwlsChatTypes = new List<XivChatType>
+    {
         XivChatType.CrossLinkShell1,
         XivChatType.CrossLinkShell2,
         XivChatType.CrossLinkShell3,
@@ -48,7 +48,7 @@ public class ConfigWindow : Window, IDisposable
         XivChatType.CrossLinkShell6,
         XivChatType.CrossLinkShell7,
         XivChatType.CrossLinkShell8
-    ];
+    };
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
