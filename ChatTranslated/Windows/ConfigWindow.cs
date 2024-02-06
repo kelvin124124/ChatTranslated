@@ -1,11 +1,9 @@
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
-using Dalamud.Interface.Utility.Table;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Numerics;
 using static ChatTranslated.Configuration;
 
@@ -15,6 +13,42 @@ public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
     private string apiKeyInput = OPENAI_API_KEY ?? "sk-YOUR-API-KEY";
+
+    public static readonly List<XivChatType> genericChatTypes =
+    [
+        XivChatType.Say,
+        XivChatType.Shout,
+        XivChatType.TellIncoming,
+        XivChatType.Party,
+        XivChatType.Alliance,
+        XivChatType.FreeCompany,
+        XivChatType.NoviceNetwork,
+        XivChatType.Yell,
+        XivChatType.CrossParty,
+        XivChatType.PvPTeam,
+    ];
+    public static readonly List<XivChatType> lsChatTypes =
+    [
+        XivChatType.Ls1,
+        XivChatType.Ls2,
+        XivChatType.Ls3,
+        XivChatType.Ls4,
+        XivChatType.Ls5,
+        XivChatType.Ls6,
+        XivChatType.Ls7,
+        XivChatType.Ls8,
+    ];
+    public static readonly List<XivChatType> cwlsChatTypes =
+    [
+        XivChatType.CrossLinkShell1,
+        XivChatType.CrossLinkShell2,
+        XivChatType.CrossLinkShell3,
+        XivChatType.CrossLinkShell4,
+        XivChatType.CrossLinkShell5,
+        XivChatType.CrossLinkShell6,
+        XivChatType.CrossLinkShell7,
+        XivChatType.CrossLinkShell8
+    ];
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
@@ -55,13 +89,13 @@ public class ConfigWindow : Window, IDisposable
             ImGui.SetColumnWidth(1, 100);
             ImGui.SetColumnWidth(2, 175);
 
-            DrawChatTypeGroup(Service.configuration.genericChatTypes);
+            DrawChatTypeGroup(genericChatTypes);
             ImGui.NextColumn();
 
-            DrawChatTypeGroup(Service.configuration.lsChatTypes);
+            DrawChatTypeGroup(lsChatTypes);
             ImGui.NextColumn();
 
-            DrawChatTypeGroup(Service.configuration.cwlsChatTypes);
+            DrawChatTypeGroup(cwlsChatTypes);
 
             ImGui.Columns(1);
         }
