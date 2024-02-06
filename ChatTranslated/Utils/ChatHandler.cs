@@ -117,7 +117,7 @@ namespace ChatTranslated.Utils
             }
         }
 
-        private static string Sanitize(string input)
+        public string Sanitize(string input)
         {
             return SpecialCharacterRegex.Replace(input, "");
         }
