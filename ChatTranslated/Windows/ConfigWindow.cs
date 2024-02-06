@@ -54,7 +54,7 @@ public class ConfigWindow : Window, IDisposable
         "Chat Translated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Size = new Vector2(400, 500);
+        Size = new Vector2(400, 300);
         configuration = Service.configuration;
     }
 
