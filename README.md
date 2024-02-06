@@ -13,4 +13,5 @@
 ```/pchat off``` to turn off chat integration
 
 ## To-do(s) 🎯 
-Provide context for better translation when using OpenAI API
+Provide context for better translation when using OpenAI API  
+Integrate with other chat plugins for smoother experience  
