@@ -12,6 +12,8 @@ namespace ChatTranslated.Windows;
 public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
+
+    private readonly string[] languages = { "English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)" };
     private string apiKeyInput = OPENAI_API_KEY ?? "sk-YOUR-API-KEY";
 
     public static readonly List<XivChatType> genericChatTypes = new List<XivChatType>
@@ -126,6 +128,20 @@ public class ConfigWindow : Window, IDisposable
 
                 Service.configuration.Save();
             }
+        }
+
+        // Target language selection
+        ImGui.AlignTextToFramePadding();
+        ImGui.Text("Language");
+        ImGui.SameLine();
+
+        int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedLanguage);
+        if (currentLanguageIndex == -1) currentLanguageIndex = 0;
+
+        if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
+        {
+            Service.configuration.SelectedLanguage = languages[currentLanguageIndex];
+            configuration.Save();
         }
 
         // Mode selection

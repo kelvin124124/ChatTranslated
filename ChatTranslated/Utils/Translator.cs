@@ -67,7 +67,7 @@ namespace ChatTranslated.Utils
         {
             try
             {
-                var result = await GTranslator.TranslateAsync(message, "English");
+                var result = await GTranslator.TranslateAsync(message, Service.configuration.SelectedLanguage);
                 return result.Translation;
             }
             catch (Exception GTex)
@@ -75,7 +75,7 @@ namespace ChatTranslated.Utils
                 Service.pluginLog.Info($"Google Translate: {GTex.Message}, falling back to Bing Translate.");
                 try
                 {
-                    var result = await BingTranslator.TranslateAsync(message, "English");
+                    var result = await BingTranslator.TranslateAsync(message, Service.configuration.SelectedLanguage);
                     return result.Translation;
                 }
                 catch (Exception BTex)

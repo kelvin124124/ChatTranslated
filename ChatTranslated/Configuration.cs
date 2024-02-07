@@ -15,6 +15,9 @@ namespace ChatTranslated
             MachineTranslate,
             OpenAI_API
         }
+
+        internal string SelectedLanguage = "English";
+
         public Mode SelectedMode { get; set; } = Mode.MachineTranslate;
 
         public bool ChatIntegration { get; set; } = true;
@@ -35,7 +38,7 @@ namespace ChatTranslated
         internal static string MODEL = "gpt-3.5-turbo";
         internal static string PROMPT = "Process this MMORPG chat message from FFXIV:\n" +
             "1. Determine the language.\n" +
-            "2. Translate into English.\n" +
+            $"2. Translate into {Service.configuration.SelectedLanguage}.\n" +
             "3. Enclose the translation in [TRANSLATED] AND [/TRANSLATED].";
 
         public void Save()
