@@ -80,6 +80,14 @@ namespace ChatTranslated
             });
         }
 
+        public static void OutputChatLine(SeString message)
+        {
+            SeStringBuilder sb = new();
+            sb.AddUiForeground("[CT] ", 58).Append(message);
+
+            Service.chatGui.Print(new XivChatEntry { Message = sb.BuiltString });
+        }
+
         public void Dispose()
         {
             WindowSystem?.RemoveAllWindows();

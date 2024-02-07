@@ -25,7 +25,7 @@ public class ConfigWindow : Window, IDisposable
         XivChatType.NoviceNetwork,
         XivChatType.Yell,
         XivChatType.CrossParty,
-        XivChatType.PvPTeam,
+        XivChatType.PvPTeam
     };
     public static readonly List<XivChatType> lsChatTypes = new List<XivChatType>
     {
@@ -36,7 +36,7 @@ public class ConfigWindow : Window, IDisposable
         XivChatType.Ls5,
         XivChatType.Ls6,
         XivChatType.Ls7,
-        XivChatType.Ls8,
+        XivChatType.Ls8
     };
     public static readonly List<XivChatType> cwlsChatTypes = new List<XivChatType>
     {
@@ -194,6 +194,5 @@ public class ConfigWindow : Window, IDisposable
                 "\nAPI key stored as plain text in plugin configuration, " +
                 "\nany malware or third party plugins may have access to \nthe key.");
         }
-
     }
 }
