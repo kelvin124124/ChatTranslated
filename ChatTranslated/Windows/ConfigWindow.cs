@@ -167,8 +167,6 @@ public class ConfigWindow : Window, IDisposable
             {
                 if (configuration.warned)
                 {
-                    Plugin.OutputChatLine(configuration.OpenAI_API_Key);
-                    Plugin.OutputChatLine(apiKeyInput);
                     // hope nothing bad happens
                     configuration.OpenAI_API_Key = apiKeyInput;
                     configuration.Save();
