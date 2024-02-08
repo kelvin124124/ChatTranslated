@@ -19,7 +19,6 @@ namespace ChatTranslated.Utils
         private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
 
         private const string DefaultContentType = "application/json";
-        private static readonly Regex GPTRegex = new Regex("\"\"\"\\n*([\\s\\S]*?)\\n*\"\"\"", RegexOptions.Compiled);
 
         public static async Task TranslateChat(string sender, string message, XivChatType type = XivChatType.Say)
         {
@@ -103,16 +102,13 @@ namespace ChatTranslated.Utils
             var requestData = new
             {
                 model = MODEL,
-                max_tokens = 800,
+                max_tokens = 300,
                 messages = new[]
                 {
                     new
                     {
                         role = "system", content =
-                            "Process this MMORPG chat message from FFXIV:\n" +
-                            "1. Determine the language.\n" +
-                            "2. Translate into " + $"{targetLanguage}.\n" +
-                            "3. Enclose the translation within triple-quotes."
+                            $"Translate this MMORPG chat message from FFXIV to {targetLanguage}."
                     },
                     new { role = "user", content = message }
                 }
@@ -130,8 +126,8 @@ namespace ChatTranslated.Utils
                 var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
                 var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var match = GPTRegex.Match(JObject.Parse(jsonResponse)["choices"]![0]!["message"]!["content"]!.ToString()).Groups[1].Value.Trim();
-                return match;
+                var translated = JObject.Parse(jsonResponse)["choices"]![0]!["message"]!["content"]!.ToString().Trim();
+                return translated;
             }
             catch (Exception ex)
             {
