@@ -31,10 +31,11 @@ namespace ChatTranslated.Utils
                 return;
 
             string playerName = GetPlayerName(sender, type);
-            string sanitizedMessage = Sanitize(message.TextValue);
 
-            if (ShouldFilterMessage(playerName, sanitizedMessage, type))
+            if (ShouldFilterMessage(playerName, message.TextValue, type))
                 return;
+
+            string sanitizedMessage = Sanitize(message.TextValue);
 
             ProcessMessage(playerName, sanitizedMessage, type);
         }

@@ -112,27 +112,27 @@ public class ConfigWindow : Window, IDisposable
 
         void UpdateChannelConfig(XivChatType type)
         {
-            var typeEnabled = Service.configuration.ChatTypes.Contains(type);
+            var typeEnabled = configuration.ChatTypes.Contains(type);
             if (ImGui.Checkbox(type.ToString(), ref typeEnabled))
             {
                 if (typeEnabled)
                 {
-                    if (!Service.configuration.ChatTypes.Contains(type))
-                        Service.configuration.ChatTypes.Add(type);
+                    if (!configuration.ChatTypes.Contains(type))
+                        configuration.ChatTypes.Add(type);
                 }
                 else
                 {
-                    if (Service.configuration.ChatTypes.Contains(type))
-                        Service.configuration.ChatTypes.Remove(type);
+                    if (configuration.ChatTypes.Contains(type))
+                        configuration.ChatTypes.Remove(type);
                 }
 
-                Service.configuration.Save();
+                configuration.Save();
             }
         }
 
         // Target language selection
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Language");
+        ImGui.Text("Translate to");
         ImGui.SameLine();
 
         int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedChatLanguage);
@@ -140,7 +140,7 @@ public class ConfigWindow : Window, IDisposable
 
         if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
         {
-            Service.configuration.SelectedChatLanguage = languages[currentLanguageIndex];
+            configuration.SelectedChatLanguage = languages[currentLanguageIndex];
             configuration.Save();
         }
 

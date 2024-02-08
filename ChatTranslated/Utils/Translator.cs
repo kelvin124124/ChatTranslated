@@ -10,8 +10,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static ChatTranslated.Configuration;
 
-// usings
-
 namespace ChatTranslated.Utils
 {
     internal class Translator

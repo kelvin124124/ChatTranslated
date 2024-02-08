@@ -19,7 +19,7 @@ public class MainWindow : Window, IDisposable
         ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
         ImGuiWindowFlags.NoScrollWithMouse)
     {
-        Size = new Vector2(360, 200);
+        Size = new Vector2(360, 220);
         SizeCondition = ImGuiCond.Always;
     }
 
@@ -31,7 +31,7 @@ public class MainWindow : Window, IDisposable
     public override void Draw()
     {
         // Output text field
-        ImGui.BeginChild("outputField", new Vector2(-1, -30), false, ImGuiWindowFlags.HorizontalScrollbar);
+        ImGui.BeginChild("outputField", new Vector2(-1, -55), false, ImGuiWindowFlags.HorizontalScrollbar);
         ImGui.InputTextMultiline("##output", ref outputText, 50000, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
         ImGui.SetScrollHereY(1.0f); // Scroll to bottom
         ImGui.EndChild();
@@ -41,7 +41,7 @@ public class MainWindow : Window, IDisposable
         // Input text field
         ImGui.AlignTextToFramePadding();
 
-        int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedChatLanguage);
+        int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedMainWindowLanguage);
         if (currentLanguageIndex == -1) currentLanguageIndex = 0;
 
         if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
@@ -51,8 +51,8 @@ public class MainWindow : Window, IDisposable
         }
 
         ImGui.InputText("##input", ref inputText, 100);
-        ImGui.SameLine();
 
+        ImGui.SameLine();
         if (ImGui.Button("Translate"))
         {
             ProcessInput(inputText);
