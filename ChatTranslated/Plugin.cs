@@ -67,7 +67,7 @@ namespace ChatTranslated
         private void TranslatePF(GameObjectContextMenuItemSelectedArgs args)
         {
             string message = Service.chatHandler.Sanitize(args?.Text?.ToString() ?? "null");
-            Task.Run(() => Translator.Translate("PF", message));
+            Task.Run(() => Translator.TranslateChat("PF", message));
         }
 
         public static void OutputChatLine(string sender, string message, XivChatType type = XivChatType.Say)

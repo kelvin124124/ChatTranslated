@@ -135,12 +135,12 @@ public class ConfigWindow : Window, IDisposable
         ImGui.Text("Language");
         ImGui.SameLine();
 
-        int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedLanguage);
+        int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedChatLanguage);
         if (currentLanguageIndex == -1) currentLanguageIndex = 0;
 
         if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
         {
-            Service.configuration.SelectedLanguage = languages[currentLanguageIndex];
+            Service.configuration.SelectedChatLanguage = languages[currentLanguageIndex];
             configuration.Save();
         }
 

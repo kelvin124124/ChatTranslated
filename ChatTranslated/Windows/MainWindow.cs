@@ -1,12 +1,16 @@
+using ChatTranslated.Utils;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace ChatTranslated.Windows;
 
 public class MainWindow : Window, IDisposable
 {
+    private readonly string[] languages = { "Japanese", "English", "German", "French" };
+
     internal string outputText = ""; // Holds the text for the output field
     internal string inputText = "";  // Holds the text for the input field
 
@@ -34,30 +38,36 @@ public class MainWindow : Window, IDisposable
 
         ImGui.Separator();
 
-        // Input text field with send button
+        // Input text field
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Input:");
-        ImGui.SameLine();
+
+        int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedChatLanguage);
+        if (currentLanguageIndex == -1) currentLanguageIndex = 0;
+
+        if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
+        {
+            Service.configuration.SelectedMainWindowLanguage = languages[currentLanguageIndex];
+            Service.configuration.Save();
+        }
 
         ImGui.InputText("##input", ref inputText, 100);
-        inputText = "currently does nothing";
         ImGui.SameLine();
 
-        if (ImGui.Button("Send"))
+        if (ImGui.Button("Translate"))
         {
             ProcessInput(inputText);
-            inputText = ""; // Clear the input field after sending
+            inputText = "";
         }
     }
 
-    private void ProcessInput(string input)
+    private static void ProcessInput(string input)
     {
-        // Do nothing (for now)
+        Task.Run(() => Translator.TranslateMainWindow(input));
     }
 
     public void PrintToOutput(string message)
     {
         // Append the given text to the output field
-        outputText = outputText + $"[{DateTime.Now.ToString("HH:mm")}] " + message + "\n";
+        outputText = outputText + $"[{DateTime.Now:HH:mm}] " + message + "\n";
     }
 }
