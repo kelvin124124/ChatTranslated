@@ -93,7 +93,7 @@ namespace ChatTranslated.Utils
 
         private static async Task<string> OpenAITranslate(string message, string targetLanguage)
         {
-            if (string.IsNullOrEmpty(OPENAI_API_KEY))
+            if (string.IsNullOrEmpty(Service.configuration.OpenAI_API_Key))
             {
                 Service.pluginLog.Warning("Warn: API key is null, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
@@ -118,7 +118,7 @@ namespace ChatTranslated.Utils
             var request = new HttpRequestMessage(HttpMethod.Post, OPENAI_API)
             {
                 Content = content,
-                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {OPENAI_API_KEY}" } }
+                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {Service.configuration.OpenAI_API_Key}" } }
             };
 
             try

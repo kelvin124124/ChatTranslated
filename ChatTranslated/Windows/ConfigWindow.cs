@@ -14,7 +14,7 @@ public class ConfigWindow : Window, IDisposable
     private readonly Configuration configuration;
 
     private readonly string[] languages = { "English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)" };
-    private string apiKeyInput = OPENAI_API_KEY ?? "sk-YOUR-API-KEY";
+    private string apiKeyInput = Service.configuration.OpenAI_API_Key;
 
     public static readonly List<XivChatType> genericChatTypes = new List<XivChatType>
     {
@@ -167,8 +167,11 @@ public class ConfigWindow : Window, IDisposable
             {
                 if (configuration.warned)
                 {
+                    Plugin.OutputChatLine(configuration.OpenAI_API_Key);
+                    Plugin.OutputChatLine(apiKeyInput);
                     // hope nothing bad happens
-                    OPENAI_API_KEY = apiKeyInput;
+                    configuration.OpenAI_API_Key = apiKeyInput;
+                    configuration.Save();
                 }
                 else
                 {
@@ -190,7 +193,7 @@ public class ConfigWindow : Window, IDisposable
                 if (ImGui.Button("Yes", new Vector2(buttonSize, 0)))
                 {
                     configuration.warned = true;
-                    OPENAI_API_KEY = apiKeyInput;
+                    configuration.OpenAI_API_Key = apiKeyInput;
                     ImGui.CloseCurrentPopup();
                 }
 

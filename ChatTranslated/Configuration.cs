@@ -16,8 +16,8 @@ namespace ChatTranslated
             OpenAI_API
         }
 
-        internal string SelectedChatLanguage = "English";
-        internal string SelectedMainWindowLanguage = "Japanese";
+        public string SelectedChatLanguage = "English";
+        public string SelectedMainWindowLanguage = "Japanese";
 
         public Mode SelectedMode { get; set; } = Mode.MachineTranslate;
 
@@ -32,7 +32,7 @@ namespace ChatTranslated
         };
 
         public static string OPENAI_API = "https://api.openai.com/v1/chat/completions";
-        internal static string? OPENAI_API_KEY;
+        public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
         public bool warned { get; set; } = false;
 
         // gpt-3.5-turbo or gpt-4 / gpt-4-turbo (VERY expensive)
