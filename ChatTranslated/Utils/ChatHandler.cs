@@ -43,10 +43,10 @@ namespace ChatTranslated.Utils
         private string GetPlayerName(SeString sender, XivChatType type)
         {
             if (type == XivChatType.TellOutgoing && Service.clientState?.LocalPlayer != null)
-                return Sanitize(Service.clientState.LocalPlayer.Name.ToString());
+                return Service.clientState.LocalPlayer.Name.ToString();
 
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
-            return Sanitize(playerPayload?.PlayerName ?? sender.ToString());
+            return playerPayload?.PlayerName ?? sender.ToString();
         }
 
         private bool ShouldFilterMessage(string playerName, string message, XivChatType type)
@@ -122,7 +122,18 @@ namespace ChatTranslated.Utils
                 Plugin.OutputChatLine(playerName, $"{message} || {response}", type);
         }
 
-        public string Sanitize(string input) => SpecialCharacterRegex.Replace(input, "");
+        public string Sanitize(string input)
+        {
+            if (Service.configuration.SelectedMode == Configuration.Mode.GPTProxy)
+            {
+                input = input.Replace("\uE040", "{[");
+                input = input.Replace("\uE041", "]}");
+            }
+
+            input = SpecialCharacterRegex.Replace(input, "");
+
+            return input;
+        }
 
         public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
     }

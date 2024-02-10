@@ -151,10 +151,18 @@ public class ConfigWindow : Window, IDisposable
 
         int selectedMode = (int)configuration.SelectedMode;
 
-        if (ImGui.Combo("##ModeCombo", ref selectedMode, Enum.GetNames(typeof(Mode)), 2))
+        if (ImGui.Combo("##ModeCombo", ref selectedMode, Enum.GetNames(typeof(Mode)), 3))
         {
             configuration.SelectedMode = (Mode)selectedMode;
             configuration.Save();
+        }
+
+        // GPTProxy description
+        if (configuration.SelectedMode == Mode.GPTProxy)
+        {
+            ImGui.Text("Free GPT-3.5-turbo translation service provided by the dev,\nsubject to availability.");
+            ImGui.Text("By using this mode, you acknowledge that your chat messages\nmay be collected and used to enhance the service." +
+                       "\nSensitive information and personal identifiers will be removed\nbefore use.");
         }
 
         // API Key Input

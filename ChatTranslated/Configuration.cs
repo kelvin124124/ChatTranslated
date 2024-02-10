@@ -13,7 +13,8 @@ namespace ChatTranslated
         public enum Mode
         {
             MachineTranslate,
-            OpenAI_API
+            OpenAI_API,
+            GPTProxy
         }
 
         public string SelectedChatLanguage = "English";

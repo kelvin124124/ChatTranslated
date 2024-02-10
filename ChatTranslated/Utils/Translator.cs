@@ -18,6 +18,7 @@ namespace ChatTranslated.Utils
         private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
 
         private const string DefaultContentType = "application/json";
+        private static readonly string? ChatFunction_key = Environment.GetEnvironmentVariable("PLOGON_SECRET_chatfunction_key");
 
         public static async Task TranslateChat(string sender, string message, XivChatType type = XivChatType.Say)
         {
@@ -61,6 +62,8 @@ namespace ChatTranslated.Utils
                     return await MachineTranslate(message, targetLanguage);
                 case Mode.OpenAI_API:
                     return await OpenAITranslate(message, targetLanguage);
+                case Mode.GPTProxy:
+                    return await GPTProxyTranslate(message, targetLanguage);
                 default:
                     Service.pluginLog.Warning("Warn: Unknown translation mode.");
                     return message;
@@ -87,6 +90,49 @@ namespace ChatTranslated.Utils
                     Service.pluginLog.Error($"Error: {BTex.Message}, both translators failed, returning original message.");
                     return message;
                 }
+            }
+        }
+
+        public static async Task<string> GPTProxyTranslate(string message, string targetLanguage)
+        {
+            if (string.IsNullOrEmpty(ChatFunction_key))
+            {
+                Service.pluginLog.Warning("Warn: GPTProxyTranslate - api key empty.");
+                return await MachineTranslate(message, targetLanguage);
+            }
+
+            var requestData = new
+            {
+                message,
+                targetLanguage
+            };
+
+            var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://jbtzl5pwoe.execute-api.us-east-2.amazonaws.com/default/ChatFunction")
+            {
+                Content = content
+            };
+
+            request.Headers.Add("x-api-key", ChatFunction_key);
+
+            try
+            {
+                var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+                var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                var jsonParsed = JObject.Parse(jsonResponse);
+                var translated = jsonParsed["choices"]?[0]?["message"]?["content"]?.ToString().Trim();
+
+                if (!string.IsNullOrEmpty(translated))
+                    return translated;
+                else
+                    throw new Exception("Translation not found in the expected JSON structure.");
+            }
+            catch (Exception ex)
+            {
+                Service.pluginLog.Warning($"Error during proxy translation: {ex.Message}");
+                return await MachineTranslate(message, targetLanguage);
             }
         }
 
@@ -126,7 +172,11 @@ namespace ChatTranslated.Utils
                 response.EnsureSuccessStatusCode();
                 var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var translated = JObject.Parse(jsonResponse)["choices"]![0]!["message"]!["content"]!.ToString().Trim();
-                return translated;
+
+                if (!string.IsNullOrEmpty(translated))
+                    return translated;
+                else
+                    throw new Exception("Translation not found in the expected JSON structure.");
             }
             catch (Exception ex)
             {
