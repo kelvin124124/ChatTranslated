@@ -50,16 +50,6 @@ public class MainWindow : Window, IDisposable
             Service.configuration.Save();
         }
 
-        // Tooltip explaining main window function
-        ImGui.SameLine();
-        ImGui.TextDisabled("?");
-        if (ImGui.IsItemHovered())
-        {
-            ImGui.BeginTooltip();
-            ImGui.Text("Translate button only affects text in the main window.\nIt does not send translated text in chat or make it visible to other players.");
-            ImGui.EndTooltip();
-        }
-
         ImGui.InputText("##input", ref inputText, 100);
 
         ImGui.SameLine();
@@ -67,6 +57,16 @@ public class MainWindow : Window, IDisposable
         {
             ProcessInput(inputText);
             inputText = "";
+        }
+
+        // Tooltip explaining main window function
+        ImGui.SameLine();
+        ImGui.TextDisabled("?");
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.BeginTooltip();
+            ImGui.Text("Translate button only print translated text in the main window.\nIt does not send translated text in chat or make it visible to other players.");
+            ImGui.EndTooltip();
         }
     }
 

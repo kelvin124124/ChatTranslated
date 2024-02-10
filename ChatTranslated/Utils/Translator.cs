@@ -132,6 +132,7 @@ namespace ChatTranslated.Utils
             catch (Exception ex)
             {
                 Service.pluginLog.Warning($"Error during proxy translation: {ex.Message}");
+                message = message.Replace("{[", "").Replace("]}", "");
                 return await MachineTranslate(message, targetLanguage);
             }
         }
