@@ -98,6 +98,7 @@ namespace ChatTranslated.Utils
             if (string.IsNullOrEmpty(ChatFunction_key))
             {
                 Service.pluginLog.Warning("Warn: GPTProxyTranslate - api key empty.");
+                message = message.Replace("{[", "").Replace("]}", "");
                 return await MachineTranslate(message, targetLanguage);
             }
 
