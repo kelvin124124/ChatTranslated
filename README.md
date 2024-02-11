@@ -1,6 +1,6 @@
 # Chat Translated [![Download count](https://img.shields.io/endpoint?url=https://qzysathwfhebdai6xgauhz4q7m0mzmrf.lambda-url.us-east-1.on.aws/ChatTranslated)](https://github.com/kelvin124124/ChatTranslated) [![CodeFactor](https://www.codefactor.io/repository/github/kelvin124124/chattranslated/badge)](https://www.codefactor.io/repository/github/kelvin124124/chattranslated)
-"Chat Translated" is a Dalamud plugin for the game FFXIV that allows users to translated in-game chat messages with Google translate / GPT-3.5-TURBO (ChatGPT)  
-* Google translate is the default option. If you want to use ChatGPT, bring your own OpenAI API key.
+"Chat Translated" is a Dalamud plugin for the game FFXIV that allows users to translated in-game chat messages with Google translate / GPT-3.5-TURBO  
+* Google translate is the default option. 
 
 ## Installation 🔧
 1. Install Dalamud (windows:[FFXIVQuickLauncher](https://github.com/goatcorp/FFXIVQuickLauncher))(mac:[XIV-on-Mac](https://github.com/marzent/XIV-on-Mac))
