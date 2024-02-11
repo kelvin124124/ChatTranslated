@@ -43,10 +43,10 @@ namespace ChatTranslated.Utils
         private string GetPlayerName(SeString sender, XivChatType type)
         {
             if (type == XivChatType.TellOutgoing && Service.clientState?.LocalPlayer != null)
-                return Service.clientState.LocalPlayer.Name.ToString();
+                return Sanitize(Service.clientState.LocalPlayer.Name.ToString());
 
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
-            return playerPayload?.PlayerName ?? sender.ToString();
+            return Sanitize(playerPayload?.PlayerName ?? sender.ToString());
         }
 
         private bool ShouldFilterMessage(string playerName, string message, XivChatType type)

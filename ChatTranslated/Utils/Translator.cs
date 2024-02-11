@@ -2,8 +2,10 @@ using Dalamud.Game.Text;
 using GTranslate.Translators;
 using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace ChatTranslated.Utils
         private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
 
         private const string DefaultContentType = "application/json";
-        private static readonly string? ChatFunction_key = Environment.GetEnvironmentVariable("PLOGON_SECRET_chatfunction_key");
+        private static readonly string? ChatFunction_key = ReadSecret("ChatTranslated.Resources.ChatFunctionKey.secret");
 
         public static async Task TranslateChat(string sender, string message, XivChatType type = XivChatType.Say)
         {
@@ -91,6 +93,16 @@ namespace ChatTranslated.Utils
                     return message;
                 }
             }
+        }
+
+        private static string ReadSecret(string resourceName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream == null) throw new FileNotFoundException($"Couldn't find resource: {resourceName}");
+
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
 
         public static async Task<string> GPTProxyTranslate(string message, string targetLanguage)
