@@ -32,7 +32,7 @@ namespace ChatTranslated.Utils
 
             string playerName = GetPlayerName(sender, type);
 
-            if (ShouldFilterMessage(playerName, message.TextValue, type))
+            if (!Service.configuration.TranslateEn && ShouldFilterMessage(playerName, message.TextValue, type))
                 return;
 
             string sanitizedMessage = Sanitize(message.TextValue);
@@ -40,7 +40,7 @@ namespace ChatTranslated.Utils
             ProcessMessage(playerName, sanitizedMessage, type);
         }
 
-        private string GetPlayerName(SeString sender, XivChatType type)
+        private static string GetPlayerName(SeString sender, XivChatType type)
         {
             if (type == XivChatType.TellOutgoing && Service.clientState?.LocalPlayer != null)
                 return Sanitize(Service.clientState.LocalPlayer.Name.ToString());
@@ -51,22 +51,28 @@ namespace ChatTranslated.Utils
 
         private bool ShouldFilterMessage(string playerName, string message, XivChatType type)
         {
-            if (AutoTranslateRegex.IsMatch(message) || playerName == Sanitize(Service.clientState?.LocalPlayer?.Name.ToString() ?? ""))
-            {
-                LogAndPrint(playerName, message, "Message filtered by standard rules.", type, includeInChat: false);
-                return true;
-            }
-
             if (IsMacroMessage(playerName))
             {
                 LogAndPrint(playerName, message, $"Macro filtered.", type, includeInChat: false);
                 return true;
             }
 
+            if (AutoTranslateRegex.IsMatch(message) || playerName == Sanitize(Service.clientState?.LocalPlayer?.Name.ToString() ?? ""))
+            {
+                LogAndPrint(playerName, message, "Message filtered by standard rules.", type, includeInChat: false);
+                return true;
+            }
+
+            if (message.Length == 1)
+            {
+                LogAndPrint(playerName, message, "Single character message filtered.", type, includeInChat: false);
+                return true;
+            }
+
             return false;
         }
 
-        private void ProcessMessage(string playerName, string message, XivChatType type)
+        private static void ProcessMessage(string playerName, string message, XivChatType type)
         {
             if (!NonEnglishRegex.IsMatch(message))
             {
@@ -82,7 +88,7 @@ namespace ChatTranslated.Utils
             Task.Run(() => Translator.TranslateChat(playerName, message, type));
         }
 
-        private bool FilterJapaneseGreetings(string playerName, string message, XivChatType type)
+        private static bool FilterJapaneseGreetings(string playerName, string message, XivChatType type)
         {
             if (JPWelcomeRegex.IsMatch(message))
             {
@@ -114,7 +120,7 @@ namespace ChatTranslated.Utils
             return false;
         }
 
-        public void LogAndPrint(string playerName, string message, string logMessage, XivChatType type, string? response = null, bool includeInChat = true)
+        public static void LogAndPrint(string playerName, string message, string logMessage, XivChatType type, string? response = null, bool includeInChat = true)
         {
             Service.mainWindow.PrintToOutput($"{playerName}: {message}");
             Service.pluginLog.Debug(logMessage);
@@ -122,7 +128,7 @@ namespace ChatTranslated.Utils
                 Plugin.OutputChatLine(playerName, $"{message} || {response}", type);
         }
 
-        public string Sanitize(string input)
+        public static string Sanitize(string input)
         {
             if (Service.configuration.SelectedMode == Configuration.Mode.GPTProxy)
             {

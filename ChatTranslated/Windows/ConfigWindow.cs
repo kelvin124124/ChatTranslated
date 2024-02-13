@@ -15,7 +15,6 @@ public class ConfigWindow : Window, IDisposable
 
     private readonly string[] languages = { "English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)" };
     private string apiKeyInput = Service.configuration.OpenAI_API_Key;
-
     public static readonly List<XivChatType> genericChatTypes = new List<XivChatType>
     {
         XivChatType.Say,
@@ -64,9 +63,11 @@ public class ConfigWindow : Window, IDisposable
 
     public override void Draw()
     {
-        // Enabled
         bool _ChatIntegration = configuration.ChatIntegration;
         bool _TranslateFrDe = configuration.TranslateFrDe;
+        bool _TranslateEn = configuration.TranslateEn;
+
+        // Enabled
         if (ImGui.Checkbox("Chat Integration", ref _ChatIntegration))
         {
             configuration.ChatIntegration = _ChatIntegration;
@@ -79,8 +80,12 @@ public class ConfigWindow : Window, IDisposable
             configuration.TranslateFrDe = _TranslateFrDe;
             configuration.Save();
         }
+        if (ImGui.Checkbox("Translate English", ref _TranslateEn))
+        {
+            configuration.TranslateEn = _TranslateEn;
+            configuration.Save();
+        }
         ImGui.Text("    Note: make translations slower.");
-
 
         // Translate channel selection
         if (ImGui.CollapsingHeader("Channel Selection", ImGuiTreeNodeFlags.None))
@@ -218,6 +223,17 @@ public class ConfigWindow : Window, IDisposable
                 "Warning: " +
                 "\nAPI key stored as plain text in plugin configuration, " +
                 "\nany malware or third party plugins may have access to \nthe key.");
+        }
+
+        // Reset config
+        if (ImGui.Button("Reset config"))
+        {
+            ImGui.SameLine();
+            if (ImGui.Button("Confirm"))
+            {
+                Service.configuration = new Configuration();
+                configuration.Save();
+            }
         }
     }
 }
