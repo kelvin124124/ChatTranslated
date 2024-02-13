@@ -20,7 +20,7 @@ namespace ChatTranslated.Utils
         private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
 
         private const string DefaultContentType = "application/json";
-        private static readonly string? ChatFunction_key = ReadSecret("ChatTranslated.Resources.ChatFunctionKey.secret");
+        private static readonly string? ChatFunction_key = ReadSecret("ChatTranslated.Resources.ChatFunctionKey.secret").Replace("\n", string.Empty);
 
         public static async Task TranslateChat(string sender, string message, XivChatType type = XivChatType.Say)
         {

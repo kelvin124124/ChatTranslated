@@ -224,16 +224,5 @@ public class ConfigWindow : Window, IDisposable
                 "\nAPI key stored as plain text in plugin configuration, " +
                 "\nany malware or third party plugins may have access to \nthe key.");
         }
-
-        // Reset config
-        if (ImGui.Button("Reset config"))
-        {
-            ImGui.SameLine();
-            if (ImGui.Button("Confirm"))
-            {
-                Service.configuration = new Configuration();
-                configuration.Save();
-            }
-        }
     }
 }
