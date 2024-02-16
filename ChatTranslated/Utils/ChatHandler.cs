@@ -13,7 +13,7 @@ namespace ChatTranslated.Utils
     {
         private static readonly Regex AutoTranslateRegex = new Regex(@"^\uE040\u0020?.*\u0020?\uE041$", RegexOptions.Compiled);
         private static readonly Regex SpecialCharacterRegex = new Regex(@"[\uE000-\uF8FF]+", RegexOptions.Compiled);
-        private static readonly Regex NonEnglishRegex = new Regex(@"[^\u0020-\u007E\uFF01-\uFF5E]+", RegexOptions.Compiled);
+        private static readonly Regex NonEnglishRegex = new Regex(@"[^\u0020-\u007E\uFF01-\uFF5E\p{S}]+", RegexOptions.Compiled);
         private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
         private static readonly Regex JPDomaRegex = new Regex(@"\b(どまい?|ドマ|どんまい)(です)?[\u3002\uFF01!]*\b", RegexOptions.Compiled);
