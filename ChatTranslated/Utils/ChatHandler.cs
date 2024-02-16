@@ -80,12 +80,10 @@ namespace ChatTranslated.Utils
                 if (Service.configuration.TranslateEn)
                 {
                     Task.Run(() => Translator.TranslateChat(playerName, message, type));
-                    return;
                 }
                 else if (Service.configuration.TranslateFrDe)
                 {
                     Task.Run(() => Translator.TranslateFrDeChat(playerName, message, type));
-                    return;
                 }
                 return;
             }
