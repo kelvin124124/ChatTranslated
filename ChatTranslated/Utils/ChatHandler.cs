@@ -78,10 +78,15 @@ namespace ChatTranslated.Utils
             {
                 // Eng character detected
                 if (Service.configuration.TranslateEn)
+                {
                     Task.Run(() => Translator.TranslateChat(playerName, message, type));
-                if (Service.configuration.TranslateFrDe)
+                    return;
+                }
+                else if (Service.configuration.TranslateFrDe)
+                {
                     Task.Run(() => Translator.TranslateFrDeChat(playerName, message, type));
-                return;
+                    return;
+                }
             }
 
             // Filter specific Japanese messages
