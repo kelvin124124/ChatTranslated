@@ -87,6 +87,7 @@ namespace ChatTranslated.Utils
                     Task.Run(() => Translator.TranslateFrDeChat(playerName, message, type));
                     return;
                 }
+                return;
             }
 
             // Filter specific Japanese messages
