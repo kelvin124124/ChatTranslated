@@ -32,7 +32,7 @@ namespace ChatTranslated.Utils
 
             string playerName = GetPlayerName(sender, type);
 
-            if (!Service.configuration.TranslateEn && ShouldFilterMessage(playerName, message.TextValue, type))
+            if (ShouldFilterMessage(playerName, message.TextValue, type))
                 return;
 
             string sanitizedMessage = Sanitize(message.TextValue);
@@ -76,6 +76,9 @@ namespace ChatTranslated.Utils
         {
             if (!NonEnglishRegex.IsMatch(message))
             {
+                // Eng character detected
+                if (Service.configuration.TranslateEn)
+                    Task.Run(() => Translator.TranslateChat(playerName, message, type));
                 if (Service.configuration.TranslateFrDe)
                     Task.Run(() => Translator.TranslateFrDeChat(playerName, message, type));
                 return;
