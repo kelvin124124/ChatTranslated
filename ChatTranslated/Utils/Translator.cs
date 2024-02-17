@@ -15,7 +15,7 @@ namespace ChatTranslated.Utils
 {
     internal class Translator
     {
-        public static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
+        private static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
         private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2(HttpClient);
         private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
 
