@@ -17,8 +17,6 @@ namespace ChatTranslated.Utils
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(pbData);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            Service.pluginLog.Debug($"Sending to DB: {data}");
-
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri("http://ffdb.sapphosound.com");
