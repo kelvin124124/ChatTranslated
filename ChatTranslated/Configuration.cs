@@ -25,6 +25,7 @@ namespace ChatTranslated
         public bool ChatIntegration { get; set; } = true;
         public bool TranslateFrDe { get; set; } = false;
         public bool TranslateEn { get; set; } = false;
+        public bool SendChatToDB { get; set; } = false;
 
         public ICollection<XivChatType> ChatTypes { get; set; } = new List<XivChatType>
         {

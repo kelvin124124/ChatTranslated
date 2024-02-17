@@ -15,12 +15,22 @@ namespace ChatTranslated.Utils
 {
     internal class Translator
     {
-        private static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
+        public static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
         private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2(HttpClient);
         private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
 
         private const string DefaultContentType = "application/json";
         private static readonly string? ChatFunction_key = ReadSecret("ChatTranslated.Resources.ChatFunctionKey.secret").Replace("\n", string.Empty);
+
+        private static string ReadSecret(string resourceName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream == null) return "";
+
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
+        }
 
         public static async Task TranslateChat(string sender, string message, XivChatType type = XivChatType.Say)
         {
@@ -95,22 +105,11 @@ namespace ChatTranslated.Utils
             }
         }
 
-        private static string ReadSecret(string resourceName)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream == null) return "";
-
-            using var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
-        }
-
         public static async Task<string> GPTProxyTranslate(string message, string targetLanguage)
         {
             if (string.IsNullOrEmpty(ChatFunction_key))
             {
                 Service.pluginLog.Warning("Warn: GPTProxyTranslate - api key empty.");
-                message = message.Replace("{[", "").Replace("]}", "");
                 return await MachineTranslate(message, targetLanguage);
             }
 
@@ -145,7 +144,6 @@ namespace ChatTranslated.Utils
             catch (Exception ex)
             {
                 Service.pluginLog.Warning($"Error during proxy translation: {ex.Message}");
-                message = message.Replace("{[", "").Replace("]}", "");
                 return await MachineTranslate(message, targetLanguage);
             }
         }

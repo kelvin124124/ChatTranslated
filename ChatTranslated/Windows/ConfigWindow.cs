@@ -55,7 +55,7 @@ public class ConfigWindow : Window, IDisposable
         "Chat Translated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Size = new Vector2(400, 300);
+        Size = new Vector2(400, 450);
         configuration = Service.configuration;
     }
 
@@ -66,6 +66,7 @@ public class ConfigWindow : Window, IDisposable
         bool _ChatIntegration = configuration.ChatIntegration;
         bool _TranslateFrDe = configuration.TranslateFrDe;
         bool _TranslateEn = configuration.TranslateEn;
+        bool _SendChatToDB = configuration.SendChatToDB;
 
         // Enabled
         if (ImGui.Checkbox("Chat Integration", ref _ChatIntegration))
@@ -80,12 +81,22 @@ public class ConfigWindow : Window, IDisposable
             configuration.TranslateFrDe = _TranslateFrDe;
             configuration.Save();
         }
-        if (ImGui.Checkbox("Translate English", ref _TranslateEn))
+        if (ImGui.Checkbox("Translate all languages", ref _TranslateEn))
         {
             configuration.TranslateEn = _TranslateEn;
             configuration.Save();
         }
-        ImGui.Text("    Note: make translations slower.");
+        ImGui.Text("    Note: Plugin translates all messages with non-English characters \n         by default.\n" +
+                   "    Using these options make translations slower.");
+
+        // Send chat to DB option
+        if (ImGui.Checkbox("Send chat to DB", ref _SendChatToDB))
+        {
+            configuration.SendChatToDB = _SendChatToDB;
+            configuration.Save();
+        }
+        ImGui.Text("    Collect outgoing chat messages to improve translations.\n" +
+                   "    Personal identifiers and sensitive info will be removed before use.");
 
         // Translate channel selection
         if (ImGui.CollapsingHeader("Channel Selection", ImGuiTreeNodeFlags.None))
