@@ -70,7 +70,7 @@ namespace ChatTranslated.Utils
                 return true;
             }
 
-            if (message.Length == 1)
+            if (message.Trim().Length == 1)
             {
                 LogAndPrint(playerName, message, "Single character message filtered.", type, includeInChat: false);
                 return true;

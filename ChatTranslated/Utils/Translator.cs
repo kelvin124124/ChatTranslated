@@ -159,13 +159,14 @@ namespace ChatTranslated.Utils
             var requestData = new
             {
                 model = MODEL,
-                max_tokens = 300,
+                temperature = 0.3,
+                max_tokens = Math.Min(Math.Max(message.Length * 2, 20), 150),
                 messages = new[]
                 {
                     new
                     {
                         role = "system", content =
-                            $"Translate this MMORPG chat message from FFXIV to {targetLanguage}."
+                            $"FFXIV chat to ${targetLanguage}:"
                     },
                     new { role = "user", content = message }
                 }
