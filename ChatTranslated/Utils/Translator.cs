@@ -166,7 +166,7 @@ namespace ChatTranslated.Utils
                     new
                     {
                         role = "system", content =
-                            $"FFXIV chat to ${targetLanguage}:"
+                            $"FFXIV chat to {targetLanguage}:"
                     },
                     new { role = "user", content = message }
                 }
