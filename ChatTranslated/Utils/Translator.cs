@@ -2,6 +2,7 @@ using Dalamud.Game.Text;
 using GTranslate.Translators;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -22,6 +23,8 @@ namespace ChatTranslated.Utils
         private const string DefaultContentType = "application/json";
         private static readonly string? ChatFunction_key = ReadSecret("ChatTranslated.Resources.ChatFunctionKey.secret").Replace("\n", string.Empty);
 
+        public static Dictionary<string, string> TranslationCache = new Dictionary<string, string>();
+
         private static string ReadSecret(string resourceName)
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -34,7 +37,12 @@ namespace ChatTranslated.Utils
 
         public static async Task TranslateChat(string sender, string message, XivChatType type = XivChatType.Say)
         {
-            string translatedText = await TranslateMessage(message, Service.configuration.SelectedChatLanguage);
+            if (!TranslationCache.TryGetValue(message, out string? translatedText))
+            {
+                translatedText = await TranslateMessage(message, Service.configuration.SelectedChatLanguage);
+                TranslationCache[message] = translatedText;
+            }
+
             Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
 
             if (Service.configuration.ChatIntegration && translatedText.Length < 500)

@@ -14,13 +14,9 @@ public class MainWindow : Window, IDisposable
     internal string outputText = ""; // Holds the text for the output field
     internal string inputText = "";  // Holds the text for the input field
 
-    public MainWindow(Plugin plugin) : base(
-        "Chat Translated",
-        ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoScrollbar |
-        ImGuiWindowFlags.NoScrollWithMouse)
+    public MainWindow(Plugin plugin) : base("Chat Translated")
     {
         Size = new Vector2(360, 220);
-        SizeCondition = ImGuiCond.Always;
     }
 
     public void Dispose()

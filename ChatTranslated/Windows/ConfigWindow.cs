@@ -157,6 +157,7 @@ public class ConfigWindow : Window, IDisposable
         if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
         {
             configuration.SelectedChatLanguage = languages[currentLanguageIndex];
+            Translator.TranslationCache = new Dictionary<string, string>();
             configuration.Save();
         }
 
@@ -170,6 +171,7 @@ public class ConfigWindow : Window, IDisposable
         if (ImGui.Combo("##ModeCombo", ref selectedMode, Enum.GetNames(typeof(Mode)), 3))
         {
             configuration.SelectedMode = (Mode)selectedMode;
+            Translator.TranslationCache = new Dictionary<string, string>();
             configuration.Save();
         }
 
@@ -191,6 +193,7 @@ public class ConfigWindow : Window, IDisposable
                 {
                     // hope nothing bad happens
                     configuration.OpenAI_API_Key = apiKeyInput;
+                    Translator.TranslationCache = new Dictionary<string, string>();
                     configuration.Save();
                 }
                 else
