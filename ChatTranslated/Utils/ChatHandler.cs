@@ -39,7 +39,7 @@ namespace ChatTranslated.Utils
                     SeString _message = message;
                     Task.Run(() => ChatStore.SendToDB(_message.TextValue));
                 }
-                return;
+                //return;
             }
 
             string? filterReason = MessageFilter(playerName, message.TextValue);
@@ -120,14 +120,14 @@ namespace ChatTranslated.Utils
         {
             Service.mainWindow.PrintToOutput($"{playerName}: {message}");
             if (logmessage != null)
-                Service.pluginLog.Debug(logmessage);
+                Service.pluginLog.Info(logmessage);
             if (Service.configuration.ChatIntegration)
                 Plugin.OutputChatLine(playerName, message, type);
         }
 
         public static string Sanitize(string input)
         {
-            return SpecialCharacterRegex.Replace(input, "");
+            return SpecialCharacterRegex.Replace(input, string.Empty);
         }
 
         public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
