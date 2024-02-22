@@ -39,7 +39,7 @@ namespace ChatTranslated.Utils
                     SeString _message = message;
                     Task.Run(() => ChatStore.SendToDB(_message.TextValue));
                 }
-                //return;
+                return;
             }
 
             string? filterReason = MessageFilter(playerName, message.TextValue);
