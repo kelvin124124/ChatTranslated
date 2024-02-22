@@ -1,9 +1,7 @@
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
-using Dalamud.Game.Text.SeStringHandling.Payloads;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -30,96 +28,40 @@ namespace ChatTranslated.Utils
             if (sender.TextValue.Contains("[CT]") || !Service.configuration.ChatTypes.Contains(type))
                 return;
 
-            string playerName = GetPlayerName(sender, type);
+            string playerName = Sanitize(sender.ToString());
+            if (type == XivChatType.TellOutgoing)
+                playerName = Sanitize(Service.clientState.LocalPlayer!.Name.ToString() ?? string.Empty);
 
-            if (ShouldFilterMessage(playerName, message.TextValue, type))
-                return;
-
-            string sanitizedMessage = Sanitize(message.TextValue);
-
-            ProcessMessage(playerName, sanitizedMessage, type);
-        }
-
-        private static string GetPlayerName(SeString sender, XivChatType type)
-        {
-            if (type == XivChatType.TellOutgoing && Service.clientState?.LocalPlayer != null)
-                return Sanitize(Service.clientState.LocalPlayer.Name.ToString());
-
-            var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
-            return Sanitize(playerPayload?.PlayerName ?? sender.ToString());
-        }
-
-        private bool ShouldFilterMessage(string playerName, string message, XivChatType type)
-        {
-            if (IsMacroMessage(playerName))
-            {
-                LogAndPrint(playerName, message, "Macro filtered.", type, includeInChat: false);
-                return true;
-            }
-
-            if (AutoTranslateRegex.IsMatch(message))
-            {
-                LogAndPrint(playerName, message, "Auto-translate messages filtered.", type, includeInChat: false);
-                return true;
-            }
-
-            if (playerName == Sanitize(Service.clientState?.LocalPlayer?.Name.ToString() ?? ""))
+            if (playerName == Sanitize(Service.clientState.LocalPlayer!.Name.ToString() ?? string.Empty))
             {
                 if (Service.configuration.SendChatToDB == true)
-                    Task.Run(() => ChatStore.SendToDB(message));
-                return true;
-            }
-
-            if (message.Trim().Length == 1)
-            {
-                LogAndPrint(playerName, message, "Single character message filtered.", type, includeInChat: false);
-                return true;
-            }
-
-            return false;
-        }
-
-        private static void ProcessMessage(string playerName, string message, XivChatType type)
-        {
-            if (!NonEnglishRegex.IsMatch(message))
-            {
-                // Eng character detected
-                if (Service.configuration.TranslateEn)
                 {
-                    Task.Run(() => Translator.TranslateChat(playerName, message, type));
-                }
-                else if (Service.configuration.TranslateFrDe)
-                {
-                    Task.Run(() => Translator.TranslateFrDeChat(playerName, message, type));
+                    SeString _message = message;
+                    Task.Run(() => ChatStore.SendToDB(_message.TextValue));
                 }
                 return;
             }
 
-            // Filter specific Japanese messages
-            if (FilterJapaneseGreetings(playerName, message, type))
+            string? filterReason = MessageFilter(playerName, message.TextValue);
+            if (filterReason != null)
+            {
+                Service.pluginLog.Info($"Message filtered: {filterReason}");
                 return;
+            }
 
-            Task.Run(() => Translator.TranslateChat(playerName, message, type));
+            ProcessMessage(playerName, Sanitize(message.TextValue), type);
         }
 
-        private static bool FilterJapaneseGreetings(string playerName, string message, XivChatType type)
+        private string? MessageFilter(string playerName, string message)
         {
-            if (JPWelcomeRegex.IsMatch(message))
-            {
-                LogAndPrint(playerName, message, "Welcome message filtered.", type, "Let's do it!");
-                return true;
-            }
-            if (JPByeRegex.IsMatch(message))
-            {
-                LogAndPrint(playerName, message, "Bye message filtered.", type, "Good game!");
-                return true;
-            }
-            if (JPDomaRegex.IsMatch(message))
-            {
-                LogAndPrint(playerName, message, "Doma message filtered.", type, "It's okay!");
-                return true;
-            }
-            return false;
+            if (AutoTranslateRegex.IsMatch(message))
+                return "Auto-translate messages.";
+            else if (IsMacroMessage(playerName))
+                return "Macro messages.";
+            else if (message.Trim().Length == 1)
+                return "Single character message.";
+
+            return null;
         }
 
         private bool IsMacroMessage(string playerName)
@@ -134,12 +76,53 @@ namespace ChatTranslated.Utils
             return false;
         }
 
-        public static void LogAndPrint(string playerName, string message, string logMessage, XivChatType type, string? response = null, bool includeInChat = true)
+        private static void ProcessMessage(string playerName, string message, XivChatType type)
+        {
+            // Process Eng character messages if configured
+            if (!NonEnglishRegex.IsMatch(message))
+            {
+                // Eng character detected
+                if (Service.configuration.TranslateEn)
+                {
+                    Task.Run(() => Translator.TranslateChat(playerName, message, type));
+                }
+                else if (Service.configuration.TranslateFrDe)
+                {
+                    Task.Run(() => Translator.TranslateFrDeChat(playerName, message, type));
+                }
+                return;
+            }
+
+            // Likely Japanese -> Filter specific Japanese messages
+            string? filteredMessage = JapaneseFilter(message);
+            if (filteredMessage != null)
+            {
+                OutputTranslation(type, playerName, filteredMessage, "Japanese greeting message filtered.");
+                return;
+            }
+
+            Task.Run(() => Translator.TranslateChat(playerName, message, type));
+        }
+
+        private static string? JapaneseFilter(string message)
+        {
+            if (JPWelcomeRegex.IsMatch(message))
+                return "Let's do it!";
+            else if (JPByeRegex.IsMatch(message))
+                return "Good game!";
+            else if (JPDomaRegex.IsMatch(message))
+                return "It's okay!";
+
+            return null;
+        }
+
+        public static void OutputTranslation(XivChatType type, string playerName, string message, string? logmessage)
         {
             Service.mainWindow.PrintToOutput($"{playerName}: {message}");
-            Service.pluginLog.Debug(logMessage);
-            if (includeInChat && Service.configuration.ChatIntegration && response != null)
-                Plugin.OutputChatLine(playerName, $"{message} || {response}", type);
+            if (logmessage != null)
+                Service.pluginLog.Debug(logmessage);
+            if (Service.configuration.ChatIntegration)
+                Plugin.OutputChatLine(playerName, message, type);
         }
 
         public static string Sanitize(string input)
@@ -150,4 +133,3 @@ namespace ChatTranslated.Utils
         public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
     }
 }
-

@@ -37,18 +37,15 @@ namespace ChatTranslated.Utils
 
         public static async Task TranslateChat(string sender, string message, XivChatType type = XivChatType.Say)
         {
+            // try get translation from cache
             if (!TranslationCache.TryGetValue(message, out string? translatedText))
             {
+                // Translate message if not in cache
                 translatedText = await TranslateMessage(message, Service.configuration.SelectedChatLanguage);
                 TranslationCache[message] = translatedText;
             }
 
-            Service.mainWindow.PrintToOutput($"{sender}: {translatedText}");
-
-            if (Service.configuration.ChatIntegration && translatedText.Length < 500)
-            {
-                Plugin.OutputChatLine(sender, $"{message} || {translatedText}", type);
-            }
+            ChatHandler.OutputTranslation(type, sender, $"{message} || {translatedText}", null);
         }
 
         public static async Task TranslateMainWindow(string message)
