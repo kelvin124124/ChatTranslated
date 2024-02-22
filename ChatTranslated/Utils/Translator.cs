@@ -45,7 +45,7 @@ namespace ChatTranslated.Utils
                 TranslationCache[message] = translatedText;
             }
 
-            ChatHandler.OutputTranslation(type, sender, $"{message} || {translatedText}", null);
+            ChatHandler.OutputTranslation(type, sender, $"{message} || {translatedText}");
         }
 
         public static async Task TranslateMainWindow(string message)

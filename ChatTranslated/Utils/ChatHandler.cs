@@ -116,7 +116,7 @@ namespace ChatTranslated.Utils
             return null;
         }
 
-        public static void OutputTranslation(XivChatType type, string playerName, string message, string? logmessage)
+        public static void OutputTranslation(XivChatType type, string playerName, string message, string? logmessage = null)
         {
             Service.mainWindow.PrintToOutput($"{playerName}: {message}");
             if (logmessage != null)
