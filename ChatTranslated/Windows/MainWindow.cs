@@ -30,7 +30,7 @@ public class MainWindow : Window, IDisposable
     {
         // Output text field
         ImGui.BeginChild("outputField", new Vector2(-1, -55), false, ImGuiWindowFlags.HorizontalScrollbar);
-        ImGui.InputTextMultiline("##output", ref outputText, 50000, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
+        ImGui.InputTextMultiline("##output", ref outputText, 0, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
         ImGui.SetScrollHereY(1.0f); // Scroll to bottom
         ImGui.EndChild();
 
@@ -48,7 +48,7 @@ public class MainWindow : Window, IDisposable
             Service.configuration.Save();
         }
 
-        ImGui.InputText("##input", ref inputText, 100);
+        ImGui.InputText("##input", ref inputText, 500);
 
         ImGui.SameLine();
         if (ImGui.Button("Translate"))

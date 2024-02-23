@@ -1,4 +1,5 @@
 using Dalamud.Game.Text;
+using Dalamud.Networking.Http;
 using GTranslate.Translators;
 using Newtonsoft.Json.Linq;
 using System;
@@ -16,7 +17,14 @@ namespace ChatTranslated.Utils
 {
     internal class Translator
     {
-        private static readonly HttpClient HttpClient = new HttpClient { Timeout = TimeSpan.FromSeconds(20) };
+        private static readonly HttpClient HttpClient =
+            new HttpClient(new SocketsHttpHandler
+            {
+                AutomaticDecompression = DecompressionMethods.All,
+                ConnectCallback = new HappyEyeballsCallback().ConnectCallback,
+            })
+            { Timeout = TimeSpan.FromSeconds(20) };
+
         private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2(HttpClient);
         private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
 
