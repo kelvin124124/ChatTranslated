@@ -58,8 +58,8 @@ namespace ChatTranslated.Utils
                 return "Auto-translate messages.";
             else if (IsMacroMessage(playerName))
                 return "Macro messages.";
-            else if (message.Trim().Length == 1)
-                return "Single character message.";
+            else if (message.Trim().Length < 2)
+                return "Single character or empty message.";
 
             return null;
         }
