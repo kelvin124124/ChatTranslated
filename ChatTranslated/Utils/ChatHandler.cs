@@ -1,7 +1,9 @@
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -28,7 +30,8 @@ namespace ChatTranslated.Utils
             if (sender.TextValue.Contains("[CT]") || !Service.configuration.ChatTypes.Contains(type))
                 return;
 
-            string playerName = Sanitize(sender.ToString());
+            var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
+            string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
             if (type == XivChatType.TellOutgoing)
                 playerName = Sanitize(Service.clientState.LocalPlayer!.Name.ToString() ?? string.Empty);
 
