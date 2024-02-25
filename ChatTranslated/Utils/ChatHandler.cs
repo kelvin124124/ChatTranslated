@@ -100,7 +100,7 @@ namespace ChatTranslated.Utils
             string? filteredMessage = JapaneseFilter(message);
             if (filteredMessage != null)
             {
-                OutputTranslation(type, playerName, filteredMessage, "Japanese greeting message filtered.");
+                OutputTranslation(type, playerName, $"{ message } || { filteredMessage }", "Japanese greeting message filtered.");
                 return;
             }
 
