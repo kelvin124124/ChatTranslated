@@ -67,8 +67,9 @@ public class ConfigWindow : Window, IDisposable
         bool _TranslateFrDe = configuration.TranslateFrDe;
         bool _TranslateEn = configuration.TranslateEn;
         bool _SendChatToDB = configuration.SendChatToDB;
+        bool _PerfectTranslation = configuration.PerfectTranslation;
 
-        // Enabled
+        // Chat Integration
         if (ImGui.Checkbox("Chat Integration", ref _ChatIntegration))
         {
             configuration.ChatIntegration = _ChatIntegration;
@@ -230,6 +231,26 @@ public class ConfigWindow : Window, IDisposable
 
                 ImGui.EndPopup();
             }
+
+            //// Perfect translation
+            //if (ImGui.Checkbox("Perfect translation", ref _PerfectTranslation))
+            //{
+            //    configuration.PerfectTranslation = _PerfectTranslation;
+            //    configuration.Save();
+            //}
+            //// Tooltip explaining perfect translation option
+            //ImGui.SameLine();
+            //ImGui.TextDisabled("?");
+            //if (ImGui.IsItemHovered())
+            //{
+            //    ImGui.BeginTooltip();
+            //    ImGui.Text("Use GPT-4-Turbo. More detailed prompt. Provide context & instance-related info to the model." +
+            //        "\nMore expensive, ofc." +
+            //        "\nPrice estimation:" +
+            //        "\nNormal mode: <$0.1/month" +
+            //        "\nPerfect Translation: #will be updated after testing#");
+            //    ImGui.EndTooltip();
+            //}
 
             ImGui.TextColored(new Vector4(1, 0, 0, 1),
                 "Warning: " +

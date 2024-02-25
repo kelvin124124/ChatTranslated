@@ -26,6 +26,7 @@ namespace ChatTranslated
         public bool TranslateFrDe { get; set; } = false;
         public bool TranslateEn { get; set; } = false;
         public bool SendChatToDB { get; set; } = false;
+        public bool PerfectTranslation { get; set; } = false;
 
         public ICollection<XivChatType> ChatTypes { get; set; } = new List<XivChatType>
         {
@@ -34,12 +35,8 @@ namespace ChatTranslated
             XivChatType.Yell, XivChatType.CrossParty, XivChatType.PvPTeam,
         };
 
-        public static string OPENAI_API = "https://api.openai.com/v1/chat/completions";
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
         public bool warned { get; set; } = false;
-
-        // gpt-3.5-turbo or gpt-4 / gpt-4-turbo (VERY expensive)
-        internal static string MODEL = "gpt-3.5-turbo";
 
         public void Save()
         {

@@ -10,8 +10,8 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Utils
 {
@@ -83,11 +83,11 @@ namespace ChatTranslated.Utils
         {
             switch (Service.configuration.SelectedMode)
             {
-                case Mode.MachineTranslate:
+                case Configuration.Mode.MachineTranslate:
                     return await MachineTranslate(message, targetLanguage);
-                case Mode.OpenAI_API:
+                case Configuration.Mode.OpenAI_API:
                     return await OpenAITranslate(message, targetLanguage);
-                case Mode.GPTProxy:
+                case Configuration.Mode.GPTProxy:
                     return await GPTProxyTranslate(message, targetLanguage);
                 default:
                     Service.pluginLog.Warning("Warn: Unknown translation mode.");
@@ -142,9 +142,9 @@ namespace ChatTranslated.Utils
 
             try
             {
-                var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+                var response = await HttpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
-                var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var jsonResponse = await response.Content.ReadAsStringAsync();
 
                 var jsonParsed = JObject.Parse(jsonResponse);
                 var translated = jsonParsed["choices"]?[0]?["message"]?["content"]?.ToString().Trim();
@@ -163,30 +163,34 @@ namespace ChatTranslated.Utils
 
         private static async Task<string> OpenAITranslate(string message, string targetLanguage)
         {
-            if (string.IsNullOrEmpty(Service.configuration.OpenAI_API_Key))
+            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9]{32,}$"))
             {
-                Service.pluginLog.Warning("Warn: API key is null, falling back to machine translate.");
+                Service.pluginLog.Warning("Warn: Incorrect API key format, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
             }
 
+            string StandardPrompt = $"TRANSLATE FFXIV chat to {targetLanguage}:";
+            string PerfectPrompt = $"TRANSLATE FFXIV chat to {targetLanguage}:";
+            //string PerfectPrompt = PhrasePerfectPrompt();
+
             var requestData = new
             {
-                model = MODEL,
-                temperature = 0.3,
+                model = Service.configuration.PerfectTranslation ? "gpt-4-turbo" : "gpt-3.5-turbo",
+                temperature = 0.6,
                 max_tokens = Math.Min(Math.Max(message.Length * 2, 20), 150),
                 messages = new[]
                 {
                     new
                     {
                         role = "system", content =
-                            $"TRANSLATE FFXIV chat to {targetLanguage}:"
+                            Service.configuration.PerfectTranslation? PerfectPrompt : StandardPrompt
                     },
                     new { role = "user", content = message }
                 }
             };
 
             var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType);
-            var request = new HttpRequestMessage(HttpMethod.Post, OPENAI_API)
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions")
             {
                 Content = content,
                 Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {Service.configuration.OpenAI_API_Key}" } }
@@ -194,9 +198,9 @@ namespace ChatTranslated.Utils
 
             try
             {
-                var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+                var response = await HttpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
-                var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                var jsonResponse = await response.Content.ReadAsStringAsync();
                 var translated = JObject.Parse(jsonResponse)["choices"]![0]!["message"]!["content"]!.ToString().Trim();
 
                 if (!string.IsNullOrEmpty(translated))
@@ -209,6 +213,19 @@ namespace ChatTranslated.Utils
                 Service.pluginLog.Warning($"Warn: {ex.Message}, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
             }
+        }
+        private static string PhrasePerfectPrompt()
+        {
+            // TODO: Implement phrase perfect prompt
+            // context: cached message in 120 seconds with the same type (including self)
+            string context = "I'm a professional translator, and I'm translating a conversation between two people who are speaking in a language I don't understand. I'm translating their conversation into English.";
+            // instruction: Cosplay prompt, example output, point to note like ignore emojis / meaningless sentences
+            string instruction = "";
+            // knowledge: detect payload (item / map) & player instance / location, fetch knowledge from db (if any)
+            string knowledge = "";
+
+            // return organized prompt
+            return "";
         }
     }
 }
