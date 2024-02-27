@@ -1,3 +1,4 @@
+using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
@@ -27,7 +28,10 @@ namespace ChatTranslated.Utils
 
         private void OnChatMessage(XivChatType type, uint _, ref SeString sender, ref SeString message, ref bool _1)
         {
-            if (sender.TextValue.Contains("[CT]") || !Service.configuration.ChatTypes.Contains(type))
+            if (!Service.configuration.Enabled || sender.TextValue.Contains("[CT]") || !Service.configuration.ChatTypes.Contains(type))
+                return;
+
+            if (!Service.configuration.EnabledInDuty && Service.condition[ConditionFlag.BoundByDuty])
                 return;
 
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
@@ -48,7 +52,7 @@ namespace ChatTranslated.Utils
             string? filterReason = MessageFilter(playerName, message.TextValue);
             if (filterReason != null)
             {
-                Service.pluginLog.Info($"Message filtered: {filterReason}");
+                OutputTranslation(type, playerName, message.TextValue, filterReason);
                 return;
             }
 

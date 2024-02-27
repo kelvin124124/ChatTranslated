@@ -142,9 +142,9 @@ namespace ChatTranslated.Utils
 
             try
             {
-                var response = await HttpClient.SendAsync(request);
+                var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
-                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 var jsonParsed = JObject.Parse(jsonResponse);
                 var translated = jsonParsed["choices"]?[0]?["message"]?["content"]?.ToString().Trim();
@@ -169,13 +169,12 @@ namespace ChatTranslated.Utils
                 return await MachineTranslate(message, targetLanguage);
             }
 
-            string StandardPrompt = $"TRANSLATE FFXIV chat to {targetLanguage}:";
-            string PerfectPrompt = $"TRANSLATE FFXIV chat to {targetLanguage}:";
-            //string PerfectPrompt = PhrasePerfectPrompt();
+            string StandardPrompt = $"Translate FF14 chat to {targetLanguage}";
+            string PerfectPrompt = PhrasePerfectPrompt(targetLanguage);
 
             var requestData = new
             {
-                model = Service.configuration.PerfectTranslation ? "gpt-4-turbo" : "gpt-3.5-turbo",
+                model = Service.configuration.BetterTranslation ? "gpt-4-turbo-preview" : "gpt-3.5-turbo",
                 temperature = 0.6,
                 max_tokens = Math.Min(Math.Max(message.Length * 2, 20), 150),
                 messages = new[]
@@ -183,7 +182,7 @@ namespace ChatTranslated.Utils
                     new
                     {
                         role = "system", content =
-                            Service.configuration.PerfectTranslation? PerfectPrompt : StandardPrompt
+                            Service.configuration.BetterTranslation ? PerfectPrompt : StandardPrompt
                     },
                     new { role = "user", content = message }
                 }
@@ -198,10 +197,13 @@ namespace ChatTranslated.Utils
 
             try
             {
-                var response = await HttpClient.SendAsync(request);
+                var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
-                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var translated = JObject.Parse(jsonResponse)["choices"]![0]!["message"]!["content"]!.ToString().Trim();
+
+                // test
+                //var token = JObject.Parse(jsonResponse)["usage"]!["total_tokens"]!.ToString().Trim();
 
                 if (!string.IsNullOrEmpty(translated))
                     return translated;
@@ -214,18 +216,17 @@ namespace ChatTranslated.Utils
                 return await MachineTranslate(message, targetLanguage);
             }
         }
-        private static string PhrasePerfectPrompt()
+        private static string PhrasePerfectPrompt(string targetLanguage)
         {
-            // TODO: Implement phrase perfect prompt
-            // context: cached message in 120 seconds with the same type (including self)
-            string context = "I'm a professional translator, and I'm translating a conversation between two people who are speaking in a language I don't understand. I'm translating their conversation into English.";
-            // instruction: Cosplay prompt, example output, point to note like ignore emojis / meaningless sentences
-            string instruction = "";
-            // knowledge: detect payload (item / map) & player instance / location, fetch knowledge from db (if any)
-            string knowledge = "";
+            // TODO: implement context
+            // context: cached message in 120 seconds with the same type (including self), capped at 100 words max
+            //string context = "";
 
-            // return organized prompt
-            return "";
+            string prompt = $"Translate FF14 chat to {targetLanguage}, keep context and jargon. Return original if emojis / meaningless. Guess if unknown.\n" +
+                //$"Context: {context}\n" +
+                $"Output plain text.";
+
+            return prompt;
         }
     }
 }

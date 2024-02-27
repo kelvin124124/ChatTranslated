@@ -80,7 +80,7 @@ namespace ChatTranslated
             });
         }
 
-        public static void OutputChatLine(SeString message)
+        public static void OutputChatLine(string message)
         {
             SeStringBuilder sb = new();
             sb.AddUiForeground("[CT] ", 58).Append(message);

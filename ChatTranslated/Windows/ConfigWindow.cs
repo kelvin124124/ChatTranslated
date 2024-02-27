@@ -55,7 +55,7 @@ public class ConfigWindow : Window, IDisposable
         "Chat Translated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Size = new Vector2(400, 450);
+        Size = new Vector2(450, 500);
         configuration = Service.configuration;
     }
 
@@ -64,10 +64,19 @@ public class ConfigWindow : Window, IDisposable
     public override void Draw()
     {
         bool _ChatIntegration = configuration.ChatIntegration;
+        bool _Enabled = configuration.Enabled;
+        bool _EnabledInDuty = configuration.EnabledInDuty;
         bool _TranslateFrDe = configuration.TranslateFrDe;
         bool _TranslateEn = configuration.TranslateEn;
         bool _SendChatToDB = configuration.SendChatToDB;
-        bool _PerfectTranslation = configuration.PerfectTranslation;
+        bool _BetterTranslation = configuration.BetterTranslation;
+
+        // Enabled
+        if (ImGui.Checkbox("Enabled", ref _Enabled))
+        {
+            configuration.Enabled = _Enabled;
+            configuration.Save();
+        }
 
         // Chat Integration
         if (ImGui.Checkbox("Chat Integration", ref _ChatIntegration))
@@ -75,6 +84,15 @@ public class ConfigWindow : Window, IDisposable
             configuration.ChatIntegration = _ChatIntegration;
             configuration.Save();
         }
+
+        // Enable in duties
+        if (ImGui.Checkbox("Enable in duties", ref _EnabledInDuty))
+        {
+            configuration.EnabledInDuty = _EnabledInDuty;
+            configuration.Save();
+        }
+
+        ImGui.Separator();
 
         // Translate language selection
         if (ImGui.Checkbox("Translate French and German", ref _TranslateFrDe))
@@ -232,25 +250,24 @@ public class ConfigWindow : Window, IDisposable
                 ImGui.EndPopup();
             }
 
-            //// Perfect translation
-            //if (ImGui.Checkbox("Perfect translation", ref _PerfectTranslation))
-            //{
-            //    configuration.PerfectTranslation = _PerfectTranslation;
-            //    configuration.Save();
-            //}
-            //// Tooltip explaining perfect translation option
-            //ImGui.SameLine();
-            //ImGui.TextDisabled("?");
-            //if (ImGui.IsItemHovered())
-            //{
-            //    ImGui.BeginTooltip();
-            //    ImGui.Text("Use GPT-4-Turbo. More detailed prompt. Provide context & instance-related info to the model." +
-            //        "\nMore expensive, ofc." +
-            //        "\nPrice estimation:" +
-            //        "\nNormal mode: <$0.1/month" +
-            //        "\nPerfect Translation: #will be updated after testing#");
-            //    ImGui.EndTooltip();
-            //}
+            // Better translation
+            if (ImGui.Checkbox("Better translation", ref _BetterTranslation))
+            {
+                configuration.BetterTranslation = _BetterTranslation;
+                configuration.Save();
+            }
+            // Tooltip explaining better translation option
+            ImGui.SameLine();
+            ImGui.TextDisabled("?");
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.BeginTooltip();
+                ImGui.Text("Use GPT-4-Turbo and more detailed prompt." +
+                    "\nPrice estimation:" +
+                    "\nNormal mode: <$0.1/month" +
+                    "\nBetter Translation: $2");
+                ImGui.EndTooltip();
+            }
 
             ImGui.TextColored(new Vector4(1, 0, 0, 1),
                 "Warning: " +

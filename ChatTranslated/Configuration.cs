@@ -21,12 +21,13 @@ namespace ChatTranslated
         public string SelectedMainWindowLanguage = "Japanese";
 
         public Mode SelectedMode { get; set; } = Mode.MachineTranslate;
-
+        public bool Enabled { get; set; } = true;
         public bool ChatIntegration { get; set; } = true;
+        public bool EnabledInDuty { get; set; } = false;
         public bool TranslateFrDe { get; set; } = false;
         public bool TranslateEn { get; set; } = false;
         public bool SendChatToDB { get; set; } = false;
-        public bool PerfectTranslation { get; set; } = false;
+        public bool BetterTranslation { get; set; } = false;
 
         public ICollection<XivChatType> ChatTypes { get; set; } = new List<XivChatType>
         {
