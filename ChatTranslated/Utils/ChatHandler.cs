@@ -37,9 +37,9 @@ namespace ChatTranslated.Utils
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
             string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
             if (type == XivChatType.TellOutgoing)
-                playerName = Sanitize(Service.clientState.LocalPlayer!.Name.ToString() ?? string.Empty);
+                playerName = Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty);
 
-            if (playerName == Sanitize(Service.clientState.LocalPlayer!.Name.ToString() ?? string.Empty))
+            if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
             {
                 if (Service.configuration.SendChatToDB == true)
                 {
@@ -52,7 +52,8 @@ namespace ChatTranslated.Utils
             string? filterReason = MessageFilter(playerName, message.TextValue);
             if (filterReason != null)
             {
-                OutputTranslation(type, playerName, message.TextValue, filterReason);
+                Service.pluginLog.Debug($"Message filtered: {filterReason}");
+                Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 return;
             }
 
@@ -65,7 +66,7 @@ namespace ChatTranslated.Utils
                 return "Auto-translate messages.";
             else if (IsMacroMessage(playerName))
                 return "Macro messages.";
-            else if (message.Trim().Length < 2)
+            else if (Sanitize(message.Trim()).Length < 2)
                 return "Single character or empty message.";
 
             return null;
@@ -108,7 +109,14 @@ namespace ChatTranslated.Utils
                 return;
             }
 
-            Task.Run(() => Translator.TranslateChat(playerName, message, type));
+            try
+            {
+                Task.Run(() => Translator.TranslateChat(playerName, message, type));
+            }
+            catch (Exception ex)
+            {
+                Service.pluginLog.Error($"TranslateChat Error: {ex}");
+            }
         }
 
         private static string? JapaneseFilter(string message)
@@ -127,7 +135,7 @@ namespace ChatTranslated.Utils
         {
             Service.mainWindow.PrintToOutput($"{playerName}: {message}");
             if (logmessage != null)
-                Service.pluginLog.Info(logmessage);
+                Service.pluginLog.Debug(logmessage);
             if (Service.configuration.ChatIntegration)
                 Plugin.OutputChatLine(playerName, message, type);
         }

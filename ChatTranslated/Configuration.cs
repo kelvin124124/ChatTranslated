@@ -41,7 +41,7 @@ namespace ChatTranslated
 
         public void Save()
         {
-            Service.pluginInterface!.SavePluginConfig(this);
+            Service.pluginInterface?.SavePluginConfig(this);
         }
     }
 }

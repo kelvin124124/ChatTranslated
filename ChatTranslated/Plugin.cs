@@ -75,15 +75,15 @@ namespace ChatTranslated
             Service.chatGui.Print(new XivChatEntry
             {
                 Type = type,
-                Name = "[CT] " + sender,
-                Message = new SeStringBuilder().AddUiForeground(50).Append(message).Build()
+                Name = "[CT] " + sender ?? "<empty>",
+                Message = new SeStringBuilder().AddUiForeground(50).Append(message ?? "<empty>").Build()
             });
         }
 
         public static void OutputChatLine(string message)
         {
             SeStringBuilder sb = new();
-            sb.AddUiForeground("[CT] ", 58).Append(message);
+            sb.AddUiForeground("[CT] ", 58).Append(message ?? "<empty>");
 
             Service.chatGui.Print(new XivChatEntry { Message = sb.BuiltString });
         }

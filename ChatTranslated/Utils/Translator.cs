@@ -200,10 +200,10 @@ namespace ChatTranslated.Utils
                 var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
                 var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var translated = JObject.Parse(jsonResponse)["choices"]![0]!["message"]!["content"]!.ToString().Trim();
+                var translated = JObject.Parse(jsonResponse)["choices"]?[0]?["message"]?["content"]?.ToString().Trim();
 
                 // test
-                //var token = JObject.Parse(jsonResponse)["usage"]!["total_tokens"]!.ToString().Trim();
+                //var token = JObject.Parse(jsonResponse)["usage"]?["total_tokens"]?.ToString().Trim();
 
                 if (!string.IsNullOrEmpty(translated))
                     return translated;
