@@ -109,14 +109,7 @@ namespace ChatTranslated.Utils
                 return;
             }
 
-            try
-            {
-                Task.Run(() => Translator.TranslateChat(playerName, message, type));
-            }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Error($"TranslateChat Error: {ex}");
-            }
+            Task.Run(() => Translator.TranslateChat(playerName, message, type));
         }
 
         private static string? JapaneseFilter(string message)
