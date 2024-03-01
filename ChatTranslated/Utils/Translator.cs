@@ -133,7 +133,7 @@ namespace ChatTranslated.Utils
             };
 
             var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://jbtzl5pwoe.execute-api.us-east-2.amazonaws.com/default/ChatFunction")
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://chatfunction.kelpcc.com")
             {
                 Content = content
             };
