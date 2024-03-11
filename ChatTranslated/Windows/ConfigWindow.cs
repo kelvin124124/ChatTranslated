@@ -13,7 +13,7 @@ public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
 
-    private readonly string[] languages = { "English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)" };
+    private readonly string[] languages = { "English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish" };
     private string apiKeyInput = Service.configuration.OpenAI_API_Key;
     public static readonly List<XivChatType> genericChatTypes = new List<XivChatType>
     {

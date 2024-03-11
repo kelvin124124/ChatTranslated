@@ -23,7 +23,7 @@ namespace ChatTranslated.Utils
                 AutomaticDecompression = DecompressionMethods.All,
                 ConnectCallback = new HappyEyeballsCallback().ConnectCallback,
             })
-            { Timeout = TimeSpan.FromSeconds(20) };
+            { Timeout = TimeSpan.FromSeconds(10) };
 
         private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2(HttpClient);
         private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
