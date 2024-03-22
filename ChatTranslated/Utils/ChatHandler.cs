@@ -10,16 +10,27 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Utils
 {
-    internal class ChatHandler
+    internal partial class ChatHandler
     {
-        private static readonly Regex AutoTranslateRegex = new Regex(@"^\uE040\u0020?.*\u0020?\uE041$", RegexOptions.Compiled);
-        private static readonly Regex SpecialCharacterRegex = new Regex(@"[\uE000-\uF8FF]+", RegexOptions.Compiled);
-        private static readonly Regex NonEnglishRegex = new Regex(@"[^\u0020-\u007E\uFF01-\uFF5E]+", RegexOptions.Compiled);
-        private static readonly Regex JPWelcomeRegex = new Regex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*", RegexOptions.Compiled);
-        private static readonly Regex JPByeRegex = new Regex(@"^お疲れ様でした[\u3002\uFF01!]*", RegexOptions.Compiled);
-        private static readonly Regex JPDomaRegex = new Regex(@"\b(どまい?|ドマ|どんまい)(です)?[\u3002\uFF01!]*\b", RegexOptions.Compiled);
+        [GeneratedRegex(@"^\uE040\u0020?.*\u0020?\uE041$")]
+        private static partial Regex AutoTranslateRegex();
 
-        private readonly Dictionary<string, DateTime> lastMessageTime = new Dictionary<string, DateTime>();
+        [GeneratedRegex(@"[\uE000-\uF8FF]+")]
+        private static partial Regex SpecialCharacterRegex();
+
+        [GeneratedRegex(@"[^\u0020-\u007E\uFF01-\uFF5E]+")]
+        private static partial Regex NonEnglishRegex();
+
+        [GeneratedRegex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*")]
+        private static partial Regex JPWelcomeRegex();
+
+        [GeneratedRegex(@"^お疲れ様でした[\u3002\uFF01!]*")]
+        private static partial Regex JPByeRegex();
+
+        [GeneratedRegex(@"\b(どまい?|ドマ|どんまい)(です)?[\u3002\uFF01!]*\b")]
+        private static partial Regex JPDomaRegex();
+
+        private readonly Dictionary<string, DateTime> lastMessageTime = [];
 
         public ChatHandler()
         {
@@ -62,7 +73,7 @@ namespace ChatTranslated.Utils
 
         private string? MessageFilter(string playerName, string message)
         {
-            if (AutoTranslateRegex.IsMatch(message))
+            if (AutoTranslateRegex().IsMatch(message))
                 return "Auto-translate messages.";
             else if (IsMacroMessage(playerName))
                 return "Macro messages.";
@@ -87,7 +98,7 @@ namespace ChatTranslated.Utils
         private static void ProcessMessage(string playerName, string message, XivChatType type)
         {
             // Process Eng character messages if configured
-            if (!NonEnglishRegex.IsMatch(message))
+            if (!NonEnglishRegex().IsMatch(message))
             {
                 // Eng character detected
                 if (Service.configuration.TranslateEn)
@@ -114,11 +125,11 @@ namespace ChatTranslated.Utils
 
         private static string? JapaneseFilter(string message)
         {
-            if (JPWelcomeRegex.IsMatch(message))
+            if (JPWelcomeRegex().IsMatch(message))
                 return "Let's do it!";
-            else if (JPByeRegex.IsMatch(message))
+            else if (JPByeRegex().IsMatch(message))
                 return "Good game!";
-            else if (JPDomaRegex.IsMatch(message))
+            else if (JPDomaRegex().IsMatch(message))
                 return "It's okay!";
 
             return null;
@@ -135,7 +146,7 @@ namespace ChatTranslated.Utils
 
         public static string Sanitize(string input)
         {
-            return SpecialCharacterRegex.Replace(input, string.Empty);
+            return SpecialCharacterRegex().Replace(input, string.Empty);
         }
 
         public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;

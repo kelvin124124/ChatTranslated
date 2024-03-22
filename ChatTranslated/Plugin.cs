@@ -1,14 +1,14 @@
 using ChatTranslated.Utils;
 using ChatTranslated.Windows;
-using Dalamud.ContextMenu;
 using Dalamud.Game.Command;
+using Dalamud.Game.Gui.ContextMenu;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
-using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Interface.Windowing;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
+using FFXIVClientStructs.FFXIV.Client.UI;
 using System.Threading.Tasks;
 
 namespace ChatTranslated
@@ -18,8 +18,7 @@ namespace ChatTranslated
         public static string Name => "ChatTranslated";
         private const string CommandName = "/pchat";
 
-        public readonly DalamudContextMenu contextMenu;
-        private readonly GameObjectContextMenuItem gameObjectContextMenuItem;
+        private readonly MenuItem contextMenuItem;
 
         public WindowSystem WindowSystem { get; } = new("ChatTranslated");
 
@@ -47,10 +46,14 @@ namespace ChatTranslated
             Service.translator = new Translator();
             Service.chatHandler = new ChatHandler();
 
-            contextMenu = new DalamudContextMenu(pluginInterface);
-            gameObjectContextMenuItem = new GameObjectContextMenuItem(
-                new SeString(new TextPayload("Translate")), TranslatePF, true);
-            contextMenu.OnOpenGameObjectContextMenu += OpenGameObjectContextMenu;
+            contextMenuItem = new MenuItem
+            {
+                Name = "Translate",
+                PrefixChar = 'T',
+                PrefixColor = 51,
+                OnClicked = TranslatePF
+            };
+            Service.contextMenu.OnMenuOpened += OnContextMenuOpened;
 
             Service.commandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
             {
@@ -58,15 +61,18 @@ namespace ChatTranslated
             });
         }
 
-        private unsafe void OpenGameObjectContextMenu(GameObjectContextMenuOpenArgs args)
+        private unsafe void OnContextMenuOpened(MenuOpenedArgs args)
         {
-            if (args.ParentAddonName == "LookingForGroupDetail")
-                args.AddCustomItem(gameObjectContextMenuItem);
+            if (args.AddonName == "LookingForGroupDetail")
+                args.AddMenuItem(contextMenuItem);
         }
 
-        private void TranslatePF(GameObjectContextMenuItemSelectedArgs args)
+        private unsafe void TranslatePF(MenuItemClickedArgs args)
         {
-            string message = ChatHandler.Sanitize(args?.Text?.ToString() ?? "null");
+            AddonLookingForGroupDetail* PfAddonPtr = (AddonLookingForGroupDetail*)args.AddonPtr;
+            string description = PfAddonPtr->DescriptionString.ToString();
+
+            string message = ChatHandler.Sanitize(description ?? "null");
             Task.Run(() => Translator.TranslateChat("PF", message));
         }
 
@@ -93,9 +99,6 @@ namespace ChatTranslated
             WindowSystem?.RemoveAllWindows();
 
             Service.chatHandler?.Dispose();
-
-            contextMenu.OnOpenGameObjectContextMenu -= OpenGameObjectContextMenu;
-            contextMenu.Dispose();
 
             Service.configWindow.Dispose();
             Service.mainWindow.Dispose();

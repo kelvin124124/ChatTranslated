@@ -17,11 +17,9 @@ namespace ChatTranslated.Utils
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(pbData);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri("http://ffdb.sapphosound.com");
-                await client.PostAsync("/api/collections/ff_sentences/records", data);
-            }
+            using var client = new HttpClient();
+            client.BaseAddress = new Uri("http://ffdb.sapphosound.com");
+            await client.PostAsync("/api/collections/ff_sentences/records", data);
         }
     }
 }

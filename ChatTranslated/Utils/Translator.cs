@@ -18,20 +18,20 @@ namespace ChatTranslated.Utils
     internal class Translator
     {
         private static readonly HttpClient HttpClient =
-            new HttpClient(new SocketsHttpHandler
+            new(new SocketsHttpHandler
             {
                 AutomaticDecompression = DecompressionMethods.All,
                 ConnectCallback = new HappyEyeballsCallback().ConnectCallback,
             })
             { Timeout = TimeSpan.FromSeconds(10) };
 
-        private static readonly GoogleTranslator2 GTranslator = new GoogleTranslator2(HttpClient);
-        private static readonly BingTranslator BingTranslator = new BingTranslator(HttpClient);
+        private static readonly GoogleTranslator2 GTranslator = new(HttpClient);
+        private static readonly BingTranslator BingTranslator = new(HttpClient);
 
         private const string DefaultContentType = "application/json";
         private static readonly string? ChatFunction_key = ReadSecret("ChatTranslated.Resources.ChatFunctionKey.secret").Replace("\n", string.Empty);
 
-        public static Dictionary<string, string> TranslationCache = new Dictionary<string, string>();
+        public static Dictionary<string, string> TranslationCache = [];
 
         private static string ReadSecret(string resourceName)
         {

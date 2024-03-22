@@ -9,7 +9,7 @@ namespace ChatTranslated.Windows;
 
 public class MainWindow : Window, IDisposable
 {
-    private readonly string[] languages = { "Japanese", "English", "German", "French" };
+    private readonly string[] languages = ["Japanese", "English", "German", "French"];
 
     internal string outputText = ""; // Holds the text for the output field
     internal string inputText = "";  // Holds the text for the input field

@@ -13,10 +13,10 @@ public class ConfigWindow : Window, IDisposable
 {
     private readonly Configuration configuration;
 
-    private readonly string[] languages = { "English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish" };
+    private readonly string[] languages = ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
     private string apiKeyInput = Service.configuration.OpenAI_API_Key;
-    public static readonly List<XivChatType> genericChatTypes = new List<XivChatType>
-    {
+    public static readonly List<XivChatType> genericChatTypes =
+    [
         XivChatType.Say,
         XivChatType.Shout,
         XivChatType.TellIncoming,
@@ -27,9 +27,9 @@ public class ConfigWindow : Window, IDisposable
         XivChatType.Yell,
         XivChatType.CrossParty,
         XivChatType.PvPTeam
-    };
-    public static readonly List<XivChatType> lsChatTypes = new List<XivChatType>
-    {
+    ];
+    public static readonly List<XivChatType> lsChatTypes =
+    [
         XivChatType.Ls1,
         XivChatType.Ls2,
         XivChatType.Ls3,
@@ -38,9 +38,9 @@ public class ConfigWindow : Window, IDisposable
         XivChatType.Ls6,
         XivChatType.Ls7,
         XivChatType.Ls8
-    };
-    public static readonly List<XivChatType> cwlsChatTypes = new List<XivChatType>
-    {
+    ];
+    public static readonly List<XivChatType> cwlsChatTypes =
+    [
         XivChatType.CrossLinkShell1,
         XivChatType.CrossLinkShell2,
         XivChatType.CrossLinkShell3,
@@ -49,7 +49,7 @@ public class ConfigWindow : Window, IDisposable
         XivChatType.CrossLinkShell6,
         XivChatType.CrossLinkShell7,
         XivChatType.CrossLinkShell8
-    };
+    ];
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
@@ -157,8 +157,7 @@ public class ConfigWindow : Window, IDisposable
                 }
                 else
                 {
-                    if (configuration.ChatTypes.Contains(type))
-                        configuration.ChatTypes.Remove(type);
+                    configuration.ChatTypes.Remove(type);
                 }
 
                 configuration.Save();
@@ -176,7 +175,7 @@ public class ConfigWindow : Window, IDisposable
         if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
         {
             configuration.SelectedChatLanguage = languages[currentLanguageIndex];
-            Translator.TranslationCache = new Dictionary<string, string>();
+            Translator.TranslationCache = [];
             configuration.Save();
         }
 
@@ -190,7 +189,7 @@ public class ConfigWindow : Window, IDisposable
         if (ImGui.Combo("##ModeCombo", ref selectedMode, Enum.GetNames(typeof(Mode)), 3))
         {
             configuration.SelectedMode = (Mode)selectedMode;
-            Translator.TranslationCache = new Dictionary<string, string>();
+            Translator.TranslationCache = [];
             configuration.Save();
         }
 
@@ -212,7 +211,7 @@ public class ConfigWindow : Window, IDisposable
                 {
                     // hope nothing bad happens
                     configuration.OpenAI_API_Key = apiKeyInput;
-                    Translator.TranslationCache = new Dictionary<string, string>();
+                    Translator.TranslationCache = [];
                     configuration.Save();
                 }
                 else

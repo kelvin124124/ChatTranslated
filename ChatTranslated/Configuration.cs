@@ -29,12 +29,12 @@ namespace ChatTranslated
         public bool SendChatToDB { get; set; } = false;
         public bool BetterTranslation { get; set; } = false;
 
-        public ICollection<XivChatType> ChatTypes { get; set; } = new List<XivChatType>
-        {
+        public ICollection<XivChatType> ChatTypes { get; set; } =
+        [
             XivChatType.Say, XivChatType.Shout, XivChatType.TellIncoming, XivChatType.Party,
             XivChatType.Alliance, XivChatType.FreeCompany, XivChatType.NoviceNetwork,
             XivChatType.Yell, XivChatType.CrossParty, XivChatType.PvPTeam,
-        };
+        ];
 
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
         public bool warned { get; set; } = false;
