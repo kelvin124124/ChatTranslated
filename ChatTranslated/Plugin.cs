@@ -49,8 +49,6 @@ namespace ChatTranslated
             contextMenuItem = new MenuItem
             {
                 Name = "Translate",
-                PrefixChar = 'T',
-                PrefixColor = 51,
                 OnClicked = TranslatePF
             };
             Service.contextMenu.OnMenuOpened += OnContextMenuOpened;
