@@ -66,7 +66,8 @@ public class ConfigWindow : Window, IDisposable
         bool _ChatIntegration = configuration.ChatIntegration;
         bool _Enabled = configuration.Enabled;
         bool _EnabledInDuty = configuration.EnabledInDuty;
-        bool _TranslateFrDe = configuration.TranslateFrDe;
+        bool _TranslateFr = configuration.TranslateFr;
+        bool _TranslateDe = configuration.TranslateDe;
         bool _TranslateEn = configuration.TranslateEn;
         bool _SendChatToDB = configuration.SendChatToDB;
         bool _BetterTranslation = configuration.BetterTranslation;
@@ -95,9 +96,14 @@ public class ConfigWindow : Window, IDisposable
         ImGui.Separator();
 
         // Translate language selection
-        if (ImGui.Checkbox("Translate French and German", ref _TranslateFrDe))
+        if (ImGui.Checkbox("Translate French", ref _TranslateFr))
         {
-            configuration.TranslateFrDe = _TranslateFrDe;
+            configuration.TranslateFr = _TranslateFr;
+            configuration.Save();
+        }
+        if (ImGui.Checkbox("Translate German", ref _TranslateDe))
+        {
+            configuration.TranslateDe = _TranslateDe;
             configuration.Save();
         }
         if (ImGui.Checkbox("Translate all languages", ref _TranslateEn))

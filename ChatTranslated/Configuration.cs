@@ -24,7 +24,8 @@ namespace ChatTranslated
         public bool Enabled { get; set; } = true;
         public bool ChatIntegration { get; set; } = true;
         public bool EnabledInDuty { get; set; } = false;
-        public bool TranslateFrDe { get; set; } = false;
+        public bool TranslateFr { get; set; } = false;
+        public bool TranslateDe { get; set; } = false;
         public bool TranslateEn { get; set; } = false;
         public bool SendChatToDB { get; set; } = false;
         public bool BetterTranslation { get; set; } = false;

@@ -59,7 +59,7 @@ namespace ChatTranslated
             });
         }
 
-        private unsafe void OnContextMenuOpened(MenuOpenedArgs args)
+        private void OnContextMenuOpened(MenuOpenedArgs args)
         {
             if (args.AddonName == "LookingForGroupDetail")
                 args.AddMenuItem(contextMenuItem);

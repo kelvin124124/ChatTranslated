@@ -68,7 +68,8 @@ namespace ChatTranslated.Utils
             {
                 var language = await GTranslator.DetectLanguageAsync(message);
                 Service.pluginLog.Debug($"language: {language.Name}");
-                if (language.Name == "French" || language.Name == "German")
+                if ((language.Name == "French" && Service.configuration.TranslateFr) ||
+                    (language.Name == "German" && Service.configuration.TranslateDe))
                 {
                     await TranslateChat(sender, message, type);
                 }

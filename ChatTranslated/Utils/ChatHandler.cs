@@ -105,7 +105,7 @@ namespace ChatTranslated.Utils
                 {
                     Task.Run(() => Translator.TranslateChat(playerName, message, type));
                 }
-                else if (Service.configuration.TranslateFrDe)
+                else if (Service.configuration.TranslateFr || Service.configuration.TranslateDe)
                 {
                     Task.Run(() => Translator.TranslateFrDeChat(playerName, message, type));
                 }
