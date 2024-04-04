@@ -122,9 +122,6 @@ namespace ChatTranslated.Utils
                 return;
             }
 
-            // debug
-            Plugin.OutputChatLine(messageText);
-
             Task.Run(() => Translator.TranslateChat(playerName, message, type));
         }
 
