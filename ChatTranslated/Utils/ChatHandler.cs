@@ -99,7 +99,7 @@ namespace ChatTranslated.Utils
         private static void ProcessMessage(string playerName, string message, XivChatType type)
         {
             // Process Eng character messages if configured
-            string messageText = Regex.Replace(message.TextValue, @"\uE040(.*?)\uE041", string.Empty);
+            string messageText = Regex.Replace(message, @"\uE040(.*?)\uE041", string.Empty);
             if (!NonEnglishRegex().IsMatch(messageText))
             {
                 // Eng character detected
