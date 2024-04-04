@@ -83,6 +83,7 @@ namespace ChatTranslated.Utils
 
         private static async Task<string> TranslateMessage(string message, string targetLanguage)
         {
+            message = ChatHandler.Sanitize(message);
             switch (Service.configuration.SelectedMode)
             {
                 case Configuration.Mode.MachineTranslate:
