@@ -18,7 +18,7 @@ namespace ChatTranslated.Utils
         [GeneratedRegex(@"[\uE000-\uF8FF]+")]
         private static partial Regex SpecialCharacterRegex();
 
-        [GeneratedRegex(@"(?<![\u0020-\u007E\u20A0-\u20CF\u2000-\u206F\u2190-\u21FF\u3000-\u303F\uFF10-\uFF19])[^(\u0020-\u007E\u20A0-\u20CF\u2000-\u206F\u2190-\u21FF\u3000-\u303F\uFF10-\uFF19)]{3,}(?![\u0020-\u007E\u20A0-\u20CF\u2000-\u206F\u2190-\u21FF\u3000-\u303F\uFF10-\uFF19])")] 
+        [GeneratedRegex(@"(?<![\u0020-\u007E\u20A0-\u20CF\u2000-\u206F\u2190-\u21FF\u3000-\u303F\uFF10-\uFF19\uFF21-\uFF3A\uFF41-\uFF5A])[^(\u0020-\u007E\u20A0-\u20CF\u2000-\u206F\u2190-\u21FF\u3000-\u303F\uFF10-\uFF19\uFF21-\uFF3A\uFF41-\uFF5A)]{2,}(?![\u0020-\u007E\u20A0-\u20CF\u2000-\u206F\u2190-\u21FF\u3000-\u303F\uFF10-\uFF19\uFF21-\uFF3A\uFF41-\uFF5A])")] 
         private static partial Regex NonEnglishRegex();
 
         [GeneratedRegex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*")]
