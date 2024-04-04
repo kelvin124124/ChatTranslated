@@ -60,7 +60,8 @@ namespace ChatTranslated.Utils
                 return;
             }
 
-            string? filterReason = MessageFilter(playerName, message.TextValue);
+            string messageText = Regex.Replace(message.TextValue, @"\uE040(.*?)\uE041", string.Empty);
+            string? filterReason = MessageFilter(playerName, messageText);
             if (filterReason != null)
             {
                 Service.pluginLog.Debug($"Message filtered: {filterReason}");
@@ -98,7 +99,8 @@ namespace ChatTranslated.Utils
         private static void ProcessMessage(string playerName, string message, XivChatType type)
         {
             // Process Eng character messages if configured
-            if (!NonEnglishRegex().IsMatch(message))
+            string messageText = Regex.Replace(message.TextValue, @"\uE040(.*?)\uE041", string.Empty);
+            if (!NonEnglishRegex().IsMatch(messageText))
             {
                 // Eng character detected
                 if (Service.configuration.TranslateEn)
