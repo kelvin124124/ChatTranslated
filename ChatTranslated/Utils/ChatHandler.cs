@@ -18,7 +18,7 @@ namespace ChatTranslated.Utils
         [GeneratedRegex(@"[\uE000-\uF8FF]+")]
         private static partial Regex SpecialCharacterRegex();
 
-        [GeneratedRegex(@"[^\u0020-\u007E\uFF01-\uFF5E]+")]
+        [GeneratedRegex(@"(?<![\u0020-\u007E\u20A0-\u20CF\u2000-\u206F\u2190-\u21FF])[^(\u0020-\u007E\u20A0-\u20CF\u2000-\u206F\u2190-\u21FF)]{2,}(?![\u0020-\u007E\u20A0-\u20CF\u2000-\u206F\u2190-\u21FF])")]
         private static partial Regex NonEnglishRegex();
 
         [GeneratedRegex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*")]
@@ -60,7 +60,7 @@ namespace ChatTranslated.Utils
                 return;
             }
 
-            string messageText = Regex.Replace(message.TextValue, @"\uE040(.*?)\uE041", string.Empty);
+            string messageText = Regex.Replace(message.TextValue, @"\uE040\u0020(.*?)\u0020\uE041", string.Empty);
             string? filterReason = MessageFilter(playerName, messageText);
             if (filterReason != null)
             {
@@ -69,7 +69,7 @@ namespace ChatTranslated.Utils
                 return;
             }
 
-            ProcessMessage(playerName, Sanitize(message.TextValue), type);
+            ProcessMessage(playerName, message.TextValue, type);
         }
 
         private string? MessageFilter(string playerName, string message)
@@ -99,7 +99,7 @@ namespace ChatTranslated.Utils
         private static void ProcessMessage(string playerName, string message, XivChatType type)
         {
             // Process Eng character messages if configured
-            string messageText = Regex.Replace(message, @"\uE040(.*?)\uE041", string.Empty);
+            string messageText = Regex.Replace(message, @"\uE040\u0020(.*?)\u0020\uE041", string.Empty);
             if (!NonEnglishRegex().IsMatch(messageText))
             {
                 // Eng character detected
@@ -115,12 +115,15 @@ namespace ChatTranslated.Utils
             }
 
             // Likely Japanese -> Filter specific Japanese messages
-            string? filteredMessage = JapaneseFilter(message);
+            string? filteredMessage = JapaneseFilter(messageText);
             if (filteredMessage != null)
             {
                 OutputTranslation(type, playerName, $"{message} || {filteredMessage}", "Japanese greeting message filtered.");
                 return;
             }
+
+            // debug
+            Plugin.OutputChatLine(messageText);
 
             Task.Run(() => Translator.TranslateChat(playerName, message, type));
         }
