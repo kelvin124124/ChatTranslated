@@ -12,8 +12,8 @@ namespace ChatTranslated.Utils
 {
     internal partial class ChatHandler
     {
-        [GeneratedRegex(@"^\uE040\u0020?.*\u0020?\uE041$")]
-        private static partial Regex AutoTranslateRegex();
+        [GeneratedRegex(@"\uE040\u0020(.*?)\u0020\uE041")]
+        public static partial Regex AutoTranslateRegex();
 
         [GeneratedRegex(@"[\uE000-\uF8FF]+")]
         private static partial Regex SpecialCharacterRegex();
@@ -60,7 +60,7 @@ namespace ChatTranslated.Utils
                 return;
             }
 
-            string messageText = Regex.Replace(message.TextValue, @"\uE040\u0020(.*?)\u0020\uE041", string.Empty);
+            string messageText = AutoTranslateRegex().Replace(message.TextValue, string.Empty);
             string? filterReason = MessageFilter(playerName, messageText);
             if (filterReason != null)
             {
@@ -74,12 +74,10 @@ namespace ChatTranslated.Utils
 
         private string? MessageFilter(string playerName, string message)
         {
-            if (AutoTranslateRegex().IsMatch(message))
-                return "Auto-translate messages.";
+            if (Sanitize(message.Trim()).Length < 2)
+                return "Single character or empty message.";
             else if (IsMacroMessage(playerName))
                 return "Macro messages.";
-            else if (Sanitize(message.Trim()).Length < 2)
-                return "Single character or empty message.";
 
             return null;
         }
@@ -99,7 +97,7 @@ namespace ChatTranslated.Utils
         private static void ProcessMessage(string playerName, string message, XivChatType type)
         {
             // Process Eng character messages if configured
-            string messageText = Regex.Replace(message, @"\uE040\u0020(.*?)\u0020\uE041", string.Empty);
+            string messageText = AutoTranslateRegex().Replace(message, string.Empty);
             if (!NonEnglishRegex().IsMatch(messageText))
             {
                 // Eng character detected

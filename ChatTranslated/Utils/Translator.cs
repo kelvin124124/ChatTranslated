@@ -64,7 +64,7 @@ namespace ChatTranslated.Utils
 
         public static async Task TranslateFrDeChat(string sender, string message, XivChatType type = XivChatType.Say)
         {
-            string messageText = Regex.Replace(message, @"\uE040\u0020(.*?)\u0020\uE041", string.Empty);
+            string messageText = ChatHandler.AutoTranslateRegex().Replace(message, string.Empty);
             try
             {
                 var language = await GTranslator.DetectLanguageAsync(messageText);
