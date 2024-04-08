@@ -10,27 +10,35 @@ namespace ChatTranslated
     public class Configuration : IPluginConfiguration
     {
         public int Version { get; set; } = 0;
-        public enum Mode
+        public enum TranslationMode
         {
             MachineTranslate,
+            DeepL_API,
             OpenAI_API,
-            GPTProxy
+            LLMProxy
         }
+        public TranslationMode SelectedTranslationMode { get; set; } = TranslationMode.MachineTranslate;
 
-        public string SelectedChatLanguage = "English";
-        public string SelectedMainWindowLanguage = "Japanese";
+        public enum LanguageSelectionMode
+        {
+            Default,
+            CustomLanguages,
+            AllLanguages
+        }
+        public LanguageSelectionMode SelectedLanguageSelectionMode { get; set; } = LanguageSelectionMode.Default;
 
-        public Mode SelectedMode { get; set; } = Mode.MachineTranslate;
+        public ICollection<string> SourceLanguages { get; set; } =
+        ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
+
+        public string SelectedTargetLanguage = "English";
+        public string SelectedMainWindowTargetLanguage = "Japanese";
+
         public bool Enabled { get; set; } = true;
         public bool ChatIntegration { get; set; } = true;
         public bool EnabledInDuty { get; set; } = false;
-        public bool TranslateFr { get; set; } = false;
-        public bool TranslateDe { get; set; } = false;
-        public bool TranslateEn { get; set; } = false;
         public bool SendChatToDB { get; set; } = false;
-        public bool BetterTranslation { get; set; } = false;
 
-        public ICollection<XivChatType> ChatTypes { get; set; } =
+        public ICollection<XivChatType> SelectedChatTypes { get; set; } =
         [
             XivChatType.Say, XivChatType.Shout, XivChatType.TellIncoming, XivChatType.Party,
             XivChatType.Alliance, XivChatType.FreeCompany, XivChatType.NoviceNetwork,
@@ -38,7 +46,10 @@ namespace ChatTranslated
         ];
 
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
-        public bool warned { get; set; } = false;
+        public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
+        public bool openaiWarned { get; set; } = false;
+        public bool BetterTranslation { get; set; } = false;
+        public string ProxyRegion { get; set; } = "US";
 
         public void Save()
         {

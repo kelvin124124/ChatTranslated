@@ -1,3 +1,4 @@
+using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using ChatTranslated.Windows;
 using Dalamud.Game.Command;
@@ -71,10 +72,10 @@ namespace ChatTranslated
             string description = PfAddonPtr->DescriptionString.ToString();
 
             string message = ChatHandler.Sanitize(description ?? "null");
-            Task.Run(() => Translator.TranslateChat("PF", message));
+            Task.Run(() => TranslationHandler.TranslatePFMessage(message));
         }
 
-        public static void OutputChatLine(string sender, string message, XivChatType type = XivChatType.Say)
+        public static void OutputChatLine(XivChatType type, string sender, string message)
         {
             Service.chatGui.Print(new XivChatEntry
             {
