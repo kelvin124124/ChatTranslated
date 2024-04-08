@@ -81,6 +81,7 @@ public class ConfigWindow : Window, IDisposable
         bool _Enabled = configuration.Enabled;
         bool _ChatIntegration = configuration.ChatIntegration;
         bool _EnabledInDuty = configuration.EnabledInDuty;
+        bool _SendChatToDB = configuration.SendChatToDB;
 
         // Enabled
         if (ImGui.Checkbox("Enabled", ref _Enabled))
@@ -102,6 +103,13 @@ public class ConfigWindow : Window, IDisposable
             configuration.EnabledInDuty = _EnabledInDuty;
             configuration.Save();
         }
+
+        // Send chat to DB
+        if (ImGui.Checkbox("Send chat to DB", ref _SendChatToDB)) {
+            configuration.SendChatToDB = _SendChatToDB;
+        }
+        ImGui.Text("    Collect outgoing chat messages to improve translations.\n" +
+                   "    Personal identifiers and sensitive info will be removed before use.");
     }
 
     private void DrawSourceLangSelection(Configuration configuration)

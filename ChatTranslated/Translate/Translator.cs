@@ -48,7 +48,7 @@ namespace ChatTranslated.Translate
                 case Configuration.TranslationMode.LLMProxy:
                     return await LLMProxyTranslate(text, targetLanguage);
                 default:
-                    Service.pluginLog.Warning("Warn: Unknown translation mode.");
+                    Service.pluginLog.Warning("Unknown translation mode.");
                     return text;
             }
         }
@@ -85,7 +85,7 @@ namespace ChatTranslated.Translate
         {
             if (string.IsNullOrEmpty(ChatFunction_key))
             {
-                Service.pluginLog.Warning("Warn: LLMProxyTranslate - api key empty.");
+                Service.pluginLog.Warning("LLMProxyTranslate - api key empty.");
                 return await MachineTranslate(message, targetLanguage);
             }
 
@@ -133,7 +133,7 @@ namespace ChatTranslated.Translate
         {
             if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9]{32,}$"))
             {
-                Service.pluginLog.Warning("Warn: Incorrect API key format, falling back to machine translate.");
+                Service.pluginLog.Warning("Incorrect API key format, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
             }
 
@@ -178,7 +178,7 @@ namespace ChatTranslated.Translate
             }
             catch (Exception ex)
             {
-                Service.pluginLog.Warning($"Warn: {ex.Message}, falling back to machine translate.");
+                Service.pluginLog.Warning($"{ex.Message}, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
             }
         }
