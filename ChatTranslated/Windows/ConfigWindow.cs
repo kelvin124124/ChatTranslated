@@ -1,3 +1,4 @@
+using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
@@ -67,6 +68,9 @@ public class ConfigWindow : Window, IDisposable
         DrawGenericSettigns(configuration);
         ImGui.Separator();
 
+        DrawPluginLangSelection(configuration);
+        ImGui.Separator();
+
         DrawChatChannelSelection(configuration);
         ImGui.Separator();
 
@@ -114,6 +118,28 @@ public class ConfigWindow : Window, IDisposable
         }
         ImGui.Text("    Collect outgoing chat messages to improve translations.\n" +
                    "    Personal identifiers and sensitive info will be removed before use.");
+    }
+
+    private void DrawPluginLangSelection(Configuration configuration)
+    {
+        ImGui.AlignTextToFramePadding();
+        ImGui.Text("Plugin Language");
+        ImGui.SameLine();
+
+        string currentSelection = configuration.SelectedPluginLanguage;
+
+        int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
+        if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
+
+        if (ImGui.Combo("##targetLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
+        {
+            configuration.SelectedPluginLanguage = supportedLanguages[currentIndex];
+            if (configuration.SelectedPluginLanguage != "English")
+            {
+                LocManager.LoadLocalizations();
+            }
+            configuration.Save();
+        }
     }
 
     private static void DrawChatChannelSelection(Configuration configuration)
