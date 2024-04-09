@@ -43,6 +43,7 @@ namespace ChatTranslated
 
             pluginInterface.UiBuilder.Draw += DrawUI;
             pluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
+            pluginInterface.UiBuilder.OpenMainUi += DrawMainUI;
 
             Service.translator = new Translator();
             Service.translationHandler = new TranslationHandler();
@@ -139,6 +140,11 @@ namespace ChatTranslated
         public static void DrawConfigUI()
         {
             Service.configWindow.IsOpen = true;
+        }
+
+        public static void DrawMainUI()
+        {
+            Service.mainWindow.IsOpen = true;
         }
     }
 }

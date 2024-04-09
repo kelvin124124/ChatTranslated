@@ -30,7 +30,7 @@ namespace ChatTranslated.Translate
         public static DeepL.Translator DeepLtranslator = new(DeepL_API_Key);
 
         private const string DefaultContentType = "application/json";
-        private static readonly string? cfv2 = ReadSecret("ChatTranslated.Resources.cfv2.secret").Replace("\n", string.Empty);
+        private static readonly string? Cfv2 = ReadSecret("ChatTranslated.Resources.cfv2.secret").Replace("\n", string.Empty);
 
         private static string ReadSecret(string resourceName)
         {
@@ -117,7 +117,7 @@ namespace ChatTranslated.Translate
 
         public static async Task<string> LLMProxyTranslate(string message, string targetLanguage)
         {
-            if (string.IsNullOrEmpty(cfv2))
+            if (string.IsNullOrEmpty(Cfv2))
             {
                 Service.pluginLog.Warning("LLMProxyTranslate - api key empty.");
                 return await MachineTranslate(message, targetLanguage);
@@ -138,7 +138,7 @@ namespace ChatTranslated.Translate
                 Content = content
             };
 
-            request.Headers.Add("x-api-key", cfv2);
+            request.Headers.Add("x-api-key", Cfv2);
 
             try
             {
