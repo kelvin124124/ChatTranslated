@@ -18,16 +18,16 @@
         <PackageReference Include="GTranslate" Version="2.1.6" />
     </ItemGroup>
 
-    <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_chatfunction_key)' != ''">
+    <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv2)' != ''">
         <PropertyGroup>
-            <SecretPath>$(ProjectDir)Resources\ChatFunctionKey.secret</SecretPath>
+            <SecretPath>$(ProjectDir)Resources\cfv2.secret</SecretPath>
         </PropertyGroup>
-        <WriteLinesToFile File="$(SecretPath)" Lines="$(PLOGON_SECRET_chatfunction_key)" Overwrite="true" />
+        <WriteLinesToFile File="$(SecretPath)" Lines="$(PLOGON_SECRET_cfv2)" Overwrite="true" />
     </Target>
 
     <Target Name="EmbedSecrets" BeforeTargets="PrepareForBuild" AfterTargets="Secrets">
         <ItemGroup>
-            <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.ChatFunctionKey.secret" />
+            <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.cfv2.secret" />
         </ItemGroup>
     </Target>
 </Project>

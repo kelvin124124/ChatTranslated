@@ -51,19 +51,19 @@ namespace ChatTranslated.Localization
             if (!File.Exists(LocalizationFilePath))
             {
                 Service.pluginLog.Warning($"Localization file not found: {LocalizationFilePath}");
-                Localizations = new Dictionary<string, string>();
+                Localizations = [];
                 return;
             }
 
             try
             {
                 var jsonContent = File.ReadAllText(LocalizationFilePath);
-                Localizations = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonContent) ?? new Dictionary<string, string>();
+                Localizations = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonContent) ?? [];
             }
             catch (Exception ex)
             {
                 Service.pluginLog.Warning($"Error loading localizations: {ex.Message}");
-                Localizations = new Dictionary<string, string>();
+                Localizations = [];
             }
         }
 

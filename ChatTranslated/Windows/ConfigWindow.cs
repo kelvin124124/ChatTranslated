@@ -59,6 +59,9 @@ public class ConfigWindow : Window, IDisposable
         Size = new Vector2(450, 500);
     }
 
+    private static string DeepLApiKeyInput = DeepL_API_Key;
+    private static string OpenAIApiKeyInput = OpenAI_API_Key;
+
     public void Dispose() { }
 
     public override void Draw()
@@ -68,8 +71,8 @@ public class ConfigWindow : Window, IDisposable
         DrawGenericSettigns(configuration);
         ImGui.Separator();
 
-        DrawPluginLangSelection(configuration);
-        ImGui.Separator();
+        //DrawPluginLangSelection(configuration);
+        //ImGui.Separator();
 
         DrawChatChannelSelection(configuration);
         ImGui.Separator();
@@ -131,7 +134,7 @@ public class ConfigWindow : Window, IDisposable
         int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        if (ImGui.Combo("##targetLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
+        if (ImGui.Combo("##pluginLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedPluginLanguage = supportedLanguages[currentIndex];
             if (configuration.SelectedPluginLanguage != "English")
@@ -297,31 +300,28 @@ public class ConfigWindow : Window, IDisposable
 
     private static void DrawDeepLSettings(Configuration configuration)
     {
-        string apiKeyInput = configuration.DeepL_API_Key;
-
         ImGui.Text("DeepL API Key ");
-        ImGui.InputText("##APIKey", ref apiKeyInput, 100);
+        ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
         ImGui.SameLine();
         if (ImGui.Button("Apply"))
         {
-            configuration.DeepL_API_Key = apiKeyInput;
+            DeepL_API_Key = DeepLApiKeyInput;
+            TranslationHandler.ClearTranslationCache();
             configuration.Save();
-            Translator.DeepLtranslator = new DeepL.Translator(apiKeyInput);
+            Translator.DeepLtranslator = new DeepL.Translator(DeepL_API_Key);
         }
     }
 
     private static void DrawOpenAISettings(Configuration configuration)
     {
-        string apiKeyInput = configuration.OpenAI_API_Key;
-
         ImGui.Text("OpenAI API Key ");
-        ImGui.InputText("##APIKey", ref apiKeyInput, 100);
+        ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 100);
         ImGui.SameLine();
         if (ImGui.Button("Apply"))
         {
             if (configuration.openaiWarned)
             {
-                configuration.OpenAI_API_Key = apiKeyInput;
+                OpenAI_API_Key = OpenAIApiKeyInput;
                 TranslationHandler.ClearTranslationCache();
                 configuration.Save();
             }
@@ -371,7 +371,7 @@ public class ConfigWindow : Window, IDisposable
             if (ImGui.Button("Yes", new Vector2(buttonSize, 0)))
             {
                 configuration.openaiWarned = true;
-                configuration.OpenAI_API_Key = apiKeyInput;
+                OpenAI_API_Key = OpenAIApiKeyInput;
                 ImGui.CloseCurrentPopup();
             }
 
@@ -379,7 +379,7 @@ public class ConfigWindow : Window, IDisposable
 
             if (ImGui.Button("No", new Vector2(buttonSize, 0)))
             {
-                apiKeyInput = "sk-YOUR-API-KEY";
+                OpenAIApiKeyInput = "sk-YOUR-API-KEY";
                 ImGui.CloseCurrentPopup();
             }
 

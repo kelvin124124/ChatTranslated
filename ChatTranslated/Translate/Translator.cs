@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Translate
 {
@@ -26,10 +27,10 @@ namespace ChatTranslated.Translate
         { Timeout = TimeSpan.FromSeconds(10) };
 
         public static GoogleTranslator2 GTranslator = new(HttpClient);
-        public static DeepL.Translator DeepLtranslator = new(Service.configuration.DeepL_API_Key);
+        public static DeepL.Translator DeepLtranslator = new(DeepL_API_Key);
 
         private const string DefaultContentType = "application/json";
-        private static readonly string? ChatFunction_key = ReadSecret("ChatTranslated.Resources.ChatFunctionKey.secret").Replace("\n", string.Empty);
+        private static readonly string? cfv2 = ReadSecret("ChatTranslated.Resources.cfv2.secret").Replace("\n", string.Empty);
 
         private static string ReadSecret(string resourceName)
         {
@@ -116,11 +117,11 @@ namespace ChatTranslated.Translate
 
         public static async Task<string> LLMProxyTranslate(string message, string targetLanguage)
         {
-            if (string.IsNullOrEmpty(ChatFunction_key))
-            {
-                Service.pluginLog.Warning("LLMProxyTranslate - api key empty.");
-                return await MachineTranslate(message, targetLanguage);
-            }
+            //if (string.IsNullOrEmpty(cfv2))
+            //{
+            //    Service.pluginLog.Warning("LLMProxyTranslate - api key empty.");
+            //    return await MachineTranslate(message, targetLanguage);
+            //}
 
             string regionCode = Service.configuration.ProxyRegion;
 
@@ -137,10 +138,7 @@ namespace ChatTranslated.Translate
                 Content = content
             };
 
-            // TODO: remove in production (replace with ChatFunction_key)
-            string Debug_key = "o1vOUAK39K2lsfwzfMTfq5CKAlqLzOAc2NsBWwIF";
-
-            request.Headers.Add("x-api-key", Debug_key);
+            request.Headers.Add("x-api-key", cfv2);
 
             try
             {
@@ -148,8 +146,13 @@ namespace ChatTranslated.Translate
                 response.EnsureSuccessStatusCode();
 
                 string responseBody = await response.Content.ReadAsStringAsync();
+
+                Service.pluginLog.Info($"responseBody = {responseBody}");
+
                 using JsonDocument doc = JsonDocument.Parse(responseBody);
                 string? translated = doc.RootElement.GetProperty("content")[0].GetProperty("text").GetString();
+
+                Service.pluginLog.Info($"translated = {translated}");
 
                 if (translated.IsNullOrWhitespace())
                 {
@@ -167,7 +170,7 @@ namespace ChatTranslated.Translate
 
         private static async Task<string> OpenAITranslate(string message, string targetLanguage)
         {
-            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9]{32,}$"))
+            if (!Regex.IsMatch(OpenAI_API_Key, @"^sk-[a-zA-Z0-9]{32,}$"))
             {
                 Service.pluginLog.Warning("Incorrect API key format, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
@@ -197,7 +200,7 @@ namespace ChatTranslated.Translate
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions")
             {
                 Content = content,
-                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {Service.configuration.OpenAI_API_Key}" } }
+                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {OpenAI_API_Key}" } }
             };
 
             try

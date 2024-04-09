@@ -19,7 +19,7 @@ namespace ChatTranslated.Utils
         [GeneratedRegex(@"[\uE000-\uF8FF]+")]
         private static partial Regex SpecialCharacterRegex();
 
-        [GeneratedRegex(@"(?<![\u0020-\u007E\u2000-\u21FF\u3000-\u303F\uFF10-\uFF5A])[^(\u0020-\u007E\u2000-\u21FF\u3000-\u303F\uFF10-\uFF5A)]{2,}(?![\u0020-\u007E\u2000-\u21FF\u3000-\u303F\uFF10-\uFF5A])")]
+        [GeneratedRegex(@"(?<![\u0020-\u007E\u2000-\u21FF\u3000-\u303F\uFF10-\uFF5A])[^(\u0020-\u007E\u2000-\u21FF\u2501\u3000-\u303F\uFF10-\uFF5A)]{2,}(?![\u0020-\u007E\u2000-\u21FF\u3000-\u303F\uFF10-\uFF5A])")]
         private static partial Regex NonEnglishRegex();
 
         [GeneratedRegex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*")]
