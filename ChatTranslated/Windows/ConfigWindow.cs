@@ -71,6 +71,7 @@ public class ConfigWindow : Window, IDisposable
         DrawGenericSettigns(configuration);
         ImGui.Separator();
 
+        //Not ready yet
         //DrawPluginLangSelection(configuration);
         //ImGui.Separator();
 

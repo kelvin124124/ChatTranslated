@@ -117,11 +117,11 @@ namespace ChatTranslated.Translate
 
         public static async Task<string> LLMProxyTranslate(string message, string targetLanguage)
         {
-            //if (string.IsNullOrEmpty(cfv2))
-            //{
-            //    Service.pluginLog.Warning("LLMProxyTranslate - api key empty.");
-            //    return await MachineTranslate(message, targetLanguage);
-            //}
+            if (string.IsNullOrEmpty(cfv2))
+            {
+                Service.pluginLog.Warning("LLMProxyTranslate - api key empty.");
+                return await MachineTranslate(message, targetLanguage);
+            }
 
             string regionCode = Service.configuration.ProxyRegion;
 
@@ -147,12 +147,10 @@ namespace ChatTranslated.Translate
 
                 string responseBody = await response.Content.ReadAsStringAsync();
 
-                Service.pluginLog.Info($"responseBody = {responseBody}");
+                Service.pluginLog.Debug($"responseBody = {responseBody}");
 
                 using JsonDocument doc = JsonDocument.Parse(responseBody);
                 string? translated = doc.RootElement.GetProperty("content")[0].GetProperty("text").GetString();
-
-                Service.pluginLog.Info($"translated = {translated}");
 
                 if (translated.IsNullOrWhitespace())
                 {
