@@ -31,6 +31,17 @@ namespace ChatTranslated.Translate
         private const string DefaultContentType = "application/json";
         private static readonly string? ChatFunction_key = ReadSecret("ChatTranslated.Resources.ChatFunctionKey.secret").Replace("\n", string.Empty);
 
+        private static string ReadSecret(string resourceName)
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            using var stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream == null) return "";
+
+            using var reader = new StreamReader(stream);
+            return reader.ReadToEnd();
+        }
+
+
         public static async Task<string> Translate(string text, string targetLanguage)
         {
             text = ChatHandler.Sanitize(text);
@@ -69,16 +80,38 @@ namespace ChatTranslated.Translate
 
         private static async Task<string> DeepLTranslate(string text, string targetLanguage)
         {
-            try
+            if (TryGetLanguageCode(targetLanguage, out var languageCode))
             {
-                var result = await DeepLtranslator.TranslateTextAsync(text, null, targetLanguage);
-                return result.Text;
+                try
+                {
+                    var result = await DeepLtranslator.TranslateTextAsync(text, null, languageCode!);
+                    return result.Text;
+                }
+                catch (Exception DLex)
+                {
+                    Service.pluginLog.Info($"DeepL Translate: {DLex.Message}, falling back to Google Translate.");
+                    return await MachineTranslate(text, targetLanguage);
+                }
             }
-            catch (Exception DLex)
+            else return "Target language not supported by DeepL.";
+        }
+
+        public static bool TryGetLanguageCode(string language, out string? languageCode)
+        {
+            languageCode = language switch
             {
-                Service.pluginLog.Info($"DeepL Translate: {DLex.Message}, falling back to Google Translate.");
-                return await MachineTranslate(text, targetLanguage);
-            }
+                "English" => "EN",
+                "Japanese" => "JA",
+                "German" => "DE",
+                "French" => "FR",
+                "Korean" => "KO",
+                "Chinese (Simplified)" => "ZH",
+                "Chinese (Traditional)" => "ZH",
+                "Spanish" => "ES",
+                _ => null
+            };
+
+            return !string.IsNullOrEmpty(languageCode);
         }
 
         public static async Task<string> LLMProxyTranslate(string message, string targetLanguage)
@@ -104,7 +137,10 @@ namespace ChatTranslated.Translate
                 Content = content
             };
 
-            request.Headers.Add("x-api-key", ChatFunction_key);
+            // TODO: remove in production (replace with ChatFunction_key)
+            string Debug_key = "o1vOUAK39K2lsfwzfMTfq5CKAlqLzOAc2NsBWwIF";
+
+            request.Headers.Add("x-api-key", Debug_key);
 
             try
             {
@@ -181,16 +217,6 @@ namespace ChatTranslated.Translate
                 Service.pluginLog.Warning($"{ex.Message}, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
             }
-        }
-
-        private static string ReadSecret(string resourceName)
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream == null) return "";
-
-            using var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
         }
 
     }

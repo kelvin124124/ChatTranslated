@@ -27,7 +27,7 @@ namespace ChatTranslated
         }
         public LanguageSelectionMode SelectedLanguageSelectionMode { get; set; } = LanguageSelectionMode.Default;
 
-        public ICollection<string> SourceLanguages { get; set; } =
+        public ICollection<string> SelectedSourceLanguages { get; set; } =
         ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
 
         public string SelectedTargetLanguage = "English";

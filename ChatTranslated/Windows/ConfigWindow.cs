@@ -67,6 +67,9 @@ public class ConfigWindow : Window, IDisposable
         DrawGenericSettigns(configuration);
         ImGui.Separator();
 
+        DrawChatChannelSelection(configuration);
+        ImGui.Separator();
+
         DrawSourceLangSelection(configuration);
         ImGui.Separator();
 
@@ -105,11 +108,62 @@ public class ConfigWindow : Window, IDisposable
         }
 
         // Send chat to DB
-        if (ImGui.Checkbox("Send chat to DB", ref _SendChatToDB)) {
+        if (ImGui.Checkbox("Send chat to DB", ref _SendChatToDB))
+        {
             configuration.SendChatToDB = _SendChatToDB;
         }
         ImGui.Text("    Collect outgoing chat messages to improve translations.\n" +
                    "    Personal identifiers and sensitive info will be removed before use.");
+    }
+
+    private static void DrawChatChannelSelection(Configuration configuration)
+    {
+        // Translate channel selection
+        if (ImGui.CollapsingHeader("Channel Selection", ImGuiTreeNodeFlags.None))
+        {
+            ImGui.Columns(3, "chatTypeColumns", false);
+
+            ImGui.SetColumnWidth(0, 125);
+            ImGui.SetColumnWidth(1, 100);
+            ImGui.SetColumnWidth(2, 175);
+
+            DrawChatTypeGroup(genericChatTypes, configuration);
+            ImGui.NextColumn();
+
+            DrawChatTypeGroup(lsChatTypes, configuration);
+            ImGui.NextColumn();
+
+            DrawChatTypeGroup(cwlsChatTypes, configuration);
+
+            ImGui.Columns(1);
+        }
+    }
+
+    private static void DrawChatTypeGroup(IEnumerable<XivChatType> chatTypes, Configuration configuration)
+    {
+        foreach (var type in chatTypes)
+        {
+            UpdateChannelConfig(type, configuration);
+        }
+    }
+
+    private static void UpdateChannelConfig(XivChatType type, Configuration configuration)
+    {
+        var typeEnabled = configuration.SelectedChatTypes.Contains(type);
+        if (ImGui.Checkbox(type.ToString(), ref typeEnabled))
+        {
+            if (typeEnabled)
+            {
+                if (!configuration.SelectedChatTypes.Contains(type))
+                    configuration.SelectedChatTypes.Add(type);
+            }
+            else
+            {
+                configuration.SelectedChatTypes.Remove(type);
+            }
+
+            configuration.Save();
+        }
     }
 
     private void DrawSourceLangSelection(Configuration configuration)
@@ -120,9 +174,9 @@ public class ConfigWindow : Window, IDisposable
 
         int selectedLanguageSelectionMode = (int)configuration.SelectedLanguageSelectionMode;
 
-        if (ImGui.Combo("##LanguageSelectionModeCombo", ref selectedLanguageSelectionMode, Enum.GetNames(typeof(TranslationMode)), 3))
+        if (ImGui.Combo("##LanguageSelectionModeCombo", ref selectedLanguageSelectionMode, Enum.GetNames(typeof(LanguageSelectionMode)), 3))
         {
-            configuration.SelectedTranslationMode = (TranslationMode)selectedLanguageSelectionMode;
+            configuration.SelectedLanguageSelectionMode = (LanguageSelectionMode)selectedLanguageSelectionMode;
             configuration.Save();
         }
 
@@ -132,25 +186,26 @@ public class ConfigWindow : Window, IDisposable
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.CustomLanguages)
         {
-            ImGui.AlignTextToFramePadding();
-            ImGui.Text("Translate from");
-            ImGui.SameLine();
-
-            // checkbox list
-            foreach (string language in supportedLanguages)
+            if (ImGui.CollapsingHeader("Source Language Selection", ImGuiTreeNodeFlags.None))
             {
-                bool isSelected = configuration.SourceLanguages.Contains(language);
-                if (ImGui.Checkbox(language, ref isSelected))
+                // checkbox list
+                foreach (string language in supportedLanguages)
                 {
-                    if (isSelected)
+                    bool isSelected = configuration.SelectedSourceLanguages.Contains(language);
+                    if (ImGui.Checkbox(language, ref isSelected))
                     {
-                        configuration.SourceLanguages.Add(language);
+                        if (isSelected)
+                        {
+                            if (!configuration.SelectedSourceLanguages.Contains(language))
+                                configuration.SelectedSourceLanguages.Add(language);
+                        }
+                        else
+                        {
+                            configuration.SelectedSourceLanguages.Remove(language);
+                        }
+
+                        configuration.Save();
                     }
-                    else
-                    {
-                        configuration.SourceLanguages.Remove(language);
-                    }
-                    configuration.Save();
                 }
             }
         }
