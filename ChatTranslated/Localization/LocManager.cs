@@ -1,9 +1,6 @@
 using ChatTranslated.Utils;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.IO;
 using System.Reflection;
 using System.Resources;
 
@@ -55,7 +52,7 @@ namespace ChatTranslated.Localization
 
         public static string GetLocalization(string originalString)
         {
-            if (Service.configuration.SelectedPluginLanguage == "English") 
+            if (Service.configuration.SelectedPluginLanguage == "English")
                 return originalString;
             else
                 return ResourceManager.GetString(originalString, CultureInfo) ?? originalString;
