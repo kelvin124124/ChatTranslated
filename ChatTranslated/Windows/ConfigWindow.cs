@@ -59,8 +59,8 @@ public class ConfigWindow : Window, IDisposable
         Size = new Vector2(450, 500);
     }
 
-    private static string DeepLApiKeyInput = DeepL_API_Key;
-    private static string OpenAIApiKeyInput = OpenAI_API_Key;
+    private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
+    private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
 
     public void Dispose() { }
 
@@ -68,26 +68,25 @@ public class ConfigWindow : Window, IDisposable
     {
         Configuration configuration = Service.configuration;
 
-        DrawGenericSettigns(configuration);
+        DrawGenericSettigns(ref configuration);
         ImGui.Separator();
 
-        //Not ready yet
-        //DrawPluginLangSelection(configuration);
-        //ImGui.Separator();
-
-        DrawChatChannelSelection(configuration);
+        DrawPluginLangSelection(ref configuration);
         ImGui.Separator();
 
-        DrawSourceLangSelection(configuration);
+        DrawChatChannelSelection(ref configuration);
         ImGui.Separator();
 
-        DrawTargetLangSelection(configuration);
+        DrawSourceLangSelection(ref configuration);
         ImGui.Separator();
 
-        DrawModeSelection(configuration);
+        DrawTargetLangSelection(ref configuration);
+        ImGui.Separator();
+
+        DrawModeSelection(ref configuration);
     }
 
-    private static void DrawGenericSettigns(Configuration configuration)
+    private static void DrawGenericSettigns(ref Configuration configuration)
     {
         bool _Enabled = configuration.Enabled;
         bool _ChatIntegration = configuration.ChatIntegration;
@@ -95,7 +94,7 @@ public class ConfigWindow : Window, IDisposable
         bool _SendChatToDB = configuration.SendChatToDB;
 
         // Enabled
-        if (ImGui.Checkbox("Enabled", ref _Enabled))
+        if (ImGui.Checkbox("Enable plugin", ref _Enabled))
         {
             configuration.Enabled = _Enabled;
             configuration.Save();
@@ -124,7 +123,7 @@ public class ConfigWindow : Window, IDisposable
                    "    Personal identifiers and sensitive info will be removed before use.");
     }
 
-    private void DrawPluginLangSelection(Configuration configuration)
+    private void DrawPluginLangSelection(ref Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
         ImGui.Text("Plugin Language");
@@ -138,15 +137,12 @@ public class ConfigWindow : Window, IDisposable
         if (ImGui.Combo("##pluginLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedPluginLanguage = supportedLanguages[currentIndex];
-            if (configuration.SelectedPluginLanguage != "English")
-            {
-                LocManager.LoadLocalizations();
-            }
             configuration.Save();
+            LocManager.LoadLocalization();
         }
     }
 
-    private static void DrawChatChannelSelection(Configuration configuration)
+    private static void DrawChatChannelSelection(ref Configuration configuration)
     {
         // Translate channel selection
         if (ImGui.CollapsingHeader("Channel Selection", ImGuiTreeNodeFlags.None))
@@ -157,27 +153,27 @@ public class ConfigWindow : Window, IDisposable
             ImGui.SetColumnWidth(1, 100);
             ImGui.SetColumnWidth(2, 175);
 
-            DrawChatTypeGroup(genericChatTypes, configuration);
+            DrawChatTypeGroup(genericChatTypes, ref configuration);
             ImGui.NextColumn();
 
-            DrawChatTypeGroup(lsChatTypes, configuration);
+            DrawChatTypeGroup(lsChatTypes, ref configuration);
             ImGui.NextColumn();
 
-            DrawChatTypeGroup(cwlsChatTypes, configuration);
+            DrawChatTypeGroup(cwlsChatTypes, ref configuration);
 
             ImGui.Columns(1);
         }
     }
 
-    private static void DrawChatTypeGroup(IEnumerable<XivChatType> chatTypes, Configuration configuration)
+    private static void DrawChatTypeGroup(IEnumerable<XivChatType> chatTypes, ref Configuration configuration)
     {
         foreach (var type in chatTypes)
         {
-            UpdateChannelConfig(type, configuration);
+            UpdateChannelConfig(type, ref configuration);
         }
     }
 
-    private static void UpdateChannelConfig(XivChatType type, Configuration configuration)
+    private static void UpdateChannelConfig(XivChatType type, ref Configuration configuration)
     {
         var typeEnabled = configuration.SelectedChatTypes.Contains(type);
         if (ImGui.Checkbox(type.ToString(), ref typeEnabled))
@@ -196,7 +192,7 @@ public class ConfigWindow : Window, IDisposable
         }
     }
 
-    private void DrawSourceLangSelection(Configuration configuration)
+    private void DrawSourceLangSelection(ref Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
         ImGui.Text("What to translate");
@@ -245,7 +241,7 @@ public class ConfigWindow : Window, IDisposable
         }
     }
 
-    private void DrawTargetLangSelection(Configuration configuration)
+    private void DrawTargetLangSelection(ref Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
         ImGui.Text("Translate to");
@@ -265,7 +261,7 @@ public class ConfigWindow : Window, IDisposable
         }
     }
 
-    private static void DrawModeSelection(Configuration configuration)
+    private static void DrawModeSelection(ref Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
         ImGui.Text("TranslationMode");
@@ -288,32 +284,33 @@ public class ConfigWindow : Window, IDisposable
                 // do nothing
                 break;
             case TranslationMode.DeepL_API:
-                DrawDeepLSettings(configuration);
+                DrawDeepLSettings(ref configuration);
                 break;
             case TranslationMode.OpenAI_API:
-                DrawOpenAISettings(configuration);
+                DrawOpenAISettings(ref configuration);
                 break;
             case TranslationMode.LLMProxy:
-                DrawLLMProxySettings(configuration);
+                DrawLLMProxySettings(ref configuration);
                 break;
         }
     }
 
-    private static void DrawDeepLSettings(Configuration configuration)
+    private static void DrawDeepLSettings(ref Configuration configuration)
     {
         ImGui.Text("DeepL API Key ");
         ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
         ImGui.SameLine();
         if (ImGui.Button("Apply"))
         {
-            DeepL_API_Key = DeepLApiKeyInput;
+            configuration.DeepL_API_Key = DeepLApiKeyInput;
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
-            Translator.DeepLtranslator = new DeepL.Translator(DeepL_API_Key);
+            Translator.DeepLtranslator = new DeepL.Translator(configuration.DeepL_API_Key);
         }
+        ImGui.Text("Get one free from DeepL official website!");
     }
 
-    private static void DrawOpenAISettings(Configuration configuration)
+    private static void DrawOpenAISettings(ref Configuration configuration)
     {
         ImGui.Text("OpenAI API Key ");
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 100);
@@ -322,7 +319,7 @@ public class ConfigWindow : Window, IDisposable
         {
             if (configuration.openaiWarned)
             {
-                OpenAI_API_Key = OpenAIApiKeyInput;
+                configuration.OpenAI_API_Key = OpenAIApiKeyInput;
                 TranslationHandler.ClearTranslationCache();
                 configuration.Save();
             }
@@ -372,7 +369,7 @@ public class ConfigWindow : Window, IDisposable
             if (ImGui.Button("Yes", new Vector2(buttonSize, 0)))
             {
                 configuration.openaiWarned = true;
-                OpenAI_API_Key = OpenAIApiKeyInput;
+                Service.configuration.OpenAI_API_Key = OpenAIApiKeyInput;
                 ImGui.CloseCurrentPopup();
             }
 
@@ -388,7 +385,7 @@ public class ConfigWindow : Window, IDisposable
         }
     }
 
-    private static void DrawLLMProxySettings(Configuration configuration)
+    private static void DrawLLMProxySettings(ref Configuration configuration)
     {
         ImGui.Text("Free Claude-Haiku translation service provided by the dev,\nsubject to availability.");
         ImGui.Text("Users from unsupported regions WILL experience higher latency.");

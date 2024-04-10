@@ -2,7 +2,10 @@ using ChatTranslated.Utils;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
+using System.Reflection;
+using System.Resources;
 
 namespace ChatTranslated.Localization
 {
@@ -24,64 +27,38 @@ namespace ChatTranslated.Localization
 
     internal class LocManager
     {
-        private static Dictionary<string, string>? Localizations;
+        private static ResourceManager ResourceManager = new ResourceManager("ChatTranslated.Resources", Assembly.GetExecutingAssembly());
+        private static CultureInfo CultureInfo = CultureInfo.CurrentCulture;
 
-        public static void LoadLocalizations()
+        public static void LoadLocalization()
         {
-            if (Service.configuration.SelectedPluginLanguage == "Englsih")
-            {
-                Localizations = null;
-                return;
-            }
+            string selectedLanguage = Service.configuration.SelectedPluginLanguage;
 
-            string langCode = Service.configuration.SelectedPluginLanguage switch
+            if (selectedLanguage == "English")
+                return;
+
+            string langCode = selectedLanguage switch
             {
                 "German" => "de",
                 "Spanish" => "es",
                 "French" => "fr",
                 "Japanese" => "ja",
                 "Korean" => "ko",
-                "Chinese (Simplified)" => "zh-cn",
-                "Chinese (Traditional)" => "zh-tw",
+                "Chinese (Simplified)" => "zh-Hans",
+                "Chinese (Traditional)" => "zh-Hant",
                 _ => "unknown"
             };
 
-            string LocalizationFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "LocStr", $"{langCode}.json");
-
-            if (!File.Exists(LocalizationFilePath))
-            {
-                Service.pluginLog.Warning($"Localization file not found: {LocalizationFilePath}");
-                Localizations = [];
-                return;
-            }
-
-            try
-            {
-                var jsonContent = File.ReadAllText(LocalizationFilePath);
-                Localizations = JsonConvert.DeserializeObject<Dictionary<string, string>>(jsonContent) ?? [];
-            }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Warning($"Error loading localizations: {ex.Message}");
-                Localizations = [];
-            }
+            if (langCode != "unknown")
+                CultureInfo = new CultureInfo(langCode);
         }
 
         public static string GetLocalization(string originalString)
         {
-            if (Localizations == null)
-            {
+            if (Service.configuration.SelectedPluginLanguage == "English") 
                 return originalString;
-            }
-            else if (Localizations.TryGetValue(originalString, out var localizedString))
-            {
-                return localizedString;
-            }
             else
-            {
-                Service.pluginLog.Warning($"Localization not found for: {originalString}");
-                return originalString;
-            }
+                return ResourceManager.GetString(originalString, CultureInfo) ?? originalString;
         }
     }
 }

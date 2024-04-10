@@ -46,8 +46,8 @@ namespace ChatTranslated
             XivChatType.Yell, XivChatType.CrossParty, XivChatType.PvPTeam,
         ];
 
-        public static string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
-        public static string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
+        public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
+        public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
         public bool openaiWarned { get; set; } = false;
         public bool BetterTranslation { get; set; } = false;
         public string ProxyRegion { get; set; } = "US";

@@ -14,6 +14,26 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <EmbeddedResource Remove="Localization\LocStr\Resources.de.resx" />
+      <EmbeddedResource Remove="Localization\LocStr\Resources.es.resx" />
+      <EmbeddedResource Remove="Localization\LocStr\Resources.fr.resx" />
+      <EmbeddedResource Remove="Localization\LocStr\Resources.js.resx" />
+      <EmbeddedResource Remove="Localization\LocStr\Resources.ko.resx" />
+      <EmbeddedResource Remove="Localization\LocStr\Resources.resx" />
+      <EmbeddedResource Remove="Localization\LocStr\Resources.zh-Hans.resx" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="Localization\LocStr\Resources.de.resx" />
+      <None Include="Localization\LocStr\Resources.es.resx" />
+      <None Include="Localization\LocStr\Resources.fr.resx" />
+      <None Include="Localization\LocStr\Resources.js.resx" />
+      <None Include="Localization\LocStr\Resources.ko.resx" />
+      <None Include="Localization\LocStr\Resources.resx" />
+      <None Include="Localization\LocStr\Resources.zh-Hans.resx" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="DeepL.net" Version="1.9.0" />
         <PackageReference Include="GTranslate" Version="2.1.6" />
     </ItemGroup>

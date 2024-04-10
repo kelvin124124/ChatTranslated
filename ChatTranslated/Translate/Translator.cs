@@ -27,7 +27,7 @@ namespace ChatTranslated.Translate
         { Timeout = TimeSpan.FromSeconds(10) };
 
         public static GoogleTranslator2 GTranslator = new(HttpClient);
-        public static DeepL.Translator DeepLtranslator = new(DeepL_API_Key);
+        public static DeepL.Translator DeepLtranslator = new(Service.configuration.DeepL_API_Key);
 
         private const string DefaultContentType = "application/json";
         private static readonly string? Cfv2 = ReadSecret("ChatTranslated.Resources.cfv2.secret").Replace("\n", string.Empty);
@@ -86,7 +86,10 @@ namespace ChatTranslated.Translate
                 try
                 {
                     var result = await DeepLtranslator.TranslateTextAsync(text, null, languageCode!);
-                    return result.Text;
+                    if (targetLanguage == "Chinese (Traditional)")
+                        return await MachineTranslate(result.Text, "Chinese (Traditional)");
+                    else
+                        return result.Text;
                 }
                 catch (Exception DLex)
                 {
@@ -168,7 +171,7 @@ namespace ChatTranslated.Translate
 
         private static async Task<string> OpenAITranslate(string message, string targetLanguage)
         {
-            if (!Regex.IsMatch(OpenAI_API_Key, @"^sk-[a-zA-Z0-9]{32,}$"))
+            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9]{32,}$"))
             {
                 Service.pluginLog.Warning("Incorrect API key format, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
@@ -198,7 +201,7 @@ namespace ChatTranslated.Translate
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions")
             {
                 Content = content,
-                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {OpenAI_API_Key}" } }
+                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {Service.configuration.OpenAI_API_Key}" } }
             };
 
             try
