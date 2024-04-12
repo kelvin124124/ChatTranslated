@@ -128,14 +128,14 @@ namespace ChatTranslated.Translate
 
         public static async Task<string> LLMProxyTranslate(string message, string targetLanguage)
         {
-#if !DEBUG
+#if DEBUG
+            string Cfv2 = Service.configuration.Proxy_API_Key;
+#else
             if (string.IsNullOrEmpty(Cfv2))
             {
                 Service.pluginLog.Warning("LLMProxyTranslate - api key empty.");
                 return await MachineTranslate(message, targetLanguage);
             }
-#else
-            string Cfv2 = Service.configuration.Proxy_API_Key;
 #endif
             string regionCode = Service.configuration.ProxyRegion;
 
