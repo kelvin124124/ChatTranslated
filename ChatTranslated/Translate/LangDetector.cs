@@ -22,13 +22,7 @@ namespace ChatTranslated.Translate
 
     public static class LangDetector
     {
-        public static readonly LanguageDetectorSettings settings = new LanguageDetectorSettings()
-        {
-            RandomSeed = 1,
-            ConvergenceThreshold = 0.9,
-            MaxIterations = 50,
-        };
-        public static readonly LanguageDetector detector = new(settings);
+        public static readonly LanguageDetector detector = new();
 
         // supported languages = ["English", "Japanese", "German", "French", "Korean", "Chinese", "Spanish"]
         // cannot distinguish between simplified and traditional Chinese
@@ -37,6 +31,7 @@ namespace ChatTranslated.Translate
         {
             detector.AddAllLanguages();
             string langcode = detector.Detect(inputstring) ?? "unknown";
+            Service.pluginLog.Debug($"LangCode: {langcode}");
             string language = langcode switch
             {
                 "eng" => "English",

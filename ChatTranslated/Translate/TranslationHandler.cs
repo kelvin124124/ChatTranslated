@@ -17,7 +17,6 @@ namespace ChatTranslated.Translate
             try
             {
                 string language = messageText.GetLanguage();
-                Service.pluginLog.Debug($"language: {language}");
                 if (Service.configuration.SelectedSourceLanguages.Contains(language))
                 {
                     await TranslateChat(type, sender, message);

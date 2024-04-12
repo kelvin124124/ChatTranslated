@@ -63,6 +63,7 @@ public class ConfigWindow : Window, IDisposable
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
+    private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
 
     public void Dispose() { }
 
@@ -309,7 +310,7 @@ public class ConfigWindow : Window, IDisposable
             configuration.Save();
             Translator.DeepLtranslator = new DeepL.Translator(configuration.DeepL_API_Key);
         }
-        ImGui.Text("Get one free from DeepL official website!");
+        ImGui.Text("Get one for free from DeepL official website!");
     }
 
     private static void DrawOpenAISettings(Configuration configuration)
@@ -410,7 +411,6 @@ public class ConfigWindow : Window, IDisposable
         }
 
 #if DEBUG
-        string ProxyApiKeyInput = Service.configuration.OpenAI_API_Key;
         ImGui.Text("Proxy API Key ");
         ImGui.InputText("##APIKey", ref ProxyApiKeyInput, 100);
         ImGui.SameLine();
