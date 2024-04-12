@@ -1,3 +1,5 @@
+using ChatTranslated.Localization;
+using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
@@ -11,10 +13,11 @@ namespace ChatTranslated.Windows;
 
 public class ConfigWindow : Window, IDisposable
 {
-    private readonly Configuration configuration;
+    private readonly string[] supportedDetectedLanguages =
+    ["English", "Japanese", "German", "French", "Korean", "Chinese", "Spanish"];
+    private readonly string[] supportedLanguages =
+    ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
 
-    private readonly string[] languages = ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
-    private string apiKeyInput = Service.configuration.OpenAI_API_Key;
     public static readonly List<XivChatType> genericChatTypes =
     [
         XivChatType.Say,
@@ -56,24 +59,44 @@ public class ConfigWindow : Window, IDisposable
         ImGuiWindowFlags.AlwaysAutoResize)
     {
         Size = new Vector2(450, 500);
-        configuration = Service.configuration;
     }
+
+    private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
+    private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
 
     public void Dispose() { }
 
     public override void Draw()
     {
-        bool _ChatIntegration = configuration.ChatIntegration;
+        Configuration configuration = Service.configuration;
+
+        DrawGenericSettigns(configuration);
+        ImGui.Separator();
+
+        DrawPluginLangSelection(configuration);
+        ImGui.Separator();
+
+        DrawChatChannelSelection(configuration);
+        ImGui.Separator();
+
+        DrawSourceLangSelection(configuration);
+        ImGui.Separator();
+
+        DrawTargetLangSelection(configuration);
+        ImGui.Separator();
+
+        DrawModeSelection(configuration);
+    }
+
+    private static void DrawGenericSettigns(Configuration configuration)
+    {
         bool _Enabled = configuration.Enabled;
+        bool _ChatIntegration = configuration.ChatIntegration;
         bool _EnabledInDuty = configuration.EnabledInDuty;
-        bool _TranslateFr = configuration.TranslateFr;
-        bool _TranslateDe = configuration.TranslateDe;
-        bool _TranslateEn = configuration.TranslateEn;
         bool _SendChatToDB = configuration.SendChatToDB;
-        bool _BetterTranslation = configuration.BetterTranslation;
 
         // Enabled
-        if (ImGui.Checkbox("Enabled", ref _Enabled))
+        if (ImGui.Checkbox("Enable plugin", ref _Enabled))
         {
             configuration.Enabled = _Enabled;
             configuration.Save();
@@ -93,36 +116,36 @@ public class ConfigWindow : Window, IDisposable
             configuration.Save();
         }
 
-        ImGui.Separator();
-
-        // Translate language selection
-        if (ImGui.Checkbox("Translate French", ref _TranslateFr))
-        {
-            configuration.TranslateFr = _TranslateFr;
-            configuration.Save();
-        }
-        if (ImGui.Checkbox("Translate German", ref _TranslateDe))
-        {
-            configuration.TranslateDe = _TranslateDe;
-            configuration.Save();
-        }
-        if (ImGui.Checkbox("Translate all languages", ref _TranslateEn))
-        {
-            configuration.TranslateEn = _TranslateEn;
-            configuration.Save();
-        }
-        ImGui.Text("    Note: Plugin translates all messages with non-English characters \n         by default.\n" +
-                   "    Using these options make translations slower.");
-
-        // Send chat to DB option
+        // Send chat to DB
         if (ImGui.Checkbox("Send chat to DB", ref _SendChatToDB))
         {
             configuration.SendChatToDB = _SendChatToDB;
-            configuration.Save();
         }
         ImGui.Text("    Collect outgoing chat messages to improve translations.\n" +
                    "    Personal identifiers and sensitive info will be removed before use.");
+    }
 
+    private void DrawPluginLangSelection(Configuration configuration)
+    {
+        ImGui.AlignTextToFramePadding();
+        ImGui.Text("Plugin Language");
+        ImGui.SameLine();
+
+        string currentSelection = configuration.SelectedPluginLanguage;
+
+        int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
+        if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
+
+        if (ImGui.Combo("##pluginLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
+        {
+            configuration.SelectedPluginLanguage = supportedLanguages[currentIndex];
+            configuration.Save();
+            LocManager.LoadLocalization();
+        }
+    }
+
+    private static void DrawChatChannelSelection(Configuration configuration)
+    {
         // Translate channel selection
         if (ImGui.CollapsingHeader("Channel Selection", ImGuiTreeNodeFlags.None))
         {
@@ -132,152 +155,270 @@ public class ConfigWindow : Window, IDisposable
             ImGui.SetColumnWidth(1, 100);
             ImGui.SetColumnWidth(2, 175);
 
-            DrawChatTypeGroup(genericChatTypes);
+            DrawChatTypeGroup(genericChatTypes, configuration);
             ImGui.NextColumn();
 
-            DrawChatTypeGroup(lsChatTypes);
+            DrawChatTypeGroup(lsChatTypes, configuration);
             ImGui.NextColumn();
 
-            DrawChatTypeGroup(cwlsChatTypes);
+            DrawChatTypeGroup(cwlsChatTypes, configuration);
 
             ImGui.Columns(1);
         }
+    }
 
-        void DrawChatTypeGroup(IEnumerable<XivChatType> chatTypes)
+    private static void DrawChatTypeGroup(IEnumerable<XivChatType> chatTypes, Configuration configuration)
+    {
+        foreach (var type in chatTypes)
         {
-            foreach (var type in chatTypes)
+            UpdateChannelConfig(type, configuration);
+        }
+    }
+
+    private static void UpdateChannelConfig(XivChatType type, Configuration configuration)
+    {
+        var typeEnabled = configuration.SelectedChatTypes.Contains(type);
+        if (ImGui.Checkbox(type.ToString(), ref typeEnabled))
+        {
+            if (typeEnabled)
             {
-                UpdateChannelConfig(type);
+                if (!configuration.SelectedChatTypes.Contains(type))
+                    configuration.SelectedChatTypes.Add(type);
             }
+            else
+            {
+                configuration.SelectedChatTypes.Remove(type);
+            }
+
+            configuration.Save();
+        }
+    }
+
+    private void DrawSourceLangSelection(Configuration configuration)
+    {
+        ImGui.AlignTextToFramePadding();
+        ImGui.Text("What to translate");
+        ImGui.SameLine();
+
+        int selectedLanguageSelectionMode = (int)configuration.SelectedLanguageSelectionMode;
+
+        if (ImGui.Combo("##LanguageSelectionModeCombo", ref selectedLanguageSelectionMode, Enum.GetNames(typeof(LanguageSelectionMode)), 3))
+        {
+            configuration.SelectedLanguageSelectionMode = (LanguageSelectionMode)selectedLanguageSelectionMode;
+            configuration.Save();
         }
 
-        void UpdateChannelConfig(XivChatType type)
+        if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.Default)
         {
-            var typeEnabled = configuration.ChatTypes.Contains(type);
-            if (ImGui.Checkbox(type.ToString(), ref typeEnabled))
+            ImGui.Text("Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)");
+        }
+        else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.CustomLanguages)
+        {
+            if (ImGui.CollapsingHeader("Source Language Selection", ImGuiTreeNodeFlags.None))
             {
-                if (typeEnabled)
+                // checkbox list
+                foreach (string language in supportedDetectedLanguages)
                 {
-                    if (!configuration.ChatTypes.Contains(type))
-                        configuration.ChatTypes.Add(type);
-                }
-                else
-                {
-                    configuration.ChatTypes.Remove(type);
-                }
+                    bool isSelected = configuration.SelectedSourceLanguages.Contains(language);
+                    if (ImGui.Checkbox(language, ref isSelected))
+                    {
+                        if (isSelected)
+                        {
+                            if (!configuration.SelectedSourceLanguages.Contains(language))
+                                configuration.SelectedSourceLanguages.Add(language);
+                        }
+                        else
+                        {
+                            configuration.SelectedSourceLanguages.Remove(language);
+                        }
 
-                configuration.Save();
+                        configuration.Save();
+                    }
+                }
             }
         }
+        else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.AllLanguages)
+        {
+            ImGui.Text("Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!");
+        }
+    }
 
-        // Target language selection
+    private void DrawTargetLangSelection(Configuration configuration)
+    {
         ImGui.AlignTextToFramePadding();
         ImGui.Text("Translate to");
         ImGui.SameLine();
 
-        int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedChatLanguage);
-        if (currentLanguageIndex == -1) currentLanguageIndex = 0;
+        string currentSelection = configuration.SelectedTargetLanguage;
 
-        if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
+        int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
+        if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
+
+        if (ImGui.Combo("##targetLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
         {
-            configuration.SelectedChatLanguage = languages[currentLanguageIndex];
-            Translator.TranslationCache = [];
+            configuration.SelectedTargetLanguage = supportedLanguages[currentIndex];
+
+            TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
+    }
 
-        // Mode selection
+    private static void DrawModeSelection(Configuration configuration)
+    {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Mode");
+        ImGui.Text("TranslationMode");
         ImGui.SameLine();
 
-        int selectedMode = (int)configuration.SelectedMode;
+        int selectedTranslationMode = (int)configuration.SelectedTranslationMode;
 
-        if (ImGui.Combo("##ModeCombo", ref selectedMode, Enum.GetNames(typeof(Mode)), 3))
+        // update index when adding new modes
+        if (ImGui.Combo("##TranslationModeCombo", ref selectedTranslationMode, Enum.GetNames(typeof(TranslationMode)), 4))
         {
-            configuration.SelectedMode = (Mode)selectedMode;
-            Translator.TranslationCache = [];
+            configuration.SelectedTranslationMode = (TranslationMode)selectedTranslationMode;
+
+            TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
 
-        // GPTProxy description
-        if (configuration.SelectedMode == Mode.GPTProxy)
+        switch (configuration.SelectedTranslationMode)
         {
-            ImGui.Text("Free GPT-3.5-turbo translation service provided by the dev,\nsubject to availability.");
+            case TranslationMode.MachineTranslate:
+                // do nothing
+                break;
+            case TranslationMode.DeepL_API:
+                DrawDeepLSettings(configuration);
+                break;
+            case TranslationMode.OpenAI_API:
+                DrawOpenAISettings(configuration);
+                break;
+            case TranslationMode.LLMProxy:
+                DrawLLMProxySettings(configuration);
+                break;
         }
+    }
 
-        // API Key Input
-        if (configuration.SelectedMode == Mode.OpenAI_API)
+    private static void DrawDeepLSettings(Configuration configuration)
+    {
+        ImGui.Text("DeepL API Key ");
+        ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
+        ImGui.SameLine();
+        if (ImGui.Button("Apply"))
         {
-            ImGui.Text("OpenAI API Key ");
-            ImGui.InputText("##APIKey", ref apiKeyInput, 100);
-            ImGui.SameLine();
-            if (ImGui.Button("Apply"))
+            configuration.DeepL_API_Key = DeepLApiKeyInput;
+            TranslationHandler.ClearTranslationCache();
+            configuration.Save();
+            Translator.DeepLtranslator = new DeepL.Translator(configuration.DeepL_API_Key);
+        }
+        ImGui.Text("Get one free from DeepL official website!");
+    }
+
+    private static void DrawOpenAISettings(Configuration configuration)
+    {
+        ImGui.Text("OpenAI API Key ");
+        ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 100);
+        ImGui.SameLine();
+        if (ImGui.Button("Apply"))
+        {
+            if (configuration.openaiWarned)
             {
-                if (configuration.warned)
-                {
-                    // hope nothing bad happens
-                    configuration.OpenAI_API_Key = apiKeyInput;
-                    Translator.TranslationCache = [];
-                    configuration.Save();
-                }
-                else
-                {
-                    ImGui.OpenPopup("Confirmation");
-                }
-            }
-
-            if (ImGui.BeginPopupModal("Confirmation"))
-            {
-                ImGui.Text("Warning: API key will be stored as plain text in plugin configuration, " +
-                           "\nany malware or third party plugins may have access to the key. \nProceed?");
-
-                ImGui.Separator();
-
-                float windowWidth = ImGui.GetWindowWidth();
-                float buttonSize = ImGui.CalcTextSize("Yes").X + (ImGui.GetStyle().FramePadding.X * 2);
-
-                ImGui.SetCursorPosX((windowWidth - (buttonSize * 2) - ImGui.GetStyle().ItemSpacing.X) * 0.5f);
-                if (ImGui.Button("Yes", new Vector2(buttonSize, 0)))
-                {
-                    configuration.warned = true;
-                    configuration.OpenAI_API_Key = apiKeyInput;
-                    ImGui.CloseCurrentPopup();
-                }
-
-                ImGui.SameLine();
-
-                if (ImGui.Button("No", new Vector2(buttonSize, 0)))
-                {
-                    apiKeyInput = "sk-YOUR-API-KEY";
-                    ImGui.CloseCurrentPopup();
-                }
-
-                ImGui.EndPopup();
-            }
-
-            // Better translation
-            if (ImGui.Checkbox("Better translation", ref _BetterTranslation))
-            {
-                configuration.BetterTranslation = _BetterTranslation;
+                configuration.OpenAI_API_Key = OpenAIApiKeyInput;
+                TranslationHandler.ClearTranslationCache();
                 configuration.Save();
             }
-            // Tooltip explaining better translation option
-            ImGui.SameLine();
-            ImGui.TextDisabled("?");
-            if (ImGui.IsItemHovered())
+            else
             {
-                ImGui.BeginTooltip();
-                ImGui.Text("Use GPT-4-Turbo and more detailed prompt." +
-                    "\nPrice estimation:" +
-                    "\nNormal mode: <$0.1/month" +
-                    "\nBetter Translation: $2");
-                ImGui.EndTooltip();
+                ImGui.OpenPopup("Confirmation");
+            }
+        }
+
+        bool _BetterTranslation = configuration.BetterTranslation;
+        // Better translation
+        if (ImGui.Checkbox("Better translation", ref _BetterTranslation))
+        {
+            configuration.BetterTranslation = _BetterTranslation;
+            configuration.Save();
+        }
+        // Tooltip explaining better translation option
+        ImGui.SameLine();
+        ImGui.TextDisabled("?");
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.BeginTooltip();
+            ImGui.Text("Use GPT-4-Turbo and more detailed prompt." +
+                "\nPrice estimation:" +
+                "\nNormal mode: <$0.1/month" +
+                "\nBetter Translation: $2");
+            ImGui.EndTooltip();
+        }
+
+        ImGui.TextColored(new Vector4(1, 0, 0, 1),
+            "Warning: " +
+            "\nAPI key stored as plain text in plugin configuration, " +
+            "\nany malware or third party plugins may have access to \nthe key.");
+
+        // confirmation popup
+        if (ImGui.BeginPopupModal("Confirmation"))
+        {
+            ImGui.Text("Warning: API key will be stored as plain text in plugin configuration, " +
+                       "\nany malware or third party plugins may have access to the key. \nProceed?");
+
+            ImGui.Separator();
+
+            float windowWidth = ImGui.GetWindowWidth();
+            float buttonSize = ImGui.CalcTextSize("Yes").X + (ImGui.GetStyle().FramePadding.X * 2);
+
+            ImGui.SetCursorPosX((windowWidth - (buttonSize * 2) - ImGui.GetStyle().ItemSpacing.X) * 0.5f);
+            if (ImGui.Button("Yes", new Vector2(buttonSize, 0)))
+            {
+                configuration.openaiWarned = true;
+                Service.configuration.OpenAI_API_Key = OpenAIApiKeyInput;
+                ImGui.CloseCurrentPopup();
             }
 
-            ImGui.TextColored(new Vector4(1, 0, 0, 1),
-                "Warning: " +
-                "\nAPI key stored as plain text in plugin configuration, " +
-                "\nany malware or third party plugins may have access to \nthe key.");
+            ImGui.SameLine();
+
+            if (ImGui.Button("No", new Vector2(buttonSize, 0)))
+            {
+                OpenAIApiKeyInput = "sk-YOUR-API-KEY";
+                ImGui.CloseCurrentPopup();
+            }
+
+            ImGui.EndPopup();
         }
+    }
+
+    private static void DrawLLMProxySettings(Configuration configuration)
+    {
+        ImGui.Text("Free Claude-Haiku translation service provided by the dev,\nsubject to availability.");
+        ImGui.Text("Users from unsupported regions WILL experience higher latency.");
+
+        // select region
+        ImGui.AlignTextToFramePadding();
+        ImGui.Text("Region");
+        ImGui.SameLine();
+
+        string[] ProxyRegions = ["US", "EU"];
+        string currentSelection = configuration.ProxyRegion;
+
+        int currentIndex = Array.IndexOf(ProxyRegions, currentSelection);
+        if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
+
+        if (ImGui.Combo("##regionCombo", ref currentIndex, ProxyRegions, ProxyRegions.Length))
+        {
+            configuration.ProxyRegion = ProxyRegions[currentIndex];
+            configuration.Save();
+        }
+
+#if DEBUG
+        string ProxyApiKeyInput = Service.configuration.OpenAI_API_Key;
+        ImGui.Text("Proxy API Key ");
+        ImGui.InputText("##APIKey", ref ProxyApiKeyInput, 100);
+        ImGui.SameLine();
+        if (ImGui.Button("Apply"))
+        {
+            configuration.Proxy_API_Key = ProxyApiKeyInput;
+            configuration.Save();
+        }
+#endif
     }
 }

@@ -5,7 +5,7 @@
     <PropertyGroup>
         <Authors>kelvin124124</Authors>
         <Company></Company>
-        <Version>1.4.1.5</Version>
+        <Version>2.0.0.0</Version>
         <Description>In-game chat translator.</Description>
         <Copyright></Copyright>
         <PackageProjectUrl>https://github.com/kelvin124124/ChatTranslated</PackageProjectUrl>
@@ -14,19 +14,29 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="GTranslate" Version="2.1.6" />
+      <EmbeddedResource Remove="Localization\LocStr\Resources.resx" />
     </ItemGroup>
 
-    <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_chatfunction_key)' != ''">
+    <ItemGroup>
+      <None Include="Localization\LocStr\Resources.resx" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="DeepL.net" Version="1.9.0" />
+        <PackageReference Include="GTranslate" Version="2.1.6" />
+        <PackageReference Include="LanguageDetection.Ai" Version="1.1.0" />
+    </ItemGroup>
+
+    <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv2)' != ''">
         <PropertyGroup>
-            <SecretPath>$(ProjectDir)Resources\ChatFunctionKey.secret</SecretPath>
+            <SecretPath>$(ProjectDir)Resources\cfv2.secret</SecretPath>
         </PropertyGroup>
-        <WriteLinesToFile File="$(SecretPath)" Lines="$(PLOGON_SECRET_chatfunction_key)" Overwrite="true" />
+        <WriteLinesToFile File="$(SecretPath)" Lines="$(PLOGON_SECRET_cfv2)" Overwrite="true" />
     </Target>
 
     <Target Name="EmbedSecrets" BeforeTargets="PrepareForBuild" AfterTargets="Secrets">
         <ItemGroup>
-            <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.ChatFunctionKey.secret" />
+            <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.cfv2.secret" />
         </ItemGroup>
     </Target>
 </Project>

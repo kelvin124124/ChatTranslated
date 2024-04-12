@@ -1,3 +1,4 @@
+using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using ChatTranslated.Windows;
 using Dalamud.Game.Command;
@@ -42,8 +43,8 @@ namespace ChatTranslated
 
             pluginInterface.UiBuilder.Draw += DrawUI;
             pluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
+            pluginInterface.UiBuilder.OpenMainUi += DrawMainUI;
 
-            Service.translator = new Translator();
             Service.chatHandler = new ChatHandler();
 
             contextMenuItem = new MenuItem
@@ -57,6 +58,12 @@ namespace ChatTranslated
             {
                 HelpMessage = "Open Chat Translated main window. \"/pchat config\" open config window."
             });
+
+            if (Service.configuration.Version != 2)
+            {
+                OutputChatLine("Plugin has been updated to v2.0 and requires a config reset.");
+                Service.configuration = new Configuration();
+            }
         }
 
         private void OnContextMenuOpened(MenuOpenedArgs args)
@@ -71,10 +78,10 @@ namespace ChatTranslated
             string description = PfAddonPtr->DescriptionString.ToString();
 
             string message = ChatHandler.Sanitize(description ?? "null");
-            Task.Run(() => Translator.TranslateChat("PF", message));
+            Task.Run(() => TranslationHandler.TranslatePFMessage(message));
         }
 
-        public static void OutputChatLine(string sender, string message, XivChatType type = XivChatType.Say)
+        public static void OutputChatLine(XivChatType type, string sender, string message)
         {
             Service.chatGui.Print(new XivChatEntry
             {
@@ -131,6 +138,11 @@ namespace ChatTranslated
         public static void DrawConfigUI()
         {
             Service.configWindow.IsOpen = true;
+        }
+
+        public static void DrawMainUI()
+        {
+            Service.mainWindow.IsOpen = true;
         }
     }
 }

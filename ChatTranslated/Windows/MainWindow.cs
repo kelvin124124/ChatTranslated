@@ -1,3 +1,4 @@
+using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
@@ -39,12 +40,12 @@ public class MainWindow : Window, IDisposable
         // Input text field
         ImGui.AlignTextToFramePadding();
 
-        int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedMainWindowLanguage);
+        int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage);
         if (currentLanguageIndex == -1) currentLanguageIndex = 0;
 
         if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
         {
-            Service.configuration.SelectedMainWindowLanguage = languages[currentLanguageIndex];
+            Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];
             Service.configuration.Save();
         }
 
@@ -63,19 +64,20 @@ public class MainWindow : Window, IDisposable
         if (ImGui.IsItemHovered())
         {
             ImGui.BeginTooltip();
-            ImGui.Text("Translate button only print translated text in the main window.\nIt does not send translated text in chat or make it visible to other players.");
+            ImGui.Text("Translate button only print translated text in the main window." +
+                "\nIt does not send translated text in chat or make it visible to other players.");
             ImGui.EndTooltip();
         }
     }
 
     private static void ProcessInput(string input)
     {
-        Task.Run(() => Translator.TranslateMainWindow(input));
+        Task.Run(() => TranslationHandler.TranslateMainWindowMessage(input));
     }
 
     public void PrintToOutput(string message)
     {
         // Append the given text to the output field
-        outputText = outputText + $"[{DateTime.Now:HH:mm}] " + message + "\n";
+        outputText += $"[{DateTime.Now:HH:mm}] " + message + "\n";
     }
 }
