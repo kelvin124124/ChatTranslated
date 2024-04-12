@@ -22,16 +22,13 @@ namespace ChatTranslated.Translate
 
     public static class LangDetector
     {
-        public static readonly LanguageDetector detector = GetLanguageDetector();
-
-        public static LanguageDetector GetLanguageDetector()
+        public static readonly LanguageDetectorSettings settings = new LanguageDetectorSettings()
         {
-            LanguageDetector detector = new();
-            detector.AddAllLanguages();
-            detector.ConvergenceThreshold = 0.9;
-            detector.MaxIterations = 50;
-            return detector;
-        }
+            RandomSeed = 1,
+            ConvergenceThreshold = 0.9,
+            MaxIterations = 50,
+        };
+        public static readonly LanguageDetector detector = new(settings);
 
         // supported languages = ["English", "Japanese", "German", "French", "Korean", "Chinese", "Spanish"]
         // cannot distinguish between simplified and traditional Chinese
@@ -39,15 +36,15 @@ namespace ChatTranslated.Translate
         public static string DetectLanguage(string inputstring)
         {
             detector.AddAllLanguages();
-            string langcode = detector.Detect(inputstring);
+            string langcode = detector.Detect(inputstring) ?? "unknown";
             string language = langcode switch
             {
                 "eng" => "English",
                 "jpn" => "Japanese",
-                "deu" => "German",
-                "fra" => "French",
+                "ger" => "German",
+                "fre" => "French",
                 "kor" => "Korean",
-                "zho" => "Chinese",
+                "chi" => "Chinese",
                 "spa" => "Spanish",
                 _ => "unknown"
             };

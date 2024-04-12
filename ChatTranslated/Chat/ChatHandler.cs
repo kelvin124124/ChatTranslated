@@ -64,14 +64,15 @@ namespace ChatTranslated.Utils
                 return;
             }
 
+            string messageText = Sanitize(AutoTranslateRegex().Replace(_message, string.Empty));
+            if (isFilteredMessage(playerName, messageText)) return;
+
             switch (Service.configuration.SelectedLanguageSelectionMode)
             {
                 case Configuration.LanguageSelectionMode.Default:
-                    string messageText = Sanitize(AutoTranslateRegex().Replace(_message, string.Empty));
                     if (NonEnglishRegex().IsMatch(messageText))
-                        if (!isFilteredMessage(playerName, messageText))
-                            if (!isJPFilteredMessage(type, playerName, _message))
-                                Task.Run(() => TranslationHandler.TranslateChat(type, playerName, _message));
+                        if (!isJPFilteredMessage(type, playerName, _message))
+                            Task.Run(() => TranslationHandler.TranslateChat(type, playerName, _message));
                     break;
                 case Configuration.LanguageSelectionMode.CustomLanguages:
                     Task.Run(() => TranslationHandler.DetermineLangAndTranslate(type, playerName, _message));
