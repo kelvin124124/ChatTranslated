@@ -24,7 +24,7 @@ namespace ChatTranslated.Localization
 
     internal class LocManager
     {
-        private static ResourceManager ResourceManager = new ResourceManager("ChatTranslated.Resources", Assembly.GetExecutingAssembly());
+        private static readonly ResourceManager ResourceManager = new("ChatTranslated.Resources", Assembly.GetExecutingAssembly());
         private static CultureInfo CultureInfo = CultureInfo.CurrentCulture;
 
         public static void LoadLocalization()

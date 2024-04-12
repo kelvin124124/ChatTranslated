@@ -45,8 +45,6 @@ namespace ChatTranslated
             pluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
             pluginInterface.UiBuilder.OpenMainUi += DrawMainUI;
 
-            Service.translator = new Translator();
-            Service.translationHandler = new TranslationHandler();
             Service.chatHandler = new ChatHandler();
 
             contextMenuItem = new MenuItem

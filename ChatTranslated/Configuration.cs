@@ -27,8 +27,8 @@ namespace ChatTranslated
         }
         public LanguageSelectionMode SelectedLanguageSelectionMode { get; set; } = LanguageSelectionMode.Default;
 
-        public ICollection<string> SelectedSourceLanguages { get; set; } =
-        ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
+        public List<string> SelectedSourceLanguages { get; set; } =
+        ["English", "Japanese", "German", "French", "Korean", "Chinese", "Spanish"];
 
         public string SelectedTargetLanguage = "English";
         public string SelectedMainWindowTargetLanguage = "Japanese";
@@ -39,7 +39,7 @@ namespace ChatTranslated
         public bool EnabledInDuty { get; set; } = false;
         public bool SendChatToDB { get; set; } = false;
 
-        public ICollection<XivChatType> SelectedChatTypes { get; set; } =
+        public List<XivChatType> SelectedChatTypes { get; set; } =
         [
             XivChatType.Say, XivChatType.Shout, XivChatType.TellIncoming, XivChatType.Party,
             XivChatType.Alliance, XivChatType.FreeCompany, XivChatType.NoviceNetwork,
@@ -48,6 +48,7 @@ namespace ChatTranslated
 
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
+        public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
         public bool openaiWarned { get; set; } = false;
         public bool BetterTranslation { get; set; } = false;
         public string ProxyRegion { get; set; } = "US";

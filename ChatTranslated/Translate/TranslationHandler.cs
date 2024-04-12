@@ -16,16 +16,29 @@ namespace ChatTranslated.Translate
             string messageText = ChatHandler.Sanitize(ChatHandler.AutoTranslateRegex().Replace(message, string.Empty));
             try
             {
-                var language = await Translator.GTranslator.DetectLanguageAsync(messageText);
-                Service.pluginLog.Debug($"language: {language.Name}");
-                if (Service.configuration.SelectedSourceLanguages.Contains(language.Name))
+                string language = messageText.GetLanguage();
+                Service.pluginLog.Debug($"language: {language}");
+                if (Service.configuration.SelectedSourceLanguages.Contains(language))
                 {
                     await TranslateChat(type, sender, message);
                 }
             }
-            catch (Exception ex)
+            catch (Exception GTex)
             {
-                Service.pluginLog.Warning($"Failed to detect language. {ex}");
+                Service.pluginLog.Warning($"Google Translate failed to detect language. {GTex}");
+                try
+                {
+                    var language = await Translator.BingTranslator.DetectLanguageAsync(messageText);
+                    Service.pluginLog.Debug($"language: {language.Name}");
+                    if (Service.configuration.SelectedSourceLanguages.Contains(language.Name))
+                    {
+                        await TranslateChat(type, sender, message);
+                    }
+                }
+                catch (Exception BTex)
+                {
+                    Service.pluginLog.Warning($"Bing Translate failed to detect language. {BTex}");
+                }
             }
         }
 

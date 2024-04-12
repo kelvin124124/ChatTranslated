@@ -26,6 +26,7 @@ namespace ChatTranslated.Translate
         { Timeout = TimeSpan.FromSeconds(10) };
 
         public static GoogleTranslator2 GTranslator = new(HttpClient);
+        public static BingTranslator BingTranslator = new(HttpClient);
         public static DeepL.Translator DeepLtranslator = new(Service.configuration.DeepL_API_Key);
 
         private const string DefaultContentType = "application/json";
@@ -40,7 +41,6 @@ namespace ChatTranslated.Translate
             using var reader = new StreamReader(stream);
             return reader.ReadToEnd();
         }
-
 
         public static async Task<string> Translate(string text, string targetLanguage)
         {
@@ -73,8 +73,17 @@ namespace ChatTranslated.Translate
             }
             catch (Exception GTex)
             {
-                Service.pluginLog.Info($"Google Translate: {GTex.Message}.");
-                return text;
+                Service.pluginLog.Info($"Exception in Google Translate: {GTex.Message}.");
+                try
+                {
+                    var result = await BingTranslator.TranslateAsync(text, targetLanguage);
+                    return result.Translation;
+                }
+                catch (Exception BTex)
+                {
+                    Service.pluginLog.Info($"Exception in Bing Translate: {BTex.Message}.");
+                    return text;
+                }
             }
         }
 
@@ -103,7 +112,7 @@ namespace ChatTranslated.Translate
         {
             languageCode = language switch
             {
-                "English" => "EN",
+                "English" => "EN-GB",
                 "Japanese" => "JA",
                 "German" => "DE",
                 "French" => "FR",
@@ -119,12 +128,15 @@ namespace ChatTranslated.Translate
 
         public static async Task<string> LLMProxyTranslate(string message, string targetLanguage)
         {
+#if !DEBUG
             if (string.IsNullOrEmpty(Cfv2))
             {
                 Service.pluginLog.Warning("LLMProxyTranslate - api key empty.");
                 return await MachineTranslate(message, targetLanguage);
             }
-
+#else
+            string Cfv2 = Service.configuration.Proxy_API_Key;
+#endif
             string regionCode = Service.configuration.ProxyRegion;
 
             var requestData = new
