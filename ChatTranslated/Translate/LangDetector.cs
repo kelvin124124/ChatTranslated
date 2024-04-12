@@ -41,10 +41,10 @@ namespace ChatTranslated.Translate
             {
                 "eng" => "English",
                 "jpn" => "Japanese",
-                "ger" => "German",
-                "fre" => "French",
+                "deu" => "German",
+                "fra" => "French",
                 "kor" => "Korean",
-                "chi" => "Chinese",
+                "zho" => "Chinese",
                 "spa" => "Spanish",
                 _ => "unknown"
             };
