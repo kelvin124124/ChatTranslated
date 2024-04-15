@@ -16,8 +16,8 @@ namespace ChatTranslated.Translate
             string messageText = ChatHandler.Sanitize(ChatHandler.AutoTranslateRegex().Replace(message, string.Empty));
             try
             {
-                string language = messageText.GetLanguage();
-                if (Service.configuration.SelectedSourceLanguages.Contains(language))
+                var language = await Translator.GTranslator.DetectLanguageAsync(messageText);
+                if (Service.configuration.SelectedSourceLanguages.Contains(language.Name))
                 {
                     await TranslateChat(type, sender, message);
                 }

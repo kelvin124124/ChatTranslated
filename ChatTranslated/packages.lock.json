@@ -24,12 +24,6 @@
         "resolved": "2.1.6",
         "contentHash": "2ejPoAQDOkd5T54D8T/thwX57KLj2fIi9jcGel8YdJnRu4Ek3eyaWUy/jPMiBu5pG1rXzJc8al+hHuU0LImrHQ=="
       },
-      "LanguageDetection.Ai": {
-        "type": "Direct",
-        "requested": "[1.1.0, )",
-        "resolved": "1.1.0",
-        "contentHash": "m4IwpYNLG5v37/oX98QwUVWjmJKVkn24QygNRpGcQlS9bvwMTEh3akBcLCMCxVHgYt4+ufLT5+g/pV+Q+V9gHQ=="
-      },
       "Microsoft.Extensions.DependencyInjection": {
         "type": "Transitive",
         "resolved": "5.0.0",

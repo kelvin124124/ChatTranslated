@@ -49,7 +49,8 @@ namespace ChatTranslated
 
             contextMenuItem = new MenuItem
             {
-                UseDefaultPrefix = true,
+                // still in stg
+                //UseDefaultPrefix = true,
                 Name = "Translate",
                 OnClicked = TranslatePF
             };
