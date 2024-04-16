@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Alliance">
+    <value></value>
+  </data>
+  <data name="AllLanguages">
+    <value></value>
+  </data>
+  <data name="API key stored as plain text in plugin configuration, any malware or third party plugins may have access to the key.">
+    <value></value>
+  </data>
+  <data name="Apply">
+    <value></value>
+  </data>
+  <data name="Better translation">
+    <value></value>
+  </data>
+  <data name="Better Translation: $2">
+    <value></value>
+  </data>
+  <data name="Channel Selection">
+    <value></value>
+  </data>
+  <data name="Chat Integration">
+    <value></value>
+  </data>
+  <data name="Chinese (Simplified)">
+    <value></value>
+  </data>
+  <data name="Chinese (Traditional)">
+    <value></value>
+  </data>
+  <data name="Collect outgoing chat messages to improve translations.">
+    <value></value>
+  </data>
+  <data name="CrossLinkShell1">
+    <value></value>
+  </data>
+  <data name="CrossLinkShell2">
+    <value></value>
+  </data>
+  <data name="CrossLinkShell3">
+    <value></value>
+  </data>
+  <data name="CrossLinkShell4">
+    <value></value>
+  </data>
+  <data name="CrossLinkShell5">
+    <value></value>
+  </data>
+  <data name="CrossLinkShell6">
+    <value></value>
+  </data>
+  <data name="CrossLinkShell7">
+    <value></value>
+  </data>
+  <data name="CrossLinkShell8">
+    <value></value>
+  </data>
+  <data name="CrossParty">
+    <value></value>
+  </data>
+  <data name="CustomLanguages">
+    <value></value>
+  </data>
+  <data name="DeepL API Key">
+    <value></value>
+  </data>
+  <data name="DeepL_API">
+    <value></value>
+  </data>
+  <data name="Default">
+    <value></value>
+  </data>
+  <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!">
+    <value></value>
+  </data>
+  <data name="Enable in duties">
+    <value></value>
+  </data>
+  <data name="Enable plugin">
+    <value></value>
+  </data>
+  <data name="English">
+    <value></value>
+  </data>
+  <data name="EU">
+    <value></value>
+  </data>
+  <data name="Free Claude-Haiku translation service provided by the dev, subject to availability.">
+    <value></value>
+  </data>
+  <data name="FreeCompany">
+    <value></value>
+  </data>
+  <data name="French">
+    <value></value>
+  </data>
+  <data name="German">
+    <value></value>
+  </data>
+  <data name="Get one free from DeepL official website!">
+    <value></value>
+  </data>
+  <data name="It does not send translated text in chat or make it visible to other players.">
+    <value></value>
+  </data>
+  <data name="Japanese">
+    <value></value>
+  </data>
+  <data name="Korean">
+    <value></value>
+  </data>
+  <data name="LLMProxy">
+    <value></value>
+  </data>
+  <data name="Ls1">
+    <value></value>
+  </data>
+  <data name="Ls2">
+    <value></value>
+  </data>
+  <data name="Ls3">
+    <value></value>
+  </data>
+  <data name="Ls4">
+    <value></value>
+  </data>
+  <data name="Ls5">
+    <value></value>
+  </data>
+  <data name="Ls6">
+    <value></value>
+  </data>
+  <data name="Ls7">
+    <value></value>
+  </data>
+  <data name="Ls8">
+    <value></value>
+  </data>
+  <data name="MachineTranslate">
+    <value></value>
+  </data>
+  <data name="No">
+    <value></value>
+  </data>
+  <data name="Normal mode: &amp;lt;$0.1/month">
+    <value></value>
+  </data>
+  <data name="NoviceNetwork">
+    <value></value>
+  </data>
+  <data name="OpenAI API Key">
+    <value></value>
+  </data>
+  <data name="OpenAI_API">
+    <value></value>
+  </data>
+  <data name="Party">
+    <value></value>
+  </data>
+  <data name="Personal identifiers and sensitive info will be removed before use.">
+    <value></value>
+  </data>
+  <data name="Plugin Language">
+    <value></value>
+  </data>
+  <data name="Price estimation:">
+    <value></value>
+  </data>
+  <data name="PvPTeam">
+    <value></value>
+  </data>
+  <data name="Region">
+    <value></value>
+  </data>
+  <data name="Say">
+    <value></value>
+  </data>
+  <data name="Send chat to DB">
+    <value></value>
+  </data>
+  <data name="Shout">
+    <value></value>
+  </data>
+  <data name="Source Language Selection">
+    <value></value>
+  </data>
+  <data name="Spanish">
+    <value></value>
+  </data>
+  <data name="TellIncoming">
+    <value></value>
+  </data>
+  <data name="Translate">
+    <value></value>
+  </data>
+  <data name="Translate all incoming messages.">
+    <value></value>
+  </data>
+  <data name="Translate button only print translated text in the main window.">
+    <value></value>
+  </data>
+  <data name="Translate to">
+    <value></value>
+  </data>
+  <data name="TranslationMode">
+    <value></value>
+  </data>
+  <data name="US">
+    <value></value>
+  </data>
+  <data name="Use GPT-4-Turbo and more detailed prompt.">
+    <value></value>
+  </data>
+  <data name="Users from unsupported regions WILL experience higher latency.">
+    <value></value>
+  </data>
+  <data name="Warning:">
+    <value></value>
+  </data>
+  <data name="What to translate">
+    <value></value>
+  </data>
+  <data name="Yell">
+    <value></value>
+  </data>
+  <data name="Yes">
+    <value></value>
+  </data>
+</root>
