@@ -3,11 +3,14 @@ using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
+using FFXIVClientStructs.FFXIV.Client.Game.UI;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
 using static ChatTranslated.Configuration;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ChatTranslated.Windows;
 
@@ -330,21 +333,16 @@ public class ConfigWindow : Window, IDisposable
                 ImGui.OpenPopup("Confirmation");
             }
         }
-
         ImGui.Text("Price estimation: $0.2 /month");
-
         ImGui.NewLine();
-
         ImGui.TextColored(new Vector4(1, 0, 0, 1),
-            "Warning: " +
-            "\nAPI key stored as plain text in plugin configuration, " +
-            "\nany malware or third party plugins may have access to \nthe key.");
+            "Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.");
 
         // confirmation popup
         if (ImGui.BeginPopupModal("Confirmation"))
         {
-            ImGui.Text("Warning: API key will be stored as plain text in plugin configuration, " +
-                       "\nany malware or third party plugins may have access to the key. \nProceed?");
+            ImGui.Text("Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.");
+            ImGui.Text("Proceed?");
 
             ImGui.Separator();
 
