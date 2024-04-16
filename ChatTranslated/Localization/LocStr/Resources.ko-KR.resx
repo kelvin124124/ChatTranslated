@@ -118,28 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alliance" xml:space="preserve">
-    <value>Alliance</value>
+    <value>동맹</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>AllLanguages</value>
+    <value>모든 언어</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>적용하다</value>
   </data>
   <data name="Channel Selection" xml:space="preserve">
-    <value>Channel Selection</value>
+    <value>채널 선택</value>
   </data>
   <data name="Chat Integration" xml:space="preserve">
-    <value>Chat Integration</value>
+    <value>채팅 통합</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>Chinese (Simplified)</value>
+    <value>중국어 (간체)</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>Chinese (Traditional)</value>
+    <value>중국 전통)</value>
   </data>
   <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
-    <value>Collect outgoing chat messages to improve translations.</value>
+    <value>나가는 채팅 메시지를 수집하여 번역을 개선하세요.</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
     <value>CrossLinkShell1</value>
@@ -166,58 +166,58 @@
     <value>CrossLinkShell8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>CrossParty</value>
+    <value>크로스파티</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
-    <value>CustomLanguages</value>
+    <value>사용자 정의 언어</value>
   </data>
   <data name="DeepL API Key" xml:space="preserve">
-    <value>DeepL API Key</value>
+    <value>DeepL API 키</value>
   </data>
   <data name="DeepL_API" xml:space="preserve">
     <value>DeepL_API</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Default</value>
+    <value>기본</value>
   </data>
   <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>Didn't find your language in language selection?\nSend feedback from plugin installer!</value>
+    <value>언어 선택에서 언어를 찾지 못하셨나요?\n플러그인 설치 프로그램에서 피드백을 보내주세요!</value>
   </data>
   <data name="Enable in duties" xml:space="preserve">
-    <value>Enable in duties</value>
+    <value>직무에서 활성화</value>
   </data>
   <data name="Enable plugin" xml:space="preserve">
-    <value>Enable plugin</value>
+    <value>플러그인 활성화</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English</value>
+    <value>영어</value>
   </data>
   <data name="EU" xml:space="preserve">
-    <value>EU</value>
+    <value>유럽 연합</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev, subject to availability." xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev, subject to availability.</value>
+    <value>개발자가 제공하는 무료 Claude-Haiku 번역 서비스는 이용 가능 여부에 따라 달라질 수 있습니다.</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>FreeCompany</value>
+    <value>프리컴퍼니</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>French</value>
+    <value>프랑스 국민</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>German</value>
+    <value>독일 사람</value>
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
-    <value>Get one free from DeepL official website!</value>
+    <value>DeepL 공식 웹사이트에서 무료로 받으세요!</value>
   </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
-    <value>It does not send translated text in chat or make it visible to other players.</value>
+    <value>채팅에서 번역된 텍스트를 보내거나 다른 플레이어에게 표시하지 않습니다.</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>Japanese</value>
+    <value>일본어</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>Korean</value>
+    <value>한국인</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMProxy</value>
@@ -247,96 +247,96 @@
     <value>Ls8</value>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
-    <value>MachineTranslate</value>
+    <value>기계 번역</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>아니요</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>NoviceNetwork</value>
+    <value>초보자네트워크</value>
   </data>
   <data name="OpenAI API Key" xml:space="preserve">
-    <value>OpenAI API Key</value>
+    <value>OpenAI API 키</value>
   </data>
   <data name="OpenAI_API" xml:space="preserve">
     <value>OpenAI_API</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>Party</value>
+    <value>파티</value>
   </data>
   <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
-    <value>Personal identifiers and sensitive info will be removed before use.</value>
+    <value>개인 식별자와 민감한 정보는 사용하기 전에 제거됩니다.</value>
   </data>
   <data name="Plugin Language" xml:space="preserve">
-    <value>Plugin Language</value>
+    <value>플러그인 언어</value>
   </data>
   <data name="Price estimation:" xml:space="preserve">
-    <value>Price estimation:</value>
+    <value>가격 추정:</value>
   </data>
   <data name="Price estimation: $0.2 /month" xml:space="preserve">
-    <value>Price estimation: $0.2 /month</value>
+    <value>예상 가격: $0.2 /월</value>
   </data>
   <data name="Proceed?" xml:space="preserve">
-    <value>Proceed?</value>
+    <value>진행하다?</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvPTeam</value>
+    <value>PvP팀</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
     <value/>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>지역</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>Say</value>
+    <value>말하다</value>
   </data>
   <data name="Send chat to DB" xml:space="preserve">
-    <value>Send chat to DB</value>
+    <value>채팅을 DB로 보내기</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>Shout</value>
+    <value>외침</value>
   </data>
   <data name="Source Language Selection" xml:space="preserve">
-    <value>Source Language Selection</value>
+    <value>소스 언어 선택</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>Spanish</value>
+    <value>스페인의</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
     <value>TellIncoming</value>
   </data>
   <data name="Translate" xml:space="preserve">
-    <value>Translate</value>
+    <value>번역하다</value>
   </data>
   <data name="Translate all incoming messages." xml:space="preserve">
-    <value>Translate all incoming messages.</value>
+    <value>모든 수신 메시지를 번역하세요.</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
-    <value>Translate button only print translated text in the main window.</value>
+    <value>번역 버튼은 기본 창에서 번역된 텍스트만 인쇄합니다.</value>
   </data>
   <data name="Translate to" xml:space="preserve">
-    <value>Translate to</value>
+    <value>다음으로 번역하다</value>
   </data>
   <data name="TranslationMode" xml:space="preserve">
-    <value>TranslationMode</value>
+    <value>번역 모드</value>
   </data>
   <data name="US" xml:space="preserve">
-    <value>US</value>
+    <value>우리를</value>
   </data>
   <data name="Users from unsupported regions WILL experience higher latency." xml:space="preserve">
-    <value>Users from unsupported regions WILL experience higher latency.</value>
+    <value>지원되지 않는 지역의 사용자는 대기 시간이 길어집니다.</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.</value>
+    <value>경고: API 키는 플러그인 구성에 일반 텍스트로 저장됩니다.\n모든 맬웨어 또는 타사 플러그인이 키에 액세스할 수 있습니다.</value>
   </data>
   <data name="What to translate" xml:space="preserve">
-    <value>What to translate</value>
+    <value>번역할 내용</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Yell</value>
+    <value>소리치다</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>예</value>
   </data>
 </root>
