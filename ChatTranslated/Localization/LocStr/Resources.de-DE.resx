@@ -127,43 +127,43 @@
     <value>Anwenden</value>
   </data>
   <data name="Channel Selection" xml:space="preserve">
-    <value>Kanalauswahl</value>
+    <value>Chat-Kanäle Auswahl</value>
   </data>
   <data name="Chat Integration" xml:space="preserve">
     <value>Chat-Integration</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>Vereinfachtes Chinesisch)</value>
+    <value>Chinesisch (vereinfacht)</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>Chinesische Tradition)</value>
+    <value>Chinesisch (traditionell)</value>
   </data>
   <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
-    <value>Sammeln Sie ausgehende Chatnachrichten, um Übersetzungen zu verbessern.</value>
+    <value>Sammelt ausgehende Chatnachrichten, um Übersetzungen zu verbessern.</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>CrossLinkShell1</value>
+    <value>Welten-Kontaktkreis1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>CrossLinkShell2</value>
+    <value>Welten-Kontaktkreis2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>CrossLinkShell3</value>
+    <value>Welten-Kontaktkreis3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>CrossLinkShell4</value>
+    <value>Welten-Kontaktkreis4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>CrossLinkShell5</value>
+    <value>Welten-Kontaktkreis5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>CrossLinkShell6</value>
+    <value>Welten-Kontaktkreis6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>CrossLinkShell7</value>
+    <value>Welten-Kontaktkreis7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>CrossLinkShell8</value>
+    <value>Welten-Kontaktkreis8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
     <value>CrossParty</value>
@@ -223,37 +223,37 @@
     <value>LLMProxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>Ls1</value>
+    <value>Kontaktkreis1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>Ls2</value>
+    <value>Kontaktkreis2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>Ls3</value>
+    <value>Kontaktkreis3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>LS4</value>
+    <value>Kontaktkreis4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>LS5</value>
+    <value>Kontaktkreis5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>Ls6</value>
+    <value>Kontaktkreis6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>Ls7</value>
+    <value>Kontaktkreis7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>Ls8</value>
+    <value>Kontaktkreis8</value>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
     <value>Maschinelle Übersetzung</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>NEIN</value>
+    <value>Nein</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>AnfängerNetzwerk</value>
+    <value>Neulings-Chat</value>
   </data>
   <data name="OpenAI API Key" xml:space="preserve">
     <value>OpenAI API-Schlüssel</value>
@@ -265,16 +265,16 @@
     <value>Party</value>
   </data>
   <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
-    <value>Persönliche Kennungen und sensible Informationen werden vor der Verwendung entfernt.</value>
+    <value>Jeglicher persönlicher Bezug sowie sensible Information werden vor der Verwendung entfernt.</value>
   </data>
   <data name="Plugin Language" xml:space="preserve">
     <value>Plugin-Sprache</value>
   </data>
   <data name="Price estimation:" xml:space="preserve">
-    <value>Preisschätzung:</value>
+    <value>Geschätzter Preis:</value>
   </data>
   <data name="Price estimation: $0.2 /month" xml:space="preserve">
-    <value>Preisschätzung: 0,2 $ /Monat</value>
+    <value>Geschätzter Preis: 0,2 $ /pro Monat</value>
   </data>
   <data name="Proceed?" xml:space="preserve">
     <value>Fortfahren?</value>
@@ -292,7 +292,7 @@
     <value>Sagen</value>
   </data>
   <data name="Send chat to DB" xml:space="preserve">
-    <value>Chat an DB senden</value>
+    <value>Sende Chat an DB</value>
   </data>
   <data name="Shout" xml:space="preserve">
     <value>Schreien</value>
@@ -304,16 +304,16 @@
     <value>Spanisch</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>ErzählenEingehend</value>
+    <value>Eingehende Flüster</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>Übersetzen</value>
   </data>
   <data name="Translate all incoming messages." xml:space="preserve">
-    <value>Übersetzen Sie alle eingehenden Nachrichten.</value>
+    <value>Übersetze alle eingehenden Nachrichten.</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
-    <value>Mit der Schaltfläche „Übersetzen“ wird nur übersetzter Text im Hauptfenster gedruckt.</value>
+    <value>Mit der Schaltfläche „Übersetzen“ wird nur übersetzter Text im Hauptfenster angezeigt.</value>
   </data>
   <data name="Translate to" xml:space="preserve">
     <value>Übersetzen ins</value>
@@ -328,13 +328,13 @@
     <value>Benutzer aus nicht unterstützten Regionen werden eine höhere Latenz feststellen.</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>Warnung: Der API-Schlüssel wird als Klartext in der Plugin-Konfiguration gespeichert.\nMalware oder Plugins von Drittanbietern könnten auf den Schlüssel zugreifen.</value>
+    <value>Warnung: Der API-Schlüssel wird als Klartext in der Plugin-Konfiguration gespeichert. Jegliche Malware oder Plugins von Drittanbietern könnten auf den Schlüssel zugreifen.</value>
   </data>
   <data name="What to translate" xml:space="preserve">
-    <value>Was soll übersetzt werden?</value>
+    <value>Folgende Channel übersetzen</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Schrei</value>
+    <value>Rufen</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
