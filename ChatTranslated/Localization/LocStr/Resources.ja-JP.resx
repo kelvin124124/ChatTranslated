@@ -118,225 +118,225 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alliance" xml:space="preserve">
-    <value>Alliance</value>
+    <value>アライアンス</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>AllLanguages</value>
+    <value>すべての言語</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>適用する</value>
   </data>
   <data name="Channel Selection" xml:space="preserve">
-    <value>Channel Selection</value>
+    <value>チャンネル選択</value>
   </data>
   <data name="Chat Integration" xml:space="preserve">
-    <value>Chat Integration</value>
+    <value>チャット統合</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>Chinese (Simplified)</value>
+    <value>中国語（簡体字）</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>Chinese (Traditional)</value>
+    <value>中国の伝統的な）</value>
   </data>
   <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
-    <value>Collect outgoing chat messages to improve translations.</value>
+    <value>送信チャット メッセージを収集して翻訳を改善します。</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>CrossLinkShell1</value>
+    <value>クロスリンクシェル1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>CrossLinkShell2</value>
+    <value>クロスリンクシェル2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>CrossLinkShell3</value>
+    <value>クロスリンクシェル3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>CrossLinkShell4</value>
+    <value>クロスリンクシェル4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>CrossLinkShell5</value>
+    <value>クロスリンクシェル5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>CrossLinkShell6</value>
+    <value>クロスリンクシェル6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>CrossLinkShell7</value>
+    <value>クロスリンクシェル7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>CrossLinkShell8</value>
+    <value>クロスリンクシェル8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>CrossParty</value>
+    <value>クロスパーティー</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
-    <value>CustomLanguages</value>
+    <value>カスタム言語</value>
   </data>
   <data name="DeepL API Key" xml:space="preserve">
-    <value>DeepL API Key</value>
+    <value>DeepL APIキー</value>
   </data>
   <data name="DeepL_API" xml:space="preserve">
-    <value>DeepL_API</value>
+    <value>ディープL_API</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Default</value>
+    <value>デフォルト</value>
   </data>
   <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>Didn't find your language in language selection?\nSend feedback from plugin installer!</value>
+    <value>言語選択でご希望の言語が見つかりませんでしたか?\nプラグインインストーラーからフィードバックを送信してください!</value>
   </data>
   <data name="Enable in duties" xml:space="preserve">
-    <value>Enable in duties</value>
+    <value>職務で有効にする</value>
   </data>
   <data name="Enable plugin" xml:space="preserve">
-    <value>Enable plugin</value>
+    <value>プラグインを有効にする</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English</value>
+    <value>英語</value>
   </data>
   <data name="EU" xml:space="preserve">
-    <value>EU</value>
+    <value>欧州連合</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev, subject to availability." xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev, subject to availability.</value>
+    <value>開発者が提供する無料の Claude-Haiku 翻訳サービス (空き状況によります)。</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>FreeCompany</value>
+    <value>フリーカンパニー</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>French</value>
+    <value>フランス語</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>German</value>
+    <value>ドイツ人</value>
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
-    <value>Get one free from DeepL official website!</value>
+    <value>DeepL公式サイトから無料でゲットしましょう！</value>
   </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
-    <value>It does not send translated text in chat or make it visible to other players.</value>
+    <value>翻訳されたテキストはチャットに送信されず、他のプレイヤーに表示されることもありません。</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>Japanese</value>
+    <value>日本語</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>Korean</value>
+    <value>韓国語</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
-    <value>LLMProxy</value>
+    <value>LLMプロキシ</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>Ls1</value>
+    <value>LS1 1 1 1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
     <value>Ls2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>Ls3</value>
+    <value>LS3 の</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>Ls4</value>
+    <value>LS4 の</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>Ls5</value>
+    <value>LS5 ...</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>Ls6</value>
+    <value>LS6 6 番</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>Ls7</value>
+    <value>LS7 ...8 9 10 11 1</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>Ls8</value>
+    <value>8番</value>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
-    <value>MachineTranslate</value>
+    <value>機械翻訳</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>いいえ</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>NoviceNetwork</value>
+    <value>初心者ネットワーク</value>
   </data>
   <data name="OpenAI API Key" xml:space="preserve">
-    <value>OpenAI API Key</value>
+    <value>OpenAI APIキー</value>
   </data>
   <data name="OpenAI_API" xml:space="preserve">
-    <value>OpenAI_API</value>
+    <value>オープンAI_API</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>Party</value>
+    <value>パーティー</value>
   </data>
   <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
-    <value>Personal identifiers and sensitive info will be removed before use.</value>
+    <value>個人識別情報と機密情報は使用前に削除されます。</value>
   </data>
   <data name="Plugin Language" xml:space="preserve">
-    <value>Plugin Language</value>
+    <value>プラグイン言語</value>
   </data>
   <data name="Price estimation:" xml:space="preserve">
-    <value>Price estimation:</value>
+    <value>価格の見積もり:</value>
   </data>
   <data name="Price estimation: $0.2 /month" xml:space="preserve">
-    <value>Price estimation: $0.2 /month</value>
+    <value>価格の見積もり: 月額 0.2 ドル</value>
   </data>
   <data name="Proceed?" xml:space="preserve">
-    <value>Proceed?</value>
+    <value>進む？</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvPTeam</value>
+    <value>PvPチーム</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
     <value/>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>地域</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>Say</value>
+    <value>言う</value>
   </data>
   <data name="Send chat to DB" xml:space="preserve">
-    <value>Send chat to DB</value>
+    <value>チャットをDBに送信</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>Shout</value>
+    <value>叫ぶ</value>
   </data>
   <data name="Source Language Selection" xml:space="preserve">
-    <value>Source Language Selection</value>
+    <value>ソース言語の選択</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>Spanish</value>
+    <value>スペイン語</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>TellIncoming</value>
+    <value>着信を伝える</value>
   </data>
   <data name="Translate" xml:space="preserve">
-    <value>Translate</value>
+    <value>翻訳する</value>
   </data>
   <data name="Translate all incoming messages." xml:space="preserve">
-    <value>Translate all incoming messages.</value>
+    <value>すべての受信メッセージを翻訳します。</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
-    <value>Translate button only print translated text in the main window.</value>
+    <value>翻訳ボタンはメイン ウィンドウに翻訳されたテキストのみを印刷します。</value>
   </data>
   <data name="Translate to" xml:space="preserve">
-    <value>Translate to</value>
+    <value>翻訳する</value>
   </data>
   <data name="TranslationMode" xml:space="preserve">
-    <value>TranslationMode</value>
+    <value>翻訳モード</value>
   </data>
   <data name="US" xml:space="preserve">
-    <value>US</value>
+    <value>私たち</value>
   </data>
   <data name="Users from unsupported regions WILL experience higher latency." xml:space="preserve">
-    <value>Users from unsupported regions WILL experience higher latency.</value>
+    <value>サポートされていない地域のユーザーは、より高いレイテンシを経験することになります。</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.</value>
+    <value>警告: API キーはプラグイン設定にプレーンテキストとして保存されるため、\nマルウェアやサードパーティのプラグインがキーにアクセスできる可能性があります。</value>
   </data>
   <data name="What to translate" xml:space="preserve">
-    <value>What to translate</value>
+    <value>翻訳するもの</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Yell</value>
+    <value>エール</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>はい</value>
   </data>
 </root>
