@@ -1,5 +1,6 @@
 using ChatTranslated.Utils;
 using Dalamud.Networking.Http;
+using FFXIVClientStructs.Havok;
 using GTranslate.Translators;
 using Newtonsoft.Json.Linq;
 using System;
@@ -112,13 +113,18 @@ namespace ChatTranslated.Translate
                     var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
 
                     if (!string.IsNullOrEmpty(translated))
-                        return translated;
+                    {
+                        if (targetLanguage == "Chinese (Traditional)")
+                            return await MachineTranslate(translated, "Chinese (Traditional)");
+                        else
+                            return translated;
+                    }
                     else
                         throw new Exception("Translation not found in the expected JSON structure.");
                 }
-                catch (Exception ex)
+                catch (Exception DLex)
                 {
-                    Service.pluginLog.Info($"DeepL Translate: {ex.Message}, falling back to Google Translate.");
+                    Service.pluginLog.Info($"DeepL Translate: {DLex.Message}, falling back to Google Translate.");
                     return await MachineTranslate(text, targetLanguage);
                 }
             }
