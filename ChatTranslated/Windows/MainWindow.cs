@@ -1,3 +1,4 @@
+using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Interface.Windowing;
@@ -52,7 +53,7 @@ public class MainWindow : Window, IDisposable
         ImGui.InputText("##input", ref inputText, 500);
 
         ImGui.SameLine();
-        if (ImGui.Button("Translate"))
+        if (ImGui.Button("Translate".GetLocalization()))
         {
             ProcessInput(inputText);
             inputText = "";
@@ -64,8 +65,8 @@ public class MainWindow : Window, IDisposable
         if (ImGui.IsItemHovered())
         {
             ImGui.BeginTooltip();
-            ImGui.Text("Translate button only print translated text in the main window." +
-                "\nIt does not send translated text in chat or make it visible to other players.");
+            ImGui.Text("Translate button only print translated text in the main window.".GetLocalization());
+            ImGui.Text("It does not send translated text in chat or make it visible to other players.".GetLocalization());
             ImGui.EndTooltip();
         }
     }

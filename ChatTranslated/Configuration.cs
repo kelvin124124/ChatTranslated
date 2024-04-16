@@ -9,7 +9,7 @@ namespace ChatTranslated
     [Serializable]
     public class Configuration : IPluginConfiguration
     {
-        public int Version { get; set; } = 2;
+        public int Version { get; set; } = 3;
         public enum TranslationMode
         {
             MachineTranslate,
@@ -27,8 +27,7 @@ namespace ChatTranslated
         }
         public LanguageSelectionMode SelectedLanguageSelectionMode { get; set; } = LanguageSelectionMode.Default;
 
-        public List<string> SelectedSourceLanguages { get; set; } =
-        ["English", "Japanese", "German", "French", "Korean", "Chinese", "Spanish"];
+        public List<string> SelectedSourceLanguages { get; set; } = [];
 
         public string SelectedTargetLanguage = "English";
         public string SelectedMainWindowTargetLanguage = "Japanese";

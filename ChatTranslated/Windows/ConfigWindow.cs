@@ -4,6 +4,7 @@ using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
+using Lumina.Data.Parsing.Layer;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -97,39 +98,39 @@ public class ConfigWindow : Window, IDisposable
         bool _SendChatToDB = configuration.SendChatToDB;
 
         // Enabled
-        if (ImGui.Checkbox("Enable plugin", ref _Enabled))
+        if (ImGui.Checkbox("Enable plugin".GetLocalization(), ref _Enabled))
         {
             configuration.Enabled = _Enabled;
             configuration.Save();
         }
 
         // Chat Integration
-        if (ImGui.Checkbox("Chat Integration", ref _ChatIntegration))
+        if (ImGui.Checkbox("Chat Integration".GetLocalization(), ref _ChatIntegration))
         {
             configuration.ChatIntegration = _ChatIntegration;
             configuration.Save();
         }
 
         // Enable in duties
-        if (ImGui.Checkbox("Enable in duties", ref _EnabledInDuty))
+        if (ImGui.Checkbox("Enable in duties".GetLocalization(), ref _EnabledInDuty))
         {
             configuration.EnabledInDuty = _EnabledInDuty;
             configuration.Save();
         }
 
         // Send chat to DB
-        if (ImGui.Checkbox("Send chat to DB", ref _SendChatToDB))
+        if (ImGui.Checkbox("Send chat to DB".GetLocalization(), ref _SendChatToDB))
         {
             configuration.SendChatToDB = _SendChatToDB;
         }
-        ImGui.Text("    Collect outgoing chat messages to improve translations.\n" +
-                   "    Personal identifiers and sensitive info will be removed before use.");
+        ImGui.Text("    " + "Collect outgoing chat messages to improve translations.".GetLocalization());
+        ImGui.Text("    " + "Personal identifiers and sensitive info will be removed before use.".GetLocalization());
     }
 
     private void DrawPluginLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Plugin Language");
+        ImGui.Text("Plugin Language".GetLocalization());
         ImGui.SameLine();
 
         string currentSelection = configuration.SelectedPluginLanguage;
@@ -148,7 +149,7 @@ public class ConfigWindow : Window, IDisposable
     private static void DrawChatChannelSelection(Configuration configuration)
     {
         // Translate channel selection
-        if (ImGui.CollapsingHeader("Channel Selection", ImGuiTreeNodeFlags.None))
+        if (ImGui.CollapsingHeader("Channel Selection".GetLocalization(), ImGuiTreeNodeFlags.None))
         {
             ImGui.Columns(3, "chatTypeColumns", false);
 
@@ -188,7 +189,7 @@ public class ConfigWindow : Window, IDisposable
             }
             else
             {
-                configuration.SelectedChatTypes.Remove(type);
+                configuration.SelectedChatTypes.RemoveAll(t => t == type);
             }
 
             configuration.Save();
@@ -198,7 +199,7 @@ public class ConfigWindow : Window, IDisposable
     private void DrawSourceLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("What to translate");
+        ImGui.Text("What to translate".GetLocalization());
         ImGui.SameLine();
 
         int selectedLanguageSelectionMode = (int)configuration.SelectedLanguageSelectionMode;
@@ -211,11 +212,11 @@ public class ConfigWindow : Window, IDisposable
 
         if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.Default)
         {
-            ImGui.Text("Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)");
+            ImGui.Text("Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)".GetLocalization());
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.CustomLanguages)
         {
-            if (ImGui.CollapsingHeader("Source Language Selection", ImGuiTreeNodeFlags.None))
+            if (ImGui.CollapsingHeader("Source Language Selection".GetLocalization(), ImGuiTreeNodeFlags.None))
             {
                 // checkbox list
                 foreach (string language in supportedDetectedLanguages)
@@ -230,7 +231,7 @@ public class ConfigWindow : Window, IDisposable
                         }
                         else
                         {
-                            configuration.SelectedSourceLanguages.Remove(language);
+                            configuration.SelectedSourceLanguages.RemoveAll(lang => lang == language);
                         }
 
                         configuration.Save();
@@ -240,14 +241,14 @@ public class ConfigWindow : Window, IDisposable
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.AllLanguages)
         {
-            ImGui.Text("Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!");
+            ImGui.Text("Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!".GetLocalization());
         }
     }
 
     private void DrawTargetLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Translate to");
+        ImGui.Text("Translate to".GetLocalization());
         ImGui.SameLine();
 
         string currentSelection = configuration.SelectedTargetLanguage;
@@ -267,7 +268,7 @@ public class ConfigWindow : Window, IDisposable
     private static void DrawModeSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("TranslationMode");
+        ImGui.Text("TranslationMode".GetLocalization());
         ImGui.SameLine();
 
         int selectedTranslationMode = (int)configuration.SelectedTranslationMode;
@@ -300,24 +301,24 @@ public class ConfigWindow : Window, IDisposable
 
     private static void DrawDeepLSettings(Configuration configuration)
     {
-        ImGui.Text("DeepL API Key ");
+        ImGui.Text("DeepL API Key".GetLocalization());
         ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
         ImGui.SameLine();
-        if (ImGui.Button("Apply"))
+        if (ImGui.Button("Apply".GetLocalization()))
         {
             configuration.DeepL_API_Key = DeepLApiKeyInput;
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
-        ImGui.Text("Get one for free from DeepL official website!");
+        ImGui.Text("Get one free from DeepL official website!".GetLocalization());
     }
 
     private static void DrawOpenAISettings(Configuration configuration)
     {
-        ImGui.Text("OpenAI API Key ");
+        ImGui.Text("OpenAI API Key".GetLocalization());
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 100);
         ImGui.SameLine();
-        if (ImGui.Button("Apply"))
+        if (ImGui.Button("Apply".GetLocalization()))
         {
             if (configuration.openaiWarned)
             {
@@ -330,16 +331,16 @@ public class ConfigWindow : Window, IDisposable
                 ImGui.OpenPopup("Confirmation");
             }
         }
-        ImGui.Text("Price estimation: $0.2 /month");
+        ImGui.Text("Price estimation: $0.2 /month".GetLocalization());
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1),
-            "Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.");
+            "Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.".GetLocalization());
 
         // confirmation popup
         if (ImGui.BeginPopupModal("Confirmation"))
         {
-            ImGui.Text("Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.");
-            ImGui.Text("Proceed?");
+            ImGui.Text("Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.".GetLocalization());
+            ImGui.Text("Proceed?".GetLocalization());
 
             ImGui.Separator();
 
@@ -347,7 +348,7 @@ public class ConfigWindow : Window, IDisposable
             float buttonSize = ImGui.CalcTextSize("Yes").X + (ImGui.GetStyle().FramePadding.X * 2);
 
             ImGui.SetCursorPosX((windowWidth - (buttonSize * 2) - ImGui.GetStyle().ItemSpacing.X) * 0.5f);
-            if (ImGui.Button("Yes", new Vector2(buttonSize, 0)))
+            if (ImGui.Button("Yes".GetLocalization(), new Vector2(buttonSize, 0)))
             {
                 configuration.openaiWarned = true;
                 Service.configuration.OpenAI_API_Key = OpenAIApiKeyInput;
@@ -356,7 +357,7 @@ public class ConfigWindow : Window, IDisposable
 
             ImGui.SameLine();
 
-            if (ImGui.Button("No", new Vector2(buttonSize, 0)))
+            if (ImGui.Button("No".GetLocalization(), new Vector2(buttonSize, 0)))
             {
                 OpenAIApiKeyInput = "sk-YOUR-API-KEY";
                 ImGui.CloseCurrentPopup();
@@ -368,12 +369,12 @@ public class ConfigWindow : Window, IDisposable
 
     private static void DrawLLMProxySettings(Configuration configuration)
     {
-        ImGui.Text("Free Claude-Haiku translation service provided by the dev,\nsubject to availability.");
-        ImGui.Text("Users from unsupported regions WILL experience higher latency.");
+        ImGui.Text("Free Claude-Haiku translation service provided by the dev,\nsubject to availability.".GetLocalization());
+        ImGui.Text("Users from unsupported regions WILL experience higher latency.".GetLocalization());
 
         // select region
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Region");
+        ImGui.Text("Region".GetLocalization());
         ImGui.SameLine();
 
         string[] ProxyRegions = ["US", "EU"];
@@ -389,10 +390,10 @@ public class ConfigWindow : Window, IDisposable
         }
 
 #if DEBUG
-        ImGui.Text("Proxy API Key ");
+        ImGui.Text("Proxy API Key".GetLocalization());
         ImGui.InputText("##APIKey", ref ProxyApiKeyInput, 100);
         ImGui.SameLine();
-        if (ImGui.Button("Apply"))
+        if (ImGui.Button("Apply".GetLocalization()))
         {
             configuration.Proxy_API_Key = ProxyApiKeyInput;
             configuration.Save();

@@ -17,6 +17,10 @@ namespace ChatTranslated.Translate
             try
             {
                 var language = await Translator.GTranslator.DetectLanguageAsync(messageText);
+                Service.pluginLog.Debug($"{messageText}\n -> language: {language.Name}");
+#if DEBUG
+                Plugin.OutputChatLine($"{messageText}\n -> language: {language.Name}");
+#endif
                 if (Service.configuration.SelectedSourceLanguages.Contains(language.Name))
                 {
                     await TranslateChat(type, sender, message);

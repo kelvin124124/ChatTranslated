@@ -61,7 +61,7 @@ namespace ChatTranslated
                 HelpMessage = "Open Chat Translated main window. \"/pchat config\" open config window."
             });
 
-            if (Service.configuration.Version != 2)
+            if (Service.configuration.Version != 3)
             {
                 OutputChatLine("Plugin has been updated to v2.0 and requires a config reset.");
                 Service.configuration = new Configuration();

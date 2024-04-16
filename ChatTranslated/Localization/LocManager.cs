@@ -16,7 +16,6 @@ namespace ChatTranslated.Localization
             }
             catch (Exception ex)
             {
-                Service.pluginLog.Warning($"Error retrieving localization: {ex.Message}");
                 return originalString;
             }
         }
@@ -24,7 +23,7 @@ namespace ChatTranslated.Localization
 
     internal class LocManager
     {
-        private static readonly ResourceManager ResourceManager = new("ChatTranslated.Resources", Assembly.GetExecutingAssembly());
+        private static readonly ResourceManager ResourceManager = new("ChatTranslated.Localization.LocStr.Resources", Assembly.GetExecutingAssembly());
         private static CultureInfo CultureInfo = new("en-US");
 
         public static void LoadLocalization()
