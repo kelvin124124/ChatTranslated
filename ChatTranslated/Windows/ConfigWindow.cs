@@ -15,7 +15,7 @@ namespace ChatTranslated.Windows;
 public class ConfigWindow : Window, IDisposable
 {
     private readonly string[] supportedDetectedLanguages =
-    ["English", "Japanese", "German", "French", "Korean", "Chinese", "Spanish"];
+    ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
     private readonly string[] supportedLanguages =
     ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
 

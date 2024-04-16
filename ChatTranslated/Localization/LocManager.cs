@@ -45,7 +45,7 @@ namespace ChatTranslated.Localization
                 _ => "unknown"
             };
 
-            if (locale != "unknown")
+            if (locale != "unknown" && locale != "en-US")
             {
                 CultureInfo = new CultureInfo(locale);
             }

@@ -1,3 +1,4 @@
+using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using ChatTranslated.Windows;
@@ -50,7 +51,7 @@ namespace ChatTranslated
             contextMenuItem = new MenuItem
             {
                 // still in stg
-                //UseDefaultPrefix = true,
+                UseDefaultPrefix = true,
                 Name = "Translate",
                 OnClicked = TranslatePF
             };
@@ -66,6 +67,8 @@ namespace ChatTranslated
                 OutputChatLine("Plugin has been updated to v2.0 and requires a config reset.");
                 Service.configuration = new Configuration();
             }
+
+            LocManager.LoadLocalization();
         }
 
         private void OnContextMenuOpened(MenuOpenedArgs args)
