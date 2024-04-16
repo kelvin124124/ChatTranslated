@@ -1,6 +1,5 @@
 using ChatTranslated.Utils;
 using Dalamud.Networking.Http;
-using Dalamud.Utility;
 using GTranslate.Translators;
 using Newtonsoft.Json.Linq;
 using System;
@@ -27,7 +26,6 @@ namespace ChatTranslated.Translate
 
         public static GoogleTranslator2 GTranslator = new(HttpClient);
         public static BingTranslator BingTranslator = new(HttpClient);
-        public static DeepL.Translator DeepLtranslator = new(Service.configuration.DeepL_API_Key);
 
         private const string DefaultContentType = "application/json";
         private static readonly string? Cfv2 = ReadSecret("ChatTranslated.Resources.cfv2.secret").Replace("\n", string.Empty);
@@ -87,25 +85,44 @@ namespace ChatTranslated.Translate
             }
         }
 
-        private static async Task<string> DeepLTranslate(string text, string targetLanguage)
+        public static async Task<string> DeepLTranslate(string text, string targetLanguage)
         {
             if (TryGetLanguageCode(targetLanguage, out var languageCode))
             {
+                var requestBody = new
+                {
+                    text = new string[] { text },
+                    target_lang = languageCode
+                };
+
+                string jsonContent = JsonSerializer.Serialize(requestBody);
+                using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api.deepl.com/v2/translate")
+                {
+                    Content = new StringContent(jsonContent, Encoding.UTF8, "application/json"),
+                    Headers = { { HttpRequestHeader.Authorization.ToString(), $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}" } }
+                };
+
                 try
                 {
-                    var result = await DeepLtranslator.TranslateTextAsync(text, null, languageCode!);
-                    if (targetLanguage == "Chinese (Traditional)")
-                        return await MachineTranslate(result.Text, "Chinese (Traditional)");
+                    var response = await HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
+                    response.EnsureSuccessStatusCode();
+                    string jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                    var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
+
+                    if (!string.IsNullOrEmpty(translated))
+                        return translated;
                     else
-                        return result.Text;
+                        throw new Exception("Translation not found in the expected JSON structure.");
                 }
-                catch (Exception DLex)
+                catch (Exception ex)
                 {
-                    Service.pluginLog.Info($"DeepL Translate: {DLex.Message}, falling back to Google Translate.");
+                    Service.pluginLog.Info($"DeepL Translate: {ex.Message}, falling back to Google Translate.");
                     return await MachineTranslate(text, targetLanguage);
                 }
             }
-            else return "Target language not supported by DeepL.";
+            else
+                return "Target language not supported by DeepL.";
         }
 
         public static bool TryGetLanguageCode(string language, out string? languageCode)
@@ -163,15 +180,12 @@ namespace ChatTranslated.Translate
 
                 Service.pluginLog.Debug($"responseBody = {responseBody}");
 
-                using JsonDocument doc = JsonDocument.Parse(responseBody);
-                string? translated = doc.RootElement.GetProperty("content")[0].GetProperty("text").GetString();
+                var translated = JObject.Parse(responseBody)["content"]?[0]?["text"]?.ToString().Trim();
 
-                if (translated.IsNullOrWhitespace())
-                {
-                    throw new Exception("Translation not found in the expected JSON structure.");
-                }
-                else
+                if (!string.IsNullOrEmpty(translated))
                     return translated;
+                else
+                    throw new Exception("Translation not found in the expected JSON structure.");
             }
             catch (Exception ex)
             {
@@ -188,22 +202,17 @@ namespace ChatTranslated.Translate
                 return await MachineTranslate(message, targetLanguage);
             }
 
-            string StandardPrompt = $"Translate FF14 chat to {targetLanguage}";
-            string PerfectPrompt = $"Translate FF14 chat to {targetLanguage}, keep context and jargon. Return original if emojis / meaningless. Guess if unknown." +
+            string prmopt = $"Translate FF14 chat to {targetLanguage}, keep context and jargon. Return original if emojis / meaningless. Guess if unknown." +
                 $"\nOutput plain text.";
 
             var requestData = new
             {
-                model = Service.configuration.BetterTranslation ? "gpt-4-turbo-preview" : "gpt-3.5-turbo",
+                model = "gpt-3.5-turbo",
                 temperature = 0.6,
                 max_tokens = Math.Min(Math.Max(message.Length * 2, 20), 150),
                 messages = new[]
                 {
-                    new
-                    {
-                        role = "system", content =
-                            Service.configuration.BetterTranslation ? PerfectPrompt : StandardPrompt
-                    },
+                    new { role = "system", content = prmopt },
                     new { role = "user", content = message }
                 }
             };

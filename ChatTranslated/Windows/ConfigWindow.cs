@@ -308,7 +308,6 @@ public class ConfigWindow : Window, IDisposable
             configuration.DeepL_API_Key = DeepLApiKeyInput;
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
-            Translator.DeepLtranslator = new DeepL.Translator(configuration.DeepL_API_Key);
         }
         ImGui.Text("Get one for free from DeepL official website!");
     }
@@ -332,25 +331,9 @@ public class ConfigWindow : Window, IDisposable
             }
         }
 
-        bool _BetterTranslation = configuration.BetterTranslation;
-        // Better translation
-        if (ImGui.Checkbox("Better translation", ref _BetterTranslation))
-        {
-            configuration.BetterTranslation = _BetterTranslation;
-            configuration.Save();
-        }
-        // Tooltip explaining better translation option
-        ImGui.SameLine();
-        ImGui.TextDisabled("?");
-        if (ImGui.IsItemHovered())
-        {
-            ImGui.BeginTooltip();
-            ImGui.Text("Use GPT-4-Turbo and more detailed prompt." +
-                "\nPrice estimation:" +
-                "\nNormal mode: <$0.1/month" +
-                "\nBetter Translation: $2");
-            ImGui.EndTooltip();
-        }
+        ImGui.Text("Price estimation: $0.2 /month");
+
+        ImGui.NewLine();
 
         ImGui.TextColored(new Vector4(1, 0, 0, 1),
             "Warning: " +

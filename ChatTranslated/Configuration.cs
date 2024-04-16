@@ -50,7 +50,6 @@ namespace ChatTranslated
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
         public bool openaiWarned { get; set; } = false;
-        public bool BetterTranslation { get; set; } = false;
         public string ProxyRegion { get; set; } = "US";
 
         public void Save()

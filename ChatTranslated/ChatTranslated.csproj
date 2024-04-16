@@ -22,7 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="DeepL.net" Version="1.9.0" />
         <PackageReference Include="GTranslate" Version="2.1.6" />
     </ItemGroup>
 
