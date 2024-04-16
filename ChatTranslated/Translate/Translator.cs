@@ -92,11 +92,12 @@ namespace ChatTranslated.Translate
                 var requestBody = new
                 {
                     text = new string[] { text },
-                    target_lang = languageCode
+                    target_lang = languageCode,
+                    context = "FFXIV, MMORPG"
                 };
 
                 string jsonContent = JsonSerializer.Serialize(requestBody);
-                using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api.deepl.com/v2/translate")
+                using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
                 {
                     Content = new StringContent(jsonContent, Encoding.UTF8, "application/json"),
                     Headers = { { HttpRequestHeader.Authorization.ToString(), $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}" } }
