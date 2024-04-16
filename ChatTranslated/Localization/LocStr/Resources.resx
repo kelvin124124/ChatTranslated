@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -118,231 +118,222 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alliance" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="API key stored as plain text in plugin configuration, any malware or third party plugins may have access to the key." xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Better translation" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Better Translation: $2" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Channel Selection" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Chat Integration" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="DeepL API Key" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="DeepL_API" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Default" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Enable in duties" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Enable plugin" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="English" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="EU" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev, subject to availability." xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="French" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="German" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="LLMProxy" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="No" xml:space="preserve">
-    <value />
-  </data>
-  <data name="Normal mode: &lt;$0.1/month" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="OpenAI API Key" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="OpenAI_API" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Party" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Plugin Language" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Price estimation:" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Region" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Say" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Send chat to DB" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Source Language Selection" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Translate" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Translate all incoming messages." xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Translate to" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="TranslationMode" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="US" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Use GPT-4-Turbo and more detailed prompt." xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Users from unsupported regions WILL experience higher latency." xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Warning:" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="What to translate" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value />
+    <value/>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value />
+    <value/>
   </data>
 </root>
