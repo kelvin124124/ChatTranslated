@@ -53,15 +53,15 @@ namespace ChatTranslated.Utils
                 playerName = Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty);
 
             // check if message is from self
-            //if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
-            //{
-            //    if (Service.configuration.SendChatToDB == true)
-            //    {
-            //        string _messageText = RemoveNonTextPayloads(message);
-            //        Task.Run(() => ChatStore.SendToDB(_messageText));
-            //    }
-            //    return;
-            //}
+            if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
+            {
+                if (Service.configuration.SendChatToDB == true)
+                {
+                    string _messageText = RemoveNonTextPayloads(message);
+                    Task.Run(() => ChatStore.SendToDB(_messageText));
+                }
+                return;
+            }
 
             // filter message
             string messageText = RemoveNonTextPayloads(message);
