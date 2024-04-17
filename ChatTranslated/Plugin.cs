@@ -59,7 +59,7 @@ namespace ChatTranslated
 
             Service.commandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
             {
-                HelpMessage = "Open Chat Translated main window. \"/pchat config\" open config window."
+                HelpMessage = "Open Chat Translated main window. /pchat config to open config window."
             });
 
             if (Service.configuration.Version != 3)
@@ -123,12 +123,15 @@ namespace ChatTranslated
                     Service.configWindow.IsOpen = true;
                     return;
                 case "on":
-                    Service.configuration.ChatIntegration = true;
+                    Service.configuration.Enabled = true;
                     Service.configuration.Save();
                     return;
                 case "off":
-                    Service.configuration.ChatIntegration = false;
+                    Service.configuration.Enabled = false;
                     Service.configuration.Save();
+                    return;
+                case "integration":
+                    Service.configuration.ChatIntegration = !Service.configuration.ChatIntegration;
                     return;
             }
 

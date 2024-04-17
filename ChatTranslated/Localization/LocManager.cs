@@ -14,7 +14,7 @@ namespace ChatTranslated.Localization
             {
                 return LocManager.GetLocalization(originalString);
             }
-            catch (Exception ex)
+            catch
             {
                 return originalString;
             }

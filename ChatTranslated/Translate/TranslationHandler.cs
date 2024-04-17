@@ -1,5 +1,6 @@
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
+using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Utility;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace ChatTranslated.Translate
     {
         public static Dictionary<string, string> TranslationCache = [];
 
-        internal static async Task DetermineLangAndTranslate(XivChatType type, string sender, string message)
+        internal static async Task DetermineLangAndTranslate(XivChatType type, string sender, SeString message)
         {
-            string messageText = ChatHandler.Sanitize(ChatHandler.AutoTranslateRegex().Replace(message, string.Empty));
+            string messageText = ChatHandler.RemoveNonTextPayloads(message);
             try
             {
                 var language = await Translator.GTranslator.DetectLanguageAsync(messageText);
@@ -23,7 +24,7 @@ namespace ChatTranslated.Translate
 #endif
                 if (Service.configuration.SelectedSourceLanguages.Contains(language.Name))
                 {
-                    await TranslateChat(type, sender, message);
+                    await TranslateChat(type, sender, message.TextValue);
                 }
             }
             catch (Exception GTex)
@@ -35,7 +36,7 @@ namespace ChatTranslated.Translate
                     Service.pluginLog.Debug($"language: {language.Name}");
                     if (Service.configuration.SelectedSourceLanguages.Contains(language.Name))
                     {
-                        await TranslateChat(type, sender, message);
+                        await TranslateChat(type, sender, message.TextValue);
                     }
                 }
                 catch (Exception BTex)

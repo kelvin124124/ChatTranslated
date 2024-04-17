@@ -52,37 +52,71 @@ namespace ChatTranslated.Utils
             if (type == XivChatType.TellOutgoing)
                 playerName = Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty);
 
-            string _message = message.TextValue;
-
             // check if message is from self
-            if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
-            {
-                if (Service.configuration.SendChatToDB == true)
-                {
-                    Task.Run(() => ChatStore.SendToDB(_message));
-                }
-                return;
-            }
+            //if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
+            //{
+            //    if (Service.configuration.SendChatToDB == true)
+            //    {
+            //        string _messageText = RemoveNonTextPayloads(message);
+            //        Task.Run(() => ChatStore.SendToDB(_messageText));
+            //    }
+            //    return;
+            //}
 
-            string messageText = Sanitize(AutoTranslateRegex().Replace(_message, string.Empty));
+            // filter message
+            string messageText = RemoveNonTextPayloads(message);
             if (isFilteredMessage(playerName, messageText)) return;
 
+            var _message = message;
             switch (Service.configuration.SelectedLanguageSelectionMode)
             {
                 case Configuration.LanguageSelectionMode.Default:
                     if (NonEnglishRegex().IsMatch(messageText))
-                        if (!isJPFilteredMessage(type, playerName, _message))
-                            Task.Run(() => TranslationHandler.TranslateChat(type, playerName, _message));
+                        if (!isJPFilteredMessage(type, playerName, messageText))
+                            Task.Run(() => TranslationHandler.TranslateChat(type, playerName, _message.TextValue));
                     break;
                 case Configuration.LanguageSelectionMode.CustomLanguages:
                     Task.Run(() => TranslationHandler.DetermineLangAndTranslate(type, playerName, _message));
                     break;
                 case Configuration.LanguageSelectionMode.AllLanguages:
-                    Task.Run(() => TranslationHandler.TranslateChat(type, playerName, _message));
+                    Task.Run(() => TranslationHandler.TranslateChat(type, playerName, _message.TextValue));
                     break;
             }
 
             return;
+        }
+
+        public static string RemoveNonTextPayloads(SeString inputMsg)
+        {
+            var message = new SeString(new List<Payload>());
+            for (int i = 0; i < inputMsg.Payloads.Count; i++)
+            {
+                var payload = inputMsg.Payloads[i];
+                switch (payload)
+                {
+                    case TextPayload textPayload:
+                        message.Payloads.Add(textPayload);
+                        break;
+                    case PlayerPayload _:
+                        i += 2;
+                        break;
+                    case ItemPayload _:
+                    case QuestPayload _:
+                    case MapLinkPayload _:
+                        i += 7;
+                        break;
+                    case StatusPayload _:
+                        i += 10;
+                        break;
+                    case PartyFinderPayload _:
+                        i += 6;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            string messageText = Sanitize(AutoTranslateRegex().Replace(message.TextValue, string.Empty));
+            return messageText;
         }
 
         private bool isFilteredMessage(string playerName, SeString message)
