@@ -1,6 +1,5 @@
 using ChatTranslated.Utils;
 using Dalamud.Networking.Http;
-using FFXIVClientStructs.Havok;
 using GTranslate.Translators;
 using Newtonsoft.Json.Linq;
 using System;

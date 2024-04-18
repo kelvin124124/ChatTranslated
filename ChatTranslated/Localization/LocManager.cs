@@ -1,5 +1,4 @@
 using ChatTranslated.Utils;
-using System;
 using System.Globalization;
 using System.Reflection;
 using System.Resources;

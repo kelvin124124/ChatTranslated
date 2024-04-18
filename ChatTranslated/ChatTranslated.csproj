@@ -22,6 +22,10 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Include="..\images\**" Link="images\%(RecursiveDir)\%(Filename)%(Extension)" CopyToOutputDirectory="Always" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="GTranslate" Version="2.1.6" />
     </ItemGroup>
 

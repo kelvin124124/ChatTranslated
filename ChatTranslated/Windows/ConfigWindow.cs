@@ -4,7 +4,6 @@ using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
-using Lumina.Data.Parsing.Layer;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -137,6 +136,12 @@ public class ConfigWindow : Window, IDisposable
 
         int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
+
+        // need to redesign ui
+        //if (ImGui.Button("Help with localization!"))
+        //{
+        //    Process.Start(new ProcessStartInfo { FileName = "https://crowdin.com/project/chattranslated", UseShellExecute = true });
+        //}
 
         if (ImGui.Combo("##pluginLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
         {
