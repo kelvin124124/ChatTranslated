@@ -12,3 +12,6 @@ A Dalamud plugin for the game FFXIV that allows users to translated in-game chat
 ```/pchat config``` to select your desired mode (Google translate / GPT-3.5-TURBO)  
 ```/pchat on``` and ```/pchat off``` to turn on/off plugin  
 ```/pchat integration``` to toggle chat integration (output translation in gane chat)
+
+## Contribution
+Translate the plugin via [Crowdin](https://crowdin.com/project/chattranslated)
