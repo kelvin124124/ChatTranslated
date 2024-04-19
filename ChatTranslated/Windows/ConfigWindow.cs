@@ -6,6 +6,7 @@ using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 using static ChatTranslated.Configuration;
 
@@ -137,11 +138,12 @@ public class ConfigWindow : Window, IDisposable
         int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        // need to redesign ui
-        //if (ImGui.Button("Help with localization!"))
-        //{
-        //    Process.Start(new ProcessStartInfo { FileName = "https://crowdin.com/project/chattranslated", UseShellExecute = true });
-        //}
+        ImGui.Text("Localization strings are, for now, machine-translated.");
+        ImGui.SameLine();
+        if (ImGui.Button("Help with localization!"))
+        {
+            Process.Start(new ProcessStartInfo { FileName = "https://crowdin.com/project/chattranslated", UseShellExecute = true });
+        }
 
         if (ImGui.Combo("##pluginLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
         {
