@@ -132,6 +132,7 @@ namespace ChatTranslated
                     return;
                 case "integration":
                     Service.configuration.ChatIntegration = !Service.configuration.ChatIntegration;
+                    Service.configuration.Save();
                     return;
             }
 
