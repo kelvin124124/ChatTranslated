@@ -65,9 +65,10 @@ namespace ChatTranslated.Utils
 
             // filter message
             string messageText = RemoveNonTextPayloads(message);
-            if (isFilteredMessage(playerName, messageText)) { 
+            if (isFilteredMessage(playerName, messageText))
+            {
                 Service.mainWindow.PrintToOutput(message.TextValue);
-                return; 
+                return;
             }
 
             var _message = message;

@@ -384,7 +384,7 @@ public class ConfigWindow : Window, IDisposable
         ImGui.Text("Region".GetLocalization());
         ImGui.SameLine();
 
-        string[] ProxyRegions = ["US", "EU"];
+        string[] ProxyRegions = ["US", "EU", "HK"];
         string currentSelection = configuration.ProxyRegion;
 
         int currentIndex = Array.IndexOf(ProxyRegions, currentSelection);
@@ -397,10 +397,10 @@ public class ConfigWindow : Window, IDisposable
         }
 
 #if DEBUG
-        ImGui.Text("Proxy API Key".GetLocalization());
+        ImGui.Text("Proxy API Key");
         ImGui.InputText("##APIKey", ref ProxyApiKeyInput, 100);
         ImGui.SameLine();
-        if (ImGui.Button("Apply".GetLocalization()))
+        if (ImGui.Button("Apply"))
         {
             configuration.Proxy_API_Key = ProxyApiKeyInput;
             configuration.Save();

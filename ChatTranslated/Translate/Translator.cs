@@ -180,13 +180,29 @@ namespace ChatTranslated.Translate
             try
             {
                 var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+                Service.pluginLog.Debug(response.Content.ToString() ?? "Proxy: HTTP response is null");
+
                 response.EnsureSuccessStatusCode();
 
                 string responseBody = await response.Content.ReadAsStringAsync();
-
                 Service.pluginLog.Debug($"responseBody = {responseBody}");
 
-                var translated = JObject.Parse(responseBody)["content"]?[0]?["text"]?.ToString().Trim();
+                // Attempt to parse JSON from the responseBody
+                var jObject = JObject.Parse(responseBody);
+
+                // Extract translation based on the model's JSON structure
+                string? translated = null;
+
+                // Check for Gemini model response structure
+                if (jObject["candidates"] != null)
+                {
+                    translated = jObject["candidates"]?[0]?["content"]?["parts"]?[0]?["text"]?.ToString().Trim();
+                }
+                // Check for Claude model response structure
+                else if (jObject["content"] != null)
+                {
+                    translated = jObject["content"]?[0]?["text"]?.ToString().Trim();
+                }
 
                 if (!string.IsNullOrEmpty(translated))
                     return translated;
@@ -195,7 +211,7 @@ namespace ChatTranslated.Translate
             }
             catch (Exception ex)
             {
-                Service.pluginLog.Warning($"Error during proxy translation: {ex.Message}");
+                Service.pluginLog.Warning($"Error during proxy translation: {ex.Message}.");
                 return await MachineTranslate(message, targetLanguage);
             }
         }
