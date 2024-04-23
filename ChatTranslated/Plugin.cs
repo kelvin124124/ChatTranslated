@@ -59,7 +59,7 @@ namespace ChatTranslated
 
             Service.commandManager.AddHandler(CommandName, new CommandInfo(OnCommand)
             {
-                HelpMessage = "Open Chat Translated main window. /pchat config to open config window."
+                HelpMessage = "Open Chat Translated main window. '/pchat config' to open config window."
             });
 
             if (Service.configuration.Version != 3)
