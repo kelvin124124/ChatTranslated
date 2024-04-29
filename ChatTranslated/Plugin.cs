@@ -50,7 +50,7 @@ namespace ChatTranslated
 
             contextMenuItem = new MenuItem
             {
-                UseDefaultPrefix = true,
+                //UseDefaultPrefix = true,
                 Name = "Translate",
                 OnClicked = TranslatePF
             };
