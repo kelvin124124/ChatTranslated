@@ -14,6 +14,16 @@ namespace ChatTranslated.Translate
 
         internal static async Task DetermineLangAndTranslate(XivChatType type, string sender, SeString message)
         {
+            string language = await DetermineLanguage(message);
+            if (Service.configuration.SelectedSourceLanguages.Contains(language))
+            {
+                await TranslateChat(type, sender, message.TextValue);
+            }
+        }
+
+        public static async Task<string> DetermineLanguage(SeString message) 
+        {
+            string? langStr = null;
             string messageText = ChatHandler.RemoveNonTextPayloads(message);
             try
             {
@@ -22,10 +32,7 @@ namespace ChatTranslated.Translate
 #if DEBUG
                 Plugin.OutputChatLine($"{messageText}\n -> language: {language.Name}");
 #endif
-                if (Service.configuration.SelectedSourceLanguages.Contains(language.Name))
-                {
-                    await TranslateChat(type, sender, message.TextValue);
-                }
+                langStr = language.Name;
             }
             catch (Exception GTex)
             {
@@ -33,17 +40,15 @@ namespace ChatTranslated.Translate
                 try
                 {
                     var language = await Translator.BingTranslator.DetectLanguageAsync(messageText);
-                    Service.pluginLog.Debug($"language: {language.Name}");
-                    if (Service.configuration.SelectedSourceLanguages.Contains(language.Name))
-                    {
-                        await TranslateChat(type, sender, message.TextValue);
-                    }
+                    Service.pluginLog.Debug($"{messageText}\n -> language: {language.Name}");
+                    langStr = language.Name;
                 }
                 catch (Exception BTex)
                 {
                     Service.pluginLog.Warning($"Bing Translate failed to detect language. {BTex}");
                 }
             }
+            return (langStr ?? "unknown");
         }
 
         public static async Task TranslateChat(XivChatType type, string sender, string message)

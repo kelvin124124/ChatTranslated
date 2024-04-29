@@ -178,7 +178,7 @@ namespace ChatTranslated.Utils
 
         public static string Sanitize(string input)
         {
-            return SpecialCharacterRegex().Replace(input, string.Empty);
+            return SpecialCharacterRegex().Replace(input, " ");
         }
 
         public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;

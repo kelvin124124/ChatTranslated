@@ -48,6 +48,7 @@ public class MainWindow : Window, IDisposable
         {
             Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];
             Service.configuration.Save();
+            TranslationHandler.ClearTranslationCache();
         }
 
         ImGui.InputText("##input", ref inputText, 500);
