@@ -118,55 +118,55 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alliance" xml:space="preserve">
-    <value>联盟</value>
+    <value>团队</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
     <value>所有语言</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>申请</value>
+    <value>应用</value>
   </data>
   <data name="Channel Selection" xml:space="preserve">
-    <value>频道选择</value>
+    <value>频道选项</value>
   </data>
   <data name="Chat Integration" xml:space="preserve">
     <value>聊天集成</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>简体中文）</value>
+    <value>简体中文</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>中国传统的）</value>
+    <value>繁體中文</value>
   </data>
   <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
     <value>收集发出的聊天信息以改进翻译。</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>CrossLinkShell1</value>
+    <value>跨服通讯贝1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>CrossLinkShell2</value>
+    <value>跨服通讯贝2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>CrossLinkShell3</value>
+    <value>跨服通讯贝3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>CrossLinkShell4</value>
+    <value>跨服通讯贝4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>CrossLinkShell5</value>
+    <value>跨服通讯贝5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>CrossLinkShell6</value>
+    <value>跨服通讯贝6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>CrossLinkShell7</value>
+    <value>跨服通讯贝7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>CrossLinkShell8</value>
+    <value>跨服通讯贝8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>跨党派</value>
+    <value>跨服小队</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
     <value>自定义语言</value>
@@ -181,10 +181,12 @@
     <value>默认</value>
   </data>
   <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>在语言选择中没有找到您的语言？\n从插件安装程序发送反馈！</value>
+    <value>没有在语言选项中找到您的语言？\n在插件安装程序中发送反馈！</value>
   </data>
   <data name="Enable in duties" xml:space="preserve">
-    <value>启用职责</value>
+    <value>在任务中启用 (not only for dungeons but also else like eureka)
+or
+在副本中启用 (special for dungeons)</value>
   </data>
   <data name="Enable plugin" xml:space="preserve">
     <value>启用插件</value>
