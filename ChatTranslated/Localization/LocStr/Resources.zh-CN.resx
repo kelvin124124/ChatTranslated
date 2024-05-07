@@ -130,7 +130,7 @@
     <value>频道选项</value>
   </data>
   <data name="Chat Integration" xml:space="preserve">
-    <value>聊天集成</value>
+    <value>聊天内集成</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
     <value>简体中文</value>
@@ -198,10 +198,10 @@ or
     <value>欧洲联盟</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev, subject to availability." xml:space="preserve">
-    <value>开发者提供免费的 Claude-Haiku 翻译服务（视情况而定）。</value>
+    <value>由开发者提供的免费的 Claude-Haiku 翻译服务（可用性将视情况而定）。</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>自由公司</value>
+    <value>部队</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>法语</value>
@@ -210,52 +210,52 @@ or
     <value>德语</value>
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
-    <value>从DeepL官方网站免费获取一个！</value>
+    <value>从DeepL官方网站免费获取！</value>
   </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
     <value>它不会在聊天中发送翻译后的文本，也不会让其他玩家看到。</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>日本人</value>
+    <value>日语</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>韩国人</value>
+    <value>韩语</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>代理服务器</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>LS1</value>
+    <value>通讯贝1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>LS2</value>
+    <value>通讯贝2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>LS3</value>
+    <value>通讯贝3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>LS4</value>
+    <value>通讯贝4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>LS5</value>
+    <value>通讯贝5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>LS6</value>
+    <value>通讯贝6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>LS7</value>
+    <value>通讯贝7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>LS8</value>
+    <value>通讯贝8</value>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
     <value>机器翻译</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>不</value>
+    <value>否</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>新手网络</value>
+    <value>新人频道</value>
   </data>
   <data name="OpenAI API Key" xml:space="preserve">
     <value>OpenAI API 密钥</value>
@@ -264,7 +264,7 @@ or
     <value>OpenAI_API</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>派对</value>
+    <value>小队</value>
   </data>
   <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
     <value>个人身份信息和敏感信息将在使用前被删除。</value>
@@ -273,16 +273,16 @@ or
     <value>插件语言</value>
   </data>
   <data name="Price estimation:" xml:space="preserve">
-    <value>价格估算：</value>
+    <value>预计价格：</value>
   </data>
   <data name="Price estimation: $0.2 /month" xml:space="preserve">
-    <value>价格估算：0.2 美元/月</value>
+    <value>预计价格：0.2 美元/月</value>
   </data>
   <data name="Proceed?" xml:space="preserve">
     <value>继续？</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvP团队</value>
+    <value>战队</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
     <value/>
@@ -291,31 +291,31 @@ or
     <value>地区</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>说</value>
+    <value>说话</value>
   </data>
   <data name="Send chat to DB" xml:space="preserve">
-    <value>发送聊天信息至 DB</value>
+    <value>向服务器发送聊天信息</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>喊</value>
+    <value>喊话</value>
   </data>
   <data name="Source Language Selection" xml:space="preserve">
-    <value>源语言选择</value>
+    <value>源语言选项</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>西班牙语</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>告知传入</value>
+    <value>悄悄话</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻译</value>
   </data>
   <data name="Translate all incoming messages." xml:space="preserve">
-    <value>翻译所有来电消息。</value>
+    <value>翻译所有接收的消息。</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
-    <value>翻译按钮仅在主窗口中打印翻译的文本。</value>
+    <value>翻译按钮仅在主窗口中打印翻译后的文本。</value>
   </data>
   <data name="Translate to" xml:space="preserve">
     <value>翻译成</value>
@@ -324,21 +324,21 @@ or
     <value>翻译模式</value>
   </data>
   <data name="US" xml:space="preserve">
-    <value>我们</value>
+    <value>美国</value>
   </data>
   <data name="Users from unsupported regions WILL experience higher latency." xml:space="preserve">
-    <value>来自不受支持地区的用户将会遇到更高的延迟。</value>
+    <value>来自未受支持地区的用户将会感受到更高的延迟。</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
     <value>警告：API 密钥将以纯文本形式存储在插件配置中，\n任何恶意软件或第三方插件都可以访问该密钥。</value>
   </data>
   <data name="What to translate" xml:space="preserve">
-    <value>翻译什么</value>
+    <value>翻译对象</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>叫喊</value>
+    <value>呼喊</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>是的</value>
+    <value>是</value>
   </data>
 </root>
