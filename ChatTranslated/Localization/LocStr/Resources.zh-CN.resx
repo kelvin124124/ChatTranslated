@@ -184,9 +184,7 @@
     <value>没有在语言选项中找到您的语言？\n在插件安装程序中发送反馈！</value>
   </data>
   <data name="Enable in duties" xml:space="preserve">
-    <value>在任务中启用 (not only for dungeons but also else like eureka)
-or
-在副本中启用 (special for dungeons)</value>
+    <value>在任务中启用 </value>
   </data>
   <data name="Enable plugin" xml:space="preserve">
     <value>启用插件</value>
