@@ -124,55 +124,55 @@
     <value>所有語言</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>申請</value>
+    <value>應用</value>
   </data>
   <data name="Channel Selection" xml:space="preserve">
-    <value>頻道選擇</value>
+    <value>頻道選項</value>
   </data>
   <data name="Chat Integration" xml:space="preserve">
     <value>聊天集成</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>簡體中文）</value>
+    <value>简体中文</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>中國傳統的）</value>
+    <value>繁體中文</value>
   </data>
   <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
-    <value>收集傳出的聊天訊息以改進翻譯。</value>
+    <value>收集發送的聊天訊息以改進翻譯。</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>交聯殼1</value>
+    <value>跨服通訊貝1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>交聯殼2</value>
+    <value>跨服通訊貝2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>交聯殼3</value>
+    <value>跨服通訊貝3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>交聯殼4</value>
+    <value>跨服通訊貝4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>交聯殼5</value>
+    <value>跨服通訊貝5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>交聯殼6</value>
+    <value>跨服通訊貝6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>交聯殼7</value>
+    <value>跨服通訊貝7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>交聯Shell8</value>
+    <value>跨服通訊貝8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>跨黨派</value>
+    <value>跨服小隊</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
     <value>自訂語言</value>
   </data>
   <data name="DeepL API Key" xml:space="preserve">
-    <value>DeepL API 金鑰</value>
+    <value>DeepL API 密鑰</value>
   </data>
   <data name="DeepL_API" xml:space="preserve">
     <value>DeepL_API</value>
@@ -181,10 +181,10 @@
     <value>預設</value>
   </data>
   <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>在語言選擇中沒有找到您的語言？\n從外掛安裝程式發送回饋！</value>
+    <value>在語言選擇中沒有找到您的語言？\n從插件安裝軟體發送反饋！</value>
   </data>
   <data name="Enable in duties" xml:space="preserve">
-    <value>在職責中啟用</value>
+    <value>在任務中啟用</value>
   </data>
   <data name="Enable plugin" xml:space="preserve">
     <value>啟用插件</value>
@@ -196,91 +196,91 @@
     <value>歐洲聯盟</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev, subject to availability." xml:space="preserve">
-    <value>開發人員提供免費的克勞德俳句翻譯服務，視供應情況而定。</value>
+    <value>由開發人員提供的免費的Claude-Haiku翻譯服務，可用性視情況而定。</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>自由公司</value>
+    <value>部隊</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>法語</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>德文</value>
+    <value>德語</value>
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
-    <value>從DeepL官網免費領取一份！</value>
+    <value>在DeepL官網上免費獲取！</value>
   </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
-    <value>它不會在聊天中發送翻譯文字或使其對其他玩家可見。</value>
+    <value>它不會在聊天中發送翻譯后的文本或使其對其他玩家可見。</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>日本人</value>
+    <value>日語</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>韓國人</value>
+    <value>韓語</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
-    <value>LLM代理</value>
+    <value>LLMProxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>LS1</value>
+    <value>通訊貝1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>LS2</value>
+    <value>通訊貝2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>LS3</value>
+    <value>通訊貝3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>LS4</value>
+    <value>通訊貝4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>LS5</value>
+    <value>通訊貝5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>LS6</value>
+    <value>通訊貝6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>LS7</value>
+    <value>通訊貝7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>LS8</value>
+    <value>通訊貝8</value>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
     <value>機器翻譯</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>不</value>
+    <value>否</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>新手網</value>
+    <value>新人頻道</value>
   </data>
   <data name="OpenAI API Key" xml:space="preserve">
-    <value>OpenAI API 金鑰</value>
+    <value>OpenAI API 密鑰</value>
   </data>
   <data name="OpenAI_API" xml:space="preserve">
     <value>OpenAI_API</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>派對</value>
+    <value>小隊</value>
   </data>
   <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
-    <value>個人標識符和敏感資訊將在使用前刪除。</value>
+    <value>個人訊息和敏感資訊將在使用前刪除。</value>
   </data>
   <data name="Plugin Language" xml:space="preserve">
-    <value>外掛語言</value>
+    <value>插件語言</value>
   </data>
   <data name="Price estimation:" xml:space="preserve">
-    <value>價格預估：</value>
+    <value>價格預計：</value>
   </data>
   <data name="Price estimation: $0.2 /month" xml:space="preserve">
-    <value>價格預估：$0.2/月</value>
+    <value>價格預計：$0.2/月</value>
   </data>
   <data name="Proceed?" xml:space="preserve">
     <value>繼續？</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvP團隊</value>
+    <value>戰隊</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
     <value/>
@@ -289,13 +289,13 @@
     <value>地區</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>說</value>
+    <value>説話</value>
   </data>
   <data name="Send chat to DB" xml:space="preserve">
-    <value>將聊天傳送到資料庫</value>
+    <value>將聊天傳輸到資料庫</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>喊</value>
+    <value>喊話</value>
   </data>
   <data name="Source Language Selection" xml:space="preserve">
     <value>原始語言選擇</value>
@@ -322,21 +322,21 @@
     <value>翻譯模式</value>
   </data>
   <data name="US" xml:space="preserve">
-    <value>我們</value>
+    <value>美國</value>
   </data>
   <data name="Users from unsupported regions WILL experience higher latency." xml:space="preserve">
-    <value>來自不受支援區域的用戶將遇到更高的延遲。</value>
+    <value>來自不受支援區域的用戶將會感到更高的延遲。</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
     <value>Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.</value>
   </data>
   <data name="What to translate" xml:space="preserve">
-    <value>翻譯什麼</value>
+    <value>翻譯對象</value>
   </data>
   <data name="Yell" xml:space="preserve">
     <value>叫喊</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>是的</value>
+    <value>是</value>
   </data>
 </root>
