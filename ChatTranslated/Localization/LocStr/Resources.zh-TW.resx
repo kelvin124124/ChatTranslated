@@ -187,7 +187,7 @@
     <value>啟用插件</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English (英語)</value>
+    <value>英語</value>
   </data>
   <data name="EU" xml:space="preserve">
     <value>歐洲</value>
@@ -199,10 +199,10 @@
     <value>部隊</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>Français （法文）</value>
+    <value>法語</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>Deutsch （德文）</value>
+    <value>德語</value>
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
     <value>在DeepL官網上免費獲取！</value>
@@ -211,7 +211,7 @@
     <value>它不會在聊天中發送翻譯後的文本、或使其對其他玩家可見。</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>日本語</value>
+    <value>日語</value>
   </data>
   <data name="Korean" xml:space="preserve">
     <value>韓語</value>
@@ -298,10 +298,10 @@
     <value>翻譯對象語言選擇</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>Espagnol (西班牙文)</value>
+    <value>西班牙語</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>悄悄話（傳入）</value>
+    <value>悄悄話</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻譯</value>
