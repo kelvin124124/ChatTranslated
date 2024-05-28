@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alliance" xml:space="preserve">
-    <value>聯盟</value>
+    <value>團隊</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
     <value>所有語言</value>
@@ -187,31 +187,31 @@
     <value>啟用插件</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>英語</value>
+    <value>English (英語)</value>
   </data>
   <data name="EU" xml:space="preserve">
-    <value>歐洲聯盟</value>
+    <value>歐洲</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev,\nsubject to availability.</value>
+    <value>由開發人員提供的免費的Claude-Haiku翻譯服務，\n可用性視情況而定。</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>部隊</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>法語</value>
+    <value>Français （法文）</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>德語</value>
+    <value>Deutsch （德文）</value>
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
     <value>在DeepL官網上免費獲取！</value>
   </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
-    <value>它不會在聊天中發送翻譯后的文本或使其對其他玩家可見。</value>
+    <value>它不會在聊天中發送翻譯後的文本、或使其對其他玩家可見。</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>日語</value>
+    <value>日本語</value>
   </data>
   <data name="Korean" xml:space="preserve">
     <value>韓語</value>
@@ -274,13 +274,13 @@
     <value>價格預計：$0.2/月</value>
   </data>
   <data name="Proceed?" xml:space="preserve">
-    <value>繼續？</value>
+    <value>要繼續嗎？</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>戰隊</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)</value>
+    <value>推薦選項，翻譯非拉丁語言\n（日文、韓文、中文等）</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地區</value>
@@ -295,25 +295,25 @@
     <value>喊話</value>
   </data>
   <data name="Source Language Selection" xml:space="preserve">
-    <value>原始語言選擇</value>
+    <value>翻譯對象語言選擇</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>西班牙語</value>
+    <value>Espagnol (西班牙文)</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>告訴傳入</value>
+    <value>悄悄話（傳入）</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻譯</value>
   </data>
   <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!</value>
+    <value>在語言選擇中沒有找到您的語言？\n\n在插件安裝界面發送反饋！</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>翻譯按鈕僅在主視窗中列印翻譯後的文字。</value>
   </data>
   <data name="Translate to" xml:space="preserve">
-    <value>翻譯成</value>
+    <value>翻譯至</value>
   </data>
   <data name="TranslationMode" xml:space="preserve">
     <value>翻譯模式</value>
@@ -325,13 +325,13 @@
     <value>來自不受支援區域的用戶將會感到更高的延遲。</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.</value>
+    <value>警告：API 密鑰將以純文字形式儲存在插件配置中，\n任何惡意軟體或第三方插件都可能有權存取該密鑰。</value>
   </data>
   <data name="What to translate" xml:space="preserve">
     <value>翻譯對象</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>叫喊</value>
+    <value>呼喊</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>
