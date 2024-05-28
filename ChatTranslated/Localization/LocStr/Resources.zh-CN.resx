@@ -180,9 +180,6 @@
   <data name="Default" xml:space="preserve">
     <value>默认</value>
   </data>
-  <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>没有在语言选项中找到您的语言？\n在插件安装程序中发送反馈！</value>
-  </data>
   <data name="Enable in duties" xml:space="preserve">
     <value>在任务中启用 (not only for dungeons but also else like eureka)
 or
@@ -197,8 +194,8 @@ or
   <data name="EU" xml:space="preserve">
     <value>欧洲联盟</value>
   </data>
-  <data name="Free Claude-Haiku translation service provided by the dev, subject to availability." xml:space="preserve">
-    <value>由开发者提供的免费的 Claude-Haiku 翻译服务（可用性将视情况而定）。</value>
+  <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
+    <value>Free Claude-Haiku translation service provided by the dev,\nsubject to availability.</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>部队</value>
@@ -285,7 +282,7 @@ or
     <value>战队</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value/>
+    <value>Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地区</value>
@@ -311,8 +308,8 @@ or
   <data name="Translate" xml:space="preserve">
     <value>翻译</value>
   </data>
-  <data name="Translate all incoming messages." xml:space="preserve">
-    <value>翻译所有接收的消息。</value>
+  <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
+    <value>Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>翻译按钮仅在主窗口中打印翻译后的文本。</value>
