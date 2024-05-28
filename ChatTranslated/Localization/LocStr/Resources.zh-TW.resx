@@ -133,7 +133,7 @@
     <value>聊天集成</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>简体中文</value>
+    <value>簡體中文</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
     <value>繁體中文</value>
@@ -206,6 +206,9 @@
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
     <value>在DeepL官網上免費獲取！</value>
+  </data>
+  <data name="HK" xml:space="preserve">
+    <value>HK</value>
   </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
     <value>它不會在聊天中發送翻譯後的文本、或使其對其他玩家可見。</value>
