@@ -180,9 +180,6 @@
   <data name="Default" xml:space="preserve">
     <value>Por defecto</value>
   </data>
-  <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>¿No encontró su idioma en la selección de idiomas?\n¡Envíe comentarios desde el instalador del complemento!</value>
-  </data>
   <data name="Enable in duties" xml:space="preserve">
     <value>Habilitar en deberes</value>
   </data>
@@ -195,8 +192,8 @@
   <data name="EU" xml:space="preserve">
     <value>UE</value>
   </data>
-  <data name="Free Claude-Haiku translation service provided by the dev, subject to availability." xml:space="preserve">
-    <value>Servicio gratuito de traducción Claude-Haiku proporcionado por el desarrollador, sujeto a disponibilidad.</value>
+  <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
+    <value>Free Claude-Haiku translation service provided by the dev,\nsubject to availability.</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>LibreCompañía</value>
@@ -283,7 +280,7 @@
     <value>Equipo PvP</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value/>
+    <value>Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Región</value>
@@ -309,8 +306,8 @@
   <data name="Translate" xml:space="preserve">
     <value>Traducir</value>
   </data>
-  <data name="Translate all incoming messages." xml:space="preserve">
-    <value>Traduce todos los mensajes entrantes.</value>
+  <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
+    <value>Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>El botón Traducir solo imprime el texto traducido en la ventana principal.</value>
