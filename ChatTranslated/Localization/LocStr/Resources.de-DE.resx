@@ -193,7 +193,7 @@
     <value>EU</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev,\nsubject to availability.</value>
+    <value>Kostenloser Claude-Haiku-Übersetzungsdienst vom Entwickler\nje nach Verfügbarkeit.</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>FreieGesellschaft</value>
@@ -280,7 +280,7 @@
     <value>PvP-Team</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)</value>
+    <value>Empfohlen. Übersetzen Sie nicht auf Latein basierende Sprachen.\n(Japanisch, Koreanisch, Chinesisch usw.)</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Region</value>
@@ -307,7 +307,7 @@
     <value>Übersetzen</value>
   </data>
   <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!</value>
+    <value>Übersetzen Sie alle eingehenden Nachrichten.\n\nSie haben Ihre Sprache in der Sprachauswahl nicht gefunden?\nSenden Sie Feedback vom Plugin-Installer!</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>Mit der Schaltfläche „Übersetzen“ wird nur übersetzter Text im Hauptfenster angezeigt.</value>
