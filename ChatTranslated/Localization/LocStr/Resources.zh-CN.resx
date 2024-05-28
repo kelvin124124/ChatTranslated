@@ -180,34 +180,29 @@
   <data name="Default" xml:space="preserve">
     <value>默认</value>
   </data>
-  <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>没有在语言选项中找到您的语言？\n在插件安装程序中发送反馈！</value>
-  </data>
   <data name="Enable in duties" xml:space="preserve">
-    <value>在任务中启用 (not only for dungeons but also else like eureka)
-or
-在副本中启用 (special for dungeons)</value>
+    <value>在任务中启用 </value>
   </data>
   <data name="Enable plugin" xml:space="preserve">
     <value>启用插件</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>英语</value>
+    <value>English（英语）</value>
   </data>
   <data name="EU" xml:space="preserve">
-    <value>欧洲联盟</value>
+    <value>欧洲</value>
   </data>
-  <data name="Free Claude-Haiku translation service provided by the dev, subject to availability." xml:space="preserve">
-    <value>由开发者提供的免费的 Claude-Haiku 翻译服务（可用性将视情况而定）。</value>
+  <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
+    <value>由开发者提供的免费的 Claude-Haiku 翻译服务\n（可用性将视情况而定）。</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>部队</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>法语</value>
+    <value>Français（法文）</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>德语</value>
+    <value>Deutsch （德文）</value>
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
     <value>从DeepL官方网站免费获取！</value>
@@ -222,7 +217,7 @@ or
     <value>韩语</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
-    <value>代理服务器</value>
+    <value>LLMProxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通讯贝1</value>
@@ -267,7 +262,7 @@ or
     <value>小队</value>
   </data>
   <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
-    <value>个人身份信息和敏感信息将在使用前被删除。</value>
+    <value>个人讯息和敏感资讯将在使用前删除。</value>
   </data>
   <data name="Plugin Language" xml:space="preserve">
     <value>插件语言</value>
@@ -279,13 +274,13 @@ or
     <value>预计价格：0.2 美元/月</value>
   </data>
   <data name="Proceed?" xml:space="preserve">
-    <value>继续？</value>
+    <value>要继续吗？</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>战队</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value/>
+    <value>推荐。翻译非拉丁语系语言。\n（日语、韩语、中文等）</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地区</value>
@@ -303,22 +298,22 @@ or
     <value>源语言选项</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>西班牙语</value>
+    <value>Espagnol （西班牙语）</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>悄悄话</value>
+    <value>悄悄话（传入）</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻译</value>
   </data>
-  <data name="Translate all incoming messages." xml:space="preserve">
-    <value>翻译所有接收的消息。</value>
+  <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
+    <value>没有在语言选项中找到您的语言？\n在插件安装界面中发送反馈！</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>翻译按钮仅在主窗口中打印翻译后的文本。</value>
   </data>
   <data name="Translate to" xml:space="preserve">
-    <value>翻译成</value>
+    <value>翻译至</value>
   </data>
   <data name="TranslationMode" xml:space="preserve">
     <value>翻译模式</value>

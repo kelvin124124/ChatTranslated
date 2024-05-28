@@ -180,9 +180,6 @@
   <data name="Default" xml:space="preserve">
     <value>デフォルト</value>
   </data>
-  <data name="Didn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>言語選択でご希望の言語が見つかりませんでしたか?\nプラグインインストーラーからフィードバックを送信してください!</value>
-  </data>
   <data name="Enable in duties" xml:space="preserve">
     <value>職務で有効にする</value>
   </data>
@@ -195,8 +192,8 @@
   <data name="EU" xml:space="preserve">
     <value>欧州連合</value>
   </data>
-  <data name="Free Claude-Haiku translation service provided by the dev, subject to availability." xml:space="preserve">
-    <value>開発者が提供する無料の Claude-Haiku 翻訳サービス (空き状況によります)。</value>
+  <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
+    <value>開発者が提供する無料の Claude-Haiku 翻訳サービス \n(利用可能状況によります)。</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>フリーカンパニー</value>
@@ -226,7 +223,7 @@
     <value>LS1 1 1 1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>Ls2</value>
+    <value>LS2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
     <value>LS3 の</value>
@@ -274,7 +271,7 @@
     <value>価格の見積もり:</value>
   </data>
   <data name="Price estimation: $0.2 /month" xml:space="preserve">
-    <value>価格の見積もり: 月額 0.2 ドル</value>
+    <value>価格の見積もり: 月額 0.2 USD</value>
   </data>
   <data name="Proceed?" xml:space="preserve">
     <value>進む？</value>
@@ -283,7 +280,7 @@
     <value>PvPチーム</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value/>
+    <value>推奨。ラテン語以外の言語を翻訳します。\n(日本語、韓国語、中国語など)</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地域</value>
@@ -309,8 +306,8 @@
   <data name="Translate" xml:space="preserve">
     <value>翻訳する</value>
   </data>
-  <data name="Translate all incoming messages." xml:space="preserve">
-    <value>すべての受信メッセージを翻訳します。</value>
+  <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
+    <value>すべての受信メッセージを翻訳します。\n\n言語選択でご希望の言語が見つかりませんでしたか?\nプラグイン インストーラーからフィードバックを送信してください。</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>翻訳ボタンはメイン ウィンドウに翻訳されたテキストのみを印刷します。</value>
@@ -322,7 +319,7 @@
     <value>翻訳モード</value>
   </data>
   <data name="US" xml:space="preserve">
-    <value>私たち</value>
+    <value>アメリカ</value>
   </data>
   <data name="Users from unsupported regions WILL experience higher latency." xml:space="preserve">
     <value>サポートされていない地域のユーザーは、より高いレイテンシを経験することになります。</value>
