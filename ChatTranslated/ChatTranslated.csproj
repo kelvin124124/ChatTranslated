@@ -26,7 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="GTranslate" Version="2.1.6" />
+        <PackageReference Include="GTranslate" Version="2.2.0" />
     </ItemGroup>
 
     <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv2)' != ''">
