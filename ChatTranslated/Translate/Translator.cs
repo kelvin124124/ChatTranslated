@@ -190,19 +190,8 @@ namespace ChatTranslated.Translate
                 // Attempt to parse JSON from the responseBody
                 var jObject = JObject.Parse(responseBody);
 
-                // Extract translation based on the model's JSON structure
-                string? translated = null;
-
-                // Check for Gemini model response structure
-                if (jObject["candidates"] != null)
-                {
-                    translated = jObject["candidates"]?[0]?["content"]?["parts"]?[0]?["text"]?.ToString().Trim();
-                }
-                // Check for Claude model response structure
-                else if (jObject["content"] != null)
-                {
-                    translated = jObject["content"]?[0]?["text"]?.ToString().Trim();
-                }
+                // Extract translation based on the updated JSON structure
+                string? translated = jObject["translated"]?.ToString().Trim();
 
                 if (!string.IsNullOrEmpty(translated))
                     return translated;

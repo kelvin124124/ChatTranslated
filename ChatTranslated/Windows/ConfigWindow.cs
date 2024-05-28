@@ -138,7 +138,6 @@ public class ConfigWindow : Window, IDisposable
         int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        ImGui.Text("Localization strings are, for now, machine-translated.");
         ImGui.SameLine();
         if (ImGui.Button("Help with localization!"))
         {
