@@ -187,7 +187,7 @@
     <value>启用插件</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English（英语）</value>
+    <value>英语</value>
   </data>
   <data name="EU" xml:space="preserve">
     <value>欧洲</value>
@@ -199,10 +199,10 @@
     <value>部队</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>Français（法文）</value>
+    <value>法语</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>Deutsch （德文）</value>
+    <value>德语</value>
   </data>
   <data name="Get one free from DeepL official website!" xml:space="preserve">
     <value>从DeepL官方网站免费获取！</value>
@@ -298,10 +298,10 @@
     <value>源语言选项</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>Espagnol （西班牙语）</value>
+    <value>西班牙语</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>悄悄话（传入）</value>
+    <value>悄悄话</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻译</value>
