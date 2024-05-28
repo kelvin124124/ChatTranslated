@@ -4,6 +4,7 @@ using ChatTranslated.Utils;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
+using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
@@ -44,6 +45,7 @@ public class MainWindow : Window, IDisposable
         int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage);
         if (currentLanguageIndex == -1) currentLanguageIndex = 0;
 
+        string[] localizedLanguages = languages.Select(lang => lang.GetLocalization()).ToArray();
         if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
         {
             Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];

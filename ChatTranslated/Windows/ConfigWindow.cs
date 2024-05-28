@@ -7,6 +7,7 @@ using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Numerics;
 using static ChatTranslated.Configuration;
 
@@ -144,7 +145,8 @@ public class ConfigWindow : Window, IDisposable
             Process.Start(new ProcessStartInfo { FileName = "https://crowdin.com/project/chattranslated", UseShellExecute = true });
         }
 
-        if (ImGui.Combo("##pluginLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
+        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => lang.GetLocalization()).ToArray();
+        if (ImGui.Combo("##pluginLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedPluginLanguage = supportedLanguages[currentIndex];
             configuration.Save();
@@ -186,7 +188,7 @@ public class ConfigWindow : Window, IDisposable
     private static void UpdateChannelConfig(XivChatType type, Configuration configuration)
     {
         var typeEnabled = configuration.SelectedChatTypes.Contains(type);
-        if (ImGui.Checkbox(type.ToString(), ref typeEnabled))
+        if (ImGui.Checkbox(type.ToString().GetLocalization(), ref typeEnabled))
         {
             if (typeEnabled)
             {
@@ -210,7 +212,10 @@ public class ConfigWindow : Window, IDisposable
 
         int selectedLanguageSelectionMode = (int)configuration.SelectedLanguageSelectionMode;
 
-        if (ImGui.Combo("##LanguageSelectionModeCombo", ref selectedLanguageSelectionMode, Enum.GetNames(typeof(LanguageSelectionMode)), 3))
+        string[] languageSelectionModeNames = Enum.GetNames(typeof(LanguageSelectionMode));
+        string[] localizedlanguageSelectionModes = languageSelectionModeNames.Select(mode => mode.GetLocalization()).ToArray();
+
+        if (ImGui.Combo("##LanguageSelectionModeCombo", ref selectedLanguageSelectionMode, localizedlanguageSelectionModes, languageSelectionModeNames.Length))
         {
             configuration.SelectedLanguageSelectionMode = (LanguageSelectionMode)selectedLanguageSelectionMode;
             configuration.Save();
@@ -228,7 +233,7 @@ public class ConfigWindow : Window, IDisposable
                 foreach (string language in supportedDetectedLanguages)
                 {
                     bool isSelected = configuration.SelectedSourceLanguages.Contains(language);
-                    if (ImGui.Checkbox(language, ref isSelected))
+                    if (ImGui.Checkbox(language.GetLocalization(), ref isSelected))
                     {
                         if (isSelected)
                         {
@@ -262,7 +267,8 @@ public class ConfigWindow : Window, IDisposable
         int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        if (ImGui.Combo("##targetLanguage", ref currentIndex, supportedLanguages, supportedLanguages.Length))
+        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => lang.GetLocalization()).ToArray();
+        if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedTargetLanguage = supportedLanguages[currentIndex];
 
@@ -279,8 +285,11 @@ public class ConfigWindow : Window, IDisposable
 
         int selectedTranslationMode = (int)configuration.SelectedTranslationMode;
 
+        string[] translationModeNames = Enum.GetNames(typeof(TranslationMode));
+        string[] localizedTranslationModes = translationModeNames.Select(mode => mode.GetLocalization()).ToArray();
+
         // update index when adding new modes
-        if (ImGui.Combo("##TranslationModeCombo", ref selectedTranslationMode, Enum.GetNames(typeof(TranslationMode)), 4))
+        if (ImGui.Combo("##TranslationModeCombo", ref selectedTranslationMode, localizedTranslationModes, translationModeNames.Length))
         {
             configuration.SelectedTranslationMode = (TranslationMode)selectedTranslationMode;
 
@@ -389,7 +398,8 @@ public class ConfigWindow : Window, IDisposable
         int currentIndex = Array.IndexOf(ProxyRegions, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        if (ImGui.Combo("##regionCombo", ref currentIndex, ProxyRegions, ProxyRegions.Length))
+        string[] localizedRegions = ProxyRegions.Select(region => region.GetLocalization()).ToArray();
+        if (ImGui.Combo("##regionCombo", ref currentIndex, localizedRegions, ProxyRegions.Length))
         {
             configuration.ProxyRegion = ProxyRegions[currentIndex];
             configuration.Save();
