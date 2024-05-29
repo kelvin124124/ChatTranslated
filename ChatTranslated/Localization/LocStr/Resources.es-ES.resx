@@ -207,6 +207,9 @@
   <data name="Get one free from DeepL official website!" xml:space="preserve">
     <value>¡Consigue uno gratis en el sitio web oficial de DeepL!</value>
   </data>
+  <data name="HK" xml:space="preserve">
+    <value>HK</value>
+  </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
     <value>No envía texto traducido en el chat ni lo hace visible para otros jugadores.</value>
   </data>
