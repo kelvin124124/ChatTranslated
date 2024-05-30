@@ -11,6 +11,7 @@ using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ChatTranslated
@@ -50,7 +51,7 @@ namespace ChatTranslated
 
             contextMenuItem = new MenuItem
             {
-                //UseDefaultPrefix = true,
+                UseDefaultPrefix = true,
                 Name = "Translate",
                 OnClicked = TranslatePF
             };
@@ -81,8 +82,12 @@ namespace ChatTranslated
             AddonLookingForGroupDetail* PfAddonPtr = (AddonLookingForGroupDetail*)args.AddonPtr;
             string description = PfAddonPtr->DescriptionString.ToString();
 
-            string message = ChatHandler.Sanitize(description ?? "null");
-            Task.Run(() => TranslationHandler.TranslatePFMessage(message));
+            // Replacement logic
+            description = description
+                .Replace("\u0002\u0012\u0002\u0037\u0003", " \uE040 ")
+                .Replace("\u0002\u0012\u0002\u0038\u0003", " \uE041 ");
+
+            Task.Run(() => TranslationHandler.TranslatePFMessage(description));
         }
 
         public static void OutputChatLine(XivChatType type, string sender, string message)
