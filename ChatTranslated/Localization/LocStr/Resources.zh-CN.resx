@@ -136,7 +136,7 @@
     <value>简体中文</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>繁體中文</value>
+    <value>繁体中文</value>
   </data>
   <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
     <value>收集发出的聊天信息以改进翻译。</value>
@@ -208,7 +208,7 @@
     <value>从DeepL官方网站免费获取！</value>
   </data>
   <data name="Good game!" xml:space="preserve">
-    <value>Good game!</value>
+    <value>打得好！辛苦了！</value>
   </data>
   <data name="HK" xml:space="preserve">
     <value>香港</value>
@@ -217,7 +217,7 @@
     <value>它不会在聊天中发送翻译后的文本，也不会让其他玩家看到。</value>
   </data>
   <data name="It's okay!" xml:space="preserve">
-    <value>It's okay!</value>
+    <value>别在意。</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>日语</value>
@@ -226,7 +226,7 @@
     <value>韩语</value>
   </data>
   <data name="Let's do it!" xml:space="preserve">
-    <value>Let's do it!</value>
+    <value>请多指教！</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMProxy</value>
