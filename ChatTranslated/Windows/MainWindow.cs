@@ -36,14 +36,22 @@ namespace ChatTranslated.Windows
 
         private void DrawOutputField()
         {
-            ImGui.BeginChild("outputField", new Vector2(-1, -55), false, ImGuiWindowFlags.HorizontalScrollbar);
-            float outputFieldWidth = ImGui.GetContentRegionAvail().X - 15.0f;
+            ImGui.BeginChild("outputField", new Vector2(-1, -55), false);
+            float outputFieldWidth = ImGui.GetContentRegionAvail().X;
             string wrappedText = cleanOutputText;
             AddSoftReturnsToText(ref wrappedText, outputFieldWidth);
 
             ImGui.InputTextMultiline("##output", ref wrappedText, 0, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
             ImGui.SetScrollHereY(1.0f);
             ImGui.EndChild();
+
+            if (ImGui.IsKeyPressed(ImGuiKey.C) && (ImGui.GetIO().KeyCtrl || ImGui.GetIO().KeySuper))
+            {
+                // debug
+                Plugin.OutputChatLine("Copied text to clipboard.");
+                // copy selected text
+                ImGui.SetClipboardText(RemoveSoftReturns(ImGui.GetClipboardText()));
+            }
 
             ImGui.Separator();
         }
@@ -95,17 +103,17 @@ namespace ChatTranslated.Windows
         private static void AddSoftReturnsToText(ref string str, float multilineWidth)
         {
             var lines = str.Split('\n');
-            str = string.Join("\n", lines.SelectMany(line => WrapLine(line, multilineWidth)));
+            str = string.Join("\r\n", lines.SelectMany(line => WrapLine(line, multilineWidth)));
         }
 
         private static IEnumerable<string> WrapLine(string line, float multilineWidth)
         {
             var wrappedLine = string.Empty;
-            var words = Regex.Matches(line, @"\p{IsCJKUnifiedIdeographs}|\w+|\s+|[^\w\s]").Cast<Match>().Select(m => m.Value);
+            var words = Regex.Matches(line, @"(\p{IsCJKUnifiedIdeographs}|[^\x00-\x7F]|\w+|\s+|[^\w\s])").Cast<Match>().Select(m => m.Value);
 
             foreach (var word in words)
             {
-                if (ImGui.CalcTextSize(wrappedLine + word).X > multilineWidth)
+                if (ImGui.CalcTextSize(wrappedLine + word).X + 20f > multilineWidth)
                 {
                     yield return wrappedLine.TrimEnd();
                     wrappedLine = string.Empty;
@@ -114,5 +122,7 @@ namespace ChatTranslated.Windows
             }
             yield return wrappedLine.TrimEnd();
         }
+
+        private static string RemoveSoftReturns(string str) => str.Replace("\r\n", " ");
     }
 }
