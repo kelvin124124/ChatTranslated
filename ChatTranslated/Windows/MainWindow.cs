@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ChatTranslated.Windows
@@ -105,7 +106,7 @@ namespace ChatTranslated.Windows
         private static IEnumerable<string> WrapLine(string line, float multilineWidth)
         {
             var wrappedLine = string.Empty;
-            var words = line.Split(' ');
+            var words = Regex.Matches(line, @"\p{IsCJKUnifiedIdeographs}|\w+|\s+|[^\w\s]").Cast<Match>().Select(m => m.Value);
 
             foreach (var word in words)
             {
@@ -114,7 +115,7 @@ namespace ChatTranslated.Windows
                     yield return wrappedLine.TrimEnd();
                     wrappedLine = string.Empty;
                 }
-                wrappedLine += word + " ";
+                wrappedLine += word;
             }
             yield return wrappedLine.TrimEnd();
         }

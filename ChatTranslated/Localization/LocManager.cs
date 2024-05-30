@@ -30,7 +30,10 @@ namespace ChatTranslated.Localization
             string selectedLanguage = Service.configuration.SelectedPluginLanguage;
 
             if (selectedLanguage == "English")
+            {
+                CultureInfo = new CultureInfo("en-US");
                 return;
+            }
 
             string locale = selectedLanguage switch
             {
@@ -43,7 +46,7 @@ namespace ChatTranslated.Localization
                 _ => "unknown"
             };
 
-            if (locale != "unknown" && locale != "en-US")
+            if (locale != "unknown")
             {
                 CultureInfo = new CultureInfo(locale);
             }
@@ -60,7 +63,7 @@ namespace ChatTranslated.Localization
                 "Japanese" => new CultureInfo("ja-JP"),
                 "Chinese (Simplified)" => new CultureInfo("zh-CN"),
                 "Chinese (Traditional)" => new CultureInfo("zh-TW"),
-                _ => CultureInfo
+                _ => CultureInfo // Default to the loaded localization
             };
         }
 

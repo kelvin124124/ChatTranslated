@@ -68,7 +68,7 @@ namespace ChatTranslated.Translate
             else
             {
                 string reversedTranslation = await Translator.Translate(translatedText, Service.configuration.SelectedPluginLanguage, Configuration.TranslationMode.MachineTranslate);
-                Service.mainWindow.PrintToOutput($"Translation: {translatedText}\nReverse Translation: {reversedTranslation}");
+                Service.mainWindow.PrintToOutput($"Translation: {translatedText} || Reverse Translation: {reversedTranslation}");
             }
         }
 
