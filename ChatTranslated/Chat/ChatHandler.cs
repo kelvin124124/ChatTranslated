@@ -138,7 +138,6 @@ namespace ChatTranslated.Utils
             if (filterReason != null)
             {
                 Service.pluginLog.Debug($"Message filtered: {filterReason}");
-                Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 return true;
             }
             else

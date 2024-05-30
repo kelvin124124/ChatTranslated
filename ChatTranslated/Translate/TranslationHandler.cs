@@ -16,9 +16,9 @@ namespace ChatTranslated.Translate
         {
             string language = await DetermineLanguage(message);
             if (Service.configuration.SelectedSourceLanguages.Contains(language))
-            {
                 await TranslateChat(type, sender, message.TextValue);
-            }
+            else 
+                Service.mainWindow.PrintToOutput($"{sender}: {message.TextValue}");
         }
 
         public static async Task<string> DetermineLanguage(SeString message)
