@@ -38,7 +38,6 @@ namespace ChatTranslated.Localization
                 "Spanish" => "es-ES",
                 "French" => "fr-FR",
                 "Japanese" => "ja-JP",
-                "Korean" => "ko-KR",
                 "Chinese (Simplified)" => "zh-CN",
                 "Chinese (Traditional)" => "zh-TW",
                 _ => "unknown"
