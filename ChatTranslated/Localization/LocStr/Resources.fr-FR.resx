@@ -207,17 +207,26 @@
   <data name="Get one free from DeepL official website!" xml:space="preserve">
     <value>Obtenez-en un gratuitement sur le site officiel de DeepL !</value>
   </data>
+  <data name="Good game!" xml:space="preserve">
+    <value>Good game!</value>
+  </data>
   <data name="HK" xml:space="preserve">
     <value>HK</value>
   </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
     <value>Il n'envoie pas de texte traduit dans le chat et ne le rend pas visible aux autres joueurs.</value>
   </data>
+  <data name="It's okay!" xml:space="preserve">
+    <value>It's okay!</value>
+  </data>
   <data name="Japanese" xml:space="preserve">
     <value>Japonais</value>
   </data>
   <data name="Korean" xml:space="preserve">
     <value>coréen</value>
+  </data>
+  <data name="Let's do it!" xml:space="preserve">
+    <value>Let's do it!</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMProxy</value>
