@@ -11,7 +11,6 @@ using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.UI;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ChatTranslated
