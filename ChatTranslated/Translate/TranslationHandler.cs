@@ -21,7 +21,7 @@ namespace ChatTranslated.Translate
             }
         }
 
-        public static async Task<string> DetermineLanguage(SeString message) 
+        public static async Task<string> DetermineLanguage(SeString message)
         {
             string? langStr = null;
             string messageText = ChatHandler.RemoveNonTextPayloads(message);
