@@ -45,11 +45,6 @@ namespace ChatTranslated.Windows
             ImGui.SetScrollHereY(1.0f);
             ImGui.EndChild();
 
-            if (ImGui.IsItemActive() && ImGui.IsKeyPressed(ImGuiKey.C) && (ImGui.GetIO().KeyCtrl || ImGui.GetIO().KeySuper))
-            {
-                ImGui.SetClipboardText(RemoveSoftReturns(cleanOutputText));
-            }
-
             ImGui.Separator();
         }
 
@@ -119,7 +114,5 @@ namespace ChatTranslated.Windows
             }
             yield return wrappedLine.TrimEnd();
         }
-
-        private static string RemoveSoftReturns(string str) => str.Replace("\r\n", " ").Replace("\n", " ");
     }
 }
