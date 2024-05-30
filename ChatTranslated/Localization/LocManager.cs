@@ -7,11 +7,11 @@ namespace ChatTranslated.Localization
 {
     public static class StringExtensions
     {
-        public static string GetLocalization(this string originalString)
+        public static string GetLocalization(this string originalString, string? language = null)
         {
             try
             {
-                return LocManager.GetLocalization(originalString);
+                return LocManager.GetLocalization(originalString, language);
             }
             catch
             {
@@ -49,12 +49,28 @@ namespace ChatTranslated.Localization
             }
         }
 
-        public static string GetLocalization(string originalString)
+        private static CultureInfo GetCultureInfo(string language)
         {
-            if (Service.configuration.SelectedPluginLanguage == "English")
+            return language switch
+            {
+                "English" => new CultureInfo("en-US"),
+                "German" => new CultureInfo("de-DE"),
+                "Spanish" => new CultureInfo("es-ES"),
+                "French" => new CultureInfo("fr-FR"),
+                "Japanese" => new CultureInfo("ja-JP"),
+                "Chinese (Simplified)" => new CultureInfo("zh-CN"),
+                "Chinese (Traditional)" => new CultureInfo("zh-TW"),
+                _ => CultureInfo
+            };
+        }
+
+        public static string GetLocalization(string originalString, string? language = null)
+        {
+            CultureInfo cultureInfo = language == null ? CultureInfo : GetCultureInfo(language);
+            if (language == "English" || (language == null && CultureInfo.Name == "en-US"))
                 return originalString;
             else
-                return ResourceManager.GetString(originalString, CultureInfo) ?? originalString;
+                return ResourceManager.GetString(originalString, cultureInfo) ?? originalString;
         }
     }
 }

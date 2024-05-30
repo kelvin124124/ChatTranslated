@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Translate
 {
@@ -40,13 +41,13 @@ namespace ChatTranslated.Translate
             return reader.ReadToEnd();
         }
 
-        public static async Task<string> Translate(string text, string targetLanguage)
+        public static async Task<string> Translate(string text, string targetLanguage, TranslationMode? translationMode = null)
         {
             text = ChatHandler.Sanitize(text);
             if (string.IsNullOrWhiteSpace(text))
                 return text;
 
-            switch (Service.configuration.SelectedTranslationMode)
+            switch ((translationMode != null) ? translationMode : Service.configuration.SelectedTranslationMode)
             {
                 case Configuration.TranslationMode.MachineTranslate:
                     return await MachineTranslate(text, targetLanguage);

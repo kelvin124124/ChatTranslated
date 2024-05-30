@@ -66,7 +66,10 @@ namespace ChatTranslated.Translate
             if (translatedText.IsNullOrWhitespace())
                 return;
             else
-                Service.mainWindow.PrintToOutput($"Translation: {translatedText}");
+            {
+                string reversedTranslation = await Translator.Translate(translatedText, Service.configuration.SelectedPluginLanguage, Configuration.TranslationMode.MachineTranslate);
+                Service.mainWindow.PrintToOutput($"Translation: {translatedText}\nReverse Translation: {reversedTranslation}");
+            }
         }
 
         public static async Task TranslatePFMessage(string message)
