@@ -207,6 +207,9 @@
   <data name="Get one free from DeepL official website!" xml:space="preserve">
     <value>DeepL 공식 웹사이트에서 무료로 받으세요!</value>
   </data>
+  <data name="HK" xml:space="preserve">
+    <value>HK</value>
+  </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
     <value>채팅에서 번역된 텍스트를 보내거나 다른 플레이어에게 표시하지 않습니다.</value>
   </data>
