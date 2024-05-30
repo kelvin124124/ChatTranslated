@@ -208,7 +208,7 @@
     <value>在DeepL官網上免費獲取！</value>
   </data>
   <data name="Good game!" xml:space="preserve">
-    <value>Good game!</value>
+    <value>打得好！辛苦了！</value>
   </data>
   <data name="HK" xml:space="preserve">
     <value>香港</value>
@@ -217,7 +217,7 @@
     <value>它不會在聊天中發送翻譯後的文本、或使其對其他玩家可見。</value>
   </data>
   <data name="It's okay!" xml:space="preserve">
-    <value>It's okay!</value>
+    <value>別在意。</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>日語</value>
@@ -226,7 +226,7 @@
     <value>韓語</value>
   </data>
   <data name="Let's do it!" xml:space="preserve">
-    <value>Let's do it!</value>
+    <value>請多指教！</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMProxy</value>
