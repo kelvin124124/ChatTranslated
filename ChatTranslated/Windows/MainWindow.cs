@@ -47,9 +47,6 @@ namespace ChatTranslated.Windows
 
             if (ImGui.IsKeyPressed(ImGuiKey.C) && (ImGui.GetIO().KeyCtrl || ImGui.GetIO().KeySuper))
             {
-                // debug
-                Plugin.OutputChatLine("Copied text to clipboard.");
-                // copy selected text
                 ImGui.SetClipboardText(RemoveSoftReturns(ImGui.GetClipboardText()));
             }
 
