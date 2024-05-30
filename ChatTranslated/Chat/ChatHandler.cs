@@ -1,3 +1,4 @@
+using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Text;
@@ -53,8 +54,10 @@ namespace ChatTranslated.Utils
                 playerName = Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty);
 
             // check if message is from self
+#if (!DEBUG)
             if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
             {
+                Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 if (Service.configuration.SendChatToDB == true)
                 {
                     string _messageText = RemoveNonTextPayloads(message);
@@ -62,6 +65,7 @@ namespace ChatTranslated.Utils
                 }
                 return;
             }
+#endif
 
             // filter message
             string messageText = RemoveNonTextPayloads(message);
@@ -147,17 +151,17 @@ namespace ChatTranslated.Utils
 
             if (JPWelcomeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || Let's do it!");
+                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "Let's do it!".GetLocalization());
                 return true;
             }
             else if (JPByeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || Good game!");
+                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "Good game!".GetLocalization());
                 return true;
             }
             else if (JPDomaRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || It's okay!");
+                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "It's okay!".GetLocalization());
                 return true;
             }
 

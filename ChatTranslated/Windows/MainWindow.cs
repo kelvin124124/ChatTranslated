@@ -46,7 +46,7 @@ public class MainWindow : Window, IDisposable
         if (currentLanguageIndex == -1) currentLanguageIndex = 0;
 
         string[] localizedLanguages = languages.Select(lang => lang.GetLocalization()).ToArray();
-        if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, languages, languages.Length))
+        if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, localizedLanguages, languages.Length))
         {
             Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];
             Service.configuration.Save();

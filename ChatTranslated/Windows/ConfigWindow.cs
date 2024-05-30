@@ -16,9 +16,9 @@ namespace ChatTranslated.Windows;
 public class ConfigWindow : Window, IDisposable
 {
     private readonly string[] supportedDetectedLanguages =
-    ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
+    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
     private readonly string[] supportedLanguages =
-    ["English", "Japanese", "German", "French", "Korean", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
+    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
 
     public static readonly List<XivChatType> genericChatTypes =
     [
@@ -60,7 +60,7 @@ public class ConfigWindow : Window, IDisposable
         "Chat Translated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Size = new Vector2(450, 500);
+        Size = new Vector2(600, 500);
     }
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
