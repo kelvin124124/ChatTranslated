@@ -193,7 +193,7 @@
     <value>UE</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev,\nsubject to availability.</value>
+    <value>Servicio gratuito de traducción Claude-Haiku proporcionado por el desarrollador,\nsujeto a disponibilidad.</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>LibreCompañía</value>
@@ -208,7 +208,7 @@
     <value>¡Consigue uno gratis en el sitio web oficial de DeepL!</value>
   </data>
   <data name="Good game!" xml:space="preserve">
-    <value>Good game!</value>
+    <value>¡Buen juego!</value>
   </data>
   <data name="HK" xml:space="preserve">
     <value>HK</value>
@@ -217,7 +217,7 @@
     <value>No envía texto traducido en el chat ni lo hace visible para otros jugadores.</value>
   </data>
   <data name="It's okay!" xml:space="preserve">
-    <value>It's okay!</value>
+    <value>¡Está bien!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>japonés</value>
@@ -226,7 +226,7 @@
     <value>coreano</value>
   </data>
   <data name="Let's do it!" xml:space="preserve">
-    <value>Let's do it!</value>
+    <value>¡Hagámoslo!</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMProxy</value>
@@ -292,7 +292,7 @@
     <value>Equipo PvP</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)</value>
+    <value>Recomendado. Traducir idiomas no basados en latín.\n(Japonés, Coreano, Chino, etc.)</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Región</value>
@@ -319,7 +319,7 @@
     <value>Traducir</value>
   </data>
   <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!</value>
+    <value>Traducir todos los mensajes entrantes.\n\n¿No encontraste tu idioma en la selección de idiomas?\n¡Envía comentarios desde el instalador del plugin!</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>El botón Traducir solo imprime el texto traducido en la ventana principal.</value>
