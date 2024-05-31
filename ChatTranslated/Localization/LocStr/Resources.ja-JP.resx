@@ -193,8 +193,7 @@
     <value>EU</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev,
-subject to availability.</value>
+    <value>開発者が提供する無料のClaude-Haiku翻訳サービス（利用可能な場合に限る）。</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>フリーカンパニー</value>
@@ -293,8 +292,8 @@ subject to availability.</value>
     <value>PvPチーム</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.
-(Japanese, Koren, Chinese, etc.)</value>
+    <value>推奨される。非ラテン語系の言語を翻訳します。
+（日本語、韓国語、中国語などで）</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地域</value>
@@ -321,10 +320,10 @@ subject to availability.</value>
     <value>翻訳</value>
   </data>
   <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>Translate all incoming messages.
+    <value>すべての受信メッセージを翻訳します。
 
-Didn't find your language in language selection?
-Send feedback from plugin installer!</value>
+言語選択にあなたの言語が見つからない？
+プラグインインストーラーからフィードバックを送信してください！</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>翻訳ボタンはメインウィンドウに翻訳されたテキストを表示するだけです。</value>
@@ -342,8 +341,8 @@ Send feedback from plugin installer!</value>
     <value>サポートされていない地域のユーザーは高いレイテンシを経験する可能性があります。</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>Warning: API key will be stored as plain text in plugin configuration,
-any malware or third party plugins may have access to the key.</value>
+    <value>警告: APIキーはプラグイン設定にプレーンテキストとして保存されます。
+他のマルウェアやサードパーティのプラグインがキーにアクセスする可能性があります。</value>
   </data>
   <data name="What to translate" xml:space="preserve">
     <value>何を翻訳するか</value>
