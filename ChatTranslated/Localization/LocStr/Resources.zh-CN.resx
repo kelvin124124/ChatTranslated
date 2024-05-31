@@ -193,8 +193,8 @@
     <value>欧洲</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev,
-subject to availability.</value>
+    <value>由开发者提供的免费的 Claude-Haiku 翻译服务
+（可用性将视情况而定）。</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>部队</value>
@@ -293,8 +293,8 @@ subject to availability.</value>
     <value>战队</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.
-(Japanese, Koren, Chinese, etc.)</value>
+    <value>推荐。翻译非拉丁语系语言。
+（日语、韩语、中文等）</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地区</value>
@@ -321,10 +321,8 @@ subject to availability.</value>
     <value>翻译</value>
   </data>
   <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>Translate all incoming messages.
-
-Didn't find your language in language selection?
-Send feedback from plugin installer!</value>
+    <value>没有在语言选项中找到您的语言？
+在插件安装界面中发送反馈！</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>翻译按钮仅在主窗口中打印翻译后的文本。</value>
@@ -342,8 +340,8 @@ Send feedback from plugin installer!</value>
     <value>来自未受支持地区的用户将会感受到更高的延迟。</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>Warning: API key will be stored as plain text in plugin configuration,
-any malware or third party plugins may have access to the key.</value>
+    <value>警告：API 密钥将以纯文本形式存储在插件配置中，
+任何恶意软件或第三方插件都可以访问该密钥。</value>
   </data>
   <data name="What to translate" xml:space="preserve">
     <value>翻译对象</value>
