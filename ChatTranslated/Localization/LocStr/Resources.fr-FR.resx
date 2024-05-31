@@ -193,8 +193,8 @@
     <value>UE</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev,
-subject to availability.</value>
+    <value>Service de traduction Claude-Haiku gratuit fourni par le développeur,
+sous réserve de disponibilité.</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>CompagnieLibre</value>
@@ -293,8 +293,8 @@ subject to availability.</value>
     <value>PvPTeam</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.
-(Japanese, Koren, Chinese, etc.)</value>
+    <value>Recommandé. Traduisez les langues non basées sur le latin.
+(Japonais, Coréen, Chinois, etc.)</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Région</value>
@@ -321,10 +321,10 @@ subject to availability.</value>
     <value>Traduire</value>
   </data>
   <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>Translate all incoming messages.
+    <value>Traduire tous les messages entrants.
 
-Didn't find your language in language selection?
-Send feedback from plugin installer!</value>
+Vous n'avez pas trouvé votre langue dans la sélection des langues?
+Envoyez des commentaires depuis l'installateur de plugin!</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>Le bouton Traduire imprime uniquement le texte traduit dans la fenêtre principale.</value>
@@ -342,8 +342,8 @@ Send feedback from plugin installer!</value>
     <value>Les utilisateurs des régions non prises en charge rencontreront une latence plus élevée.</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>Warning: API key will be stored as plain text in plugin configuration,
-any malware or third party plugins may have access to the key.</value>
+    <value>Avertissement : la clé API sera stockée en texte brut dans la configuration du plugin,
+tout malware ou plugin tiers peut avoir accès à la clé.</value>
   </data>
   <data name="What to translate" xml:space="preserve">
     <value>Quoi traduire</value>
