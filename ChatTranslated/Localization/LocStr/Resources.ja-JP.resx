@@ -208,7 +208,7 @@
     <value>DeepL公式サイトから無料でゲットしましょう！</value>
   </data>
   <data name="Good game!" xml:space="preserve">
-    <value>Good game!</value>
+    <value>楽しいゲームでした！</value>
   </data>
   <data name="HK" xml:space="preserve">
     <value>HK</value>
@@ -217,7 +217,7 @@
     <value>翻訳されたテキストはチャットに送信されず、他のプレイヤーに表示されることもありません。</value>
   </data>
   <data name="It's okay!" xml:space="preserve">
-    <value>It's okay!</value>
+    <value>大丈夫です！</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>日本語</value>
@@ -226,7 +226,7 @@
     <value>韓国語</value>
   </data>
   <data name="Let's do it!" xml:space="preserve">
-    <value>Let's do it!</value>
+    <value>行こう！</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMプロキシ</value>
