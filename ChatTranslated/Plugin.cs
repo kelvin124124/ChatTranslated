@@ -81,7 +81,7 @@ namespace ChatTranslated
             AddonLookingForGroupDetail* PfAddonPtr = (AddonLookingForGroupDetail*)args.AddonPtr;
             string description = PfAddonPtr->DescriptionString.ToString();
 
-            // Replacement logic
+            // fix weird characters in pf description
             description = description
                 .Replace("\u0002\u0012\u0002\u0037\u0003", " \uE040 ")
                 .Replace("\u0002\u0012\u0002\u0038\u0003", " \uE041 ");

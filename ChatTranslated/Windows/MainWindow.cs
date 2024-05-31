@@ -120,6 +120,6 @@ namespace ChatTranslated.Windows
             yield return wrappedLine.TrimEnd();
         }
 
-        private static string RemoveSoftReturns(string str) => str.Replace("\r\n", " ");
+        private static string RemoveSoftReturns(string str) => str.Replace("\r\n", string.Empty);
     }
 }
