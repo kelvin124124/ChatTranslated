@@ -193,7 +193,8 @@
     <value>歐洲</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
-    <value>由開發人員提供的免費的Claude-Haiku翻譯服務，\n可用性視情況而定。</value>
+    <value>Free Claude-Haiku translation service provided by the dev,
+subject to availability.</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>部隊</value>
@@ -292,7 +293,8 @@
     <value>戰隊</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>推薦選項，翻譯非拉丁語言\n（日文、韓文、中文等）</value>
+    <value>Recommended. Translate non-Latin based languages.
+(Japanese, Koren, Chinese, etc.)</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地區</value>
@@ -319,7 +321,10 @@
     <value>翻譯</value>
   </data>
   <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>在語言選擇中沒有找到您的語言？\n\n在插件安裝界面發送反饋！</value>
+    <value>Translate all incoming messages.
+
+Didn't find your language in language selection?
+Send feedback from plugin installer!</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
     <value>翻譯按鈕僅在主視窗中列印翻譯後的文字。</value>
@@ -337,7 +342,8 @@
     <value>來自不受支援區域的用戶將會感到更高的延遲。</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>警告：API 密鑰將以純文字形式儲存在插件配置中，\n任何惡意軟體或第三方插件都可能有權存取該密鑰。</value>
+    <value>Warning: API key will be stored as plain text in plugin configuration,
+any malware or third party plugins may have access to the key.</value>
   </data>
   <data name="What to translate" xml:space="preserve">
     <value>翻譯對象</value>
