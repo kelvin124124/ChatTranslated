@@ -161,9 +161,9 @@ public class ConfigWindow : Window, IDisposable
         {
             ImGui.Columns(3, "chatTypeColumns", false);
 
-            ImGui.SetColumnWidth(0, 125);
-            ImGui.SetColumnWidth(1, 100);
-            ImGui.SetColumnWidth(2, 175);
+            ImGui.SetColumnWidth(0, 200);
+            ImGui.SetColumnWidth(1, 200);
+            ImGui.SetColumnWidth(2, 200);
 
             DrawChatTypeGroup(genericChatTypes, configuration);
             ImGui.NextColumn();
@@ -223,7 +223,7 @@ public class ConfigWindow : Window, IDisposable
 
         if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.Default)
         {
-            ImGui.Text("Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)".GetLocalization());
+            ImGui.Text("Recommended. Translate non-Latin based languages.\\n(Japanese, Koren, Chinese, etc.)".GetLocalization());
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.CustomLanguages)
         {
@@ -252,7 +252,7 @@ public class ConfigWindow : Window, IDisposable
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.AllLanguages)
         {
-            ImGui.Text("Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!".GetLocalization());
+            ImGui.Text("Translate all incoming messages.\\n\\nDidn't find your language in language selection?\\nSend feedback from plugin installer!".GetLocalization());
         }
     }
 
@@ -384,7 +384,7 @@ public class ConfigWindow : Window, IDisposable
 
     private static void DrawLLMProxySettings(Configuration configuration)
     {
-        ImGui.Text("Free Claude-Haiku translation service provided by the dev,\nsubject to availability.".GetLocalization());
+        ImGui.Text("Free Claude-Haiku translation service provided by the dev,\\nsubject to availability.".GetLocalization());
         ImGui.Text("Users from unsupported regions WILL experience higher latency.".GetLocalization());
 
         // select region
