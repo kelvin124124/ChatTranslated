@@ -121,43 +121,43 @@
     <value>Alianza</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>Todos los idiomas</value>
+    <value>TodosLosIdiomas</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Aplicar</value>
   </data>
   <data name="Channel Selection" xml:space="preserve">
-    <value>Selección del canal</value>
+    <value>Selección de Canal</value>
   </data>
   <data name="Chat Integration" xml:space="preserve">
-    <value>Integración de chat</value>
+    <value>Integración de Chat</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>Chino simplificado)</value>
+    <value>Chino (Simplificado)</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>Chino tradicional)</value>
+    <value>Chino (Tradicional)</value>
   </data>
   <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
-    <value>Recopile mensajes de chat salientes para mejorar las traducciones.</value>
+    <value>Recopilar mensajes de chat salientes para mejorar las traducciones.</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>Enlace cruzado1</value>
+    <value>CrossLinkShell1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
     <value>CrossLinkShell2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>Enlace cruzado3</value>
+    <value>CrossLinkShell3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>Enlace cruzado4</value>
+    <value>CrossLinkShell4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>Enlace cruzado5</value>
+    <value>CrossLinkShell5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>Enlace cruzado6</value>
+    <value>CrossLinkShell6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
     <value>CrossLinkShell7</value>
@@ -166,22 +166,22 @@
     <value>CrossLinkShell8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>Partido cruzado</value>
+    <value>CrossParty</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
-    <value>Idiomas personalizados</value>
+    <value>IdiomasPersonalizados</value>
   </data>
   <data name="DeepL API Key" xml:space="preserve">
     <value>Clave API de DeepL</value>
   </data>
   <data name="DeepL_API" xml:space="preserve">
-    <value>ProfundoL_API</value>
+    <value>DeepL_API</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Por defecto</value>
+    <value>Predeterminado</value>
   </data>
   <data name="Enable in duties" xml:space="preserve">
-    <value>Habilitar en deberes</value>
+    <value>Habilitar en misiones</value>
   </data>
   <data name="Enable plugin" xml:space="preserve">
     <value>Habilitar complemento</value>
@@ -193,10 +193,10 @@
     <value>UE</value>
   </data>
   <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev,\nsubject to availability.</value>
+    <value>Servicio de traducción Claude-Haiku gratuito proporcionado por el desarrollador,\nsujeto a disponibilidad.</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>LibreCompañía</value>
+    <value>CompañíaLibre</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>Francés</value>
@@ -208,7 +208,7 @@
     <value>¡Consigue uno gratis en el sitio web oficial de DeepL!</value>
   </data>
   <data name="Good game!" xml:space="preserve">
-    <value>Good game!</value>
+    <value>¡Buen juego!</value>
   </data>
   <data name="HK" xml:space="preserve">
     <value>HK</value>
@@ -217,67 +217,67 @@
     <value>No envía texto traducido en el chat ni lo hace visible para otros jugadores.</value>
   </data>
   <data name="It's okay!" xml:space="preserve">
-    <value>It's okay!</value>
+    <value>¡Está bien!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>japonés</value>
+    <value>Japonés</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>coreano</value>
+    <value>Coreano</value>
   </data>
   <data name="Let's do it!" xml:space="preserve">
-    <value>Let's do it!</value>
+    <value>¡Vamos a hacerlo!</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMProxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>ls1</value>
+    <value>Lc1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>ls2</value>
+    <value>Lc2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>ls3</value>
+    <value>Lc3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>ls4</value>
+    <value>Lc4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>ls5</value>
+    <value>Lc5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>ls6</value>
+    <value>Lc6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>ls7</value>
+    <value>Lc7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>ls8</value>
+    <value>Lc8</value>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
-    <value>MáquinaTraducir</value>
+    <value>TraducciónAutomática</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>Red de novatos</value>
+    <value>RedDePrincipiantes</value>
   </data>
   <data name="OpenAI API Key" xml:space="preserve">
     <value>Clave API de OpenAI</value>
   </data>
   <data name="OpenAI_API" xml:space="preserve">
-    <value>AbrirAI_API</value>
+    <value>OpenAI_API</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>Fiesta</value>
+    <value>Equipo</value>
   </data>
   <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
-    <value>Los identificadores personales y la información confidencial se eliminarán antes de su uso.</value>
+    <value>Los identificadores personales y la información sensible se eliminarán antes de su uso.</value>
   </data>
   <data name="Plugin Language" xml:space="preserve">
-    <value>Idioma del complemento</value>
+    <value>Idioma del Complemento</value>
   </data>
   <data name="Price estimation:" xml:space="preserve">
     <value>Estimación de precio:</value>
@@ -289,10 +289,10 @@
     <value>¿Proceder?</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>Equipo PvP</value>
+    <value>PvPTeam</value>
   </data>
   <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)</value>
+    <value>Recomendado. Traducir idiomas que no se basen en el alfabeto latino.\n(Japonés, Coreano, Chino, etc.)</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Región</value>
@@ -307,22 +307,22 @@
     <value>Gritar</value>
   </data>
   <data name="Source Language Selection" xml:space="preserve">
-    <value>Selección del idioma de origen</value>
+    <value>Selección de idioma de origen</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>Español</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>decir entrante</value>
+    <value>DimeEntrante</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>Traducir</value>
   </data>
   <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!</value>
+    <value>Traducir todos los mensajes entrantes.\n\n¿No encontraste tu idioma en la selección de idiomas?\n¡Envía comentarios desde el instalador del plugin!</value>
   </data>
   <data name="Translate button only print translated text in the main window." xml:space="preserve">
-    <value>El botón Traducir solo imprime el texto traducido en la ventana principal.</value>
+    <value>El botón de traducción solo imprime el texto traducido en la ventana principal.</value>
   </data>
   <data name="Translate to" xml:space="preserve">
     <value>Traducir a</value>
@@ -331,19 +331,19 @@
     <value>Modo de traducción</value>
   </data>
   <data name="US" xml:space="preserve">
-    <value>A NOSOTROS</value>
+    <value>EE.UU.</value>
   </data>
   <data name="Users from unsupported regions WILL experience higher latency." xml:space="preserve">
     <value>Los usuarios de regiones no compatibles experimentarán una mayor latencia.</value>
   </data>
   <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>Advertencia: la clave API se almacenará como texto sin formato en la configuración del complemento,\ncualquier malware o complementos de terceros pueden tener acceso a la clave.</value>
+    <value>Advertencia: La clave API se almacenará como texto sin formato en la configuración del plugin,\ncualquier malware o plugin de terceros puede tener acceso a la clave.</value>
   </data>
   <data name="What to translate" xml:space="preserve">
-    <value>que traducir</value>
+    <value>Qué traducir</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Gritar</value>
+    <value>Chillar</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Sí</value>
