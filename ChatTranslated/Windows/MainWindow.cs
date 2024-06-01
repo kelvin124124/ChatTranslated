@@ -12,12 +12,17 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Windows
 {
-    public class MainWindow : Window, IDisposable
+    public partial class MainWindow : Window, IDisposable
     {
         private readonly string[] languages = ["Japanese", "English", "German", "French"];
         internal string outputText = "";
         private string cleanOutputText = "";
         internal string inputText = "";
+        private float lastOutputFieldWidth = 0;
+        private bool isOutputFieldWrapped = false;
+
+        [GeneratedRegex(@"(\p{IsCJKUnifiedIdeographs}|[^\x00-\x7F]|\w+|\s+|[^\w\s])")]
+        private static partial Regex WordRegex();
 
         public MainWindow(Plugin plugin) : base("Chat Translated", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse)
         {
@@ -38,10 +43,17 @@ namespace ChatTranslated.Windows
         {
             ImGui.BeginChild("outputField", new Vector2(-1, -55), false);
             float outputFieldWidth = ImGui.GetContentRegionAvail().X;
-            string wrappedText = cleanOutputText;
-            AddSoftReturnsToText(ref wrappedText, outputFieldWidth);
 
-            ImGui.InputTextMultiline("##output", ref wrappedText, 0, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
+            if (!isOutputFieldWrapped || Math.Abs(outputFieldWidth - lastOutputFieldWidth) > 0.1f)
+            {
+                lastOutputFieldWidth = outputFieldWidth;
+                string wrappedText = cleanOutputText;
+                AddSoftReturnsToText(ref wrappedText, outputFieldWidth);
+                outputText = wrappedText;
+                isOutputFieldWrapped = true;
+            }
+
+            ImGui.InputTextMultiline("##output", ref outputText, 0, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
             ImGui.SetScrollHereY(1.0f);
             ImGui.EndChild();
 
@@ -95,6 +107,7 @@ namespace ChatTranslated.Windows
         {
             string timeStampedMessage = $"[{DateTime.Now:HH:mm}] {message}\n";
             cleanOutputText += timeStampedMessage;
+            isOutputFieldWrapped = false; // Force re-wrap on next Draw
         }
 
         private static void AddSoftReturnsToText(ref string str, float multilineWidth)
@@ -106,7 +119,7 @@ namespace ChatTranslated.Windows
         private static IEnumerable<string> WrapLine(string line, float multilineWidth)
         {
             var wrappedLine = string.Empty;
-            var words = Regex.Matches(line, @"(\p{IsCJKUnifiedIdeographs}|[^\x00-\x7F]|\w+|\s+|[^\w\s])").Cast<Match>().Select(m => m.Value);
+            var words = WordRegex().Matches(line).Cast<Match>().Select(m => m.Value);
 
             foreach (var word in words)
             {

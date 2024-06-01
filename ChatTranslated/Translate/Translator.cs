@@ -194,7 +194,7 @@ namespace ChatTranslated.Translate
                 // Extract translation based on the updated JSON structure
                 string? translated = jObject["translated"]?.ToString().Trim();
 
-                if (!string.IsNullOrWhiteSpace(translated))
+                if (!string.IsNullOrWhiteSpace(translated) && (translated != "{}"))
                     return translated;
                 else
                     throw new Exception("Translation not found in the expected JSON structure.");
