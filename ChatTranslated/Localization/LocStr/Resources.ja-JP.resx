@@ -291,9 +291,9 @@
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPチーム</value>
   </data>
-  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>推奨される。非ラテン語系の言語を翻訳します。
-（日本語、韓国語、中国語などで）</value>
+  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Korean, Chinese, etc.)" xml:space="preserve">
+    <value>Recommended. Translate non-Latin based languages.
+(Japanese, Korean, Chinese, etc.)</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地域</value>
