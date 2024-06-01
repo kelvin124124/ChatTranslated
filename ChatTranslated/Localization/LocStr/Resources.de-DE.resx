@@ -292,7 +292,7 @@ vorbehaltlich Verfügbarkeit.</value>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPTeam</value>
   </data>
-  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
+  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Korean, Chinese, etc.)" xml:space="preserve">
     <value>Empfohlen. Übersetzen Sie nicht-lateinische Sprachen.
 (Japanisch, Koreanisch, Chinesisch, etc.)</value>
   </data>

@@ -292,8 +292,8 @@ sujeto a disponibilidad.</value>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPTeam</value>
   </data>
-  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>Recomendado. Traduce idiomas que no se basan en el latín.
+  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Korean, Chinese, etc.)" xml:space="preserve">
+    <value>Recomendado. Traduzca idiomas que no se basan en el alfabeto latino.
 (Japonés, Coreano, Chino, etc.)</value>
   </data>
   <data name="Region" xml:space="preserve">

@@ -232,28 +232,28 @@
     <value>LLMProxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>リンクシェル1</value>
+    <value>LS1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>リンクシェル2</value>
+    <value>LS2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>リンクシェル3</value>
+    <value>LS3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>リンクシェル4</value>
+    <value>LS4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>リンクシェル5</value>
+    <value>LS5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>リンクシェル6</value>
+    <value>LS6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>リンクシェル7</value>
+    <value>LS7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>リンクシェル8</value>
+    <value>LS8</value>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
     <value>機械翻訳</value>
@@ -291,9 +291,9 @@
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPチーム</value>
   </data>
-  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
-    <value>推奨される。非ラテン語系の言語を翻訳します。
-（日本語、韓国語、中国語などで）</value>
+  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Korean, Chinese, etc.)" xml:space="preserve">
+    <value>おすすめ。非ラテン系言語を翻訳します。
+（日本語、韓国語、中国語など）</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地域</value>
@@ -314,7 +314,7 @@
     <value>スペイン語</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>Tell（着信）</value>
+    <value>Tell</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻訳</value>

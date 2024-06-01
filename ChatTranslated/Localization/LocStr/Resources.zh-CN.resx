@@ -292,7 +292,7 @@
   <data name="PvPTeam" xml:space="preserve">
     <value>战队</value>
   </data>
-  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Koren, Chinese, etc.)" xml:space="preserve">
+  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Korean, Chinese, etc.)" xml:space="preserve">
     <value>推荐。翻译非拉丁语系语言。
 （日语、韩语、中文等）</value>
   </data>
