@@ -223,7 +223,7 @@ public class ConfigWindow : Window, IDisposable
 
         if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.Default)
         {
-            ImGui.Text("Recommended. Translate non-Latin based languages.\\n(Japanese, Koren, Chinese, etc.)".GetLocalization());
+            ImGui.Text("Recommended. Translate non-Latin based languages.\\n(Japanese, Korean, Chinese, etc.)".GetLocalization());
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.CustomLanguages)
         {
