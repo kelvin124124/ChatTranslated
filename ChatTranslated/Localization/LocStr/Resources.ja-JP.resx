@@ -127,7 +127,7 @@
     <value>適用</value>
   </data>
   <data name="Channel Selection" xml:space="preserve">
-    <value>チャネル選択</value>
+    <value>チャンネル選択</value>
   </data>
   <data name="Chat Integration" xml:space="preserve">
     <value>チャット統合</value>
@@ -139,31 +139,31 @@
     <value>中国語（繁体字）</value>
   </data>
   <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
-    <value>翻訳を改善するために送信されるチャットメッセージを収集します。</value>
+    <value>送信されたチャットメッセージを収集して翻訳を改善します。</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>クロスリンクシェル1</value>
+    <value>CWLS1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>クロスリンクシェル2</value>
+    <value>CWLS2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>クロスリンクシェル3</value>
+    <value>CWLS3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>クロスリンクシェル4</value>
+    <value>CWLS4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>クロスリンクシェル5</value>
+    <value>CWLS5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>クロスリンクシェル6</value>
+    <value>CWLS6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>クロスリンクシェル7</value>
+    <value>CWLS7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>クロスリンクシェル8</value>
+    <value>CWLS8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
     <value>クロスパーティ</value>
@@ -181,7 +181,7 @@
     <value>デフォルト</value>
   </data>
   <data name="Enable in duties" xml:space="preserve">
-    <value>任務中で有効にする</value>
+    <value>戦闘コンテンツ内で有効にする</value>
   </data>
   <data name="Enable plugin" xml:space="preserve">
     <value>プラグインを有効にする</value>
@@ -208,13 +208,13 @@
     <value>DeepL公式サイトから無料で入手！</value>
   </data>
   <data name="Good game!" xml:space="preserve">
-    <value>良い試合でした！</value>
+    <value>お疲れ様でした。</value>
   </data>
   <data name="HK" xml:space="preserve">
     <value>香港</value>
   </data>
   <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
-    <value>チャットに翻訳されたテキストを送信したり、他のプレイヤーに見せたりしません。</value>
+    <value>翻訳されたテキストはチャットに送信されず、他のプレイヤーに表示されることもありません。</value>
   </data>
   <data name="It's okay!" xml:space="preserve">
     <value>大丈夫です！</value>
@@ -226,7 +226,7 @@
     <value>韓国語</value>
   </data>
   <data name="Let's do it!" xml:space="preserve">
-    <value>やってみましょう！</value>
+    <value>よろしくお願いします！</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMProxy</value>
@@ -262,7 +262,7 @@
     <value>いいえ</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>初心者ネットワーク</value>
+    <value>ビギナーチャンネル</value>
   </data>
   <data name="OpenAI API Key" xml:space="preserve">
     <value>OpenAI API キー</value>
@@ -271,10 +271,10 @@
     <value>OpenAI_API</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>パーティー</value>
+    <value>Party</value>
   </data>
   <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
-    <value>使用前に個人識別情報や機密情報は削除されます。</value>
+    <value>送信前に個人識別情報や機密情報は削除されます。</value>
   </data>
   <data name="Plugin Language" xml:space="preserve">
     <value>プラグイン言語</value>
@@ -299,13 +299,13 @@
     <value>地域</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>言う</value>
+    <value>Say</value>
   </data>
   <data name="Send chat to DB" xml:space="preserve">
     <value>チャットをDBに送信</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>叫ぶ</value>
+    <value>Shout</value>
   </data>
   <data name="Source Language Selection" xml:space="preserve">
     <value>ソース言語の選択</value>
@@ -314,7 +314,7 @@
     <value>スペイン語</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>着信メッセージ</value>
+    <value>Tell（着信）</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻訳</value>
@@ -345,10 +345,10 @@
 他のマルウェアやサードパーティのプラグインがキーにアクセスする可能性があります。</value>
   </data>
   <data name="What to translate" xml:space="preserve">
-    <value>何を翻訳するか</value>
+    <value>翻訳する言語</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>叫び</value>
+    <value>Yell</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>はい</value>
