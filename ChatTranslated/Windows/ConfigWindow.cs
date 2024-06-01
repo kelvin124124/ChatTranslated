@@ -349,12 +349,12 @@ public class ConfigWindow : Window, IDisposable
         ImGui.Text("Price estimation: $0.2 /month".GetLocalization());
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1),
-            "Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.".GetLocalization());
+            "Warning: API key will be stored as plain text in plugin configuration,\\nany malware or third party plugins may have access to the key.".GetLocalization());
 
         // confirmation popup
         if (ImGui.BeginPopupModal("Confirmation"))
         {
-            ImGui.Text("Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key.".GetLocalization());
+            ImGui.Text("Warning: API key will be stored as plain text in plugin configuration,\\nany malware or third party plugins may have access to the key.".GetLocalization());
             ImGui.Text("Proceed?".GetLocalization());
 
             ImGui.Separator();

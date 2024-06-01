@@ -70,10 +70,7 @@ namespace ChatTranslated.Localization
         public static string GetLocalization(string originalString, string? language = null)
         {
             CultureInfo cultureInfo = language == null ? CultureInfo : GetCultureInfo(language);
-            if (language == "English" || (language == null && CultureInfo.Name == "en-US"))
-                return originalString;
-            else
-                return ResourceManager.GetString(originalString, cultureInfo) ?? originalString;
+            return ResourceManager.GetString(originalString, cultureInfo) ?? originalString;
         }
     }
 }
