@@ -47,51 +47,43 @@ namespace ChatTranslated.Utils
             if (!Service.configuration.EnabledInDuty && Service.condition[ConditionFlag.BoundByDuty])
                 return;
 
-            // get player name
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
             string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString());
             if (type == XivChatType.TellOutgoing)
                 playerName = Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty);
 
-            // check if message is from self
-#if (!DEBUG)
             if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
             {
                 Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
-                if (Service.configuration.SendChatToDB == true)
+                if (Service.configuration.SendChatToDB)
                 {
                     string _messageText = RemoveNonTextPayloads(message);
                     Task.Run(() => ChatStore.SendToDB(_messageText));
                 }
                 return;
             }
-#endif
 
-            // filter message
             string messageText = RemoveNonTextPayloads(message);
-            if (isFilteredMessage(playerName, messageText))
+            if (IsFilteredMessage(playerName, messageText))
             {
                 Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 return;
             }
 
-            var _message = message;
+            var capturedMessage = message;
             switch (Service.configuration.SelectedLanguageSelectionMode)
             {
                 case Configuration.LanguageSelectionMode.Default:
-                    if (NonEnglishRegex().IsMatch(messageText))
-                        if (!isJPFilteredMessage(type, playerName, messageText))
-                            Task.Run(() => TranslationHandler.TranslateChat(type, playerName, _message.TextValue));
+                    if (NonEnglishRegex().IsMatch(messageText) && !IsJPFilteredMessage(type, playerName, messageText))
+                        Task.Run(() => TranslationHandler.TranslateChat(type, playerName, capturedMessage.TextValue));
                     break;
                 case Configuration.LanguageSelectionMode.CustomLanguages:
-                    Task.Run(() => TranslationHandler.DetermineLangAndTranslate(type, playerName, _message));
+                    Task.Run(() => TranslationHandler.DetermineLangAndTranslate(type, playerName, capturedMessage));
                     break;
                 case Configuration.LanguageSelectionMode.AllLanguages:
-                    Task.Run(() => TranslationHandler.TranslateChat(type, playerName, _message.TextValue));
+                    Task.Run(() => TranslationHandler.TranslateChat(type, playerName, capturedMessage.TextValue));
                     break;
             }
-
-            return;
         }
 
         public static string RemoveNonTextPayloads(SeString inputMsg)
@@ -119,32 +111,22 @@ namespace ChatTranslated.Utils
                     case PartyFinderPayload _:
                         i += 6;
                         break;
-                    default:
-                        break;
                 }
             }
-            string messageText = Sanitize(AutoTranslateRegex().Replace(message.TextValue, string.Empty));
-            return messageText;
+            return Sanitize(AutoTranslateRegex().Replace(message.TextValue, string.Empty));
         }
 
-        private bool isFilteredMessage(string playerName, SeString message)
+        private bool IsFilteredMessage(string playerName, string messageText)
         {
-            string? filterReason = null;
-            if (message.TextValue.Trim().Length < 2)
-                filterReason = "Single character or empty message.";
-            else if (IsMacroMessage(playerName))
-                filterReason = "Macro messages.";
-
-            if (filterReason != null)
+            if (messageText.Trim().Length < 2 || IsMacroMessage(playerName))
             {
-                Service.pluginLog.Debug($"Message filtered: {filterReason}");
+                Service.pluginLog.Debug("Message filtered: " + (messageText.Trim().Length < 2 ? "Single character or empty message." : "Macro messages."));
                 return true;
             }
-            else
-                return false;
+            return false;
         }
 
-        private static bool isJPFilteredMessage(XivChatType type, string sender, string message)
+        private static bool IsJPFilteredMessage(XivChatType type, string sender, string message)
         {
             string messageText = Sanitize(AutoTranslateRegex().Replace(message, string.Empty));
 
@@ -153,12 +135,12 @@ namespace ChatTranslated.Utils
                 TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "Let's do it!".GetLocalization());
                 return true;
             }
-            else if (JPByeRegex().IsMatch(messageText))
+            if (JPByeRegex().IsMatch(messageText))
             {
                 TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "Good game!".GetLocalization());
                 return true;
             }
-            else if (JPDomaRegex().IsMatch(messageText))
+            if (JPDomaRegex().IsMatch(messageText))
             {
                 TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "It's okay!".GetLocalization());
                 return true;
@@ -179,10 +161,7 @@ namespace ChatTranslated.Utils
             return false;
         }
 
-        public static string Sanitize(string input)
-        {
-            return SpecialCharacterRegex().Replace(input, " ");
-        }
+        public static string Sanitize(string input) => SpecialCharacterRegex().Replace(input, " ");
 
         public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
     }

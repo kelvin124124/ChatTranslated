@@ -17,8 +17,7 @@ namespace ChatTranslated.Translate
 {
     internal class Translator
     {
-        private static readonly HttpClient HttpClient =
-        new(new SocketsHttpHandler
+        private static readonly HttpClient HttpClient = new(new SocketsHttpHandler
         {
             AutomaticDecompression = DecompressionMethods.All,
             ConnectCallback = new HappyEyeballsCallback().ConnectCallback,
@@ -33,34 +32,25 @@ namespace ChatTranslated.Translate
 
         private static string ReadSecret(string resourceName)
         {
-            var assembly = Assembly.GetExecutingAssembly();
-            using var stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream == null) return "";
-
-            using var reader = new StreamReader(stream);
-            return reader.ReadToEnd();
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName);
+            return stream == null ? "" : new StreamReader(stream).ReadToEnd();
         }
 
         public static async Task<string> Translate(string text, string targetLanguage, TranslationMode? translationMode = null)
         {
             text = ChatHandler.Sanitize(text);
-            if (string.IsNullOrWhiteSpace(text))
-                return text;
+            if (string.IsNullOrWhiteSpace(text)) return text;
 
-            switch ((translationMode != null) ? translationMode : Service.configuration.SelectedTranslationMode)
+            var mode = translationMode ?? Service.configuration.SelectedTranslationMode;
+
+            return mode switch
             {
-                case Configuration.TranslationMode.MachineTranslate:
-                    return await MachineTranslate(text, targetLanguage);
-                case Configuration.TranslationMode.DeepL_API:
-                    return await DeepLTranslate(text, targetLanguage);
-                case Configuration.TranslationMode.OpenAI_API:
-                    return await OpenAITranslate(text, targetLanguage);
-                case Configuration.TranslationMode.LLMProxy:
-                    return await LLMProxyTranslate(text, targetLanguage);
-                default:
-                    Service.pluginLog.Warning("Unknown translation mode.");
-                    return text;
-            }
+                Configuration.TranslationMode.MachineTranslate => await MachineTranslate(text, targetLanguage),
+                Configuration.TranslationMode.DeepL_API => await DeepLTranslate(text, targetLanguage),
+                Configuration.TranslationMode.OpenAI_API => await OpenAITranslate(text, targetLanguage),
+                Configuration.TranslationMode.LLMProxy => await LLMProxyTranslate(text, targetLanguage),
+                _ => text
+            };
         }
 
         private static async Task<string> MachineTranslate(string text, string targetLanguage)
@@ -70,17 +60,15 @@ namespace ChatTranslated.Translate
                 var result = await GTranslator.TranslateAsync(text, targetLanguage);
                 return result.Translation;
             }
-            catch (Exception GTex)
+            catch
             {
-                Service.pluginLog.Info($"Exception in Google Translate: {GTex.Message}.");
                 try
                 {
                     var result = await BingTranslator.TranslateAsync(text, targetLanguage);
                     return result.Translation;
                 }
-                catch (Exception BTex)
+                catch
                 {
-                    Service.pluginLog.Info($"Exception in Bing Translate: {BTex.Message}.");
                     return text;
                 }
             }
@@ -90,17 +78,10 @@ namespace ChatTranslated.Translate
         {
             if (TryGetLanguageCode(targetLanguage, out var languageCode))
             {
-                var requestBody = new
+                var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
+                var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
                 {
-                    text = new string[] { text },
-                    target_lang = languageCode,
-                    context = "FFXIV, MMORPG"
-                };
-
-                string jsonContent = JsonSerializer.Serialize(requestBody);
-                using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
-                {
-                    Content = new StringContent(jsonContent, Encoding.UTF8, "application/json"),
+                    Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, DefaultContentType),
                     Headers = { { HttpRequestHeader.Authorization.ToString(), $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}" } }
                 };
 
@@ -108,28 +89,18 @@ namespace ChatTranslated.Translate
                 {
                     var response = await HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
                     response.EnsureSuccessStatusCode();
-                    string jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
+                    var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
-
-                    if (!string.IsNullOrWhiteSpace(translated))
-                    {
-                        if (targetLanguage == "Chinese (Traditional)")
-                            return await MachineTranslate(translated, "Chinese (Traditional)");
-                        else
-                            return translated;
-                    }
-                    else
-                        throw new Exception("Translation not found in the expected JSON structure.");
+                    return !string.IsNullOrWhiteSpace(translated)
+                        ? (targetLanguage == "Chinese (Traditional)" ? await MachineTranslate(translated, "Chinese (Traditional)") : translated)
+                        : throw new Exception("Translation not found in the expected JSON structure.");
                 }
-                catch (Exception DLex)
+                catch
                 {
-                    Service.pluginLog.Info($"DeepL Translate: {DLex.Message}, falling back to Google Translate.");
                     return await MachineTranslate(text, targetLanguage);
                 }
             }
-            else
-                return "Target language not supported by DeepL.";
+            return "Target language not supported by DeepL.";
         }
 
         public static bool TryGetLanguageCode(string language, out string? languageCode)
@@ -146,7 +117,6 @@ namespace ChatTranslated.Translate
                 "Spanish" => "ES",
                 _ => null
             };
-
             return !string.IsNullOrEmpty(languageCode);
         }
 
@@ -157,51 +127,28 @@ namespace ChatTranslated.Translate
 #else
             if (string.IsNullOrEmpty(Cfv2))
             {
-                Service.pluginLog.Warning("LLMProxyTranslate - api key empty.");
                 return await MachineTranslate(message, targetLanguage);
             }
 #endif
-            string regionCode = Service.configuration.ProxyRegion;
 
-            var requestData = new
-            {
-                regionCode,
-                targetLanguage,
-                message
-            };
 
-            var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json");
+            var requestData = new { regionCode = Service.configuration.ProxyRegion, targetLanguage, message };
             var request = new HttpRequestMessage(HttpMethod.Post, "https://cfv2.kelpcc.com")
             {
-                Content = content
+                Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType)
             };
-
             request.Headers.Add("x-api-key", Cfv2);
 
             try
             {
                 var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
-                Service.pluginLog.Debug(response.Content.ToString() ?? "Proxy: HTTP response is null");
-
                 response.EnsureSuccessStatusCode();
-
-                string responseBody = await response.Content.ReadAsStringAsync();
-                Service.pluginLog.Debug($"responseBody = {responseBody}");
-
-                // Attempt to parse JSON from the responseBody
-                var jObject = JObject.Parse(responseBody);
-
-                // Extract translation based on the updated JSON structure
-                string? translated = jObject["translated"]?.ToString().Trim();
-
-                if (!string.IsNullOrWhiteSpace(translated) && (translated != "{}"))
-                    return translated;
-                else
-                    throw new Exception("Translation not found in the expected JSON structure.");
+                var responseBody = await response.Content.ReadAsStringAsync();
+                var translated = JObject.Parse(responseBody)["translated"]?.ToString().Trim();
+                return !string.IsNullOrWhiteSpace(translated) && translated != "{}" ? translated : throw new Exception("Translation not found in the expected JSON structure.");
             }
-            catch (Exception ex)
+            catch
             {
-                Service.pluginLog.Warning($"Error during proxy translation: {ex.Message}.");
                 return await MachineTranslate(message, targetLanguage);
             }
         }
@@ -210,13 +157,10 @@ namespace ChatTranslated.Translate
         {
             if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9]{32,}$"))
             {
-                Service.pluginLog.Warning("Incorrect API key format, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
             }
 
-            string prmopt = $"Translate FF14 chat to {targetLanguage}, keep context and jargon. Return original if emojis / meaningless. Guess if unknown." +
-                $"\nOutput plain text.";
-
+            var prmopt = $"Translate FF14 chat to {targetLanguage}, keep context and jargon. Return original if emojis / meaningless. Guess if unknown.\nOutput plain text.";
             var requestData = new
             {
                 model = "gpt-3.5-turbo",
@@ -229,10 +173,9 @@ namespace ChatTranslated.Translate
                 }
             };
 
-            var content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType);
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions")
             {
-                Content = content,
+                Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType),
                 Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {Service.configuration.OpenAI_API_Key}" } }
             };
 
@@ -242,18 +185,12 @@ namespace ChatTranslated.Translate
                 response.EnsureSuccessStatusCode();
                 var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var translated = JObject.Parse(jsonResponse)["choices"]?[0]?["message"]?["content"]?.ToString().Trim();
-
-                if (!string.IsNullOrWhiteSpace(translated))
-                    return translated;
-                else
-                    throw new Exception("Translation not found in the expected JSON structure.");
+                return !string.IsNullOrWhiteSpace(translated) ? translated : throw new Exception("Translation not found in the expected JSON structure.");
             }
-            catch (Exception ex)
+            catch
             {
-                Service.pluginLog.Warning($"{ex.Message}, falling back to machine translate.");
                 return await MachineTranslate(message, targetLanguage);
             }
         }
-
     }
 }
