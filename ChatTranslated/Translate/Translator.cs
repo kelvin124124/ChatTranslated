@@ -131,7 +131,6 @@ namespace ChatTranslated.Translate
             }
 #endif
 
-
             var requestData = new { regionCode = Service.configuration.ProxyRegion, targetLanguage, message };
             var request = new HttpRequestMessage(HttpMethod.Post, "https://cfv2.kelpcc.com")
             {
@@ -145,7 +144,7 @@ namespace ChatTranslated.Translate
                 response.EnsureSuccessStatusCode();
                 var responseBody = await response.Content.ReadAsStringAsync();
                 var translated = JObject.Parse(responseBody)["translated"]?.ToString().Trim();
-                return !string.IsNullOrWhiteSpace(translated) && translated != "{}" ? translated : throw new Exception("Translation not found in the expected JSON structure.");
+                return !string.IsNullOrWhiteSpace(translated) && translated != "{}" ? translated.Replace("\n", string.Empty) : throw new Exception("Translation not found in the expected JSON structure.");
             }
             catch
             {
