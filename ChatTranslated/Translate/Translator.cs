@@ -112,7 +112,7 @@ namespace ChatTranslated.Translate
 
                     var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
 
-                    if (!string.IsNullOrEmpty(translated))
+                    if (!string.IsNullOrWhiteSpace(translated))
                     {
                         if (targetLanguage == "Chinese (Traditional)")
                             return await MachineTranslate(translated, "Chinese (Traditional)");
@@ -194,7 +194,7 @@ namespace ChatTranslated.Translate
                 // Extract translation based on the updated JSON structure
                 string? translated = jObject["translated"]?.ToString().Trim();
 
-                if (!string.IsNullOrEmpty(translated))
+                if (!string.IsNullOrWhiteSpace(translated))
                     return translated;
                 else
                     throw new Exception("Translation not found in the expected JSON structure.");
@@ -243,7 +243,7 @@ namespace ChatTranslated.Translate
                 var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var translated = JObject.Parse(jsonResponse)["choices"]?[0]?["message"]?["content"]?.ToString().Trim();
 
-                if (!string.IsNullOrEmpty(translated))
+                if (!string.IsNullOrWhiteSpace(translated))
                     return translated;
                 else
                     throw new Exception("Translation not found in the expected JSON structure.");
