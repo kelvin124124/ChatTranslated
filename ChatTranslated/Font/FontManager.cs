@@ -3,7 +3,6 @@ using Dalamud;
 using Dalamud.Interface.ManagedFontAtlas;
 using Dalamud.Storage.Assets;
 using ImGuiNET;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -11,13 +10,9 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Font
 {
-
-    // NOTE: I have no idea what I'm doing.
-
-    public class FontManager(IDalamudAssetManager assetManager, IFontAtlasBuildToolkit fontAtlasBuildToolkit)
+    public class FontManager()
     {
-        private readonly IDalamudAssetManager assetManager = assetManager;
-        private readonly IFontAtlasBuildToolkit fontAtlasBuildToolkit = fontAtlasBuildToolkit;
+        private readonly IDalamudAssetManager assetManager = Service.assetManager;
 
         public async Task LoadFontsAsync()
         {
@@ -32,11 +27,9 @@ namespace ChatTranslated.Font
 
             try
             {
+                io.Fonts.AddFontDefault();
                 await LoadFontAsync(DalamudAsset.NotoSansJpMedium, fontConfig, combinedRangesPtr, io);
                 await LoadFontAsync(DalamudAsset.NotoSansKrRegular, fontConfig, combinedRangesPtr, io);
-            } catch (Exception e)
-            {
-                Service.pluginLog.Warning($"Failed to load fonts: {e}");
             }
             finally
             {
@@ -58,7 +51,6 @@ namespace ChatTranslated.Font
                 {
                     var fontDataPtr = new nint(fontPtr);
                     var font = io.Fonts.AddFontFromMemoryTTF(fontDataPtr, fontData.Length, 18.0f, nint.Zero, combinedRangesPtr);
-                    var fontConfigPtr = fontAtlasBuildToolkit.FindConfigPtr(font);
                 }
             }
         }

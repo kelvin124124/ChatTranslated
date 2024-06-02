@@ -1,3 +1,4 @@
+using ChatTranslated.Font;
 using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
@@ -69,14 +70,8 @@ namespace ChatTranslated
 
             LocManager.LoadLocalization();
 
-            try
-            {
-                Service.fontManager.LoadFontsAsync().Wait();
-            }
-            catch
-            {
-                OutputChatLine("Failed to load fonts.");
-            }
+            Service.fontManager = new FontManager();
+            Task.Run(() => Service.fontManager.LoadFontsAsync()).Wait();
         }
 
         private void OnContextMenuOpened(MenuOpenedArgs args)
