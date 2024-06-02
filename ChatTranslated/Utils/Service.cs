@@ -1,3 +1,4 @@
+using ChatTranslated.Font;
 using ChatTranslated.Windows;
 using Dalamud.IoC;
 using Dalamud.Plugin;
@@ -12,6 +13,7 @@ namespace ChatTranslated.Utils
         internal static Configuration configuration { get; set; } = null!;
         internal static MainWindow mainWindow { get; set; } = null!;
         internal static ChatHandler chatHandler { get; set; } = null!;
+        internal static FontManager fontManager { get; set; } = null!;
 
         [PluginService] public static DalamudPluginInterface pluginInterface { get; set; } = null!;
         [PluginService] public static IChatGui chatGui { get; private set; } = null!;
