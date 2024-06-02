@@ -8,9 +8,9 @@ using System.Reflection;
 
 namespace ChatTranslated.Font
 {
-    public class FontManager()
+    public class FontManager : IDisposable
     {
-        internal IFontHandle? fontHandle { get; private set; } = null!;
+        internal IFontHandle? ExtendedFontHandle { get; private set; } = null!;
 
         private static byte[] GetFont(string resourceName)
         {
@@ -21,77 +21,85 @@ namespace ChatTranslated.Font
             return memory.ToArray();
         }
 
+        private static unsafe ushort[] ConvertRanges(IntPtr ranges)
+        {
+            var rangeList = new List<ushort>();
+            var rangePtr = (ushort*)ranges;
+
+            while (true)
+            {
+                ushort start = *rangePtr++;
+                ushort end = *rangePtr++;
+
+                if (start == 0 && end == 0)
+                    break;
+
+                rangeList.Add(start);
+                rangeList.Add(end);
+            }
+
+            // Ensure the list is terminated with two zeros
+            rangeList.Add(0);
+            rangeList.Add(0);
+
+            return rangeList.ToArray();
+        }
+
         public void LoadFonts()
         {
-            byte[]? fontFile = null;
-            try
-            {
-                fontFile = GetFont("ChatTranslated.Font.NotoSans-Regular.ttf");
-            }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Warning($"Failed to load font: {ex.Message}");
-                return;
-            }
-
-            // Get Ranges
             var io = ImGui.GetIO();
-            var ranges = new List<IntPtr> { io.Fonts.GetGlyphRangesDefault(), io.Fonts.GetGlyphRangesChineseFull(), io.Fonts.GetGlyphRangesKorean(), io.Fonts.GetGlyphRangesJapanese() };
-            //var combinedRanges = BuildRange(null, [.. ranges]);
 
-            fontHandle = Service.pluginInterface.UiBuilder.FontAtlas.NewDelegateFontHandle(
+            byte[] notoSansData = GetFont("ChatTranslated.Font.NotoSans-Medium.ttf");
+            byte[] scFontData = GetFont("ChatTranslated.Font.NotoSansSC-Medium.otf");
+            byte[] tcFontData = GetFont("ChatTranslated.Font.NotoSansTC-Medium.otf");
+            byte[] jpFontData = GetFont("ChatTranslated.Font.NotoSansJP-Medium.otf");
+            byte[] krFontData = GetFont("ChatTranslated.Font.NotoSansKR-Medium.otf");
+
+            var sizePx = Service.pluginInterface.UiBuilder.DefaultFontSpec.SizePx;
+
+            ExtendedFontHandle = Service.pluginInterface.UiBuilder.FontAtlas.NewDelegateFontHandle(
                 e => e.OnPreBuild(
                     tk =>
                     {
-                        var config = new SafeFontConfig { SizePx = Service.pluginInterface.UiBuilder.DefaultFontSpec.SizePx/* , GlyphRanges = combinedRanges */};
+                        // Load and merge fonts sequentially
+                        var config = new SafeFontConfig { SizePx = sizePx, GlyphRanges = ConvertRanges(io.Fonts.GetGlyphRangesDefault()) };
+                        var font = tk.AddFontFromMemory(notoSansData, config, "NotoSans");
 
-                        var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ChatTranslated.Font.NotoSans-Regular.ttf");
-                        if (stream == null)
-                        {
-                            Service.pluginLog.Warning("Failed to load font resource");
-                            return;
-                        }
+                        // Merge Vietnamese ranges into the base font
+                        config.GlyphRanges = ConvertRanges(io.Fonts.GetGlyphRangesVietnamese());
+                        config.MergeFont = font;
+                        tk.AddFontFromMemory(notoSansData, config, "NotoSans-Vietnamese");
 
-                        var font = tk.AddFontFromStream(stream, config, false, "Expanded font");
+                        // Merge Chinese (Simplified) ranges
+                        config.GlyphRanges = ConvertRanges(io.Fonts.GetGlyphRangesChineseFull());
+                        tk.AddFontFromMemory(scFontData, config, "NotoSansSC");
+
+                        // Merge Chinese (Traditional) ranges
+                        tk.AddFontFromMemory(tcFontData, config, "NotoSansTC");
+
+                        // Merge Japanese ranges
+                        config.GlyphRanges = ConvertRanges(io.Fonts.GetGlyphRangesJapanese());
+                        tk.AddFontFromMemory(jpFontData, config, "NotoSansJP");
+
+                        // Merge Korean ranges
+                        config.GlyphRanges = ConvertRanges(io.Fonts.GetGlyphRangesKorean());
+                        tk.AddFontFromMemory(krFontData, config, "NotoSansKR");
+
+                        // Add game symbols
                         tk.AddGameSymbol(config with { MergeFont = font });
                     }
                 ));
+            io.Fonts.Build();
         }
 
-        // stolen from Chat2
-        //private static unsafe ushort[] BuildRange(IReadOnlyList<ushort>? chars, params IntPtr[] ranges)
-        //{
-        //    var builder = new ImFontGlyphRangesBuilderPtr(ImGuiNative.ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder());
-        //    // text
-        //    foreach (var range in ranges)
-        //        builder.AddRanges(range);
-
-        //    // chars
-        //    if (chars != null)
-        //    {
-        //        for (var i = 0; i < chars.Count; i += 2)
-        //        {
-        //            if (chars[i] == 0)
-        //                break;
-
-        //            for (var j = (uint)chars[i]; j <= chars[i + 1]; j++)
-        //                builder.AddChar((ushort)j);
-        //        }
-        //    }
-
-        //    // various symbols
-        //    // French
-        //    // Romanian
-        //    builder.AddText("←→↑↓《》■※☀★★☆♥♡ヅツッシ☀☁☂℃℉°♀♂♠♣♦♣♧®©™€$£♯♭♪✓√◎◆◇♦■□〇●△▽▼▲‹›≤≥<«“”─＼～");
-        //    builder.AddText("Œœ");
-        //    builder.AddText("ĂăÂâÎîȘșȚț");
-
-        //    // "Enclosed Alphanumerics" (partial) https://www.compart.com/en/unicode/block/U+2460
-        //    for (var i = 0x2460; i <= 0x24B5; i++)
-        //        builder.AddChar((char)i);
-
-        //    builder.AddChar('⓪');
-        //    return builder.BuildRangesToArray();
-        //}
+        public void Dispose()
+        {
+            // Ensure proper cleanup of the font handle
+            if (ExtendedFontHandle != null)
+            {
+                ExtendedFontHandle.Dispose();
+                ExtendedFontHandle = null;
+            }
+        }
     }
 }
