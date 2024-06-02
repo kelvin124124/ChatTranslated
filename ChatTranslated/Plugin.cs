@@ -68,6 +68,15 @@ namespace ChatTranslated
             }
 
             LocManager.LoadLocalization();
+
+            try
+            {
+                Service.fontManager.LoadFontsAsync().Wait();
+            }
+            catch
+            {
+                OutputChatLine("Failed to load fonts.");
+            }
         }
 
         private void OnContextMenuOpened(MenuOpenedArgs args)
