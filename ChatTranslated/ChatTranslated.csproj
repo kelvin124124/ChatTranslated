@@ -18,32 +18,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="Font\NotoSans-Medium.ttf" />
-      <None Remove="Font\NotoSansJP-Medium.otf" />
-      <None Remove="Font\NotoSansKR-Medium.otf" />
-      <None Remove="Font\NotoSansSC-Medium.otf" />
-      <None Remove="Font\NotoSansTC-Medium.otf" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <EmbeddedResource Include="Font\NotoSans-Medium.ttf">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="Font\NotoSansJP-Medium.otf">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="Font\NotoSansKR-Medium.otf">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="Font\NotoSansSC-Medium.otf">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </EmbeddedResource>
-      <EmbeddedResource Include="Font\NotoSansTC-Medium.otf">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
       <None Include="Localization\LocStr\Resources.resx" />
     </ItemGroup>
 

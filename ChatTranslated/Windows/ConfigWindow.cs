@@ -67,31 +67,28 @@ public class ConfigWindow : Window, IDisposable
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
     private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
 
-    public void Dispose() { Service.fontManager.ExtendedFontHandle?.Pop(); }
+    public void Dispose() { }
 
     public override void Draw()
     {
         Configuration configuration = Service.configuration;
 
-        using (Service.fontManager.ExtendedFontHandle?.Push())
-        {
-            DrawGenericSettigns(configuration);
-            ImGui.Separator();
+        DrawGenericSettigns(configuration);
+        ImGui.Separator();
 
-            DrawPluginLangSelection(configuration);
-            ImGui.Separator();
+        DrawPluginLangSelection(configuration);
+        ImGui.Separator();
 
-            DrawChatChannelSelection(configuration);
-            ImGui.Separator();
+        DrawChatChannelSelection(configuration);
+        ImGui.Separator();
 
-            DrawSourceLangSelection(configuration);
-            ImGui.Separator();
+        DrawSourceLangSelection(configuration);
+        ImGui.Separator();
 
-            DrawTargetLangSelection(configuration);
-            ImGui.Separator();
+        DrawTargetLangSelection(configuration);
+        ImGui.Separator();
 
-            DrawModeSelection(configuration);
-        }
+        DrawModeSelection(configuration);
     }
 
     private static void DrawGenericSettigns(Configuration configuration)
