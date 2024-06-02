@@ -1,3 +1,4 @@
+using ChatTranslated.Font;
 using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
@@ -36,6 +37,10 @@ namespace ChatTranslated
             _ = pluginInterface.Create<Service>();
 
             Service.plugin = this;
+
+            Service.fontManager = new FontManager();
+            Service.fontManager.LoadFonts();
+
             Service.configWindow = new ConfigWindow(this);
             Service.mainWindow = new MainWindow(this);
 
