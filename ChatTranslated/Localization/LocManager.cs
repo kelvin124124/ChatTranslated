@@ -43,6 +43,7 @@ namespace ChatTranslated.Localization
                 "Japanese" => "ja-JP",
                 "Chinese (Simplified)" => "zh-CN",
                 "Chinese (Traditional)" => "zh-TW",
+                "Korean" => "ko-KR",
                 _ => "unknown"
             };
 
@@ -63,6 +64,7 @@ namespace ChatTranslated.Localization
                 "Japanese" => new CultureInfo("ja-JP"),
                 "Chinese (Simplified)" => new CultureInfo("zh-CN"),
                 "Chinese (Traditional)" => new CultureInfo("zh-TW"),
+                "Korean" => new CultureInfo("ko-KR"),
                 _ => CultureInfo // Default to the loaded localization
             };
         }

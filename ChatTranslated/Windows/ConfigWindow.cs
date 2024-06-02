@@ -16,9 +16,9 @@ namespace ChatTranslated.Windows;
 public class ConfigWindow : Window, IDisposable
 {
     private readonly string[] supportedDetectedLanguages =
-    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
+    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
     private readonly string[] supportedLanguages =
-    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Spanish"];
+    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
 
     public static readonly List<XivChatType> genericChatTypes =
     [
