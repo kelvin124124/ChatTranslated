@@ -42,7 +42,7 @@ namespace ChatTranslated.Font
             rangeList.Add(0);
             rangeList.Add(0);
 
-            return rangeList.ToArray();
+            return [.. rangeList];
         }
 
         public void LoadFonts()
