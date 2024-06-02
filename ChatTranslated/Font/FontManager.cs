@@ -1,90 +1,97 @@
 using ChatTranslated.Utils;
-using Dalamud;
 using Dalamud.Interface.ManagedFontAtlas;
-using Dalamud.Storage.Assets;
 using ImGuiNET;
+using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
+using System.Reflection;
 
 namespace ChatTranslated.Font
 {
     public class FontManager()
     {
-        private readonly IDalamudAssetManager assetManager = Service.assetManager;
+        internal IFontHandle? fontHandle { get; private set; } = null!;
 
-        public async Task LoadFontsAsync()
+        private static byte[] GetFont(string resourceName)
         {
-            ImGui.CreateContext();
-            var io = ImGui.GetIO();
+            using var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)
+                ?? throw new Exception($"Failed to load font resource: {resourceName}");
+            using var memory = new MemoryStream();
+            stream.CopyTo(memory);
+            return memory.ToArray();
+        }
 
-            var fontConfig = new ImFontConfig { MergeMode = 1 };
-
-            var combinedRanges = CombineGlyphRanges(io.Fonts.GetGlyphRangesChineseFull(), io.Fonts.GetGlyphRangesKorean());
-            var handle = GCHandle.Alloc(combinedRanges, GCHandleType.Pinned);
-            var combinedRangesPtr = handle.AddrOfPinnedObject();
-
+        public void LoadFonts()
+        {
+            byte[]? fontFile = null;
             try
             {
-                io.Fonts.AddFontDefault();
-                await LoadFontAsync(DalamudAsset.NotoSansJpMedium, fontConfig, combinedRangesPtr, io);
-                await LoadFontAsync(DalamudAsset.NotoSansKrRegular, fontConfig, combinedRangesPtr, io);
+                fontFile = GetFont("ChatTranslated.Font.NotoSans-Regular.ttf");
             }
-            finally
+            catch (Exception ex)
             {
-                handle.Free();
+                Service.pluginLog.Warning($"Failed to load font: {ex.Message}");
+                return;
             }
 
-            io.Fonts.Build();
-        }
+            // Get Ranges
+            var io = ImGui.GetIO();
+            var ranges = new List<IntPtr> { io.Fonts.GetGlyphRangesDefault(), io.Fonts.GetGlyphRangesChineseFull(), io.Fonts.GetGlyphRangesKorean(), io.Fonts.GetGlyphRangesJapanese() };
+            //var combinedRanges = BuildRange(null, [.. ranges]);
 
-        private async Task LoadFontAsync(DalamudAsset asset, ImFontConfig fontConfig, nint combinedRangesPtr, ImGuiIOPtr io)
-        {
-            using var fontStream = await assetManager.CreateStreamAsync(asset);
-            using var ms = new MemoryStream();
-            await fontStream.CopyToAsync(ms);
-            var fontData = ms.ToArray();
-            unsafe
-            {
-                fixed (byte* fontPtr = fontData)
-                {
-                    var fontDataPtr = new nint(fontPtr);
-                    var font = io.Fonts.AddFontFromMemoryTTF(fontDataPtr, fontData.Length, 18.0f, nint.Zero, combinedRangesPtr);
-                }
-            }
-        }
-
-        private ushort[] CombineGlyphRanges(nint rangesChinese, nint rangesKorean)
-        {
-            var glyphRangeChinese = ConvertGlyphRangeToChars(rangesChinese);
-            var glyphRangeKorean = ConvertGlyphRangeToChars(rangesKorean);
-
-            var combinedRanges = new List<char>();
-            combinedRanges.AddRange(glyphRangeChinese);
-            combinedRanges.AddRange(glyphRangeKorean);
-
-            return combinedRanges.ToGlyphRange();
-        }
-
-        private List<char> ConvertGlyphRangeToChars(nint glyphRangePtr)
-        {
-            var chars = new List<char>();
-
-            unsafe
-            {
-                var p = (ushort*)glyphRangePtr.ToPointer();
-                while (*p != 0)
-                {
-                    for (var c = *p; c <= *(p + 1); c++)
+            fontHandle = Service.pluginInterface.UiBuilder.FontAtlas.NewDelegateFontHandle(
+                e => e.OnPreBuild(
+                    tk =>
                     {
-                        chars.Add((char)c);
-                    }
-                    p += 2;
-                }
-            }
+                        var config = new SafeFontConfig { SizePx = Service.pluginInterface.UiBuilder.DefaultFontSpec.SizePx/* , GlyphRanges = combinedRanges */};
 
-            return chars;
+                        var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("ChatTranslated.Font.NotoSans-Regular.ttf");
+                        if (stream == null)
+                        {
+                            Service.pluginLog.Warning("Failed to load font resource");
+                            return;
+                        }
+
+                        var font = tk.AddFontFromStream(stream, config, false, "Expanded font");
+                        tk.AddGameSymbol(config with { MergeFont = font });
+                    }
+                ));
         }
+
+        // stolen from Chat2
+        //private static unsafe ushort[] BuildRange(IReadOnlyList<ushort>? chars, params IntPtr[] ranges)
+        //{
+        //    var builder = new ImFontGlyphRangesBuilderPtr(ImGuiNative.ImFontGlyphRangesBuilder_ImFontGlyphRangesBuilder());
+        //    // text
+        //    foreach (var range in ranges)
+        //        builder.AddRanges(range);
+
+        //    // chars
+        //    if (chars != null)
+        //    {
+        //        for (var i = 0; i < chars.Count; i += 2)
+        //        {
+        //            if (chars[i] == 0)
+        //                break;
+
+        //            for (var j = (uint)chars[i]; j <= chars[i + 1]; j++)
+        //                builder.AddChar((ushort)j);
+        //        }
+        //    }
+
+        //    // various symbols
+        //    // French
+        //    // Romanian
+        //    builder.AddText("←→↑↓《》■※☀★★☆♥♡ヅツッシ☀☁☂℃℉°♀♂♠♣♦♣♧®©™€$£♯♭♪✓√◎◆◇♦■□〇●△▽▼▲‹›≤≥<«“”─＼～");
+        //    builder.AddText("Œœ");
+        //    builder.AddText("ĂăÂâÎîȘșȚț");
+
+        //    // "Enclosed Alphanumerics" (partial) https://www.compart.com/en/unicode/block/U+2460
+        //    for (var i = 0x2460; i <= 0x24B5; i++)
+        //        builder.AddChar((char)i);
+
+        //    builder.AddChar('⓪');
+        //    return builder.BuildRangesToArray();
+        //}
     }
 }

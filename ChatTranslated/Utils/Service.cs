@@ -3,8 +3,6 @@ using ChatTranslated.Windows;
 using Dalamud.IoC;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
-using Dalamud.Interface.ManagedFontAtlas;
-using Dalamud.Storage.Assets;
 
 namespace ChatTranslated.Utils
 {
@@ -24,6 +22,5 @@ namespace ChatTranslated.Utils
         [PluginService] public static IPluginLog pluginLog { get; private set; } = null!;
         [PluginService] public static IClientState clientState { get; private set; } = null!;
         [PluginService] public static ICommandManager commandManager { get; set; } = null!;
-        [PluginService] public static IDalamudAssetManager assetManager { get; set; } = null!;
     }
 }

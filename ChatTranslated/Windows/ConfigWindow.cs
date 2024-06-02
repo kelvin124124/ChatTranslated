@@ -61,34 +61,38 @@ public class ConfigWindow : Window, IDisposable
         ImGuiWindowFlags.AlwaysAutoResize)
     {
         Size = new Vector2(600, 500);
+        Service.fontManager.fontHandle?.Push();
     }
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
     private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
 
-    public void Dispose() { }
+    public void Dispose() => Service.fontManager.fontHandle?.Pop();
 
     public override void Draw()
     {
         Configuration configuration = Service.configuration;
 
-        DrawGenericSettigns(configuration);
-        ImGui.Separator();
+        using (Service.fontManager.fontHandle?.Push())
+        {
+            DrawGenericSettigns(configuration);
+            ImGui.Separator();
 
-        DrawPluginLangSelection(configuration);
-        ImGui.Separator();
+            DrawPluginLangSelection(configuration);
+            ImGui.Separator();
 
-        DrawChatChannelSelection(configuration);
-        ImGui.Separator();
+            DrawChatChannelSelection(configuration);
+            ImGui.Separator();
 
-        DrawSourceLangSelection(configuration);
-        ImGui.Separator();
+            DrawSourceLangSelection(configuration);
+            ImGui.Separator();
 
-        DrawTargetLangSelection(configuration);
-        ImGui.Separator();
+            DrawTargetLangSelection(configuration);
+            ImGui.Separator();
 
-        DrawModeSelection(configuration);
+            DrawModeSelection(configuration);
+        }
     }
 
     private static void DrawGenericSettigns(Configuration configuration)

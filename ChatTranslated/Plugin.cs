@@ -71,7 +71,7 @@ namespace ChatTranslated
             LocManager.LoadLocalization();
 
             Service.fontManager = new FontManager();
-            Task.Run(() => Service.fontManager.LoadFontsAsync()).Wait();
+            Service.fontManager.LoadFonts();
         }
 
         private void OnContextMenuOpened(MenuOpenedArgs args)

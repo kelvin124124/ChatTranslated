@@ -30,13 +30,16 @@ namespace ChatTranslated.Windows
             SizeCondition = ImGuiCond.FirstUseEver;
         }
 
-        public void Dispose() => GC.SuppressFinalize(this);
+        public void Dispose() => Service.fontManager.fontHandle?.Pop();
 
         public override void Draw()
         {
-            DrawOutputField();
-            DrawLanguageSelector();
-            DrawInputField();
+            using (Service.fontManager.fontHandle?.Push())
+            {
+                DrawOutputField();
+                DrawLanguageSelector();
+                DrawInputField();
+            }
         }
 
         private void DrawOutputField()
