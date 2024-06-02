@@ -275,6 +275,16 @@ public class ConfigWindow : Window, IDisposable
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
+
+        // tooltip explaining unsupported characters [do not localize]
+        ImGui.TextDisabled("Regarding unsupported (=) characters");
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.BeginTooltip();
+            ImGui.Text("Unsupported characters can be rendered if Dalamud font is switch to anything except the default game font ");
+            ImGui.Text("This only fixes texts in plugin windows, unsupported characters in chat UI will still be rendered as  =");
+            ImGui.EndTooltip();
+        }
     }
 
     private static void DrawModeSelection(Configuration configuration)
