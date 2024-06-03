@@ -1,3 +1,3 @@
 files:
-  - source: /ChatTranslated/Localization/LocStr/Resources.resx
-    translation: /ChatTranslated/Localization/LocStr/Resources.%locale%.resx
+  - source: /ChatTranslated/Localization/Resources.resx
+    translation: /ChatTranslated/Localization/Resources.%locale%.resx
