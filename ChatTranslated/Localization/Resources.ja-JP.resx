@@ -118,56 +118,56 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alliance" xml:space="preserve">
-    <value>Alliance</value>
+    <value>アライアンス</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>AllLanguages</value>
+    <value>全ての言語</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
     <value>Warning: API key will be stored as plain text in plugin configuration,
 any malware or third party plugins may have access to the key.</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>適用</value>
   </data>
   <data name="AskProceed" xml:space="preserve">
     <value>Proceed?</value>
   </data>
   <data name="ChannelSelection" xml:space="preserve">
-    <value>Channel Selection</value>
+    <value>チャンネル選択</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
     <value>Chat Integration</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>CrossLinkShell1</value>
+    <value>CWLS1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>CrossLinkShell2</value>
+    <value>CWLS2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>CrossLinkShell3</value>
+    <value>CWLS3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>CrossLinkShell4</value>
+    <value>CWLS4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>CrossLinkShell5</value>
+    <value>CWLS5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>CrossLinkShell6</value>
+    <value>CWLS6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>CrossLinkShell7</value>
+    <value>CWLS7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>CrossLinkShell8</value>
+    <value>CWLS8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
     <value>CrossParty</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
-    <value>CustomLanguages</value>
+    <value>カスタム言語</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API Key</value>
@@ -179,83 +179,83 @@ any malware or third party plugins may have access to the key.</value>
     <value>DeepL_API</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Default</value>
+    <value>デフォルト</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
     <value>Recommended. Translate non-Latin based languages.
 (Japanese, Korean, Chinese, etc.)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>It's okay!</value>
+    <value>大丈夫です！</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>Enable in duties</value>
+    <value>戦闘コンテンツ内で有効にする</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
-    <value>Enable plugin</value>
+    <value>プラグインを有効にする</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English</value>
+    <value>英語</value>
   </data>
   <data name="EU" xml:space="preserve">
     <value>EU</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>FreeCompany</value>
+    <value>フリーカンパニー</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>French</value>
+    <value>フランス語</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>German</value>
+    <value>ドイツ語</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>Good game!</value>
+    <value>お疲れ様でした。</value>
   </data>
   <data name="HK" xml:space="preserve">
     <value>HK</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>Japanese</value>
+    <value>日本語</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>Korean</value>
+    <value>韓国語</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMProxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>Ls1</value>
+    <value>LS1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>Ls2</value>
+    <value>LS2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>Ls3</value>
+    <value>LS3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>Ls4</value>
+    <value>LS4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>Ls5</value>
+    <value>LS5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>Ls6</value>
+    <value>LS6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>Ls7</value>
+    <value>LS7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>Ls8</value>
+    <value>LS8</value>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
-    <value>MachineTranslate</value>
+    <value>機械翻訳</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>いいえ</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>NoviceNetwork</value>
+    <value>ビギナーチャンネル</value>
   </data>
   <data name="OpenAIAPI" xml:space="preserve">
     <value>OpenAI API</value>
@@ -292,16 +292,16 @@ subject to availability.</value>
     <value>Send chat to DB</value>
   </data>
   <data name="SendChatDisclaimer" xml:space="preserve">
-    <value>Personal identifiers and sensitive info will be removed before use.</value>
+    <value>送信前に個人識別情報や機密情報は削除されます。</value>
   </data>
   <data name="SendChatExplaination" xml:space="preserve">
-    <value>Collect outgoing chat messages to improve translations.</value>
+    <value>送信されたチャットメッセージを収集して翻訳を改善します。</value>
   </data>
   <data name="Shout" xml:space="preserve">
     <value>Shout</value>
   </data>
   <data name="SourceLang" xml:space="preserve">
-    <value>What to translate</value>
+    <value>翻訳する言語</value>
   </data>
   <data name="SourceLangSelection" xml:space="preserve">
     <value>Source Language Selection</value>
@@ -313,7 +313,7 @@ subject to availability.</value>
     <value>Translate to</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>TellIncoming</value>
+    <value>Tell</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>Translate</value>
@@ -335,18 +335,18 @@ It does not send translated text in chat or make it visible to other players.</v
     <value>US</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
-    <value>Let's do it!</value>
+    <value>よろしくお願いします！</value>
   </data>
   <data name="Yell" xml:space="preserve">
     <value>Yell</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>はい</value>
   </data>
   <data name="zh-CN" xml:space="preserve">
-    <value>Chinese (Simplified)</value>
+    <value>中国語（簡体字）</value>
   </data>
   <data name="zh-TW" xml:space="preserve">
-    <value>Chinese (Traditional)</value>
+    <value>中国語（繁体字）</value>
   </data>
 </root>
