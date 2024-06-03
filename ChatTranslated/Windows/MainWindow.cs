@@ -34,8 +34,6 @@ namespace ChatTranslated.Windows
 
         public override void Draw()
         {
-            Configuration configuration = Service.configuration;
-
             DrawOutputField();
             DrawLanguageSelector();
             DrawInputField();
@@ -72,7 +70,7 @@ namespace ChatTranslated.Windows
             int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage);
             if (currentLanguageIndex == -1) currentLanguageIndex = 0;
 
-            string[] localizedLanguages = languages.Select(lang => lang.GetLocalization()).ToArray();
+            string[] localizedLanguages = languages.Select(lang => Resources.ResourceManager.GetString(lang) ?? lang).ToArray();
             if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, localizedLanguages, languages.Length))
             {
                 Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];
@@ -86,7 +84,7 @@ namespace ChatTranslated.Windows
             ImGui.InputText("##input", ref inputText, 500);
 
             ImGui.SameLine();
-            if (ImGui.Button("Translate".GetLocalization()))
+            if (ImGui.Button(Resources.Translate))
             {
                 ProcessInput(inputText);
                 inputText = "";
@@ -96,10 +94,7 @@ namespace ChatTranslated.Windows
             ImGui.TextDisabled("?");
             if (ImGui.IsItemHovered())
             {
-                ImGui.BeginTooltip();
-                ImGui.Text("Translate button only prints translated text in the main window.".GetLocalization());
-                ImGui.Text("It does not send translated text in chat or make it visible to other players.".GetLocalization());
-                ImGui.EndTooltip();
+                ImGui.SetTooltip(Resources.TranslateButtonTooltip);
             }
         }
 

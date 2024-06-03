@@ -1,14 +1,15 @@
-using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using FFXIVClientStructs.FFXIV.Common.Component.BGCollision;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ChatTranslated.Localization;
 
 namespace ChatTranslated.Utils
 {
@@ -132,17 +133,17 @@ namespace ChatTranslated.Utils
 
             if (JPWelcomeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "Let's do it!".GetLocalization(Service.configuration.SelectedTargetLanguage));
+                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.WelcomeStr);
                 return true;
             }
             if (JPByeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "Good game!".GetLocalization(Service.configuration.SelectedTargetLanguage));
+                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.GGstr);
                 return true;
             }
             if (JPDomaRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "It's okay!".GetLocalization(Service.configuration.SelectedTargetLanguage));
+                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.DomaStr);
                 return true;
             }
 

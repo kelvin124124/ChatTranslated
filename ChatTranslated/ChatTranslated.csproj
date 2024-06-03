@@ -14,15 +14,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <EmbeddedResource Remove="Localization\LocStr\Resources.resx" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Include="Localization\LocStr\Resources.resx" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="GTranslate" Version="2.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Localization\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Localization\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
     </ItemGroup>
 
     <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv2)' != ''">
