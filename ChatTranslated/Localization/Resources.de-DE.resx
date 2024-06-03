@@ -134,34 +134,34 @@ any malware or third party plugins may have access to the key.</value>
     <value>Proceed?</value>
   </data>
   <data name="ChannelSelection" xml:space="preserve">
-    <value>Channel Selection</value>
+    <value>Chat-Kanäle Auswahl</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
     <value>Chat Integration</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>CrossLinkShell1</value>
+    <value>Welten-Kontaktkreis1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>CrossLinkShell2</value>
+    <value>Welten-Kontaktkreis2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>CrossLinkShell3</value>
+    <value>Welten-Kontaktkreis3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>CrossLinkShell4</value>
+    <value>Welten-Kontaktkreis4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>CrossLinkShell5</value>
+    <value>Welten-Kontaktkreis5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>CrossLinkShell6</value>
+    <value>Welten-Kontaktkreis6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>CrossLinkShell7</value>
+    <value>Welten-Kontaktkreis7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>CrossLinkShell8</value>
+    <value>Welten-Kontaktkreis8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
     <value>CrossParty</value>
@@ -225,28 +225,28 @@ any malware or third party plugins may have access to the key.</value>
     <value>LLMProxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>Ls1</value>
+    <value>LS1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>Ls2</value>
+    <value>LS2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>Ls3</value>
+    <value>LS3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>Ls4</value>
+    <value>LS4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>Ls5</value>
+    <value>LS5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>Ls6</value>
+    <value>LS6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>Ls7</value>
+    <value>LS7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>Ls8</value>
+    <value>LS8</value>
   </data>
   <data name="MachineTranslate" xml:space="preserve">
     <value>MachineTranslate</value>
@@ -295,7 +295,7 @@ subject to availability.</value>
     <value>Personal identifiers and sensitive info will be removed before use.</value>
   </data>
   <data name="SendChatExplaination" xml:space="preserve">
-    <value>Collect outgoing chat messages to improve translations.</value>
+    <value>Sammelt ausgehende Chatnachrichten, um Übersetzungen zu verbessern.</value>
   </data>
   <data name="Shout" xml:space="preserve">
     <value>Shout</value>
@@ -344,9 +344,9 @@ It does not send translated text in chat or make it visible to other players.</v
     <value>Yes</value>
   </data>
   <data name="zh-CN" xml:space="preserve">
-    <value>Chinese (Simplified)</value>
+    <value>Chinesisch (vereinfacht)</value>
   </data>
   <data name="zh-TW" xml:space="preserve">
-    <value>Chinese (Traditional)</value>
+    <value>Chinesisch (traditionell)</value>
   </data>
 </root>
