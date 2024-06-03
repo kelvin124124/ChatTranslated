@@ -124,20 +124,20 @@
     <value>全ての言語</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>Warning: API key will be stored as plain text in plugin configuration,
-any malware or third party plugins may have access to the key.</value>
+    <value>警告: APIキーはプラグイン設定にプレーンテキストとして保存されます。
+マルウェアや第三者のプラグインがアクセスする可能性があります。</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>適用</value>
   </data>
   <data name="AskProceed" xml:space="preserve">
-    <value>Proceed?</value>
+    <value>続行しますか？</value>
   </data>
   <data name="ChannelSelection" xml:space="preserve">
     <value>チャンネル選択</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>Chat Integration</value>
+    <value>チャット統合</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
     <value>CWLS1</value>
@@ -164,16 +164,16 @@ any malware or third party plugins may have access to the key.</value>
     <value>CWLS8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>CrossParty</value>
+    <value>クロスパーティー</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
     <value>カスタム言語</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key</value>
+    <value>DeepL APIキー</value>
   </data>
   <data name="DeepLAPIKeyExplaination" xml:space="preserve">
-    <value>Get one free from DeepL official website!</value>
+    <value>公式サイトから無料で入手できます！</value>
   </data>
   <data name="DeepL_API" xml:space="preserve">
     <value>DeepL_API</value>
@@ -182,8 +182,8 @@ any malware or third party plugins may have access to the key.</value>
     <value>デフォルト</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.
-(Japanese, Korean, Chinese, etc.)</value>
+    <value>推奨されます。非ラテンベースの言語を翻訳します。
+（日本語、韓国語、中国語など）</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
     <value>大丈夫です！</value>
@@ -261,35 +261,35 @@ any malware or third party plugins may have access to the key.</value>
     <value>OpenAI API</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
-    <value>OpenAI API Key</value>
+    <value>OpenAI APIキー</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Price estimation: $0.2 /month</value>
+    <value>価格予測: $0.2 /月</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Party</value>
   </data>
   <data name="PluginLanguage" xml:space="preserve">
-    <value>Plugin Language</value>
+    <value>プラグイン言語</value>
   </data>
   <data name="ProxyExplanation" xml:space="preserve">
-    <value>Free Claude-Haiku translation service provided by the dev,
-subject to availability.</value>
+    <value>提供されるフリーのClaude-Haiku翻訳サービス、
+利用可能状況による。</value>
   </data>
   <data name="ProxyLatency" xml:space="preserve">
-    <value>Users from unsupported regions WILL experience higher latency.</value>
+    <value>サポートされていない地域のユーザーはより高い遅延を経験します。</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvPTeam</value>
+    <value>PvPチーム</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>地域</value>
   </data>
   <data name="Say" xml:space="preserve">
     <value>Say</value>
   </data>
   <data name="SendChat" xml:space="preserve">
-    <value>Send chat to DB</value>
+    <value>チャットをDBに送信</value>
   </data>
   <data name="SendChatDisclaimer" xml:space="preserve">
     <value>送信前に個人識別情報や機密情報は削除されます。</value>
@@ -304,32 +304,32 @@ subject to availability.</value>
     <value>翻訳する言語</value>
   </data>
   <data name="SourceLangSelection" xml:space="preserve">
-    <value>Source Language Selection</value>
+    <value>ソース言語選択</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>Spanish</value>
+    <value>スペイン語</value>
   </data>
   <data name="TargetLang" xml:space="preserve">
-    <value>Translate to</value>
+    <value>翻訳する</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
     <value>Tell</value>
   </data>
   <data name="Translate" xml:space="preserve">
-    <value>Translate</value>
+    <value>翻訳</value>
   </data>
   <data name="TranslateAllExplaination" xml:space="preserve">
-    <value>Translate all incoming messages.
+    <value>すべての受信メッセージを翻訳します。
 
-Didn't find your language in language selection?
-Send feedback from plugin installer!</value>
+言語選択にご希望の言語が見つかりませんか？
+プラグインインストーラーからフィードバックを送信してください！</value>
   </data>
   <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>Translate button only print translated text in the main window.
-It does not send translated text in chat or make it visible to other players.</value>
+    <value>翻訳ボタンはメインウィンドウに翻訳されたテキストのみを表示します。
+チャットに翻訳されたテキストを送信したり、他のプレイヤーに見せたりするわけではありません。</value>
   </data>
   <data name="TranslationMode" xml:space="preserve">
-    <value>TranslationMode</value>
+    <value>翻訳モード</value>
   </data>
   <data name="US" xml:space="preserve">
     <value>US</value>
