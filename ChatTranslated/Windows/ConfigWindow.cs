@@ -66,7 +66,10 @@ public class ConfigWindow : Window, IDisposable
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
+
+#if DEBUG
     private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
+#endif
 
     public void Dispose() { }
 
