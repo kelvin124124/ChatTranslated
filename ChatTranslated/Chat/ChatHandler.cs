@@ -1,15 +1,14 @@
+using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
-using FFXIVClientStructs.FFXIV.Common.Component.BGCollision;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using ChatTranslated.Localization;
 
 namespace ChatTranslated.Utils
 {
