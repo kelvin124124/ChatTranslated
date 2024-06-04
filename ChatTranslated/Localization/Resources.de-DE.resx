@@ -139,6 +139,12 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
   <data name="ChatIntegration" xml:space="preserve">
     <value>Chat-Integration</value>
   </data>
+  <data name="Chinese (Simplified)" xml:space="preserve">
+    <value>Chinese (Simplified)</value>
+  </data>
+  <data name="Chinese (Traditional)" xml:space="preserve">
+    <value>Chinese (Traditional)</value>
+  </data>
   <data name="CrossLinkShell1" xml:space="preserve">
     <value>Welten-Kontaktkreis1</value>
   </data>
@@ -342,11 +348,5 @@ Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere S
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
-  </data>
-  <data name="zh-CN" xml:space="preserve">
-    <value>Chinesisch (vereinfacht)</value>
-  </data>
-  <data name="zh-TW" xml:space="preserve">
-    <value>Chinesisch (traditionell)</value>
   </data>
 </root>
