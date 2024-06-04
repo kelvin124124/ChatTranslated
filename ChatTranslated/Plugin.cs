@@ -1,5 +1,3 @@
-using ChatTranslated.Font;
-using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using ChatTranslated.Windows;
@@ -38,9 +36,6 @@ namespace ChatTranslated
 
             Service.plugin = this;
 
-            Service.fontManager = new FontManager();
-            Service.fontManager.LoadFonts();
-
             Service.configWindow = new ConfigWindow(this);
             Service.mainWindow = new MainWindow(this);
 
@@ -71,8 +66,6 @@ namespace ChatTranslated
                 OutputChatLine("Plugin has been updated to v2.0 and requires a config reset.");
                 Service.configuration = new Configuration();
             }
-
-            LocManager.LoadLocalization();
         }
 
         private void OnContextMenuOpened(MenuOpenedArgs args)
@@ -120,6 +113,7 @@ namespace ChatTranslated
 
             Service.configWindow.Dispose();
             Service.mainWindow.Dispose();
+
             Service.commandManager.RemoveHandler(CommandName);
         }
 

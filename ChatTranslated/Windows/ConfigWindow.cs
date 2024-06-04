@@ -7,6 +7,7 @@ using ImGuiNET;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Numerics;
 using static ChatTranslated.Configuration;
@@ -65,33 +66,33 @@ public class ConfigWindow : Window, IDisposable
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
-    private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
 
-    public void Dispose() { Service.fontManager.ExtendedFontHandle?.Pop(); }
+#if DEBUG
+    private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
+#endif
+
+    public void Dispose() { }
 
     public override void Draw()
     {
         Configuration configuration = Service.configuration;
 
-        using (Service.fontManager.ExtendedFontHandle?.Push())
-        {
-            DrawGenericSettigns(configuration);
-            ImGui.Separator();
+        DrawGenericSettigns(configuration);
+        ImGui.Separator();
 
-            DrawPluginLangSelection(configuration);
-            ImGui.Separator();
+        DrawPluginLangSelection(configuration);
+        ImGui.Separator();
 
-            DrawChatChannelSelection(configuration);
-            ImGui.Separator();
+        DrawChatChannelSelection(configuration);
+        ImGui.Separator();
 
-            DrawSourceLangSelection(configuration);
-            ImGui.Separator();
+        DrawSourceLangSelection(configuration);
+        ImGui.Separator();
 
-            DrawTargetLangSelection(configuration);
-            ImGui.Separator();
+        DrawTargetLangSelection(configuration);
+        ImGui.Separator();
 
-            DrawModeSelection(configuration);
-        }
+        DrawModeSelection(configuration);
     }
 
     private static void DrawGenericSettigns(Configuration configuration)
@@ -102,39 +103,39 @@ public class ConfigWindow : Window, IDisposable
         bool _SendChatToDB = configuration.SendChatToDB;
 
         // Enabled
-        if (ImGui.Checkbox("Enable plugin".GetLocalization(), ref _Enabled))
+        if (ImGui.Checkbox(Resources.EnablePlugin, ref _Enabled))
         {
             configuration.Enabled = _Enabled;
             configuration.Save();
         }
 
         // Chat Integration
-        if (ImGui.Checkbox("Chat Integration".GetLocalization(), ref _ChatIntegration))
+        if (ImGui.Checkbox(Resources.ChatIntegration, ref _ChatIntegration))
         {
             configuration.ChatIntegration = _ChatIntegration;
             configuration.Save();
         }
 
         // Enable in duties
-        if (ImGui.Checkbox("Enable in duties".GetLocalization(), ref _EnabledInDuty))
+        if (ImGui.Checkbox(Resources.EnableInDuties, ref _EnabledInDuty))
         {
             configuration.EnabledInDuty = _EnabledInDuty;
             configuration.Save();
         }
 
         // Send chat to DB
-        if (ImGui.Checkbox("Send chat to DB".GetLocalization(), ref _SendChatToDB))
+        if (ImGui.Checkbox(Resources.SendChat, ref _SendChatToDB))
         {
             configuration.SendChatToDB = _SendChatToDB;
         }
-        ImGui.Text("    " + "Collect outgoing chat messages to improve translations.".GetLocalization());
-        ImGui.Text("    " + "Personal identifiers and sensitive info will be removed before use.".GetLocalization());
+        ImGui.Text("    " + Resources.SendChatExplaination);
+        ImGui.Text("    " + Resources.SendChatDisclaimer);
     }
 
     private void DrawPluginLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Plugin Language".GetLocalization());
+        ImGui.Text(Resources.PluginLanguage);
         ImGui.SameLine();
 
         string currentSelection = configuration.SelectedPluginLanguage;
@@ -148,19 +149,36 @@ public class ConfigWindow : Window, IDisposable
             Process.Start(new ProcessStartInfo { FileName = "https://crowdin.com/project/chattranslated", UseShellExecute = true });
         }
 
-        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => lang.GetLocalization()).ToArray();
+        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang) ?? lang).ToArray();
         if (ImGui.Combo("##pluginLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedPluginLanguage = supportedLanguages[currentIndex];
             configuration.Save();
-            LocManager.LoadLocalization();
+            SetLanguageCulture(configuration.SelectedPluginLanguage);
         }
+    }
+
+    internal static void SetLanguageCulture(string langName)
+    {
+        string langCode = langName switch
+        {
+            "English" => "en-US",
+            "German" => "de-DE",
+            "Spanish" => "es-ES",
+            "French" => "fr-FR",
+            "Japanese" => "ja-JP",
+            "Chinese (Simplified)" => "zh-CN",
+            "Chinese (Traditional)" => "zh-TW",
+            "Korean" => "ko-KR",
+            _ => "en-US"
+        };
+        Resources.Culture = new CultureInfo(langCode);
     }
 
     private static void DrawChatChannelSelection(Configuration configuration)
     {
         // Translate channel selection
-        if (ImGui.CollapsingHeader("Channel Selection".GetLocalization(), ImGuiTreeNodeFlags.None))
+        if (ImGui.CollapsingHeader(Resources.ChannelSelection, ImGuiTreeNodeFlags.None))
         {
             ImGui.Columns(3, "chatTypeColumns", false);
 
@@ -191,7 +209,7 @@ public class ConfigWindow : Window, IDisposable
     private static void UpdateChannelConfig(XivChatType type, Configuration configuration)
     {
         var typeEnabled = configuration.SelectedChatTypes.Contains(type);
-        if (ImGui.Checkbox(type.ToString().GetLocalization(), ref typeEnabled))
+        if (ImGui.Checkbox(Resources.ResourceManager.GetString(type.ToString()) ?? type.ToString(), ref typeEnabled))
         {
             if (typeEnabled)
             {
@@ -210,13 +228,13 @@ public class ConfigWindow : Window, IDisposable
     private void DrawSourceLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("What to translate".GetLocalization());
+        ImGui.Text(Resources.SourceLang);
         ImGui.SameLine();
 
         int selectedLanguageSelectionMode = (int)configuration.SelectedLanguageSelectionMode;
 
         string[] languageSelectionModeNames = Enum.GetNames(typeof(LanguageSelectionMode));
-        string[] localizedlanguageSelectionModes = languageSelectionModeNames.Select(mode => mode.GetLocalization()).ToArray();
+        string[] localizedlanguageSelectionModes = languageSelectionModeNames.Select(mode => Resources.ResourceManager.GetString(mode) ?? mode).ToArray();
 
         if (ImGui.Combo("##LanguageSelectionModeCombo", ref selectedLanguageSelectionMode, localizedlanguageSelectionModes, languageSelectionModeNames.Length))
         {
@@ -226,17 +244,17 @@ public class ConfigWindow : Window, IDisposable
 
         if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.Default)
         {
-            ImGui.Text("Recommended. Translate non-Latin based languages.\\n(Japanese, Korean, Chinese, etc.)".GetLocalization());
+            ImGui.Text(Resources.DefaultFilteringExplaination);
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.CustomLanguages)
         {
-            if (ImGui.CollapsingHeader("Source Language Selection".GetLocalization(), ImGuiTreeNodeFlags.None))
+            if (ImGui.CollapsingHeader(Resources.SourceLangSelection, ImGuiTreeNodeFlags.None))
             {
                 // checkbox list
                 foreach (string language in supportedDetectedLanguages)
                 {
                     bool isSelected = configuration.SelectedSourceLanguages.Contains(language);
-                    if (ImGui.Checkbox(language.GetLocalization(), ref isSelected))
+                    if (ImGui.Checkbox(Resources.ResourceManager.GetString(language) ?? language, ref isSelected))
                     {
                         if (isSelected)
                         {
@@ -255,14 +273,14 @@ public class ConfigWindow : Window, IDisposable
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.AllLanguages)
         {
-            ImGui.Text("Translate all incoming messages.\\n\\nDidn't find your language in language selection?\\nSend feedback from plugin installer!".GetLocalization());
+            ImGui.Text(Resources.TranslateAllExplaination);
         }
     }
 
     private void DrawTargetLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Translate to".GetLocalization());
+        ImGui.Text(Resources.TargetLang);
         ImGui.SameLine();
 
         string currentSelection = configuration.SelectedTargetLanguage;
@@ -270,7 +288,7 @@ public class ConfigWindow : Window, IDisposable
         int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => lang.GetLocalization()).ToArray();
+        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang) ?? lang).ToArray();
         if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedTargetLanguage = supportedLanguages[currentIndex];
@@ -278,18 +296,28 @@ public class ConfigWindow : Window, IDisposable
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
+
+        // tooltip explaining unsupported characters [do not localize]
+        ImGui.TextDisabled("Regarding unsupported (=) characters");
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.BeginTooltip();
+            ImGui.Text("Unsupported characters can be rendered if Dalamud font is switch to anything except the default game font ");
+            ImGui.Text("This only fixes texts in plugin windows, unsupported characters in chat UI will still be rendered as  =");
+            ImGui.EndTooltip();
+        }
     }
 
     private static void DrawModeSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("TranslationMode".GetLocalization());
+        ImGui.Text(Resources.TranslationMode);
         ImGui.SameLine();
 
         int selectedTranslationMode = (int)configuration.SelectedTranslationMode;
 
         string[] translationModeNames = Enum.GetNames(typeof(TranslationMode));
-        string[] localizedTranslationModes = translationModeNames.Select(mode => mode.GetLocalization()).ToArray();
+        string[] localizedTranslationModes = translationModeNames.Select(mode => Resources.ResourceManager.GetString(mode) ?? mode).ToArray();
 
         // update index when adding new modes
         if (ImGui.Combo("##TranslationModeCombo", ref selectedTranslationMode, localizedTranslationModes, translationModeNames.Length))
@@ -319,24 +347,24 @@ public class ConfigWindow : Window, IDisposable
 
     private static void DrawDeepLSettings(Configuration configuration)
     {
-        ImGui.Text("DeepL API Key".GetLocalization());
+        ImGui.Text(Resources.DeepLAPIKey);
         ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
         ImGui.SameLine();
-        if (ImGui.Button("Apply".GetLocalization()))
+        if (ImGui.Button(Resources.Apply))
         {
             configuration.DeepL_API_Key = DeepLApiKeyInput;
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
-        ImGui.Text("Get one free from DeepL official website!".GetLocalization());
+        ImGui.Text(Resources.DeepLAPIKeyExplaination);
     }
 
     private static void DrawOpenAISettings(Configuration configuration)
     {
-        ImGui.Text("OpenAI API Key".GetLocalization());
+        ImGui.Text(Resources.OpenAIAPIKey);
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 100);
         ImGui.SameLine();
-        if (ImGui.Button("Apply".GetLocalization()))
+        if (ImGui.Button(Resources.Apply))
         {
             if (configuration.openaiWarned)
             {
@@ -349,16 +377,15 @@ public class ConfigWindow : Window, IDisposable
                 ImGui.OpenPopup("Confirmation");
             }
         }
-        ImGui.Text("Price estimation: $0.2 /month".GetLocalization());
+        ImGui.Text(Resources.OpenAIPriceEstimation);
         ImGui.NewLine();
-        ImGui.TextColored(new Vector4(1, 0, 0, 1),
-            "Warning: API key will be stored as plain text in plugin configuration,\\nany malware or third party plugins may have access to the key.".GetLocalization());
+        ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
 
         // confirmation popup
         if (ImGui.BeginPopupModal("Confirmation"))
         {
-            ImGui.Text("Warning: API key will be stored as plain text in plugin configuration,\\nany malware or third party plugins may have access to the key.".GetLocalization());
-            ImGui.Text("Proceed?".GetLocalization());
+            ImGui.Text(Resources.APIKeyWarn);
+            ImGui.Text(Resources.AskProceed);
 
             ImGui.Separator();
 
@@ -366,7 +393,7 @@ public class ConfigWindow : Window, IDisposable
             float buttonSize = ImGui.CalcTextSize("Yes").X + (ImGui.GetStyle().FramePadding.X * 2);
 
             ImGui.SetCursorPosX((windowWidth - (buttonSize * 2) - ImGui.GetStyle().ItemSpacing.X) * 0.5f);
-            if (ImGui.Button("Yes".GetLocalization(), new Vector2(buttonSize, 0)))
+            if (ImGui.Button(Resources.Yes, new Vector2(buttonSize, 0)))
             {
                 configuration.openaiWarned = true;
                 Service.configuration.OpenAI_API_Key = OpenAIApiKeyInput;
@@ -375,7 +402,7 @@ public class ConfigWindow : Window, IDisposable
 
             ImGui.SameLine();
 
-            if (ImGui.Button("No".GetLocalization(), new Vector2(buttonSize, 0)))
+            if (ImGui.Button(Resources.No, new Vector2(buttonSize, 0)))
             {
                 OpenAIApiKeyInput = "sk-YOUR-API-KEY";
                 ImGui.CloseCurrentPopup();
@@ -387,12 +414,12 @@ public class ConfigWindow : Window, IDisposable
 
     private static void DrawLLMProxySettings(Configuration configuration)
     {
-        ImGui.Text("Free Claude-Haiku translation service provided by the dev,\\nsubject to availability.".GetLocalization());
-        ImGui.Text("Users from unsupported regions WILL experience higher latency.".GetLocalization());
+        ImGui.Text(Resources.ProxyExplanation);
+        ImGui.Text(Resources.ProxyLatency);
 
         // select region
         ImGui.AlignTextToFramePadding();
-        ImGui.Text("Region".GetLocalization());
+        ImGui.Text(Resources.Region);
         ImGui.SameLine();
 
         string[] ProxyRegions = ["US", "EU", "HK"];
@@ -401,7 +428,7 @@ public class ConfigWindow : Window, IDisposable
         int currentIndex = Array.IndexOf(ProxyRegions, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        string[] localizedRegions = ProxyRegions.Select(region => region.GetLocalization()).ToArray();
+        string[] localizedRegions = ProxyRegions.Select(region => Resources.ResourceManager.GetString(region) ?? region).ToArray();
         if (ImGui.Combo("##regionCombo", ref currentIndex, localizedRegions, ProxyRegions.Length))
         {
             configuration.ProxyRegion = ProxyRegions[currentIndex];

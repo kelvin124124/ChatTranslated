@@ -132,17 +132,17 @@ namespace ChatTranslated.Utils
 
             if (JPWelcomeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "Let's do it!".GetLocalization(Service.configuration.SelectedTargetLanguage));
+                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.WelcomeStr);
                 return true;
             }
             if (JPByeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "Good game!".GetLocalization(Service.configuration.SelectedTargetLanguage));
+                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.GGstr);
                 return true;
             }
             if (JPDomaRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + "It's okay!".GetLocalization(Service.configuration.SelectedTargetLanguage));
+                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.DomaStr);
                 return true;
             }
 
