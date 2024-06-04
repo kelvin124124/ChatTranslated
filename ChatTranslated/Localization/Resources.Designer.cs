@@ -125,6 +125,24 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chinese (Simplified).
+        /// </summary>
+        internal static string Chinese__Simplified_ {
+            get {
+                return ResourceManager.GetString("Chinese (Simplified)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chinese (Traditional).
+        /// </summary>
+        internal static string Chinese__Traditional_ {
+            get {
+                return ResourceManager.GetString("Chinese (Traditional)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CrossLinkShell1.
         /// </summary>
         internal static string CrossLinkShell1 {
@@ -721,24 +739,6 @@ namespace ChatTranslated.Localization {
         internal static string Yes {
             get {
                 return ResourceManager.GetString("Yes", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chinese (Simplified).
-        /// </summary>
-        internal static string Chinese__Simplified_ {
-            get {
-                return ResourceManager.GetString("zh-CN", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chinese (Traditional).
-        /// </summary>
-        internal static string Chinese__Traditional_ {
-            get {
-                return ResourceManager.GetString("zh-TW", resourceCulture);
             }
         }
     }

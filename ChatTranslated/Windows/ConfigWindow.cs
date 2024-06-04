@@ -128,14 +128,14 @@ public class ConfigWindow : Window, IDisposable
         {
             configuration.SendChatToDB = _SendChatToDB;
         }
-        ImGui.Text("    " + Resources.SendChatExplaination);
-        ImGui.Text("    " + Resources.SendChatDisclaimer);
+        ImGui.TextUnformatted("    " + Resources.SendChatExplaination);
+        ImGui.TextUnformatted("    " + Resources.SendChatDisclaimer);
     }
 
     private void DrawPluginLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text(Resources.PluginLanguage);
+        ImGui.TextUnformatted(Resources.PluginLanguage);
         ImGui.SameLine();
 
         string currentSelection = configuration.SelectedPluginLanguage;
@@ -228,7 +228,7 @@ public class ConfigWindow : Window, IDisposable
     private void DrawSourceLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text(Resources.SourceLang);
+        ImGui.TextUnformatted(Resources.SourceLang);
         ImGui.SameLine();
 
         int selectedLanguageSelectionMode = (int)configuration.SelectedLanguageSelectionMode;
@@ -244,7 +244,7 @@ public class ConfigWindow : Window, IDisposable
 
         if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.Default)
         {
-            ImGui.Text(Resources.DefaultFilteringExplaination);
+            ImGui.TextUnformatted(Resources.DefaultFilteringExplaination);
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.CustomLanguages)
         {
@@ -273,14 +273,14 @@ public class ConfigWindow : Window, IDisposable
         }
         else if (configuration.SelectedLanguageSelectionMode == LanguageSelectionMode.AllLanguages)
         {
-            ImGui.Text(Resources.TranslateAllExplaination);
+            ImGui.TextUnformatted(Resources.TranslateAllExplaination);
         }
     }
 
     private void DrawTargetLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text(Resources.TargetLang);
+        ImGui.TextUnformatted(Resources.TargetLang);
         ImGui.SameLine();
 
         string currentSelection = configuration.SelectedTargetLanguage;
@@ -302,8 +302,8 @@ public class ConfigWindow : Window, IDisposable
         if (ImGui.IsItemHovered())
         {
             ImGui.BeginTooltip();
-            ImGui.Text("Unsupported characters can be rendered if Dalamud font is switch to anything except the default game font ");
-            ImGui.Text("This only fixes texts in plugin windows, unsupported characters in chat UI will still be rendered as  =");
+            ImGui.TextUnformatted("Unsupported characters can be rendered if Dalamud font is switch to anything except the default game font ");
+            ImGui.TextUnformatted("This only fixes texts in plugin windows, unsupported characters in chat UI will still be rendered as  =");
             ImGui.EndTooltip();
         }
     }
@@ -311,7 +311,7 @@ public class ConfigWindow : Window, IDisposable
     private static void DrawModeSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.Text(Resources.TranslationMode);
+        ImGui.TextUnformatted(Resources.TranslationMode);
         ImGui.SameLine();
 
         int selectedTranslationMode = (int)configuration.SelectedTranslationMode;
@@ -347,7 +347,7 @@ public class ConfigWindow : Window, IDisposable
 
     private static void DrawDeepLSettings(Configuration configuration)
     {
-        ImGui.Text(Resources.DeepLAPIKey);
+        ImGui.TextUnformatted(Resources.DeepLAPIKey);
         ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply))
@@ -356,12 +356,12 @@ public class ConfigWindow : Window, IDisposable
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
-        ImGui.Text(Resources.DeepLAPIKeyExplaination);
+        ImGui.TextUnformatted(Resources.DeepLAPIKeyExplaination);
     }
 
     private static void DrawOpenAISettings(Configuration configuration)
     {
-        ImGui.Text(Resources.OpenAIAPIKey);
+        ImGui.TextUnformatted(Resources.OpenAIAPIKey);
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 100);
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply))
@@ -377,15 +377,15 @@ public class ConfigWindow : Window, IDisposable
                 ImGui.OpenPopup("Confirmation");
             }
         }
-        ImGui.Text(Resources.OpenAIPriceEstimation);
+        ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
 
         // confirmation popup
         if (ImGui.BeginPopupModal("Confirmation"))
         {
-            ImGui.Text(Resources.APIKeyWarn);
-            ImGui.Text(Resources.AskProceed);
+            ImGui.TextUnformatted(Resources.APIKeyWarn);
+            ImGui.TextUnformatted(Resources.AskProceed);
 
             ImGui.Separator();
 
@@ -414,12 +414,12 @@ public class ConfigWindow : Window, IDisposable
 
     private static void DrawLLMProxySettings(Configuration configuration)
     {
-        ImGui.Text(Resources.ProxyExplanation);
-        ImGui.Text(Resources.ProxyLatency);
+        ImGui.TextUnformatted(Resources.ProxyExplanation);
+        ImGui.TextUnformatted(Resources.ProxyLatency);
 
         // select region
         ImGui.AlignTextToFramePadding();
-        ImGui.Text(Resources.Region);
+        ImGui.TextUnformatted(Resources.Region);
         ImGui.SameLine();
 
         string[] ProxyRegions = ["US", "EU", "HK"];
@@ -436,7 +436,7 @@ public class ConfigWindow : Window, IDisposable
         }
 
 #if DEBUG
-        ImGui.Text("Proxy API Key");
+        ImGui.TextUnformatted("Proxy API Key");
         ImGui.InputText("##APIKey", ref ProxyApiKeyInput, 100);
         ImGui.SameLine();
         if (ImGui.Button("Apply"))
