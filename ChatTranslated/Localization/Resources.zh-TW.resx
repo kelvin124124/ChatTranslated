@@ -140,10 +140,10 @@
     <value>聊天集成</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>Chinese (Simplified)</value>
+    <value>簡體中文</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>Chinese (Traditional)</value>
+    <value>繁體中文</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
     <value>跨服通訊貝1</value>
