@@ -139,6 +139,12 @@ any malware or third party plugins may have access to the key.</value>
   <data name="ChatIntegration" xml:space="preserve">
     <value>Chat Integration</value>
   </data>
+  <data name="Chinese (Simplified)" xml:space="preserve">
+    <value>Chinois (Simplifié)</value>
+  </data>
+  <data name="Chinese (Traditional)" xml:space="preserve">
+    <value>Chinois (Traditionnel)</value>
+  </data>
   <data name="CrossLinkShell1" xml:space="preserve">
     <value>CrossLinkShell1</value>
   </data>
@@ -342,11 +348,5 @@ Il n'envoie pas le texte traduit dans le chat et ne le rend pas visible pour les
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Oui</value>
-  </data>
-  <data name="zh-CN" xml:space="preserve">
-    <value>Chinois (simplifié)</value>
-  </data>
-  <data name="zh-TW" xml:space="preserve">
-    <value>Chinois (traditionnel)</value>
   </data>
 </root>

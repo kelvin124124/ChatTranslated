@@ -139,6 +139,12 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
   <data name="ChatIntegration" xml:space="preserve">
     <value>Integración de Chat</value>
   </data>
+  <data name="Chinese (Simplified)" xml:space="preserve">
+    <value>Chino (Simplificado)</value>
+  </data>
+  <data name="Chinese (Traditional)" xml:space="preserve">
+    <value>Chino (Tradicional)</value>
+  </data>
   <data name="CrossLinkShell1" xml:space="preserve">
     <value>CrossLinkShell1</value>
   </data>
@@ -342,11 +348,5 @@ No envía el texto traducido en el chat ni lo hace visible para otros jugadores.
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Sí</value>
-  </data>
-  <data name="zh-CN" xml:space="preserve">
-    <value>Chino (Simplificado)</value>
-  </data>
-  <data name="zh-TW" xml:space="preserve">
-    <value>Chino (Tradicional)</value>
   </data>
 </root>

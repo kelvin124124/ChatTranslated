@@ -139,6 +139,12 @@
   <data name="ChatIntegration" xml:space="preserve">
     <value>聊天内集成</value>
   </data>
+  <data name="Chinese (Simplified)" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="Chinese (Traditional)" xml:space="preserve">
+    <value>繁体中文</value>
+  </data>
   <data name="CrossLinkShell1" xml:space="preserve">
     <value>跨服通讯贝1</value>
   </data>
@@ -342,11 +348,5 @@
   </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>
-  </data>
-  <data name="zh-CN" xml:space="preserve">
-    <value>简体中文</value>
-  </data>
-  <data name="zh-TW" xml:space="preserve">
-    <value>繁体中文</value>
   </data>
 </root>
