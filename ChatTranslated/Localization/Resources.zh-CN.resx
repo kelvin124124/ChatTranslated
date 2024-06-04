@@ -123,23 +123,21 @@
   <data name="AllLanguages" xml:space="preserve">
     <value>所有语言</value>
   </data>
+  <data name="APIKeyWarn" xml:space="preserve">
+    <value>警告：API 密钥将以纯文本形式存储在插件配置中，
+任何恶意软件或第三方插件都可以访问该密钥。</value>
+  </data>
   <data name="Apply" xml:space="preserve">
     <value>应用</value>
   </data>
-  <data name="Channel Selection" xml:space="preserve">
+  <data name="AskProceed" xml:space="preserve">
+    <value>要继续吗？</value>
+  </data>
+  <data name="ChannelSelection" xml:space="preserve">
     <value>频道选项</value>
   </data>
-  <data name="Chat Integration" xml:space="preserve">
+  <data name="ChatIntegration" xml:space="preserve">
     <value>聊天内集成</value>
-  </data>
-  <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>简体中文</value>
-  </data>
-  <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>繁体中文</value>
-  </data>
-  <data name="Collect outgoing chat messages to improve translations." xml:space="preserve">
-    <value>收集发出的聊天信息以改进翻译。</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
     <value>跨服通讯贝1</value>
@@ -171,8 +169,11 @@
   <data name="CustomLanguages" xml:space="preserve">
     <value>自定义语言</value>
   </data>
-  <data name="DeepL API Key" xml:space="preserve">
+  <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API 密钥</value>
+  </data>
+  <data name="DeepLAPIKeyExplaination" xml:space="preserve">
+    <value>从DeepL官方网站免费获取！</value>
   </data>
   <data name="DeepL_API" xml:space="preserve">
     <value>DeepL_API</value>
@@ -180,10 +181,17 @@
   <data name="Default" xml:space="preserve">
     <value>默认</value>
   </data>
-  <data name="Enable in duties" xml:space="preserve">
+  <data name="DefaultFilteringExplaination" xml:space="preserve">
+    <value>推荐。翻译非拉丁语系语言。
+（日语、韩语、中文等）</value>
+  </data>
+  <data name="DomaStr" xml:space="preserve">
+    <value>别在意。</value>
+  </data>
+  <data name="EnableInDuties" xml:space="preserve">
     <value>在任务中启用 </value>
   </data>
-  <data name="Enable plugin" xml:space="preserve">
+  <data name="EnablePlugin" xml:space="preserve">
     <value>启用插件</value>
   </data>
   <data name="English" xml:space="preserve">
@@ -191,10 +199,6 @@
   </data>
   <data name="EU" xml:space="preserve">
     <value>欧洲</value>
-  </data>
-  <data name="Free Claude-Haiku translation service provided by the dev,\nsubject to availability." xml:space="preserve">
-    <value>由开发者提供的免费的 Claude-Haiku 翻译服务
-（可用性将视情况而定）。</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>部队</value>
@@ -205,29 +209,17 @@
   <data name="German" xml:space="preserve">
     <value>德语</value>
   </data>
-  <data name="Get one free from DeepL official website!" xml:space="preserve">
-    <value>从DeepL官方网站免费获取！</value>
-  </data>
-  <data name="Good game!" xml:space="preserve">
+  <data name="GGstr" xml:space="preserve">
     <value>打得好！辛苦了！</value>
   </data>
   <data name="HK" xml:space="preserve">
     <value>香港</value>
-  </data>
-  <data name="It does not send translated text in chat or make it visible to other players." xml:space="preserve">
-    <value>它不会在聊天中发送翻译后的文本，也不会让其他玩家看到。</value>
-  </data>
-  <data name="It's okay!" xml:space="preserve">
-    <value>别在意。</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>日语</value>
   </data>
   <data name="Korean" xml:space="preserve">
     <value>韩语</value>
-  </data>
-  <data name="Let's do it!" xml:space="preserve">
-    <value>请多指教！</value>
   </data>
   <data name="LLMProxy" xml:space="preserve">
     <value>LLMProxy</value>
@@ -265,36 +257,30 @@
   <data name="NoviceNetwork" xml:space="preserve">
     <value>新人频道</value>
   </data>
-  <data name="OpenAI API Key" xml:space="preserve">
+  <data name="OpenAIAPI" xml:space="preserve">
+    <value>OpenAI API</value>
+  </data>
+  <data name="OpenAIAPIKey" xml:space="preserve">
     <value>OpenAI API 密钥</value>
   </data>
-  <data name="OpenAI_API" xml:space="preserve">
-    <value>OpenAI_API</value>
+  <data name="OpenAIPriceEstimation" xml:space="preserve">
+    <value>预计价格：0.2 美元/月</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>小队</value>
   </data>
-  <data name="Personal identifiers and sensitive info will be removed before use." xml:space="preserve">
-    <value>个人讯息和敏感资讯将在使用前删除。</value>
-  </data>
-  <data name="Plugin Language" xml:space="preserve">
+  <data name="PluginLanguage" xml:space="preserve">
     <value>插件语言</value>
   </data>
-  <data name="Price estimation:" xml:space="preserve">
-    <value>预计价格：</value>
+  <data name="ProxyExplanation" xml:space="preserve">
+    <value>由开发者提供的免费的 Claude-Haiku 翻译服务
+（可用性将视情况而定）。</value>
   </data>
-  <data name="Price estimation: $0.2 /month" xml:space="preserve">
-    <value>预计价格：0.2 美元/月</value>
-  </data>
-  <data name="Proceed?" xml:space="preserve">
-    <value>要继续吗？</value>
+  <data name="ProxyLatency" xml:space="preserve">
+    <value>来自未受支持地区的用户将会感受到更高的延迟。</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>战队</value>
-  </data>
-  <data name="Recommended. Translate non-Latin based languages.\n(Japanese, Korean, Chinese, etc.)" xml:space="preserve">
-    <value>推荐。翻译非拉丁语系语言。
-（日语、韩语、中文等）</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>地区</value>
@@ -302,17 +288,29 @@
   <data name="Say" xml:space="preserve">
     <value>说话</value>
   </data>
-  <data name="Send chat to DB" xml:space="preserve">
+  <data name="SendChat" xml:space="preserve">
     <value>向服务器发送聊天信息</value>
+  </data>
+  <data name="SendChatDisclaimer" xml:space="preserve">
+    <value>个人讯息和敏感资讯将在使用前删除。</value>
+  </data>
+  <data name="SendChatExplaination" xml:space="preserve">
+    <value>收集发出的聊天信息以改进翻译。</value>
   </data>
   <data name="Shout" xml:space="preserve">
     <value>喊话</value>
   </data>
-  <data name="Source Language Selection" xml:space="preserve">
+  <data name="SourceLang" xml:space="preserve">
+    <value>翻译对象</value>
+  </data>
+  <data name="SourceLangSelection" xml:space="preserve">
     <value>源语言选项</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>西班牙语</value>
+  </data>
+  <data name="TargetLang" xml:space="preserve">
+    <value>翻译至</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
     <value>悄悄话</value>
@@ -320,15 +318,15 @@
   <data name="Translate" xml:space="preserve">
     <value>翻译</value>
   </data>
-  <data name="Translate all incoming messages.\n\nDidn't find your language in language selection?\nSend feedback from plugin installer!" xml:space="preserve">
-    <value>没有在语言选项中找到您的语言？
+  <data name="TranslateAllExplaination" xml:space="preserve">
+    <value>翻译所有收到的讯息。
+
+没有在语言选项中找到您的语言？
 在插件安装界面中发送反馈！</value>
   </data>
-  <data name="Translate button only print translated text in the main window." xml:space="preserve">
-    <value>翻译按钮仅在主窗口中打印翻译后的文本。</value>
-  </data>
-  <data name="Translate to" xml:space="preserve">
-    <value>翻译至</value>
+  <data name="TranslateButtonTooltip" xml:space="preserve">
+    <value>翻译按钮仅在主窗口中打印翻译的文本。
+它不会在聊天中发送翻译的文本或使其对其他玩家可见。</value>
   </data>
   <data name="TranslationMode" xml:space="preserve">
     <value>翻译模式</value>
@@ -336,20 +334,19 @@
   <data name="US" xml:space="preserve">
     <value>美国</value>
   </data>
-  <data name="Users from unsupported regions WILL experience higher latency." xml:space="preserve">
-    <value>来自未受支持地区的用户将会感受到更高的延迟。</value>
-  </data>
-  <data name="Warning: API key will be stored as plain text in plugin configuration,\nany malware or third party plugins may have access to the key." xml:space="preserve">
-    <value>警告：API 密钥将以纯文本形式存储在插件配置中，
-任何恶意软件或第三方插件都可以访问该密钥。</value>
-  </data>
-  <data name="What to translate" xml:space="preserve">
-    <value>翻译对象</value>
+  <data name="WelcomeStr" xml:space="preserve">
+    <value>请多指教！</value>
   </data>
   <data name="Yell" xml:space="preserve">
     <value>呼喊</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>是</value>
+  </data>
+  <data name="zh-CN" xml:space="preserve">
+    <value>简体中文</value>
+  </data>
+  <data name="zh-TW" xml:space="preserve">
+    <value>繁体中文</value>
   </data>
 </root>
