@@ -727,7 +727,7 @@ namespace ChatTranslated.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Chinese (Simplified).
         /// </summary>
-        internal static string zh_CN {
+        internal static string Chinese__Simplified_ {
             get {
                 return ResourceManager.GetString("zh-CN", resourceCulture);
             }
@@ -736,7 +736,7 @@ namespace ChatTranslated.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Chinese (Traditional).
         /// </summary>
-        internal static string zh_TW {
+        internal static string Chinese__Traditional_ {
             get {
                 return ResourceManager.GetString("zh-TW", resourceCulture);
             }
