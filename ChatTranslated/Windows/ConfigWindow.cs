@@ -149,7 +149,7 @@ public class ConfigWindow : Window, IDisposable
             Process.Start(new ProcessStartInfo { FileName = "https://crowdin.com/project/chattranslated", UseShellExecute = true });
         }
 
-        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang) ?? lang).ToArray();
+        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
         if (ImGui.Combo("##pluginLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedPluginLanguage = supportedLanguages[currentIndex];
@@ -209,7 +209,7 @@ public class ConfigWindow : Window, IDisposable
     private static void UpdateChannelConfig(XivChatType type, Configuration configuration)
     {
         var typeEnabled = configuration.SelectedChatTypes.Contains(type);
-        if (ImGui.Checkbox(Resources.ResourceManager.GetString(type.ToString()) ?? type.ToString(), ref typeEnabled))
+        if (ImGui.Checkbox(Resources.ResourceManager.GetString(type.ToString(), Resources.Culture) ?? type.ToString(), ref typeEnabled))
         {
             if (typeEnabled)
             {
@@ -234,7 +234,7 @@ public class ConfigWindow : Window, IDisposable
         int selectedLanguageSelectionMode = (int)configuration.SelectedLanguageSelectionMode;
 
         string[] languageSelectionModeNames = Enum.GetNames(typeof(LanguageSelectionMode));
-        string[] localizedlanguageSelectionModes = languageSelectionModeNames.Select(mode => Resources.ResourceManager.GetString(mode) ?? mode).ToArray();
+        string[] localizedlanguageSelectionModes = languageSelectionModeNames.Select(mode => Resources.ResourceManager.GetString(mode, Resources.Culture) ?? mode).ToArray();
 
         if (ImGui.Combo("##LanguageSelectionModeCombo", ref selectedLanguageSelectionMode, localizedlanguageSelectionModes, languageSelectionModeNames.Length))
         {
@@ -254,7 +254,7 @@ public class ConfigWindow : Window, IDisposable
                 foreach (string language in supportedDetectedLanguages)
                 {
                     bool isSelected = configuration.SelectedSourceLanguages.Contains(language);
-                    if (ImGui.Checkbox(Resources.ResourceManager.GetString(language) ?? language, ref isSelected))
+                    if (ImGui.Checkbox(Resources.ResourceManager.GetString(language, Resources.Culture) ?? language, ref isSelected))
                     {
                         if (isSelected)
                         {
@@ -288,7 +288,7 @@ public class ConfigWindow : Window, IDisposable
         int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang) ?? lang).ToArray();
+        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
         if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedTargetLanguage = supportedLanguages[currentIndex];
@@ -301,10 +301,8 @@ public class ConfigWindow : Window, IDisposable
         ImGui.TextDisabled("Regarding unsupported (=) characters");
         if (ImGui.IsItemHovered())
         {
-            ImGui.BeginTooltip();
-            ImGui.TextUnformatted("Unsupported characters can be rendered if Dalamud font is switch to anything except the default game font ");
-            ImGui.TextUnformatted("This only fixes texts in plugin windows, unsupported characters in chat UI will still be rendered as  =");
-            ImGui.EndTooltip();
+            ImGui.SetTooltip("Unsupported characters can be rendered if Dalamud font is switch to anything except the default game font " +
+                "\nThis only fixes texts in plugin windows, unsupported characters in chat UI will still be rendered as  =");
         }
     }
 
@@ -317,7 +315,7 @@ public class ConfigWindow : Window, IDisposable
         int selectedTranslationMode = (int)configuration.SelectedTranslationMode;
 
         string[] translationModeNames = Enum.GetNames(typeof(TranslationMode));
-        string[] localizedTranslationModes = translationModeNames.Select(mode => Resources.ResourceManager.GetString(mode) ?? mode).ToArray();
+        string[] localizedTranslationModes = translationModeNames.Select(mode => Resources.ResourceManager.GetString(mode, Resources.Culture) ?? mode).ToArray();
 
         // update index when adding new modes
         if (ImGui.Combo("##TranslationModeCombo", ref selectedTranslationMode, localizedTranslationModes, translationModeNames.Length))
@@ -428,7 +426,7 @@ public class ConfigWindow : Window, IDisposable
         int currentIndex = Array.IndexOf(ProxyRegions, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        string[] localizedRegions = ProxyRegions.Select(region => Resources.ResourceManager.GetString(region) ?? region).ToArray();
+        string[] localizedRegions = ProxyRegions.Select(region => Resources.ResourceManager.GetString(region, Resources.Culture) ?? region).ToArray();
         if (ImGui.Combo("##regionCombo", ref currentIndex, localizedRegions, ProxyRegions.Length))
         {
             configuration.ProxyRegion = ProxyRegions[currentIndex];
