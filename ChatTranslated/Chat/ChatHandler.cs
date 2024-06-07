@@ -58,7 +58,7 @@ namespace ChatTranslated.Utils
                 if (Service.configuration.SendChatToDB)
                 {
                     string _messageText = RemoveNonTextPayloads(message);
-                    Task.Run(() => ChatStore.SendToDB(_messageText));
+                    SendChatAsync(_messageText);
                 }
                 return;
             }
@@ -84,6 +84,11 @@ namespace ChatTranslated.Utils
                     Task.Run(() => TranslationHandler.TranslateChat(type, playerName, capturedMessage.TextValue));
                     break;
             }
+        }
+
+        private static async void SendChatAsync(string message)
+        {
+            await ChatStore.SendToDB(message);
         }
 
         public static string RemoveNonTextPayloads(SeString inputMsg)

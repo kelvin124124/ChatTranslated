@@ -27,12 +27,12 @@ namespace ChatTranslated
             [RequiredVersion("1.0")] DalamudPluginInterface pluginInterface,
             [RequiredVersion("1.0")] ICommandManager commandManager)
         {
+            _ = pluginInterface.Create<Service>();
+
             Service.pluginInterface = pluginInterface;
             Service.commandManager = commandManager;
 
             Service.configuration = pluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
-
-            _ = pluginInterface.Create<Service>();
 
             Service.plugin = this;
 
@@ -110,11 +110,7 @@ namespace ChatTranslated
             WindowSystem?.RemoveAllWindows();
 
             Service.chatHandler?.Dispose();
-
-            Service.configWindow.Dispose();
-            Service.mainWindow.Dispose();
-
-            Service.commandManager.RemoveHandler(CommandName);
+            Service.commandManager?.RemoveHandler(CommandName);
         }
 
         private void OnCommand(string command, string args)

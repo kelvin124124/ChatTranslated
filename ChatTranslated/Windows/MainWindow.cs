@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Windows
 {
-    public partial class MainWindow : Window, IDisposable
+    public partial class MainWindow : Window
     {
         private readonly string[] languages = ["Japanese", "English", "German", "French"];
         internal string outputText = "";
@@ -29,8 +29,6 @@ namespace ChatTranslated.Windows
             Size = new Vector2(360, 220);
             SizeCondition = ImGuiCond.FirstUseEver;
         }
-
-        public void Dispose() { }
 
         public override void Draw()
         {

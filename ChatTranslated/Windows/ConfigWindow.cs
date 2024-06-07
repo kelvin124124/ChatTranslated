@@ -14,7 +14,7 @@ using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Windows;
 
-public class ConfigWindow : Window, IDisposable
+public class ConfigWindow : Window
 {
     private readonly string[] supportedDetectedLanguages =
     ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
@@ -70,8 +70,6 @@ public class ConfigWindow : Window, IDisposable
 #if DEBUG
     private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
 #endif
-
-    public void Dispose() { }
 
     public override void Draw()
     {

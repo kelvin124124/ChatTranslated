@@ -5,8 +5,14 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Utils
 {
-    internal class ChatStore
+    internal class ChatStore : IDisposable
     {
+        private static readonly HttpClient HttpClient = new()
+        {
+            BaseAddress = new Uri("http://ffdb.sapphosound.com"),
+            Timeout = TimeSpan.FromSeconds(10)
+        };
+
         public static async Task SendToDB(string message)
         {
             // wrap auto translated texts
@@ -17,9 +23,13 @@ namespace ChatTranslated.Utils
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(pbData);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 
-            using var client = new HttpClient();
-            client.BaseAddress = new Uri("http://ffdb.sapphosound.com");
-            await client.PostAsync("/api/collections/ff_sentences/records", data);
+            await HttpClient.PostAsync("/api/collections/ff_sentences/records", data);
+        }
+
+        public void Dispose()
+        {
+            HttpClient?.Dispose();
+            GC.SuppressFinalize(this);
         }
     }
 }
