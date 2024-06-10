@@ -19,10 +19,15 @@ namespace ChatTranslated.Translate
     {
         private static readonly HttpClient HttpClient = new(new SocketsHttpHandler
         {
-            AutomaticDecompression = DecompressionMethods.All,
             ConnectCallback = new HappyEyeballsCallback().ConnectCallback,
+            AutomaticDecompression = DecompressionMethods.All
         })
-        { Timeout = TimeSpan.FromSeconds(10) };
+        {
+            DefaultRequestVersion = HttpVersion.Version30,
+            DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower,
+
+            Timeout = TimeSpan.FromSeconds(10)
+        };
 
         public static GoogleTranslator2 GTranslator = new(HttpClient);
         public static BingTranslator BingTranslator = new(HttpClient);
