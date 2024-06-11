@@ -57,7 +57,15 @@ namespace ChatTranslated.Windows
 
             if (ImGui.IsKeyPressed(ImGuiKey.C) && (ImGui.GetIO().KeyCtrl || ImGui.GetIO().KeySuper))
             {
-                ImGui.SetClipboardText(RemoveSoftReturns(ImGui.GetClipboardText()));
+                Task.Run(() =>
+                {
+                    string clipboardText = ImGui.GetClipboardText();
+                    string cleanedText = RemoveSoftReturns(clipboardText);
+                    if (clipboardText != cleanedText)
+                    {
+                        ImGui.SetClipboardText(cleanedText);
+                    }
+                });
             }
 
             ImGui.Separator();
