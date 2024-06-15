@@ -75,13 +75,24 @@ namespace ChatTranslated.Translate
                 OutputTranslation(XivChatType.Say, "PF", $"{message} || {translatedText}");
         }
 
+        // call translator
         private static async Task<string> TranslateMessage(string message, string targetLanguage)
         {
-            if (!TranslationCache.TryGetValue(message, out string? translatedText))
+            if (TranslationCache.TryGetValue(message, out string? translatedText))
+            {
+                return translatedText;
+            }
+
+            if (Service.configuration.UseCustomLanguage && !Service.configuration.CustomTargetLanguage.IsNullOrEmpty())
+            {
+                translatedText = await Translator.Translate(message, Service.configuration.CustomTargetLanguage, Configuration.TranslationMode.MachineTranslate);
+            }
+            else
             {
                 translatedText = await Translator.Translate(message, targetLanguage);
-                TranslationCache[message] = translatedText;
             }
+
+            TranslationCache[message] = translatedText;
             return translatedText;
         }
 

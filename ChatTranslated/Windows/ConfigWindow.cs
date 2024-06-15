@@ -3,6 +3,7 @@ using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
+using GTranslate;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
@@ -293,6 +294,46 @@ public class ConfigWindow : Window
 
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
+        }
+
+        // custom target language
+        if (ImGui.CollapsingHeader("OR enter language", ImGuiTreeNodeFlags.None))
+        {
+            ImGui.TextUnformatted("Language");
+            ImGui.SameLine();
+            ImGui.InputText("##targetLanguageInput", ref configuration.CustomTargetLanguage, 50);
+            ImGui.SameLine();
+            ImGui.TextDisabled("?");
+            if (ImGui.IsItemHovered())
+            {
+                ImGui.SetTooltip("Machine translate will be forced if you use custom languages.");
+            }
+
+            if (ImGui.Button("See Language List"))
+            {
+                Process.Start(new ProcessStartInfo { FileName = "https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L148", UseShellExecute = true });
+            }
+            ImGui.SameLine();
+            if (ImGui.Button(Resources.Apply))
+            {
+                if (Language.TryGetLanguage(configuration.CustomTargetLanguage, out var lang))
+                {
+                    Plugin.OutputChatLine("Language applied successfully.");
+                    TranslationHandler.ClearTranslationCache();
+                    configuration.Save();
+                }
+                else
+                {
+                    configuration.CustomTargetLanguage = "";
+                    Plugin.OutputChatLine("Invalid language.");
+                }
+            }
+            ImGui.SameLine();
+            if (ImGui.Checkbox("Use Custom Language", ref configuration.UseCustomLanguage))
+            {
+                TranslationHandler.ClearTranslationCache();
+                configuration.Save();
+            }
         }
 
         // tooltip explaining unsupported characters [do not localize]

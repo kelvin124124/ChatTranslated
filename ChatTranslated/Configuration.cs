@@ -38,6 +38,9 @@ namespace ChatTranslated
         public bool EnabledInDuty { get; set; } = false;
         public bool SendChatToDB { get; set; } = false;
 
+        public string CustomTargetLanguage = "";
+        public bool UseCustomLanguage = false;
+
         public List<XivChatType> SelectedChatTypes { get; set; } =
         [
             XivChatType.Say, XivChatType.Shout, XivChatType.TellIncoming, XivChatType.Party,
