@@ -175,6 +175,12 @@
   <data name="CustomLanguages" xml:space="preserve">
     <value>カスタム言語</value>
   </data>
+  <data name="CustomTargetLanguageExplanation" xml:space="preserve">
+    <value>カスタム言語を使用する場合、機械翻訳モードが強制されます。</value>
+  </data>
+  <data name="CustomTargetLanguageHeader" xml:space="preserve">
+    <value>カスタムターゲット言語</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL APIキー</value>
   </data>
@@ -294,6 +300,9 @@
   <data name="Say" xml:space="preserve">
     <value>Say</value>
   </data>
+  <data name="SeeLanguageList" xml:space="preserve">
+    <value>言語リストを表示</value>
+  </data>
   <data name="SendChat" xml:space="preserve">
     <value>チャットをDBに送信</value>
   </data>
@@ -337,8 +346,17 @@
   <data name="TranslationMode" xml:space="preserve">
     <value>翻訳モード</value>
   </data>
+  <data name="TranslationModeExplanation" xml:space="preserve">
+    <value>機械翻訳：簡単、多言語性能が低い
+DeepL API：最高の翻訳品質、多言語性能が低い
+OpenAI API：高遅延、良好な多言語性能
+LLM Proxy：上記と同じ</value>
+  </data>
   <data name="US" xml:space="preserve">
     <value>US</value>
+  </data>
+  <data name="UseCustomTargetLanguage" xml:space="preserve">
+    <value>カスタム言語を使用</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>よろしくお願いします！</value>

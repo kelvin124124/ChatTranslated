@@ -175,6 +175,12 @@
   <data name="CustomLanguages" xml:space="preserve">
     <value>사용자 정의 언어</value>
   </data>
+  <data name="CustomTargetLanguageExplanation" xml:space="preserve">
+    <value>사용자 지정 언어를 사용하면 기계 번역 모드가 강제로 설정됩니다.</value>
+  </data>
+  <data name="CustomTargetLanguageHeader" xml:space="preserve">
+    <value>사용자 지정 대상 언어</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API 키</value>
   </data>
@@ -294,6 +300,9 @@
   <data name="Say" xml:space="preserve">
     <value>말하기</value>
   </data>
+  <data name="SeeLanguageList" xml:space="preserve">
+    <value>언어 목록 보기</value>
+  </data>
   <data name="SendChat" xml:space="preserve">
     <value>DB에 채팅 전송</value>
   </data>
@@ -337,8 +346,17 @@
   <data name="TranslationMode" xml:space="preserve">
     <value>번역 모드</value>
   </data>
+  <data name="TranslationModeExplanation" xml:space="preserve">
+    <value>기계 번역: 간단하나 다중 언어 지원이 미흡함
+DeepL API: 최고의 번역 품질, 다중 언어 지원이 미흡함 
+OpenAI API: 높은 지연 시간, 우수한 다중 언어 성능
+LLM Proxy: 위와 동일</value>
+  </data>
   <data name="US" xml:space="preserve">
     <value>미국</value>
+  </data>
+  <data name="UseCustomTargetLanguage" xml:space="preserve">
+    <value>사용자 지정 언어 사용</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>해보자!</value>

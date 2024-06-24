@@ -175,6 +175,12 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
   <data name="CustomLanguages" xml:space="preserve">
     <value>BenutzerdefinierteSprachen</value>
   </data>
+  <data name="CustomTargetLanguageExplanation" xml:space="preserve">
+    <value>Der Modus für maschinelle Übersetzung wird erzwungen, wenn Sie benutzerdefinierte Sprachen verwenden.</value>
+  </data>
+  <data name="CustomTargetLanguageHeader" xml:space="preserve">
+    <value>Benutzerdefinierte Zielsprache</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API-Schlüssel</value>
   </data>
@@ -294,6 +300,9 @@ vorbehaltlich der Verfügbarkeit.</value>
   <data name="Say" xml:space="preserve">
     <value>Sagen</value>
   </data>
+  <data name="SeeLanguageList" xml:space="preserve">
+    <value>Siehe Sprachliste</value>
+  </data>
   <data name="SendChat" xml:space="preserve">
     <value>Chat an DB senden</value>
   </data>
@@ -337,8 +346,17 @@ Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere S
   <data name="TranslationMode" xml:space="preserve">
     <value>TranslationModus</value>
   </data>
+  <data name="TranslationModeExplanation" xml:space="preserve">
+    <value>Maschinelle Übersetzung: einfach, schlechte Mehrsprachenleistung
+DeepL API: beste Übersetzungsqualität, schlechte Mehrsprachenleistung
+OpenAI API: hohe Latenz, gute Mehrsprachenleistung
+LLM Proxy: wie oben</value>
+  </data>
   <data name="US" xml:space="preserve">
     <value>US</value>
+  </data>
+  <data name="UseCustomTargetLanguage" xml:space="preserve">
+    <value>Benutzerdefinierte Sprache verwenden</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>Los geht's!</value>

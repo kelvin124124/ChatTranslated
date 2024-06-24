@@ -175,6 +175,12 @@ any malware or third party plugins may have access to the key.</value>
   <data name="CustomLanguages" xml:space="preserve">
     <value>CustomLanguages</value>
   </data>
+  <data name="CustomTargetLanguageExplanation" xml:space="preserve">
+    <value>Le mode de traduction automatique sera forcé si vous utilisez des langues personnalisées.</value>
+  </data>
+  <data name="CustomTargetLanguageHeader" xml:space="preserve">
+    <value>Langue cible personnalisée</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API Key</value>
   </data>
@@ -294,6 +300,9 @@ soumis à disponibilité.</value>
   <data name="Say" xml:space="preserve">
     <value>Parler</value>
   </data>
+  <data name="SeeLanguageList" xml:space="preserve">
+    <value>Voir la liste des langues</value>
+  </data>
   <data name="SendChat" xml:space="preserve">
     <value>Envoyer le chat à DB</value>
   </data>
@@ -337,8 +346,17 @@ Il n'envoie pas le texte traduit dans le chat et ne le rend pas visible pour les
   <data name="TranslationMode" xml:space="preserve">
     <value>Mode de traduction</value>
   </data>
+  <data name="TranslationModeExplanation" xml:space="preserve">
+    <value>Traduction automatique : simple, mauvaise performance multilingue
+DeepL API : meilleure qualité de traduction, mauvaise performance multilingue 
+OpenAI API : haute latence, bonne performance multilingue
+LLM Proxy : identique à ci-dessus</value>
+  </data>
   <data name="US" xml:space="preserve">
     <value>États-Unis</value>
+  </data>
+  <data name="UseCustomTargetLanguage" xml:space="preserve">
+    <value>Utiliser une langue personnalisée</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>Allons-y !</value>
