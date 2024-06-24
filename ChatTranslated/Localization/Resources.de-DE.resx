@@ -176,10 +176,10 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>BenutzerdefinierteSprachen</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>Machine translate mode will be forced if you use custom languages.</value>
+    <value>Der Modus für maschinelle Übersetzung wird erzwungen, wenn Sie benutzerdefinierte Sprachen verwenden.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
-    <value>Custom target language</value>
+    <value>Benutzerdefinierte Zielsprache</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API-Schlüssel</value>
@@ -301,7 +301,7 @@ vorbehaltlich der Verfügbarkeit.</value>
     <value>Sagen</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
-    <value>See language list</value>
+    <value>Siehe Sprachliste</value>
   </data>
   <data name="SendChat" xml:space="preserve">
     <value>Chat an DB senden</value>
@@ -347,16 +347,16 @@ Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere S
     <value>TranslationModus</value>
   </data>
   <data name="TranslationModeExplanation" xml:space="preserve">
-    <value>Machine Translate: simple, poor multi-language performance
-DeepL API: best translation quality, poor multi-language performance 
-OpenAI API: high latency, good mult-language performance
-LLM Proxy: same as above</value>
+    <value>Maschinelle Übersetzung: einfach, schlechte Mehrsprachenleistung
+DeepL API: beste Übersetzungsqualität, schlechte Mehrsprachenleistung
+OpenAI API: hohe Latenz, gute Mehrsprachenleistung
+LLM Proxy: wie oben</value>
   </data>
   <data name="US" xml:space="preserve">
     <value>US</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
-    <value>Use Custom Language</value>
+    <value>Benutzerdefinierte Sprache verwenden</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>Los geht's!</value>
