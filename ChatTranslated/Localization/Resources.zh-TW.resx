@@ -175,6 +175,12 @@
   <data name="CustomLanguages" xml:space="preserve">
     <value>自訂語言</value>
   </data>
+  <data name="CustomTargetLanguageExplanation" xml:space="preserve">
+    <value>Machine translate mode will be forced if you use custom languages.</value>
+  </data>
+  <data name="CustomTargetLanguageHeader" xml:space="preserve">
+    <value>Custom target language</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API 密鑰</value>
   </data>
@@ -294,6 +300,9 @@
   <data name="Say" xml:space="preserve">
     <value>説話</value>
   </data>
+  <data name="SeeLanguageList" xml:space="preserve">
+    <value>See language list</value>
+  </data>
   <data name="SendChat" xml:space="preserve">
     <value>將聊天傳輸到資料庫</value>
   </data>
@@ -337,8 +346,17 @@
   <data name="TranslationMode" xml:space="preserve">
     <value>翻譯模式</value>
   </data>
+  <data name="TranslationModeExplanation" xml:space="preserve">
+    <value>Machine Translate: simple, poor multi-language performance
+DeepL API: best translation quality, poor multi-language performance 
+OpenAI API: high latency, good mult-language performance
+LLM Proxy: same as above</value>
+  </data>
   <data name="US" xml:space="preserve">
     <value>美國</value>
+  </data>
+  <data name="UseCustomTargetLanguage" xml:space="preserve">
+    <value>Use Custom Language</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>請多指教！</value>
