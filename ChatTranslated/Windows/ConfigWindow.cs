@@ -288,6 +288,7 @@ public class ConfigWindow : Window
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
         string[] localizedSupportedLanguages = supportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
+        if (configuration.UseCustomLanguage) ImGui.BeginDisabled();
         if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedTargetLanguage = supportedLanguages[currentIndex];
@@ -295,21 +296,22 @@ public class ConfigWindow : Window
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
+        if (configuration.UseCustomLanguage) ImGui.EndDisabled();
 
         // custom target language
-        if (ImGui.CollapsingHeader("OR enter language", ImGuiTreeNodeFlags.None))
+        if (ImGui.CollapsingHeader(Resources.CustomTargetLanguageHeader, ImGuiTreeNodeFlags.None))
         {
-            ImGui.TextUnformatted("Language");
+            ImGui.TextUnformatted(Resources.TargetLang);
             ImGui.SameLine();
             ImGui.InputText("##targetLanguageInput", ref configuration.CustomTargetLanguage, 50);
             ImGui.SameLine();
             ImGui.TextDisabled("?");
             if (ImGui.IsItemHovered())
             {
-                ImGui.SetTooltip("Machine translate will be forced if you use custom languages.");
+                ImGui.SetTooltip(Resources.CustomTargetLanguageExplanation);
             }
 
-            if (ImGui.Button("See Language List"))
+            if (ImGui.Button(Resources.SeeLanguageList))
             {
                 Process.Start(new ProcessStartInfo { FileName = "https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L148", UseShellExecute = true });
             }
@@ -329,7 +331,7 @@ public class ConfigWindow : Window
                 }
             }
             ImGui.SameLine();
-            if (ImGui.Checkbox("Use Custom Language", ref configuration.UseCustomLanguage))
+            if (ImGui.Checkbox(Resources.UseCustomTargetLanguage, ref configuration.UseCustomLanguage))
             {
                 TranslationHandler.ClearTranslationCache();
                 configuration.Save();
@@ -368,7 +370,8 @@ public class ConfigWindow : Window
         switch (configuration.SelectedTranslationMode)
         {
             case TranslationMode.MachineTranslate:
-                // do nothing
+                // default
+                ImGui.TextUnformatted(Resources.TranslationModeExplanation);
                 break;
             case TranslationMode.DeepL_API:
                 DrawDeepLSettings(configuration);

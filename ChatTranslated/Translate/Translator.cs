@@ -164,7 +164,7 @@ namespace ChatTranslated.Translate
                 return await MachineTranslate(message, targetLanguage);
             }
 
-            var prmopt = $"Translate FF14 chat to {targetLanguage}, keep context and jargon. Return original if emojis / meaningless. Guess if unknown.\nOutput plain text.";
+            var prompt = $"Translate the following FFXIV chat message into {targetLanguage}. If you encounter any in-game terms, keep them in their original form. Output only the translated text in a single line.\nMessage to translate: {message}";
             var requestData = new
             {
                 model = "gpt-3.5-turbo",
@@ -172,7 +172,7 @@ namespace ChatTranslated.Translate
                 max_tokens = Math.Min(Math.Max(message.Length * 2, 20), 150),
                 messages = new[]
                 {
-                    new { role = "system", content = prmopt },
+                    new { role = "system", content = prompt },
                     new { role = "user", content = message }
                 }
             };

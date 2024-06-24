@@ -175,6 +175,12 @@ any malware or third party plugins may have access to the key.</value>
   <data name="CustomLanguages" xml:space="preserve">
     <value>CustomLanguages</value>
   </data>
+  <data name="CustomTargetLanguageExplanation" xml:space="preserve">
+    <value>Machine translate mode will be forced if you use custom languages.</value>
+  </data>
+  <data name="CustomTargetLanguageHeader" xml:space="preserve">
+    <value>Custom target language</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API Key</value>
   </data>
@@ -294,6 +300,9 @@ subject to availability.</value>
   <data name="Say" xml:space="preserve">
     <value>Say</value>
   </data>
+  <data name="SeeLanguageList" xml:space="preserve">
+    <value>See language list</value>
+  </data>
   <data name="SendChat" xml:space="preserve">
     <value>Send chat to DB</value>
   </data>
@@ -337,8 +346,17 @@ It does not send translated text in chat or make it visible to other players.</v
   <data name="TranslationMode" xml:space="preserve">
     <value>TranslationMode</value>
   </data>
+  <data name="TranslationModeExplanation" xml:space="preserve">
+    <value>Machine Translate: simple, poor multi-language performance
+DeepL API: best translation quality, poor multi-language performance 
+OpenAI API: high latency, good mult-language performance
+LLM Proxy: same as above</value>
+  </data>
   <data name="US" xml:space="preserve">
     <value>US</value>
+  </data>
+  <data name="UseCustomTargetLanguage" xml:space="preserve">
+    <value>Use Custom Language</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>Let's do it!</value>

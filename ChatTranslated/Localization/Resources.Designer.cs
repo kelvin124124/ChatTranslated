@@ -233,6 +233,24 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Machine translate will be forced if you use custom languages..
+        /// </summary>
+        internal static string CustomTargetLanguageExplanation {
+            get {
+                return ResourceManager.GetString("CustomTargetLanguageExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom target language.
+        /// </summary>
+        internal static string CustomTargetLanguageHeader {
+            get {
+                return ResourceManager.GetString("CustomTargetLanguageHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DeepL_API.
         /// </summary>
         internal static string DeepL_API {
@@ -586,6 +604,15 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to See language list.
+        /// </summary>
+        internal static string SeeLanguageList {
+            get {
+                return ResourceManager.GetString("SeeLanguageList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send chat to DB.
         /// </summary>
         internal static string SendChat {
@@ -707,11 +734,32 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Machine Translate: simple, poor multi-language performance
+        ///DeepL API: best translation quality, poor multi-language performance 
+        ///OpenAI API: high latency, good mult-language performance
+        ///LLM Proxy: same as above.
+        /// </summary>
+        internal static string TranslationModeExplanation {
+            get {
+                return ResourceManager.GetString("TranslationModeExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to US.
         /// </summary>
         internal static string US {
             get {
                 return ResourceManager.GetString("US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Custom Language.
+        /// </summary>
+        internal static string UseCustomTargetLanguage {
+            get {
+                return ResourceManager.GetString("UseCustomTargetLanguage", resourceCulture);
             }
         }
         
