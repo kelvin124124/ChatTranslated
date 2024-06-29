@@ -121,7 +121,7 @@
     <value>Allianz</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>AlleSprachen</value>
+    <value>Alle Sprachen</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
     <value>Warnung: Der API-Schlüssel wird als Klartext in der Plugin-Konfiguration gespeichert, 
@@ -170,10 +170,10 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>Welten-Kontaktkreis8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>KreuzGruppe</value>
+    <value>Gruppenübergreifend</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
-    <value>BenutzerdefinierteSprachen</value>
+    <value>Benutzerdefinierte Sprachen</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
     <value>Der Modus für maschinelle Übersetzung wird erzwungen, wenn Sie benutzerdefinierte Sprachen verwenden.</value>
@@ -213,7 +213,7 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>EU</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>FreieGesellschaft</value>
+    <value>Freie Gesellschaft</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>Französisch</value>
@@ -267,7 +267,7 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>Nein</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>NeulingeNetzwerk</value>
+    <value>Neulingsnetzwerk</value>
   </data>
   <data name="OpenAIAPI" xml:space="preserve">
     <value>OpenAI API</value>
@@ -276,7 +276,7 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>OpenAI API-Schlüssel</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Preisabschätzung: $0,2 /Monat</value>
+    <value>Preisabschätzung: 0,2$ /Monat</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Gruppe</value>
@@ -292,7 +292,7 @@ vorbehaltlich der Verfügbarkeit.</value>
     <value>Benutzer aus nicht unterstützten Regionen werden eine höhere Latenz erfahren.</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvPTeam</value>
+    <value>PvpGruppe</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Region</value>
