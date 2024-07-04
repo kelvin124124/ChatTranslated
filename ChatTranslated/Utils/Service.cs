@@ -1,4 +1,3 @@
-
 using ChatTranslated.Windows;
 using Dalamud.IoC;
 using Dalamud.Plugin;
