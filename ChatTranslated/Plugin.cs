@@ -23,9 +23,7 @@ namespace ChatTranslated
 
         public WindowSystem WindowSystem { get; } = new("ChatTranslated");
 
-        public Plugin(
-            [RequiredVersion("1.0")] DalamudPluginInterface pluginInterface,
-            [RequiredVersion("1.0")] ICommandManager commandManager)
+        public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commandManager)
         {
             _ = pluginInterface.Create<Service>();
 
@@ -68,13 +66,13 @@ namespace ChatTranslated
             }
         }
 
-        private void OnContextMenuOpened(MenuOpenedArgs args)
+        private void OnContextMenuOpened(IMenuOpenedArgs args)
         {
             if (args.AddonName == "LookingForGroupDetail")
                 args.AddMenuItem(contextMenuItem);
         }
 
-        private unsafe void TranslatePF(MenuItemClickedArgs args)
+        private unsafe void TranslatePF(IMenuItemClickedArgs args)
         {
             AddonLookingForGroupDetail* PfAddonPtr = (AddonLookingForGroupDetail*)args.AddonPtr;
             string description = PfAddonPtr->DescriptionString.ToString();

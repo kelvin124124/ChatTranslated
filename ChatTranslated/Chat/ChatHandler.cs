@@ -39,7 +39,7 @@ namespace ChatTranslated.Utils
             Service.chatGui.ChatMessage += OnChatMessage;
         }
 
-        private void OnChatMessage(XivChatType type, uint _, ref SeString sender, ref SeString message, ref bool _1)
+        private void OnChatMessage(XivChatType type, int _, ref SeString sender, ref SeString message, ref bool _1)
         {
             if (!Service.configuration.Enabled || sender.TextValue.Contains("[CT]") || !Service.configuration.SelectedChatTypes.Contains(type))
                 return;

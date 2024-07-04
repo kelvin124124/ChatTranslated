@@ -14,7 +14,7 @@ namespace ChatTranslated.Utils
         internal static MainWindow mainWindow { get; set; } = null!;
         internal static ChatHandler chatHandler { get; set; } = null!;
 
-        [PluginService] public static DalamudPluginInterface pluginInterface { get; set; } = null!;
+        [PluginService] public static IDalamudPluginInterface pluginInterface { get; set; } = null!;
         [PluginService] public static IChatGui chatGui { get; private set; } = null!;
         [PluginService] public static IContextMenu contextMenu { get; private set; } = null!;
         [PluginService] public static ICondition condition { get; private set; } = null!;
