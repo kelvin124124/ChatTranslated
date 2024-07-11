@@ -181,14 +181,18 @@
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>사용자 지정 대상 언어</value>
   </data>
+  <data name="DeepL" xml:space="preserve">
+    <value>DeepL</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API 키</value>
   </data>
   <data name="DeepLAPIKeyExplaination" xml:space="preserve">
     <value>DeepL 공식 웹사이트에서 무료로 하나 받으세요!</value>
   </data>
-  <data name="DeepL_API" xml:space="preserve">
-    <value>DeepL_API</value>
+  <data name="DeepLSpoofExplanation" xml:space="preserve">
+    <value>Let you use DeepL without an API key.
+API key (if provided) will be used as backup.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>기본값</value>
@@ -269,8 +273,8 @@
   <data name="NoviceNetwork" xml:space="preserve">
     <value>초보자 채널</value>
   </data>
-  <data name="OpenAIAPI" xml:space="preserve">
-    <value>OpenAI API</value>
+  <data name="OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>OpenAI API 키</value>
@@ -347,16 +351,21 @@
     <value>번역 모드</value>
   </data>
   <data name="TranslationModeExplanation" xml:space="preserve">
-    <value>기계 번역: 간단하나 다중 언어 지원이 미흡함
-DeepL API: 최고의 번역 품질, 다중 언어 지원이 미흡함 
-OpenAI API: 높은 지연 시간, 우수한 다중 언어 성능
-LLM Proxy: 위와 동일</value>
+    <value>Machine Translate: 
+    simple, poor multi-language performance
+DeepL: 
+    best translation quality, poor multi-language performance 
+OpenAI / LLM Proxy: 
+    high latency, good mult-language performance</value>
   </data>
   <data name="US" xml:space="preserve">
     <value>미국</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>사용자 지정 언어 사용</value>
+  </data>
+  <data name="UseDeepLSpoof" xml:space="preserve">
+    <value>Use DeepL spoof</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>해보자!</value>
