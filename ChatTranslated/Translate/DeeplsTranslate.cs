@@ -75,8 +75,7 @@ namespace ChatTranslated.Translate
                     texts = new[] { new { text } },
                     timestamp = GetTimeStamp(text)
                 },
-                id,
-                timestamp = GetTimeStamp(text),
+                id
             };
 
             string postDataJson = JsonSerializer.Serialize(postData);
