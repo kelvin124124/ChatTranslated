@@ -43,8 +43,11 @@ namespace ChatTranslated.Translate
                     throw new Exception("Translation not found in the expected JSON structure.");
                 }
 
-                if (Service.configuration.SelectedTargetLanguage == "Chinese (Traditional)")
-                    return await MachineTranslate.Translate(translated, "Chinese (Traditional)");
+                if (Service.configuration.SelectedTargetLanguage == "Chinese (Traditional)") 
+                {
+                    var result = await MachineTranslate.Translate(translated, "Chinese (Traditional)");
+                    return (result.Item1, TranslationMode.DeepL);
+                }
                 else
                     return (translated, TranslationMode.DeepL);
             }
