@@ -181,14 +181,18 @@
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>カスタムターゲット言語</value>
   </data>
+  <data name="DeepL" xml:space="preserve">
+    <value>DeepL</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL APIキー</value>
   </data>
   <data name="DeepLAPIKeyExplaination" xml:space="preserve">
     <value>公式サイトから無料で入手できます！</value>
   </data>
-  <data name="DeepL_API" xml:space="preserve">
-    <value>DeepL_API</value>
+  <data name="DeepLSpoofExplanation" xml:space="preserve">
+    <value>Let you use DeepL without an API key.
+API key (if provided) will be used as backup.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>デフォルト</value>
@@ -269,8 +273,8 @@
   <data name="NoviceNetwork" xml:space="preserve">
     <value>ビギナーチャンネル</value>
   </data>
-  <data name="OpenAIAPI" xml:space="preserve">
-    <value>OpenAI API</value>
+  <data name="OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>OpenAI APIキー</value>
@@ -347,16 +351,21 @@
     <value>翻訳モード</value>
   </data>
   <data name="TranslationModeExplanation" xml:space="preserve">
-    <value>機械翻訳：簡単、多言語性能が低い
-DeepL API：最高の翻訳品質、多言語性能が低い
-OpenAI API：高遅延、良好な多言語性能
-LLM Proxy：上記と同じ</value>
+    <value>Machine Translate: 
+    simple, poor multi-language performance
+DeepL: 
+    best translation quality, poor multi-language performance 
+OpenAI / LLM Proxy: 
+    high latency, good mult-language performance</value>
   </data>
   <data name="US" xml:space="preserve">
     <value>US</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>カスタム言語を使用</value>
+  </data>
+  <data name="UseDeepLSpoof" xml:space="preserve">
+    <value>Use DeepL spoof</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>よろしくお願いします！</value>
