@@ -181,14 +181,18 @@
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>自定义目标语言</value>
   </data>
+  <data name="DeepL" xml:space="preserve">
+    <value>DeepL</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API 密钥</value>
   </data>
   <data name="DeepLAPIKeyExplaination" xml:space="preserve">
     <value>从DeepL官方网站免费获取！</value>
   </data>
-  <data name="DeepL_API" xml:space="preserve">
-    <value>DeepL_API</value>
+  <data name="DeepLSpoofExplanation" xml:space="preserve">
+    <value>Let you use DeepL without an API key.
+API key (if provided) will be used as backup.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>默认</value>
@@ -269,8 +273,8 @@
   <data name="NoviceNetwork" xml:space="preserve">
     <value>新人频道</value>
   </data>
-  <data name="OpenAIAPI" xml:space="preserve">
-    <value>OpenAI API</value>
+  <data name="OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>OpenAI API 密钥</value>
@@ -347,16 +351,21 @@
     <value>翻译模式</value>
   </data>
   <data name="TranslationModeExplanation" xml:space="preserve">
-    <value>机器翻译：多语言性能较差
-DeepL API：翻译质量最好，多语言性能较差
-OpenAI API：高延迟，多语言性能较好
-LLM Proxy：同上</value>
+    <value>Machine Translate: 
+    simple, poor multi-language performance
+DeepL: 
+    best translation quality, poor multi-language performance 
+OpenAI / LLM Proxy: 
+    high latency, good mult-language performance</value>
   </data>
   <data name="US" xml:space="preserve">
     <value>美国</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>使用自定义语言</value>
+  </data>
+  <data name="UseDeepLSpoof" xml:space="preserve">
+    <value>Use DeepL spoof</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>请多指教！</value>

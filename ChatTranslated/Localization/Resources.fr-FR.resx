@@ -181,14 +181,18 @@ any malware or third party plugins may have access to the key.</value>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Langue cible personnalisée</value>
   </data>
+  <data name="DeepL" xml:space="preserve">
+    <value>DeepL</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API Key</value>
   </data>
   <data name="DeepLAPIKeyExplaination" xml:space="preserve">
     <value>Get one free from DeepL official website!</value>
   </data>
-  <data name="DeepL_API" xml:space="preserve">
-    <value>DeepL_API</value>
+  <data name="DeepLSpoofExplanation" xml:space="preserve">
+    <value>Let you use DeepL without an API key.
+API key (if provided) will be used as backup.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Default</value>
@@ -269,8 +273,8 @@ any malware or third party plugins may have access to the key.</value>
   <data name="NoviceNetwork" xml:space="preserve">
     <value>NoviceNetwork</value>
   </data>
-  <data name="OpenAIAPI" xml:space="preserve">
-    <value>OpenAI API</value>
+  <data name="OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>OpenAI API Key</value>
@@ -347,16 +351,21 @@ Il n'envoie pas le texte traduit dans le chat et ne le rend pas visible pour les
     <value>Mode de traduction</value>
   </data>
   <data name="TranslationModeExplanation" xml:space="preserve">
-    <value>Traduction automatique : simple, mauvaise performance multilingue
-DeepL API : meilleure qualité de traduction, mauvaise performance multilingue 
-OpenAI API : haute latence, bonne performance multilingue
-LLM Proxy : identique à ci-dessus</value>
+    <value>Machine Translate: 
+    simple, poor multi-language performance
+DeepL: 
+    best translation quality, poor multi-language performance 
+OpenAI / LLM Proxy: 
+    high latency, good mult-language performance</value>
   </data>
   <data name="US" xml:space="preserve">
     <value>États-Unis</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>Utiliser une langue personnalisée</value>
+  </data>
+  <data name="UseDeepLSpoof" xml:space="preserve">
+    <value>Use DeepL spoof</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>Allons-y !</value>

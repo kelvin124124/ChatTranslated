@@ -181,14 +181,18 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Benutzerdefinierte Zielsprache</value>
   </data>
+  <data name="DeepL" xml:space="preserve">
+    <value>DeepL</value>
+  </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API-Schlüssel</value>
   </data>
   <data name="DeepLAPIKeyExplaination" xml:space="preserve">
     <value>Holen Sie sich einen kostenlos von der offiziellen DeepL-Website!</value>
   </data>
-  <data name="DeepL_API" xml:space="preserve">
-    <value>DeepL_API</value>
+  <data name="DeepLSpoofExplanation" xml:space="preserve">
+    <value>Ermöglicht die Nutzung von DeepL ohne einen API-Schlüssel.
+Ein API-Schlüssel (falls vorhanden) wird als Backup verwendet.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Standard</value>
@@ -269,8 +273,8 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
   <data name="NoviceNetwork" xml:space="preserve">
     <value>Neulingsnetzwerk</value>
   </data>
-  <data name="OpenAIAPI" xml:space="preserve">
-    <value>OpenAI API</value>
+  <data name="OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>OpenAI API-Schlüssel</value>
@@ -347,16 +351,21 @@ Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere S
     <value>TranslationModus</value>
   </data>
   <data name="TranslationModeExplanation" xml:space="preserve">
-    <value>Maschinelle Übersetzung: einfach, schlechte Mehrsprachenleistung
-DeepL API: beste Übersetzungsqualität, schlechte Mehrsprachenleistung
-OpenAI API: hohe Latenz, gute Mehrsprachenleistung
-LLM Proxy: wie oben</value>
+    <value>Maschinelle Übersetzung: 
+      einfach, schlechte Mehrsprachenleistung
+DeepL: 
+      beste Übersetzungsqualität, schlechte Mehrsprachenleistung 
+OpenAI / LLM Proxy: 
+      hohe Latenz, gute Mehrsprachenleistung</value>
   </data>
   <data name="US" xml:space="preserve">
     <value>US</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>Benutzerdefinierte Sprache verwenden</value>
+  </data>
+  <data name="UseDeepLSpoof" xml:space="preserve">
+    <value>DeepL-Spoof verwenden</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>Los geht's!</value>
