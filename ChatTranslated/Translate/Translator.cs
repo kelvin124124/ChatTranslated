@@ -28,8 +28,8 @@ namespace ChatTranslated.Translate
 
             Timeout = TimeSpan.FromSeconds(10)
         };
-
-        public static GoogleTranslator2 GTranslator = new(HttpClient);
+        
+        public static GoogleTranslator GTranslator = new(HttpClient);
         public static BingTranslator BingTranslator = new(HttpClient);
 
         private const string DefaultContentType = "application/json";
