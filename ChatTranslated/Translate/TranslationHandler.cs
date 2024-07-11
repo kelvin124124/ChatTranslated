@@ -78,6 +78,5 @@ namespace ChatTranslated.Translate
         }
 
         public static void ClearTranslationCache() => TranslationCache.Clear();
-
     }
 }
