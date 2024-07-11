@@ -9,7 +9,7 @@ namespace ChatTranslated.Translate
 {
     internal partial class TranslationHandler
     {
-        public static readonly Dictionary<string, string> TranslationCache = new();
+        public static readonly Dictionary<string, string> TranslationCache = [];
 
         internal static async Task DetermineLangAndTranslate(XivChatType type, string sender, SeString message)
         {
