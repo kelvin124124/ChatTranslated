@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Translate
 {
+    // Based on DeepLX: https://github.com/OwO-Network/DeepLX
     internal static class DeeplsTranslate
     {
         private static readonly Random Random = new();
