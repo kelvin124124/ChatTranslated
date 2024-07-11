@@ -1,4 +1,5 @@
 using ChatTranslated.Utils;
+using Dalamud.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Net;
@@ -35,9 +36,15 @@ namespace ChatTranslated.Translate
                     response.EnsureSuccessStatusCode();
                     var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
-                    return !string.IsNullOrWhiteSpace(translated)
-                        ? (targetLanguage == "Chinese (Traditional)" ? await MachineTranslate.Translate(translated, "Chinese (Traditional)") : translated)
-                        : throw new Exception("Translation not found in the expected JSON structure.");
+
+                    if (translated.IsNullOrWhitespace())
+                    {
+                        throw new Exception("Translation not found in the expected JSON structure.");
+                    }
+
+                    return targetLanguage == "Chinese (Traditional)"
+                            ? await MachineTranslate.Translate(translated, "Chinese (Traditional)")
+                            : translated;
                 }
                 catch
                 {

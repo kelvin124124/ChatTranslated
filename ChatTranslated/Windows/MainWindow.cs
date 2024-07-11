@@ -81,7 +81,6 @@ namespace ChatTranslated.Windows
             {
                 Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];
                 Service.configuration.Save();
-                TranslationHandler.ClearTranslationCache();
             }
         }
 
