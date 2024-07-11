@@ -25,10 +25,10 @@ namespace ChatTranslated.Translate
         public static GoogleTranslator GTranslator = new(HttpClient);
         public static BingTranslator BingTranslator = new(HttpClient);
 
-        public static async Task<string> Translate(string text, string targetLanguage, TranslationMode? translationMode = null)
+        public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage, TranslationMode? translationMode = null)
         {
             text = ChatHandler.Sanitize(text);
-            if (string.IsNullOrWhiteSpace(text)) return text;
+            if (string.IsNullOrWhiteSpace(text)) return (text, null);
 
             var mode = translationMode ?? Service.configuration.SelectedTranslationMode;
 
@@ -38,7 +38,7 @@ namespace ChatTranslated.Translate
                 Configuration.TranslationMode.DeepL => await DeepLTranslate.Translate(text, targetLanguage),
                 Configuration.TranslationMode.OpenAI => await OpenAITranslate.Translate(text, targetLanguage),
                 Configuration.TranslationMode.LLMProxy => await LLMProxyTranslate.Translate(text, targetLanguage),
-                _ => text
+                _ => (text, null)
             };
         }
 

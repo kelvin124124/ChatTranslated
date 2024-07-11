@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Translate
 {
@@ -14,7 +15,7 @@ namespace ChatTranslated.Translate
     {
         private const string DefaultContentType = "application/json";
 
-        public static async Task<string> Translate(string text, string targetLanguage)
+        public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
         {
             if (TryGetLanguageCode(targetLanguage, out var languageCode))
             {
@@ -44,15 +45,15 @@ namespace ChatTranslated.Translate
 
                     return targetLanguage == "Chinese (Traditional)"
                             ? await MachineTranslate.Translate(translated, "Chinese (Traditional)")
-                            : translated;
+                            : (translated, TranslationMode.DeepL);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Service.pluginLog.Warning($"DeepL Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
                     return await MachineTranslate.Translate(text, targetLanguage);
                 }
             }
-            return "Target language not supported by DeepL.";
+            return ("Target language not supported by DeepL.", null);
         }
 
         private static bool TryGetLanguageCode(string language, out string? languageCode)

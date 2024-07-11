@@ -1,4 +1,5 @@
 using ChatTranslated.Utils;
+using Dalamud.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Net;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Translate
 {
@@ -14,7 +16,7 @@ namespace ChatTranslated.Translate
     {
         private const string DefaultContentType = "application/json";
 
-        public static async Task<string> Translate(string message, string targetLanguage)
+        public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
         {
             if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9]{32,}$"))
             {
@@ -49,7 +51,13 @@ namespace ChatTranslated.Translate
                 response.EnsureSuccessStatusCode();
                 var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var translated = JObject.Parse(jsonResponse)["choices"]?[0]?["message"]?["content"]?.ToString().Trim();
-                return !string.IsNullOrWhiteSpace(translated) ? translated : throw new Exception("Translation not found in the expected JSON structure.");
+
+                if (translated.IsNullOrWhitespace())
+                {
+                    throw new Exception("Translation not found in the expected JSON structure.");
+                }
+
+                return (translated, TranslationMode.OpenAI);
             }
             catch (Exception ex)
             {

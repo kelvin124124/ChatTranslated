@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Translate
 {
@@ -14,7 +15,7 @@ namespace ChatTranslated.Translate
     internal static class DeeplsTranslate
     {
         private static readonly Random Random = new();
-        public static async Task<string> Translate(string message, string langCode)
+        public static async Task<(string, TranslationMode?)> Translate(string message, string langCode)
         {
             string postData = PreparePostData(langCode, message);
             var request = new HttpRequestMessage(HttpMethod.Post, "https://www2.deepl.com/jsonrpc")
@@ -45,7 +46,7 @@ namespace ChatTranslated.Translate
                 if (Service.configuration.SelectedTargetLanguage == "Chinese (Traditional)")
                     return await MachineTranslate.Translate(translated, "Chinese (Traditional)");
                 else
-                    return translated;
+                    return (translated, TranslationMode.DeepL);
             }
             catch (Exception ex)
             {

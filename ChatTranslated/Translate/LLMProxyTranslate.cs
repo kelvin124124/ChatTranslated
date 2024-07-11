@@ -1,4 +1,5 @@
 using ChatTranslated.Utils;
+using Dalamud.Utility;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Translate
 {
@@ -21,7 +23,7 @@ namespace ChatTranslated.Translate
             return stream == null ? "" : new StreamReader(stream).ReadToEnd();
         }
 
-        public static async Task<string> Translate(string message, string targetLanguage)
+        public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
         {
 #if DEBUG
             string Cfv2 = Service.configuration.Proxy_API_Key;
@@ -46,11 +48,15 @@ namespace ChatTranslated.Translate
                 response.EnsureSuccessStatusCode();
                 var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var translated = JObject.Parse(responseBody)["translated"]?.ToString().Trim();
-                return !string.IsNullOrWhiteSpace(translated) && translated != "{}"
-                    ? translated.Replace("\n", string.Empty)
-                    : throw new Exception("Translation not found in the expected JSON structure.");
+
+                if (translated.IsNullOrWhitespace() || translated == "{}")
+                {
+                    throw new Exception("Translation not found in the expected JSON structure.");
+                }
+
+                return (translated.Replace("\n", string.Empty), TranslationMode.LLMProxy);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Service.pluginLog.Warning($"LLMProxy Translate failed to translate. Falling back to machine translate.\n{ex.Message}");
                 return await MachineTranslate.Translate(message, targetLanguage);

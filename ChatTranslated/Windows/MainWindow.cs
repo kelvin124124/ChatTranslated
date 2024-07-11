@@ -80,6 +80,7 @@ namespace ChatTranslated.Windows
             if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, localizedLanguages, languages.Length))
             {
                 Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];
+                TranslationHandler.ClearTranslationCache();
                 Service.configuration.Save();
             }
         }
