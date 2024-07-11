@@ -388,7 +388,6 @@ public class ConfigWindow : Window
         }
         ImGui.TextUnformatted(Resources.DeepLSpoofExplanation);
 
-        ImGui.NewLine();
         ImGui.TextUnformatted(Resources.DeepLAPIKey);
         ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
         ImGui.SameLine();

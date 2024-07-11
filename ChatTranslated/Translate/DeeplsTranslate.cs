@@ -1,6 +1,7 @@
 using ChatTranslated.Utils;
 using Dalamud.Utility;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -12,13 +13,15 @@ namespace ChatTranslated.Translate
     internal static class DeeplsTranslate
     {
         private static readonly Random Random = new();
-        public static async Task<string> Translate(string message, string targetLanguage)
+        public static async Task<string> Translate(string message, string langCode)
         {
-            string postData = PreparePostData(targetLanguage, message);
+            string postData = PreparePostData(langCode, message);
             var request = new HttpRequestMessage(HttpMethod.Post, "https://www2.deepl.com/jsonrpc")
             {
                 Content = new StringContent(postData, Encoding.UTF8, "application/json")
             };
+            SetHeaders(request);
+
             try
             {
                 var response = await Translator.HttpClient.SendAsync(request).ConfigureAwait(false);
@@ -39,10 +42,13 @@ namespace ChatTranslated.Translate
 
                 return translated;
             }
-            catch
+            catch (Exception ex)
             {
-                Service.pluginLog.Warning("DeeplsTranslate failed to translate. Falling back to machine translation.");
-                return await MachineTranslate.Translate(message, targetLanguage);
+                Service.pluginLog.Warning($"DeeplsTranslate failed to translate. Falling back to DeepL API / machine translation.\n{ex.Message}");
+                if (Service.configuration.DeepL_API_Key != "YOUR-API-KEY:fx") // fallback to official DeepL API if the key is not the default
+                    return await DeepLTranslate.Translate(message, langCode);
+                else
+                    return await MachineTranslate.Translate(message, langCode);
             }
         }
 
@@ -75,6 +81,24 @@ namespace ChatTranslated.Translate
             var iCount = text.Count(c => c == 'i');
             long ts = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
             return iCount == 0 ? ts : ts - (ts % (iCount + 1)) + iCount + 1;
+        }
+
+        private static void SetHeaders(HttpRequestMessage request)
+        {
+            var headers = new Dictionary<string, string>
+            {
+                { "Accept", "*/*" },
+                { "x-app-os-name", "iOS" },
+                { "x-app-os-version", "16.3.0" },
+                { "Accept-Language", "en-US,en;q=0.9" },
+                { "Accept-Encoding", "gzip, deflate, br" },
+                { "x-app-device", "iPhone13,2" },
+                { "User-Agent", "DeepL-iOS/2.9.1 iOS 16.3.0 (iPhone13,2)" },
+                { "x-app-build", "510265" },
+                { "x-app-version", "2.9.1" },
+                { "Connection", "keep-alive" }
+            };
+            foreach (var header in headers) request.Headers.Add(header.Key, header.Value);
         }
     }
 }

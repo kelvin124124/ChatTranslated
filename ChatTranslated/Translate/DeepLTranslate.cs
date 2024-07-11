@@ -20,7 +20,7 @@ namespace ChatTranslated.Translate
             {
                 if (Service.configuration.UseDeepLspoof)
                 {
-                    return await DeeplsTranslate.Translate(text, targetLanguage);
+                    return await DeeplsTranslate.Translate(text, languageCode!);
                 }
 
                 var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
@@ -59,7 +59,7 @@ namespace ChatTranslated.Translate
         {
             languageCode = language switch
             {
-                "English" => "EN-GB",
+                "English" => "EN",
                 "Japanese" => "JA",
                 "German" => "DE",
                 "French" => "FR",

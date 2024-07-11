@@ -278,8 +278,8 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Let you use DeepL without an API key, 
-        ///API key (if provided) will be used as backup.
+        ///   Looks up a localized string similar to Let you use DeepL without an API key.
+        ///API key (if provided) will be used as backup..
         /// </summary>
         internal static string DeepLSpoofExplanation {
             get {
