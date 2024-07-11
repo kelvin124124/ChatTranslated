@@ -62,7 +62,7 @@ public class ConfigWindow : Window
         "Chat Translated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Size = new Vector2(600, 500);
+        Size = new Vector2(600, 600);
     }
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
@@ -292,7 +292,6 @@ public class ConfigWindow : Window
         if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
         {
             configuration.SelectedTargetLanguage = supportedLanguages[currentIndex];
-
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
@@ -362,7 +361,6 @@ public class ConfigWindow : Window
         if (ImGui.Combo("##TranslationModeCombo", ref selectedTranslationMode, localizedTranslationModes, translationModeNames.Length))
         {
             configuration.SelectedTranslationMode = (TranslationMode)selectedTranslationMode;
-
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
@@ -373,10 +371,10 @@ public class ConfigWindow : Window
                 // default
                 ImGui.TextUnformatted(Resources.TranslationModeExplanation);
                 break;
-            case TranslationMode.DeepL_API:
+            case TranslationMode.DeepL:
                 DrawDeepLSettings(configuration);
                 break;
-            case TranslationMode.OpenAI_API:
+            case TranslationMode.OpenAI:
                 DrawOpenAISettings(configuration);
                 break;
             case TranslationMode.LLMProxy:
@@ -387,13 +385,20 @@ public class ConfigWindow : Window
 
     private static void DrawDeepLSettings(Configuration configuration)
     {
+        bool _UseDeepLSpoof = configuration.UseDeepLspoof;
+        if (ImGui.Checkbox(Resources.UseDeepLSpoof, ref _UseDeepLSpoof))
+        {
+            configuration.UseDeepLspoof = _UseDeepLSpoof;
+            configuration.Save();
+        }
+        ImGui.TextUnformatted(Resources.DeepLSpoofExplanation);
+
         ImGui.TextUnformatted(Resources.DeepLAPIKey);
         ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply))
         {
             configuration.DeepL_API_Key = DeepLApiKeyInput;
-            TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
         ImGui.TextUnformatted(Resources.DeepLAPIKeyExplaination);
@@ -406,10 +411,9 @@ public class ConfigWindow : Window
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply))
         {
-            if (configuration.openaiWarned)
+            if (configuration.OpenaiWarned)
             {
                 configuration.OpenAI_API_Key = OpenAIApiKeyInput;
-                TranslationHandler.ClearTranslationCache();
                 configuration.Save();
             }
             else
@@ -435,7 +439,7 @@ public class ConfigWindow : Window
             ImGui.SetCursorPosX((windowWidth - (buttonSize * 2) - ImGui.GetStyle().ItemSpacing.X) * 0.5f);
             if (ImGui.Button(Resources.Yes, new Vector2(buttonSize, 0)))
             {
-                configuration.openaiWarned = true;
+                configuration.OpenaiWarned = true;
                 Service.configuration.OpenAI_API_Key = OpenAIApiKeyInput;
                 ImGui.CloseCurrentPopup();
             }

@@ -2,7 +2,6 @@ using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Utility;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,50 +9,21 @@ namespace ChatTranslated.Translate
 {
     internal partial class TranslationHandler
     {
-        public static Dictionary<string, string> TranslationCache = [];
+        public static readonly Dictionary<string, string> TranslationCache = new();
 
         internal static async Task DetermineLangAndTranslate(XivChatType type, string sender, SeString message)
         {
-            string language = await DetermineLanguage(message);
+            string messageText = ChatHandler.RemoveNonTextPayloads(message);
+            string language = await Translator.DetermineLanguage(messageText);
             if (Service.configuration.SelectedSourceLanguages.Contains(language))
                 await TranslateChat(type, sender, message.TextValue);
             else
                 Service.mainWindow.PrintToOutput($"{sender}: {message.TextValue}");
         }
 
-        public static async Task<string> DetermineLanguage(SeString message)
-        {
-            string? langStr = null;
-            string messageText = ChatHandler.RemoveNonTextPayloads(message);
-            try
-            {
-                var language = await Translator.GTranslator.DetectLanguageAsync(messageText);
-                Service.pluginLog.Debug($"{messageText}\n -> language: {language.Name}");
-#if DEBUG
-                Plugin.OutputChatLine($"{messageText}\n -> language: {language.Name}");
-#endif
-                langStr = language.Name;
-            }
-            catch (Exception GTex)
-            {
-                Service.pluginLog.Warning($"Google Translate failed to detect language. {GTex}");
-                try
-                {
-                    var language = await Translator.BingTranslator.DetectLanguageAsync(messageText);
-                    Service.pluginLog.Debug($"{messageText}\n -> language: {language.Name}");
-                    langStr = language.Name;
-                }
-                catch (Exception BTex)
-                {
-                    Service.pluginLog.Warning($"Bing Translate failed to detect language. {BTex}");
-                }
-            }
-            return langStr ?? "unknown";
-        }
-
         public static async Task TranslateChat(XivChatType type, string sender, string message)
         {
-            string translatedText = await TranslateMessage(message, Service.configuration.SelectedTargetLanguage);
+            string translatedText = await TranslateMessage(message, Service.configuration.SelectedTargetLanguage, cache: true);
             if (!translatedText.IsNullOrWhitespace())
                 OutputTranslation(type, sender, $"{message} || {translatedText}");
         }
@@ -63,36 +33,40 @@ namespace ChatTranslated.Translate
             string translatedText = await TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
             if (!translatedText.IsNullOrWhitespace())
             {
-                string reversedTranslation = await Translator.Translate(translatedText, Service.configuration.SelectedPluginLanguage, Configuration.TranslationMode.MachineTranslate);
+                var reversedTranslationResult = await Translator.Translate(translatedText, Service.configuration.SelectedPluginLanguage, Configuration.TranslationMode.MachineTranslate);
+                string reversedTranslation = reversedTranslationResult.Item1;
                 Service.mainWindow.PrintToOutput($"Translation: {translatedText} || Original: {message} || Reverse Translation: {reversedTranslation}");
             }
         }
 
         public static async Task TranslatePFMessage(string message)
         {
-            string translatedText = await TranslateMessage(message, Service.configuration.SelectedTargetLanguage);
+            string translatedText = await TranslateMessage(message, Service.configuration.SelectedTargetLanguage, cache: true);
             if (!translatedText.IsNullOrWhitespace())
                 OutputTranslation(XivChatType.Say, "PF", $"{message} || {translatedText}");
         }
 
         // call translator
-        private static async Task<string> TranslateMessage(string message, string targetLanguage)
+        private static async Task<string> TranslateMessage(string message, string targetLanguage, bool cache = false)
         {
-            if (TranslationCache.TryGetValue(message, out string? translatedText))
-            {
-                return translatedText;
-            }
+            if (TranslationCache.ContainsKey(message))
+                return TranslationCache[message];
+
+            (string, Configuration.TranslationMode?) result;
 
             if (Service.configuration.UseCustomLanguage && !Service.configuration.CustomTargetLanguage.IsNullOrEmpty())
             {
-                translatedText = await Translator.Translate(message, Service.configuration.CustomTargetLanguage, Configuration.TranslationMode.MachineTranslate);
+                result = await Translator.Translate(message, Service.configuration.CustomTargetLanguage, Configuration.TranslationMode.MachineTranslate);
             }
             else
             {
-                translatedText = await Translator.Translate(message, targetLanguage);
+                result = await Translator.Translate(message, targetLanguage);
             }
+            string translatedText = result.Item1;
 
-            TranslationCache[message] = translatedText;
+            if (cache && !translatedText.IsNullOrWhitespace() && (result.Item2 != Configuration.TranslationMode.MachineTranslate))
+                TranslationCache[message] = translatedText;
+
             return translatedText;
         }
 
@@ -103,9 +77,6 @@ namespace ChatTranslated.Translate
                 Plugin.OutputChatLine(type, sender, message);
         }
 
-        public static void ClearTranslationCache()
-        {
-            TranslationCache.Clear();
-        }
+        public static void ClearTranslationCache() => TranslationCache.Clear();
     }
 }
