@@ -35,8 +35,8 @@ namespace ChatTranslated.Translate
             return mode switch
             {
                 Configuration.TranslationMode.MachineTranslate => await MachineTranslate.Translate(text, targetLanguage),
-                Configuration.TranslationMode.DeepL_API => await DeepLTranslate.Translate(text, targetLanguage),
-                Configuration.TranslationMode.OpenAI_API => await OpenAITranslate.Translate(text, targetLanguage),
+                Configuration.TranslationMode.DeepL => await DeepLTranslate.Translate(text, targetLanguage),
+                Configuration.TranslationMode.OpenAI => await OpenAITranslate.Translate(text, targetLanguage),
                 Configuration.TranslationMode.LLMProxy => await LLMProxyTranslate.Translate(text, targetLanguage),
                 _ => text
             };

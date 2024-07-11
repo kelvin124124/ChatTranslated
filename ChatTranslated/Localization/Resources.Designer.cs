@@ -233,7 +233,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Machine translate will be forced if you use custom languages..
+        ///   Looks up a localized string similar to Machine translate mode will be forced if you use custom languages..
         /// </summary>
         internal static string CustomTargetLanguageExplanation {
             get {
@@ -251,11 +251,11 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DeepL_API.
+        ///   Looks up a localized string similar to DeepL.
         /// </summary>
-        internal static string DeepL_API {
+        internal static string DeepL {
             get {
-                return ResourceManager.GetString("DeepL_API", resourceCulture);
+                return ResourceManager.GetString("DeepL", resourceCulture);
             }
         }
         
@@ -274,6 +274,16 @@ namespace ChatTranslated.Localization {
         internal static string DeepLAPIKeyExplaination {
             get {
                 return ResourceManager.GetString("DeepLAPIKeyExplaination", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Let you use DeepL without an API key, 
+        ///API key (if provided) will be used as backup.
+        /// </summary>
+        internal static string DeepLSpoofExplanation {
+            get {
+                return ResourceManager.GetString("DeepLSpoofExplanation", resourceCulture);
             }
         }
         
@@ -513,11 +523,11 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to OpenAI API.
+        ///   Looks up a localized string similar to OpenAI.
         /// </summary>
-        internal static string OpenAIAPI {
+        internal static string OpenAI {
             get {
-                return ResourceManager.GetString("OpenAIAPI", resourceCulture);
+                return ResourceManager.GetString("OpenAI", resourceCulture);
             }
         }
         
@@ -760,6 +770,15 @@ namespace ChatTranslated.Localization {
         internal static string UseCustomTargetLanguage {
             get {
                 return ResourceManager.GetString("UseCustomTargetLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use DeepL spoof.
+        /// </summary>
+        internal static string UseDeepLSpoof {
+            get {
+                return ResourceManager.GetString("UseDeepLSpoof", resourceCulture);
             }
         }
         

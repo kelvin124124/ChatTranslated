@@ -44,9 +44,11 @@ namespace ChatTranslated.Translate
             {
                 var response = await Translator.HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
-                var responseBody = await response.Content.ReadAsStringAsync();
+                var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var translated = JObject.Parse(responseBody)["translated"]?.ToString().Trim();
-                return !string.IsNullOrWhiteSpace(translated) && translated != "{}" ? translated.Replace("\n", string.Empty) : throw new Exception("Translation not found in the expected JSON structure.");
+                return !string.IsNullOrWhiteSpace(translated) && translated != "{}"
+                    ? translated.Replace("\n", string.Empty)
+                    : throw new Exception("Translation not found in the expected JSON structure.");
             }
             catch
             {

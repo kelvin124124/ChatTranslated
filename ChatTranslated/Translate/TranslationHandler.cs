@@ -45,10 +45,7 @@ namespace ChatTranslated.Translate
         // call translator
         private static async Task<string> TranslateMessage(string message, string targetLanguage)
         {
-            if (TranslationCache.TryGetValue(message, out string? translatedText))
-            {
-                return translatedText;
-            }
+            string translatedText;
 
             if (Service.configuration.UseCustomLanguage && !Service.configuration.CustomTargetLanguage.IsNullOrEmpty())
             {
@@ -59,7 +56,6 @@ namespace ChatTranslated.Translate
                 translatedText = await Translator.Translate(message, targetLanguage);
             }
 
-            TranslationCache[message] = translatedText;
             return translatedText;
         }
 

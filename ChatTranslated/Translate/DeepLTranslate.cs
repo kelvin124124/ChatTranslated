@@ -17,6 +17,11 @@ namespace ChatTranslated.Translate
         {
             if (TryGetLanguageCode(targetLanguage, out var languageCode))
             {
+                if (Service.configuration.UseDeepLspoof)
+                {
+                    return await DeeplsTranslate.Translate(text, targetLanguage);
+                }
+
                 var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
                 var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
                 {

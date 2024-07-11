@@ -22,7 +22,9 @@ namespace ChatTranslated.Translate
                 return await MachineTranslate.Translate(message, targetLanguage);
             }
 
-            var prompt = $"Translate the following FFXIV chat message into {targetLanguage}. If you encounter any in-game terms, keep them in their original form. Output only the translated text in a single line.\nMessage to translate: {message}";
+            var prompt = $"Translate the following FFXIV chat message into {targetLanguage}. " +
+                $"If you encounter any in-game terms, keep them in their original form. " +
+                $"Output only the translated text in a single line.\nMessage to translate: {message}";
             var requestData = new
             {
                 model = "gpt-3.5-turbo",

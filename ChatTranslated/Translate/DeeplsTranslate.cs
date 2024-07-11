@@ -1,4 +1,5 @@
 using ChatTranslated.Utils;
+using Dalamud.Utility;
 using System;
 using System.Linq;
 using System.Net.Http;
@@ -10,7 +11,7 @@ namespace ChatTranslated.Translate
 {
     internal static class DeeplsTranslate
     {
-        private static readonly Random Random = new Random();
+        private static readonly Random Random = new();
         public static async Task<string> Translate(string message, string targetLanguage)
         {
             string postData = PreparePostData(targetLanguage, message);
@@ -20,8 +21,23 @@ namespace ChatTranslated.Translate
             };
             try
             {
-                var response = await Translator.HttpClient.SendAsync(request);
-                return await response.Content.ReadAsStringAsync();
+                var response = await Translator.HttpClient.SendAsync(request).ConfigureAwait(false);
+                var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                // Extract the translated text
+                var jsonDoc = JsonDocument.Parse(jsonResponse);
+                var translated = jsonDoc.RootElement
+                    .GetProperty("result")
+                    .GetProperty("texts")[0]
+                    .GetProperty("text")
+                    .GetString();
+
+                if (translated.IsNullOrWhitespace())
+                {
+                    throw new Exception("Translation not found in the expected JSON structure.");
+                }
+
+                return translated;
             }
             catch
             {
@@ -32,7 +48,7 @@ namespace ChatTranslated.Translate
 
         private static string PreparePostData(string targetLang, string text)
         {
-            ulong id = (ulong)Random.Next(8300000, 8400000) * 1000 + 1;
+            ulong id = ((ulong)Random.Next(8300000, 8400000) * 1000) + 1;
             var postData = new
             {
                 jsonrpc = "2.0",
@@ -58,7 +74,7 @@ namespace ChatTranslated.Translate
         {
             var iCount = text.Count(c => c == 'i');
             long ts = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            return iCount == 0 ? ts : ts - ts % (iCount + 1) + iCount + 1;
+            return iCount == 0 ? ts : ts - (ts % (iCount + 1)) + iCount + 1;
         }
     }
 }

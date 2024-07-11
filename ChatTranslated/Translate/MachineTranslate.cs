@@ -13,7 +13,7 @@ namespace ChatTranslated.Translate
         {
             try
             {
-                var result = await GTranslator.TranslateAsync(text, targetLanguage);
+                var result = await GTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
                 return result.Translation;
             }
             catch
@@ -21,7 +21,7 @@ namespace ChatTranslated.Translate
                 Service.pluginLog.Warning("Google Translate failed to translate. Falling back to Bing Translate.");
                 try
                 {
-                    var result = await BingTranslator.TranslateAsync(text, targetLanguage);
+                    var result = await BingTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
                     return result.Translation;
                 }
                 catch

@@ -13,8 +13,8 @@ namespace ChatTranslated
         public enum TranslationMode
         {
             MachineTranslate,
-            DeepL_API,
-            OpenAI_API,
+            DeepL,
+            OpenAI,
             LLMProxy
         }
         public TranslationMode SelectedTranslationMode { get; set; } = TranslationMode.MachineTranslate;
@@ -50,8 +50,9 @@ namespace ChatTranslated
 
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
+        public bool UseDeepLspoof { get; set; } = true;
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
-        public bool openaiWarned { get; set; } = false;
+        public bool OpenaiWarned { get; set; } = false;
         public string ProxyRegion { get; set; } = "US";
 
         public void Save()
