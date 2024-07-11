@@ -744,10 +744,12 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Machine Translate: simple, poor multi-language performance
-        ///DeepL API: best translation quality, poor multi-language performance 
-        ///OpenAI API: high latency, good mult-language performance
-        ///LLM Proxy: same as above.
+        ///   Looks up a localized string similar to Machine Translate: 
+        ///    simple, poor multi-language performance
+        ///DeepL: 
+        ///    best translation quality, poor multi-language performance 
+        ///OpenAI / LLM Proxy: 
+        ///    high latency, good mult-language performance.
         /// </summary>
         internal static string TranslationModeExplanation {
             get {

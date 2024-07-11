@@ -25,6 +25,7 @@ namespace ChatTranslated.Translate
             try
             {
                 var response = await Translator.HttpClient.SendAsync(request).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
                 var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
                 // Extract the translated text
@@ -40,7 +41,10 @@ namespace ChatTranslated.Translate
                     throw new Exception("Translation not found in the expected JSON structure.");
                 }
 
-                return translated;
+                if (Service.configuration.SelectedTargetLanguage == "Chinese (Traditional)")
+                    return await MachineTranslate.Translate(translated, "Chinese (Traditional)");
+                else
+                    return translated;
             }
             catch (Exception ex)
             {

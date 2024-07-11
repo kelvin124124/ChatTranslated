@@ -61,7 +61,7 @@ public class ConfigWindow : Window
         "Chat Translated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Size = new Vector2(600, 500);
+        Size = new Vector2(600, 600);
     }
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;

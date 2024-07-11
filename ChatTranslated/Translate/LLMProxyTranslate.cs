@@ -50,9 +50,9 @@ namespace ChatTranslated.Translate
                     ? translated.Replace("\n", string.Empty)
                     : throw new Exception("Translation not found in the expected JSON structure.");
             }
-            catch
+            catch(Exception ex)
             {
-                Service.pluginLog.Warning("LLMProxy Translate failed to translate. Falling back to machine translate.");
+                Service.pluginLog.Warning($"LLMProxy Translate failed to translate. Falling back to machine translate.\n{ex.Message}");
                 return await MachineTranslate.Translate(message, targetLanguage);
             }
         }

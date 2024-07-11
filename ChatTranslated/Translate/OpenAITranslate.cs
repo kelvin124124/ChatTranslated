@@ -51,9 +51,9 @@ namespace ChatTranslated.Translate
                 var translated = JObject.Parse(jsonResponse)["choices"]?[0]?["message"]?["content"]?.ToString().Trim();
                 return !string.IsNullOrWhiteSpace(translated) ? translated : throw new Exception("Translation not found in the expected JSON structure.");
             }
-            catch
+            catch (Exception ex)
             {
-                Service.pluginLog.Warning("OpenAI Translate failed to translate. Falling back to machine translation.");
+                Service.pluginLog.Warning($"OpenAI Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
                 return await MachineTranslate.Translate(message, targetLanguage);
             }
         }

@@ -1,5 +1,6 @@
 using ChatTranslated.Utils;
 using GTranslate.Translators;
+using System;
 using System.Threading.Tasks;
 
 namespace ChatTranslated.Translate
@@ -16,17 +17,17 @@ namespace ChatTranslated.Translate
                 var result = await GTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
                 return result.Translation;
             }
-            catch
+            catch(Exception GTex)
             {
-                Service.pluginLog.Warning("Google Translate failed to translate. Falling back to Bing Translate.");
+                Service.pluginLog.Warning($"Google Translate failed to translate. Falling back to Bing Translate.\n{GTex.Message}");
                 try
                 {
                     var result = await BingTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
                     return result.Translation;
                 }
-                catch
+                catch (Exception BTex)
                 {
-                    Service.pluginLog.Error("Bing Translate failed to translate. Returning original text.");
+                    Service.pluginLog.Error($"Bing Translate failed to translate. Returning original text.\n{BTex.Message}");
                     return text;
                 }
             }

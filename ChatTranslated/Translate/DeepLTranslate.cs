@@ -46,9 +46,9 @@ namespace ChatTranslated.Translate
                             ? await MachineTranslate.Translate(translated, "Chinese (Traditional)")
                             : translated;
                 }
-                catch
+                catch(Exception ex)
                 {
-                    Service.pluginLog.Warning("DeepL Translate failed to translate. Falling back to machine translation.");
+                    Service.pluginLog.Warning($"DeepL Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
                     return await MachineTranslate.Translate(text, targetLanguage);
                 }
             }
