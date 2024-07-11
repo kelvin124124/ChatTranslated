@@ -114,14 +114,17 @@ namespace ChatTranslated
                 case "on":
                     Service.configuration.Enabled = true;
                     Service.configuration.Save();
+                    OutputChatLine("Plugin enabled.");
                     return;
                 case "off":
                     Service.configuration.Enabled = false;
                     Service.configuration.Save();
+                    OutputChatLine("Plugin disabled.");
                     return;
                 case "integration":
                     Service.configuration.ChatIntegration = !Service.configuration.ChatIntegration;
                     Service.configuration.Save();
+                    OutputChatLine($"Chat integration {(Service.configuration.ChatIntegration ? "enabled" : "disabled")}.");
                     return;
             }
 
