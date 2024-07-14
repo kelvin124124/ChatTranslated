@@ -57,8 +57,7 @@ namespace ChatTranslated.Utils
                 Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 if (Service.configuration.SendChatToDB)
                 {
-                    string _messageText = RemoveNonTextPayloads(message);
-                    SendChatAsync(_messageText);
+                    SendChatAsync(message.TextValue);
                 }
                 return;
             }
