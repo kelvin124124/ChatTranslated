@@ -2,14 +2,13 @@
 A Dalamud plugin for the game FFXIV that allows users to translated in-game chat messages.
 
 ## Translation services
-- \[Default] Machine translate (Google translate,  use Bing translate as backup)  
-- OpenAI API (requires API key)  
-- DeepL (does not require API key)  
-- LLM Proxy (self-hosted Claude haiku proxy)  
+- \[Default] DeepL translate, with Google and Bing translate as backup  
+- OpenAI API (GPT-3.5-TURBO, requires API key)  
+- LLM Proxy (Gemma2-27B-it on Deep Infra)  
 
 ## Commands
 ```/pchat``` to open main UI  
-```/pchat config``` to select your desired mode (Google translate / GPT-3.5-TURBO)  
+```/pchat config``` to open config UI  
 ```/pchat on``` and ```/pchat off``` to turn on/off plugin  
 ```/pchat integration``` to toggle chat integration (output translation in gane chat)
 
