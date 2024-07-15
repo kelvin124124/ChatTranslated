@@ -73,6 +73,10 @@ namespace ChatTranslated.Translate
                 TranslationCache[message] = translatedText;
             }
 
+#if DEBUG
+            Plugin.OutputChatLine($"Mode: {mode}, Target language: {targetLanguage}");
+#endif
+
             return translatedText;
         }
 

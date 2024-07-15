@@ -51,7 +51,7 @@ namespace ChatTranslated.Translate
                 if (Service.configuration.SelectedTargetLanguage == "Chinese (Traditional)")
                 {
                     var (result, mode) = await MachineTranslate.Translate(translated, "Chinese (Traditional)");
-                    return (result, mode);
+                    return (result, TranslationMode.DeepL);
                 }
                 else
                     return (translated, TranslationMode.DeepL);
