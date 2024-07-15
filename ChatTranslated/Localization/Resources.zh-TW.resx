@@ -176,7 +176,7 @@
     <value>自訂語言</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>You will be forced to use Google translate if you use custom languages.</value>
+    <value>如果您使用自訂語言，將被迫使用Google翻譯。</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>自定義目標語言</value>
@@ -185,12 +185,12 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (Optional)</value>
+    <value>DeepL API 密鑰（可選）</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL will be used to translate chat messages. 
-Google and Bing translate will be used as backup.
-If DeepL API key is provided below, it will be used as backup instead.</value>
+    <value>DeepL 將用於翻譯聊天訊息。
+Google 和 Bing 翻譯將被用作備用。
+如果提供了下面的 DeepL API 密鑰，將用作備用。</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>預設</value>
@@ -218,7 +218,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>法語</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>Generic</value>
+    <value>通用</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>德語</value>
@@ -236,7 +236,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy</value>
+    <value>自托管 gemma-2-27b-it 代理</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通訊貝1</value>
@@ -333,7 +333,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
 它不會在聊天中發送翻譯文字或使其對其他玩家可見。</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Translation Engine</value>
+    <value>翻譯引擎</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>使用自定義語言</value>
