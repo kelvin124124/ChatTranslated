@@ -10,6 +10,11 @@ namespace ChatTranslated
     public class Configuration : IPluginConfiguration
     {
         public int Version { get; set; } = 3;
+        public enum TranslationEngine
+        {
+            DeepL,
+            LLM
+        }
         public enum TranslationMode
         {
             MachineTranslate,
@@ -17,7 +22,7 @@ namespace ChatTranslated
             OpenAI,
             LLMProxy
         }
-        public TranslationMode SelectedTranslationMode { get; set; } = TranslationMode.MachineTranslate;
+        public TranslationEngine SelectedTranslationEngine { get; set; } = TranslationEngine.DeepL;
 
         public enum LanguageSelectionMode
         {
@@ -48,12 +53,11 @@ namespace ChatTranslated
             XivChatType.Yell, XivChatType.CrossParty, XivChatType.PvPTeam,
         ];
 
+        public short LLM_Provider { get; set; } = 0;
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
-        public bool UseDeepLspoof { get; set; } = true;
+        public string Proxy_Url { get; set; } = "https://cfv2.kelpcc.com";
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
-        public bool OpenaiWarned { get; set; } = false;
-        public string ProxyRegion { get; set; } = "US";
 
         public void Save()
         {

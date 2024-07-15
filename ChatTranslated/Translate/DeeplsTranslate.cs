@@ -15,9 +15,14 @@ namespace ChatTranslated.Translate
     internal static class DeeplsTranslate
     {
         private static readonly Random Random = new();
-        public static async Task<(string, TranslationMode?)> Translate(string message, string langCode)
+        public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
         {
-            string postData = PreparePostData(langCode, message);
+            if (!DeepLTranslate.TryGetLanguageCode(targetLanguage, out string? langCode))
+            {
+                return ("Target language not supported by DeepL.", null);
+            }
+
+            string postData = PreparePostData(langCode!, message);
             var request = new HttpRequestMessage(HttpMethod.Post, "https://www2.deepl.com/jsonrpc")
             {
                 Content = new StringContent(postData, Encoding.UTF8, "application/json")
@@ -45,8 +50,8 @@ namespace ChatTranslated.Translate
 
                 if (Service.configuration.SelectedTargetLanguage == "Chinese (Traditional)")
                 {
-                    var result = await MachineTranslate.Translate(translated, "Chinese (Traditional)");
-                    return (result.Item1, TranslationMode.DeepL);
+                    var (result, mode) = await MachineTranslate.Translate(translated, "Chinese (Traditional)");
+                    return (result, mode);
                 }
                 else
                     return (translated, TranslationMode.DeepL);
@@ -55,13 +60,13 @@ namespace ChatTranslated.Translate
             {
                 Service.pluginLog.Warning($"DeeplsTranslate failed to translate. Falling back to DeepL API / machine translation.\n{ex.Message}");
                 if (Service.configuration.DeepL_API_Key != "YOUR-API-KEY:fx") // fallback to official DeepL API if the key is not the default
-                    return await DeepLTranslate.Translate(message, langCode);
+                    return await DeepLTranslate.Translate(message, targetLanguage);
                 else
-                    return await MachineTranslate.Translate(message, langCode);
+                    return await MachineTranslate.Translate(message, targetLanguage);
             }
         }
 
-        private static string PreparePostData(string targetLang, string text)
+        private static string PreparePostData(string langCode, string text)
         {
             ulong id = ((ulong)Random.Next(8300000, 8400000) * 1000) + 1;
             var postData = new
@@ -71,7 +76,7 @@ namespace ChatTranslated.Translate
                 @params = new
                 {
                     splitting = "newlines",
-                    lang = new { source_lang_user_selected = "auto", target_lang = targetLang },
+                    lang = new { source_lang_user_selected = "auto", target_lang = langCode },
                     texts = new[] { new { text } },
                     timestamp = GetTimeStamp(text)
                 },

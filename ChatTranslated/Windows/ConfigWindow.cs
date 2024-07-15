@@ -62,36 +62,67 @@ public class ConfigWindow : Window
         "Chat Translated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Size = new Vector2(600, 600);
+        Size = new Vector2(600, 340);
     }
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
 
 #if DEBUG
+    private static string ProxyBaseUrl = Service.configuration.Proxy_Url;
     private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
 #endif
 
+    private static short CurrentTab = 0;
     public override void Draw()
     {
         Configuration configuration = Service.configuration;
+        string[] tabs = ["General", "Languages", "Chat Channels", "Translation Mode"];
 
-        DrawGenericSettigns(configuration);
-        ImGui.Separator();
+        ImGui.Columns(2, "ConfigColumns", false);
+        ImGui.SetColumnWidth(0, 200); // Increased width for the tab box
 
-        DrawPluginLangSelection(configuration);
-        ImGui.Separator();
+        // Left column: Tab selection box
+        if (ImGui.BeginChild("TabsBox", new Vector2(190, 300), true))
+        {
+            for (short i = 0; i < tabs.Length; i++)
+            {
+                if (ImGui.Selectable(tabs[i], CurrentTab == i))
+                {
+                    CurrentTab = i;
+                }
+            }
+        }
+        ImGui.EndChild();
 
-        DrawChatChannelSelection(configuration);
-        ImGui.Separator();
+        ImGui.NextColumn();
 
-        DrawSourceLangSelection(configuration);
-        ImGui.Separator();
+        // Right column: Configuration items box
+        if (ImGui.BeginChild("ConfigBox", new Vector2(0, 300), true)) // 0 width means "stretch to fill"
+        {
+            switch (CurrentTab)
+            {
+                case 0:
+                    DrawGenericSettigns(configuration);
+                    ImGui.Separator();
+                    DrawPluginLangSelection(configuration);
+                    break;
+                case 1:
+                    DrawSourceLangSelection(configuration);
+                    ImGui.Separator();
+                    DrawTargetLangSelection(configuration);
+                    break;
+                case 2:
+                    DrawChatChannelSelection(configuration);
+                    break;
+                case 3:
+                    DrawEngineSelection(configuration);
+                    break;
+            }
+        }
+        ImGui.EndChild();
 
-        DrawTargetLangSelection(configuration);
-        ImGui.Separator();
-
-        DrawModeSelection(configuration);
+        ImGui.Columns(1);
     }
 
     private static void DrawGenericSettigns(Configuration configuration)
@@ -176,25 +207,27 @@ public class ConfigWindow : Window
 
     private static void DrawChatChannelSelection(Configuration configuration)
     {
-        // Translate channel selection
-        if (ImGui.CollapsingHeader(Resources.ChannelSelection, ImGuiTreeNodeFlags.None))
+        ImGui.BeginTabBar("ChatChannelTabs");
+
+        if (ImGui.BeginTabItem(Resources.GenericChannels))
         {
-            ImGui.Columns(3, "chatTypeColumns", false);
-
-            ImGui.SetColumnWidth(0, 200);
-            ImGui.SetColumnWidth(1, 200);
-            ImGui.SetColumnWidth(2, 200);
-
             DrawChatTypeGroup(genericChatTypes, configuration);
-            ImGui.NextColumn();
-
-            DrawChatTypeGroup(lsChatTypes, configuration);
-            ImGui.NextColumn();
-
-            DrawChatTypeGroup(cwlsChatTypes, configuration);
-
-            ImGui.Columns(1);
+            ImGui.EndTabItem();
         }
+
+        if (ImGui.BeginTabItem("LS"))
+        {
+            DrawChatTypeGroup(lsChatTypes, configuration);
+            ImGui.EndTabItem();
+        }
+
+        if (ImGui.BeginTabItem("CWLS"))
+        {
+            DrawChatTypeGroup(cwlsChatTypes, configuration);
+            ImGui.EndTabItem();
+        }
+
+        ImGui.EndTabBar();
     }
 
     private static void DrawChatTypeGroup(IEnumerable<XivChatType> chatTypes, Configuration configuration)
@@ -315,7 +348,7 @@ public class ConfigWindow : Window
                 Process.Start(new ProcessStartInfo { FileName = "https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L148", UseShellExecute = true });
             }
             ImGui.SameLine();
-            if (ImGui.Button(Resources.Apply))
+            if (ImGui.Button(Resources.Apply + "###ApplyCustomLanguage"))
             {
                 if (Language.TryGetLanguage(configuration.CustomTargetLanguage, out var lang))
                 {
@@ -346,62 +379,105 @@ public class ConfigWindow : Window
         }
     }
 
-    private static void DrawModeSelection(Configuration configuration)
+    private static void DrawEngineSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.TextUnformatted(Resources.TranslationMode);
+        ImGui.TextUnformatted(Resources.TranslationEngine);
         ImGui.SameLine();
 
-        int selectedTranslationMode = (int)configuration.SelectedTranslationMode;
+        int selectedTranslationEngine = (int)configuration.SelectedTranslationEngine;
 
-        string[] translationModeNames = Enum.GetNames(typeof(TranslationMode));
-        string[] localizedTranslationModes = translationModeNames.Select(mode => Resources.ResourceManager.GetString(mode, Resources.Culture) ?? mode).ToArray();
+        string[] translationEngineNames = Enum.GetNames(typeof(TranslationEngine));
 
         // update index when adding new modes
-        if (ImGui.Combo("##TranslationModeCombo", ref selectedTranslationMode, localizedTranslationModes, translationModeNames.Length))
+        if (ImGui.Combo("##TranslationEngineCombo", ref selectedTranslationEngine, translationEngineNames, translationEngineNames.Length))
         {
-            configuration.SelectedTranslationMode = (TranslationMode)selectedTranslationMode;
+            configuration.SelectedTranslationEngine = (TranslationEngine)selectedTranslationEngine;
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
 
-        switch (configuration.SelectedTranslationMode)
+        switch (configuration.SelectedTranslationEngine)
         {
-            case TranslationMode.MachineTranslate:
-                // default
-                ImGui.TextUnformatted(Resources.TranslationModeExplanation);
-                break;
-            case TranslationMode.DeepL:
+            case TranslationEngine.DeepL:
+                ImGui.TextUnformatted(Resources.DeepLExplanation);
+                ImGui.Separator();
                 DrawDeepLSettings(configuration);
                 break;
-            case TranslationMode.OpenAI:
-                DrawOpenAISettings(configuration);
+            case TranslationEngine.LLM:
+                DrawProviderSelection(configuration);
+                if (configuration.LLM_Provider == 0)
+                {
+                    ImGui.TextUnformatted(Resources.LLM_Explanation);
+#if DEBUG
+                    ImGui.Separator();
+                    DrawLLMProxySettings(configuration);
+#endif
+                }
+                else
+                {
+                    ImGui.TextUnformatted("GPT-3.5-turbo");
+                    ImGui.Separator();
+                    DrawOpenAISettings(configuration);
+                }
                 break;
-            case TranslationMode.LLMProxy:
-                DrawLLMProxySettings(configuration);
+            default:
                 break;
         }
     }
 
     private static void DrawDeepLSettings(Configuration configuration)
     {
-        bool _UseDeepLSpoof = configuration.UseDeepLspoof;
-        if (ImGui.Checkbox(Resources.UseDeepLSpoof, ref _UseDeepLSpoof))
-        {
-            configuration.UseDeepLspoof = _UseDeepLSpoof;
-            configuration.Save();
-        }
-        ImGui.TextUnformatted(Resources.DeepLSpoofExplanation);
-
         ImGui.TextUnformatted(Resources.DeepLAPIKey);
         ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
         ImGui.SameLine();
-        if (ImGui.Button(Resources.Apply))
+        if (ImGui.Button(Resources.Apply + "###DeepL_API_Key"))
         {
             configuration.DeepL_API_Key = DeepLApiKeyInput;
             configuration.Save();
         }
-        ImGui.TextUnformatted(Resources.DeepLAPIKeyExplaination);
+    }
+
+    private static void DrawProviderSelection(Configuration configuration)
+    {
+        ImGui.TextUnformatted(Resources.LLMProvider + ":");
+        ImGui.SameLine();
+
+        int selectedProvider = configuration.LLM_Provider;
+        if (ImGui.RadioButton("LLM Proxy", ref selectedProvider, 0))
+        {
+            configuration.LLM_Provider = 0;
+            configuration.Save();
+        }
+        ImGui.SameLine();
+        if (ImGui.RadioButton("OpenAI", ref selectedProvider, 1))
+        {
+            configuration.LLM_Provider = 1;
+            configuration.Save();
+        }
+    }
+
+    private static void DrawLLMProxySettings(Configuration configuration)
+    {
+        ImGui.TextUnformatted("Proxy Url");
+        ImGui.InputText("##APIBaseUrl", ref ProxyBaseUrl, 100);
+        ImGui.SameLine();
+        if (ImGui.Button("Save###Proxy_Url"))
+        {
+            configuration.Proxy_Url = ProxyBaseUrl;
+            configuration.Save();
+            Plugin.OutputChatLine($"Proxy Url {configuration.Proxy_Url} saved successfully.");
+        }
+
+        ImGui.TextUnformatted("Proxy API Key");
+        ImGui.InputText("##APIKey", ref ProxyApiKeyInput, 100);
+        ImGui.SameLine();
+        if (ImGui.Button("Save###Proxy_API_Key"))
+        {
+            configuration.Proxy_API_Key = ProxyApiKeyInput;
+            configuration.Save();
+            Plugin.OutputChatLine($"Proxy API Key {configuration.Proxy_API_Key} saved successfully.");
+        }
     }
 
     private static void DrawOpenAISettings(Configuration configuration)
@@ -409,85 +485,13 @@ public class ConfigWindow : Window
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 100);
         ImGui.SameLine();
-        if (ImGui.Button(Resources.Apply))
+        if (ImGui.Button(Resources.Apply + "###OpenAI_API_Key"))
         {
-            if (configuration.OpenaiWarned)
-            {
-                configuration.OpenAI_API_Key = OpenAIApiKeyInput;
-                configuration.Save();
-            }
-            else
-            {
-                ImGui.OpenPopup("Confirmation");
-            }
+            configuration.OpenAI_API_Key = OpenAIApiKeyInput;
+            configuration.Save();
         }
         ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
-
-        // confirmation popup
-        if (ImGui.BeginPopupModal("Confirmation"))
-        {
-            ImGui.TextUnformatted(Resources.APIKeyWarn);
-            ImGui.TextUnformatted(Resources.AskProceed);
-
-            ImGui.Separator();
-
-            float windowWidth = ImGui.GetWindowWidth();
-            float buttonSize = ImGui.CalcTextSize("Yes").X + (ImGui.GetStyle().FramePadding.X * 2);
-
-            ImGui.SetCursorPosX((windowWidth - (buttonSize * 2) - ImGui.GetStyle().ItemSpacing.X) * 0.5f);
-            if (ImGui.Button(Resources.Yes, new Vector2(buttonSize, 0)))
-            {
-                configuration.OpenaiWarned = true;
-                Service.configuration.OpenAI_API_Key = OpenAIApiKeyInput;
-                ImGui.CloseCurrentPopup();
-            }
-
-            ImGui.SameLine();
-
-            if (ImGui.Button(Resources.No, new Vector2(buttonSize, 0)))
-            {
-                OpenAIApiKeyInput = "sk-YOUR-API-KEY";
-                ImGui.CloseCurrentPopup();
-            }
-
-            ImGui.EndPopup();
-        }
-    }
-
-    private static void DrawLLMProxySettings(Configuration configuration)
-    {
-        ImGui.TextUnformatted(Resources.ProxyExplanation);
-        ImGui.TextUnformatted(Resources.ProxyLatency);
-
-        // select region
-        ImGui.AlignTextToFramePadding();
-        ImGui.TextUnformatted(Resources.Region);
-        ImGui.SameLine();
-
-        string[] ProxyRegions = ["US", "EU", "HK"];
-        string currentSelection = configuration.ProxyRegion;
-
-        int currentIndex = Array.IndexOf(ProxyRegions, currentSelection);
-        if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
-
-        string[] localizedRegions = ProxyRegions.Select(region => Resources.ResourceManager.GetString(region, Resources.Culture) ?? region).ToArray();
-        if (ImGui.Combo("##regionCombo", ref currentIndex, localizedRegions, ProxyRegions.Length))
-        {
-            configuration.ProxyRegion = ProxyRegions[currentIndex];
-            configuration.Save();
-        }
-
-#if DEBUG
-        ImGui.TextUnformatted("Proxy API Key");
-        ImGui.InputText("##APIKey", ref ProxyApiKeyInput, 100);
-        ImGui.SameLine();
-        if (ImGui.Button("Apply"))
-        {
-            configuration.Proxy_API_Key = ProxyApiKeyInput;
-            configuration.Save();
-        }
-#endif
     }
 }

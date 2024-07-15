@@ -233,7 +233,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Machine translate mode will be forced if you use custom languages..
+        ///   Looks up a localized string similar to You will be forced to use Google translate if you use custom languages..
         /// </summary>
         internal static string CustomTargetLanguageExplanation {
             get {
@@ -260,7 +260,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DeepL API Key.
+        ///   Looks up a localized string similar to DeepL API Key (Optional).
         /// </summary>
         internal static string DeepLAPIKey {
             get {
@@ -269,21 +269,13 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Get one free from DeepL official website!.
+        ///   Looks up a localized string similar to DeepL will be used to translate chat messages. 
+        ///Google and Bing translate will be used as backup.
+        ///If DeepL API key is provided below, it will be used as backup instead..
         /// </summary>
-        internal static string DeepLAPIKeyExplaination {
+        internal static string DeepLExplanation {
             get {
-                return ResourceManager.GetString("DeepLAPIKeyExplaination", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Let you use DeepL without an API key.
-        ///API key (if provided) will be used as backup..
-        /// </summary>
-        internal static string DeepLSpoofExplanation {
-            get {
-                return ResourceManager.GetString("DeepLSpoofExplanation", resourceCulture);
+                return ResourceManager.GetString("DeepLExplanation", resourceCulture);
             }
         }
         
@@ -343,15 +335,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to EU.
-        /// </summary>
-        internal static string EU {
-            get {
-                return ResourceManager.GetString("EU", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to FreeCompany.
         /// </summary>
         internal static string FreeCompany {
@@ -366,6 +349,15 @@ namespace ChatTranslated.Localization {
         internal static string French {
             get {
                 return ResourceManager.GetString("French", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generic.
+        /// </summary>
+        internal static string GenericChannels {
+            get {
+                return ResourceManager.GetString("GenericChannels", resourceCulture);
             }
         }
         
@@ -388,15 +380,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to HK.
-        /// </summary>
-        internal static string HK {
-            get {
-                return ResourceManager.GetString("HK", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Japanese.
         /// </summary>
         internal static string Japanese {
@@ -415,11 +398,20 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to LLMProxy.
+        ///   Looks up a localized string similar to Self-hosted gemma-2-27b-it proxy.
         /// </summary>
-        internal static string LLMProxy {
+        internal static string LLM_Explanation {
             get {
-                return ResourceManager.GetString("LLMProxy", resourceCulture);
+                return ResourceManager.GetString("LLM_Explanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LLMProvider.
+        /// </summary>
+        internal static string LLMProvider {
+            get {
+                return ResourceManager.GetString("LLMProvider", resourceCulture);
             }
         }
         
@@ -496,15 +488,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MachineTranslate.
-        /// </summary>
-        internal static string MachineTranslate {
-            get {
-                return ResourceManager.GetString("MachineTranslate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to No.
         /// </summary>
         internal static string No {
@@ -519,15 +502,6 @@ namespace ChatTranslated.Localization {
         internal static string NoviceNetwork {
             get {
                 return ResourceManager.GetString("NoviceNetwork", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to OpenAI.
-        /// </summary>
-        internal static string OpenAI {
-            get {
-                return ResourceManager.GetString("OpenAI", resourceCulture);
             }
         }
         
@@ -564,25 +538,6 @@ namespace ChatTranslated.Localization {
         internal static string PluginLanguage {
             get {
                 return ResourceManager.GetString("PluginLanguage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Free Claude-Haiku translation service provided by the dev,
-        ///subject to availability..
-        /// </summary>
-        internal static string ProxyExplanation {
-            get {
-                return ResourceManager.GetString("ProxyExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Users from unsupported regions WILL experience higher latency..
-        /// </summary>
-        internal static string ProxyLatency {
-            get {
-                return ResourceManager.GetString("ProxyLatency", resourceCulture);
             }
         }
         
@@ -735,34 +690,11 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TranslationMode.
+        ///   Looks up a localized string similar to Translation Engine.
         /// </summary>
-        internal static string TranslationMode {
+        internal static string TranslationEngine {
             get {
-                return ResourceManager.GetString("TranslationMode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Machine Translate: 
-        ///    simple, poor multi-language performance
-        ///DeepL: 
-        ///    best translation quality, poor multi-language performance 
-        ///OpenAI / LLM Proxy: 
-        ///    high latency, good mult-language performance.
-        /// </summary>
-        internal static string TranslationModeExplanation {
-            get {
-                return ResourceManager.GetString("TranslationModeExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to US.
-        /// </summary>
-        internal static string US {
-            get {
-                return ResourceManager.GetString("US", resourceCulture);
+                return ResourceManager.GetString("TranslationEngine", resourceCulture);
             }
         }
         

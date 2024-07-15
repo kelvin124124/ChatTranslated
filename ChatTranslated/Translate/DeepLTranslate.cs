@@ -19,11 +19,6 @@ namespace ChatTranslated.Translate
         {
             if (TryGetLanguageCode(targetLanguage, out var languageCode))
             {
-                if (Service.configuration.UseDeepLspoof)
-                {
-                    return await DeeplsTranslate.Translate(text, languageCode!);
-                }
-
                 var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
                 var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
                 {
@@ -45,8 +40,8 @@ namespace ChatTranslated.Translate
 
                     if (targetLanguage == "Chinese (Traditional)")
                     {
-                        var result = await MachineTranslate.Translate(translated, "Chinese (Traditional)");
-                        return (result.Item1, TranslationMode.DeepL);
+                        var (result, mode) = await MachineTranslate.Translate(translated, "Chinese (Traditional)");
+                        return (result, TranslationMode.DeepL);
                     }
                     else
                         return (translated, TranslationMode.DeepL);
@@ -60,7 +55,7 @@ namespace ChatTranslated.Translate
             return ("Target language not supported by DeepL.", null);
         }
 
-        private static bool TryGetLanguageCode(string language, out string? languageCode)
+        internal static bool TryGetLanguageCode(string language, out string? languageCode)
         {
             languageCode = language switch
             {

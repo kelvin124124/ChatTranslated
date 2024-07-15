@@ -15,7 +15,7 @@ namespace ChatTranslated.Translate
     internal static class LLMProxyTranslate
     {
         private const string DefaultContentType = "application/json";
-        private static readonly string? Cfv2 = ReadSecret("ChatTranslated.Resources.cfv2.secret").Replace("\n", string.Empty);
+        private static readonly string? Cfv3 = ReadSecret("ChatTranslated.Resources.cfv3.secret").Replace("\n", string.Empty);
 
         private static string ReadSecret(string resourceName)
         {
@@ -26,21 +26,21 @@ namespace ChatTranslated.Translate
         public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
         {
 #if DEBUG
-            string Cfv2 = Service.configuration.Proxy_API_Key;
+            string Cfv3 = Service.configuration.Proxy_API_Key;
 #else
-            if (string.IsNullOrEmpty(Cfv2))
+            if (string.IsNullOrEmpty(Cfv3))
             {
                 Service.pluginLog.Warning("LLMProxy API key not found. Falling back to machine translate.");
                 return await MachineTranslate.Translate(message, targetLanguage);
             }
 #endif
 
-            var requestData = new { regionCode = Service.configuration.ProxyRegion, targetLanguage, message };
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://cfv2.kelpcc.com")
+            var requestData = new { targetLanguage, message };
+            var request = new HttpRequestMessage(HttpMethod.Post, Service.configuration.Proxy_Url)
             {
                 Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType)
             };
-            request.Headers.Add("x-api-key", Cfv2);
+            request.Headers.Add("x-api-key", Cfv3);
 
             try
             {

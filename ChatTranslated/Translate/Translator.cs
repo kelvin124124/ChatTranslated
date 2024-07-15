@@ -5,7 +5,6 @@ using System;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Translate
 {
@@ -22,20 +21,33 @@ namespace ChatTranslated.Translate
             Timeout = TimeSpan.FromSeconds(10)
         };
 
-        public static GoogleTranslator GTranslator = new(HttpClient);
-        public static BingTranslator BingTranslator = new(HttpClient);
+        public static readonly GoogleTranslator GTranslator = new(HttpClient);
+        public static readonly BingTranslator BingTranslator = new(HttpClient);
 
-        public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage, TranslationMode? translationMode = null)
+        public static async Task<(string, Configuration.TranslationMode?)> Translate(string text, string targetLanguage)
         {
             text = ChatHandler.Sanitize(text);
             if (string.IsNullOrWhiteSpace(text)) return (text, null);
 
-            var mode = translationMode ?? Service.configuration.SelectedTranslationMode;
+            return Service.configuration.SelectedTranslationEngine switch
+            {
+                Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(text, targetLanguage),
+                Configuration.TranslationEngine.LLM => (Service.configuration.LLM_Provider == 0) ?
+                    await LLMProxyTranslate.Translate(text, targetLanguage) :
+                    await OpenAITranslate.Translate(text, targetLanguage),
+                _ => (text, null)
+            };
+        }
 
-            return mode switch
+        public static async Task<(string, Configuration.TranslationMode?)> Translate(string text, string targetLanguage, Configuration.TranslationMode translationMode)
+        {
+            text = ChatHandler.Sanitize(text);
+            if (string.IsNullOrWhiteSpace(text)) return (text, null);
+
+            return translationMode switch
             {
                 Configuration.TranslationMode.MachineTranslate => await MachineTranslate.Translate(text, targetLanguage),
-                Configuration.TranslationMode.DeepL => await DeepLTranslate.Translate(text, targetLanguage),
+                Configuration.TranslationMode.DeepL => await DeeplsTranslate.Translate(text, targetLanguage),
                 Configuration.TranslationMode.OpenAI => await OpenAITranslate.Translate(text, targetLanguage),
                 Configuration.TranslationMode.LLMProxy => await LLMProxyTranslate.Translate(text, targetLanguage),
                 _ => (text, null)
@@ -44,31 +56,30 @@ namespace ChatTranslated.Translate
 
         public static async Task<string> DetermineLanguage(string messageText)
         {
-            string? langStr = null;
             try
             {
-                var language = await Translator.GTranslator.DetectLanguageAsync(messageText);
+                var language = await GTranslator.DetectLanguageAsync(messageText);
                 Service.pluginLog.Debug($"{messageText}\n -> language: {language.Name}");
 #if DEBUG
                 Plugin.OutputChatLine($"{messageText}\n -> language: {language.Name}");
 #endif
-                langStr = language.Name;
+                return language.Name;
             }
-            catch (Exception GTex)
+            catch (Exception gEx)
             {
-                Service.pluginLog.Warning($"Google Translate failed to detect language. {GTex}");
+                Service.pluginLog.Warning($"Google Translate failed to detect language. {gEx}");
                 try
                 {
-                    var language = await Translator.BingTranslator.DetectLanguageAsync(messageText);
+                    var language = await BingTranslator.DetectLanguageAsync(messageText);
                     Service.pluginLog.Debug($"{messageText}\n -> language: {language.Name}");
-                    langStr = language.Name;
+                    return language.Name;
                 }
-                catch (Exception BTex)
+                catch (Exception bEx)
                 {
-                    Service.pluginLog.Warning($"Bing Translate failed to detect language. {BTex}");
+                    Service.pluginLog.Warning($"Bing Translate failed to detect language. {bEx}");
+                    return "unknown";
                 }
             }
-            return langStr ?? "unknown";
         }
     }
 }
