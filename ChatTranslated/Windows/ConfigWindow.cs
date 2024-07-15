@@ -457,6 +457,7 @@ public class ConfigWindow : Window
         }
     }
 
+#if DEBUG
     private static void DrawLLMProxySettings(Configuration configuration)
     {
         ImGui.TextUnformatted("Proxy Url");
@@ -479,6 +480,7 @@ public class ConfigWindow : Window
             Plugin.OutputChatLine($"Proxy API Key {configuration.Proxy_API_Key} saved successfully.");
         }
     }
+#endif
 
     private static void DrawOpenAISettings(Configuration configuration)
     {
