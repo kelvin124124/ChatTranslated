@@ -9,7 +9,7 @@ namespace ChatTranslated
     [Serializable]
     public class Configuration : IPluginConfiguration
     {
-        public int Version { get; set; } = 3;
+        public int Version { get; set; } = 4;
         public enum TranslationEngine
         {
             DeepL,
@@ -56,7 +56,7 @@ namespace ChatTranslated
         public short LLM_Provider { get; set; } = 0;
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
-        public string Proxy_Url { get; set; } = "https://cfv2.kelpcc.com";
+        public string Proxy_Url { get; set; } = "https://cfv3.kelpcc.com";
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
 
         public void Save()
