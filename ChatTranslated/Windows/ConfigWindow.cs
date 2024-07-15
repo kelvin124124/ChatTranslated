@@ -416,7 +416,7 @@ public class ConfigWindow : Window
                 }
                 else
                 {
-                    ImGui.TextUnformatted("GPT-3.5-turbo");
+                    ImGui.TextUnformatted("GPT-3.5-turbo\nMay be restricted if you live in unsupported region.");
                     ImGui.Separator();
                     DrawOpenAISettings(configuration);
                 }
@@ -488,6 +488,7 @@ public class ConfigWindow : Window
         if (ImGui.Button(Resources.Apply + "###OpenAI_API_Key"))
         {
             configuration.OpenAI_API_Key = OpenAIApiKeyInput;
+            Plugin.OutputChatLine($"OpenAI API Key {configuration.OpenAI_API_Key} saved successfully.");
             configuration.Save();
         }
         ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
