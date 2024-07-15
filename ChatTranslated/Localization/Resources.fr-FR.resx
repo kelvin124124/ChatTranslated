@@ -176,7 +176,7 @@ any malware or third party plugins may have access to the key.</value>
     <value>CustomLanguages</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>You will be forced to use Google translate if you use custom languages.</value>
+    <value>Vous serez obligé d'utiliser Google Translate si vous utilisez des langues personnalisées.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Langue cible personnalisée</value>
@@ -185,12 +185,12 @@ any malware or third party plugins may have access to the key.</value>
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (Optional)</value>
+    <value>Clé API DeepL (optionnel)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL will be used to translate chat messages. 
-Google and Bing translate will be used as backup.
-If DeepL API key is provided below, it will be used as backup instead.</value>
+    <value>DeepL sera utilisé pour traduire les messages de chat. 
+Google et Bing Translate seront utilisés en tant que secours.
+Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que secours à la place.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Default</value>
@@ -218,7 +218,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>French</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>Generic</value>
+    <value>Générique</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>German</value>
@@ -236,7 +236,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy</value>
+    <value>Proxy auto-hébergé gemma-2-27b-it</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Ls1</value>
@@ -333,7 +333,7 @@ Envoyez des commentaires depuis le programme d'installation du plugin !</value>
 Il n'envoie pas le texte traduit dans le chat et ne le rend pas visible pour les autres joueurs.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Translation Engine</value>
+    <value>Moteur de traduction</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>Utiliser une langue personnalisée</value>
