@@ -176,7 +176,7 @@
     <value>사용자 정의 언어</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>You will be forced to use Google translate if you use custom languages.</value>
+    <value>사용자 지정 언어를 사용하는 경우 Google 번역을 강제로 사용해야 합니다.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>사용자 지정 대상 언어</value>
@@ -185,12 +185,12 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (Optional)</value>
+    <value>DeepL API 키 (선택 사항)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL will be used to translate chat messages. 
-Google and Bing translate will be used as backup.
-If DeepL API key is provided below, it will be used as backup instead.</value>
+    <value>DeepL은 채팅 메시지를 번역하는 데 사용됩니다.
+Google 및 Bing 번역은 백업으로 사용됩니다.
+아래에서 DeepL API 키를 제공하면 대신 백업으로 사용됩니다.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>기본값</value>
@@ -218,7 +218,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>프랑스어</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>Generic</value>
+    <value>일반</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>독일어</value>
@@ -236,7 +236,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy</value>
+    <value>셀프 호스팅된 gemma-2-27b-it 프록시</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -333,7 +333,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
 번역된 텍스트를 채팅에서 전송하거나 다른 플레이어에게 표시하는 것은 아닙니다.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Translation Engine</value>
+    <value>번역 엔진</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>사용자 지정 언어 사용</value>

@@ -176,7 +176,7 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>Benutzerdefinierte Sprachen</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>You will be forced to use Google translate if you use custom languages.</value>
+    <value>Sie werden gezwungen sein, Google Translate zu verwenden, wenn Sie benutzerdefinierte Sprachen verwenden.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Benutzerdefinierte Zielsprache</value>
@@ -185,12 +185,12 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (Optional)</value>
+    <value>DeepL API-Schlüssel (Optional)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL will be used to translate chat messages. 
-Google and Bing translate will be used as backup.
-If DeepL API key is provided below, it will be used as backup instead.</value>
+    <value>DeepL wird verwendet, um Chatnachrichten zu übersetzen.
+Google und Bing Translate werden als Backup verwendet.
+Wenn unten ein DeepL API-Schlüssel angegeben ist, wird dieser stattdessen als Backup verwendet.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Standard</value>
@@ -218,7 +218,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>Französisch</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>Generic</value>
+    <value>Allgemein</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>Deutsch</value>
@@ -236,7 +236,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy</value>
+    <value>Selbstgehosteter gemma-2-27b-it-Proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -333,7 +333,7 @@ Senden Sie Feedback vom Plugin-Installationsprogramm!</value>
 Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere Spieler sichtbar.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Translation Engine</value>
+    <value>Übersetzungsmaschine</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>Benutzerdefinierte Sprache verwenden</value>

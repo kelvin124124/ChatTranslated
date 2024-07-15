@@ -176,7 +176,7 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
     <value>IdiomasPersonalizados</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>You will be forced to use Google translate if you use custom languages.</value>
+    <value>Se verá obligado a usar Google Translate si utiliza idiomas personalizados.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Idioma objetivo personalizado</value>
@@ -185,12 +185,12 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (Optional)</value>
+    <value>Clave API de DeepL (Opcional)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL will be used to translate chat messages. 
-Google and Bing translate will be used as backup.
-If DeepL API key is provided below, it will be used as backup instead.</value>
+    <value>DeepL se usará para traducir mensajes de chat. 
+Google y Bing Translate se usarán como respaldo.
+Si se proporciona una clave API de DeepL a continuación, se usará como respaldo en su lugar.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Predeterminado</value>
@@ -218,7 +218,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>Francés</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>Generic</value>
+    <value>Genérico</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>Alemán</value>
@@ -233,10 +233,10 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>Coreano</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>LLMProvider</value>
+    <value>Proveedor de LLM</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy</value>
+    <value>Proxy auto-alojado gemma-2-27b-it</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Comunicador1</value>
@@ -333,7 +333,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
 No envía el texto traducido en el chat ni lo hace visible para otros jugadores.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Translation Engine</value>
+    <value>Motor de Traducción</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>Usar idioma personalizado</value>
