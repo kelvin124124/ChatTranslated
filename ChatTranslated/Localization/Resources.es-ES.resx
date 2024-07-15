@@ -176,7 +176,7 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
     <value>IdiomasPersonalizados</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>El modo de traducción automática se forzará si utilizas idiomas personalizados.</value>
+    <value>You will be forced to use Google translate if you use custom languages.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Idioma objetivo personalizado</value>
@@ -185,14 +185,12 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>Clave API de DeepL</value>
+    <value>DeepL API Key (Optional)</value>
   </data>
-  <data name="DeepLAPIKeyExplaination" xml:space="preserve">
-    <value>¡Obtén una gratis en la página oficial de DeepL!</value>
-  </data>
-  <data name="DeepLSpoofExplanation" xml:space="preserve">
-    <value>Le permite usar DeepL sin una clave API.
-La clave API (si se proporciona) se usará como respaldo.</value>
+  <data name="DeepLExplanation" xml:space="preserve">
+    <value>DeepL will be used to translate chat messages. 
+Google and Bing translate will be used as backup.
+If DeepL API key is provided below, it will be used as backup instead.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Predeterminado</value>
@@ -213,14 +211,14 @@ La clave API (si se proporciona) se usará como respaldo.</value>
   <data name="English" xml:space="preserve">
     <value>Inglés</value>
   </data>
-  <data name="EU" xml:space="preserve">
-    <value>UE</value>
-  </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>CompañíaLibre</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>Francés</value>
+  </data>
+  <data name="GenericChannels" xml:space="preserve">
+    <value>Generic</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>Alemán</value>
@@ -228,17 +226,17 @@ La clave API (si se proporciona) se usará como respaldo.</value>
   <data name="GGstr" xml:space="preserve">
     <value>¡Buen juego!</value>
   </data>
-  <data name="HK" xml:space="preserve">
-    <value>HK</value>
-  </data>
   <data name="Japanese" xml:space="preserve">
     <value>Japonés</value>
   </data>
   <data name="Korean" xml:space="preserve">
     <value>Coreano</value>
   </data>
-  <data name="LLMProxy" xml:space="preserve">
-    <value>LLMProxy</value>
+  <data name="LLMProvider" xml:space="preserve">
+    <value>LLMProvider</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>Self-hosted gemma-2-27b-it proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Comunicador1</value>
@@ -264,17 +262,11 @@ La clave API (si se proporciona) se usará como respaldo.</value>
   <data name="Ls8" xml:space="preserve">
     <value>Comunicador8</value>
   </data>
-  <data name="MachineTranslate" xml:space="preserve">
-    <value>TraducciónAutomática</value>
-  </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
     <value>RedDeNuevos</value>
-  </data>
-  <data name="OpenAI" xml:space="preserve">
-    <value>OpenAI</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>Clave API de OpenAI</value>
@@ -287,13 +279,6 @@ La clave API (si se proporciona) se usará como respaldo.</value>
   </data>
   <data name="PluginLanguage" xml:space="preserve">
     <value>Idioma del plugin</value>
-  </data>
-  <data name="ProxyExplanation" xml:space="preserve">
-    <value>Servicio de traducción gratuita Claude-Haiku proporcionado por el desarrollador,
-sujeto a disponibilidad.</value>
-  </data>
-  <data name="ProxyLatency" xml:space="preserve">
-    <value>Los usuarios de regiones no compatibles TENDRÁN una mayor latencia.</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPTeam</value>
@@ -347,19 +332,8 @@ sujeto a disponibilidad.</value>
     <value>El botón de traducción solo imprime el texto traducido en la ventana principal.
 No envía el texto traducido en el chat ni lo hace visible para otros jugadores.</value>
   </data>
-  <data name="TranslationMode" xml:space="preserve">
-    <value>Modo de traducción</value>
-  </data>
-  <data name="TranslationModeExplanation" xml:space="preserve">
-    <value>Traducción automática: 
- simple, rendimiento multilingüe pobre
-DeepL: 
- mejor calidad de traducción, rendimiento multilingüe pobre
-OpenAI / LLM Proxy: 
- alta latencia, buen rendimiento multilingüe</value>
-  </data>
-  <data name="US" xml:space="preserve">
-    <value>EE.UU.</value>
+  <data name="TranslationEngine" xml:space="preserve">
+    <value>Translation Engine</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>Usar idioma personalizado</value>

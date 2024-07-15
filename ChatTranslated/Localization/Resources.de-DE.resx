@@ -176,7 +176,7 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>Benutzerdefinierte Sprachen</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>Der Modus für maschinelle Übersetzung wird erzwungen, wenn Sie benutzerdefinierte Sprachen verwenden.</value>
+    <value>You will be forced to use Google translate if you use custom languages.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Benutzerdefinierte Zielsprache</value>
@@ -185,14 +185,12 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API-Schlüssel</value>
+    <value>DeepL API Key (Optional)</value>
   </data>
-  <data name="DeepLAPIKeyExplaination" xml:space="preserve">
-    <value>Holen Sie sich einen kostenlos von der offiziellen DeepL-Website!</value>
-  </data>
-  <data name="DeepLSpoofExplanation" xml:space="preserve">
-    <value>Ermöglicht die Nutzung von DeepL ohne einen API-Schlüssel.
-Ein API-Schlüssel (falls vorhanden) wird als Backup verwendet.</value>
+  <data name="DeepLExplanation" xml:space="preserve">
+    <value>DeepL will be used to translate chat messages. 
+Google and Bing translate will be used as backup.
+If DeepL API key is provided below, it will be used as backup instead.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Standard</value>
@@ -213,14 +211,14 @@ Ein API-Schlüssel (falls vorhanden) wird als Backup verwendet.</value>
   <data name="English" xml:space="preserve">
     <value>Englisch</value>
   </data>
-  <data name="EU" xml:space="preserve">
-    <value>EU</value>
-  </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>Freie Gesellschaft</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>Französisch</value>
+  </data>
+  <data name="GenericChannels" xml:space="preserve">
+    <value>Generic</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>Deutsch</value>
@@ -228,17 +226,17 @@ Ein API-Schlüssel (falls vorhanden) wird als Backup verwendet.</value>
   <data name="GGstr" xml:space="preserve">
     <value>Gutes Spiel!</value>
   </data>
-  <data name="HK" xml:space="preserve">
-    <value>HK</value>
-  </data>
   <data name="Japanese" xml:space="preserve">
     <value>Japanisch</value>
   </data>
   <data name="Korean" xml:space="preserve">
     <value>Koreanisch</value>
   </data>
-  <data name="LLMProxy" xml:space="preserve">
-    <value>LLMProxy</value>
+  <data name="LLMProvider" xml:space="preserve">
+    <value>LLMProvider</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>Self-hosted gemma-2-27b-it proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -264,17 +262,11 @@ Ein API-Schlüssel (falls vorhanden) wird als Backup verwendet.</value>
   <data name="Ls8" xml:space="preserve">
     <value>LS8</value>
   </data>
-  <data name="MachineTranslate" xml:space="preserve">
-    <value>Maschinenübersetzung</value>
-  </data>
   <data name="No" xml:space="preserve">
     <value>Nein</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
     <value>Neulingsnetzwerk</value>
-  </data>
-  <data name="OpenAI" xml:space="preserve">
-    <value>OpenAI</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>OpenAI API-Schlüssel</value>
@@ -287,13 +279,6 @@ Ein API-Schlüssel (falls vorhanden) wird als Backup verwendet.</value>
   </data>
   <data name="PluginLanguage" xml:space="preserve">
     <value>Plugin-Sprache</value>
-  </data>
-  <data name="ProxyExplanation" xml:space="preserve">
-    <value>Kostenloser Claude-Haiku-Übersetzungsdienst, bereitgestellt vom Entwickler,
-vorbehaltlich der Verfügbarkeit.</value>
-  </data>
-  <data name="ProxyLatency" xml:space="preserve">
-    <value>Benutzer aus nicht unterstützten Regionen werden eine höhere Latenz erfahren.</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvpGruppe</value>
@@ -347,19 +332,8 @@ Senden Sie Feedback vom Plugin-Installationsprogramm!</value>
     <value>Die Schaltfläche „Übersetzen“ druckt nur den übersetzten Text im Hauptfenster aus. 
 Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere Spieler sichtbar.</value>
   </data>
-  <data name="TranslationMode" xml:space="preserve">
-    <value>TranslationModus</value>
-  </data>
-  <data name="TranslationModeExplanation" xml:space="preserve">
-    <value>Maschinelle Übersetzung: 
-      einfach, schlechte Mehrsprachenleistung
-DeepL: 
-      beste Übersetzungsqualität, schlechte Mehrsprachenleistung 
-OpenAI / LLM Proxy: 
-      hohe Latenz, gute Mehrsprachenleistung</value>
-  </data>
-  <data name="US" xml:space="preserve">
-    <value>US</value>
+  <data name="TranslationEngine" xml:space="preserve">
+    <value>Translation Engine</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>Benutzerdefinierte Sprache verwenden</value>

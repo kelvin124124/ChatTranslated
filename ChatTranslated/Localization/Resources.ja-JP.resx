@@ -176,7 +176,7 @@
     <value>カスタム言語</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>カスタム言語を使用する場合、機械翻訳モードが強制されます。</value>
+    <value>You will be forced to use Google translate if you use custom languages.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>カスタムターゲット言語</value>
@@ -185,14 +185,12 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL APIキー</value>
+    <value>DeepL API Key (Optional)</value>
   </data>
-  <data name="DeepLAPIKeyExplaination" xml:space="preserve">
-    <value>公式サイトから無料で入手できます！</value>
-  </data>
-  <data name="DeepLSpoofExplanation" xml:space="preserve">
-    <value>Let you use DeepL without an API key.
-API key (if provided) will be used as backup.</value>
+  <data name="DeepLExplanation" xml:space="preserve">
+    <value>DeepL will be used to translate chat messages. 
+Google and Bing translate will be used as backup.
+If DeepL API key is provided below, it will be used as backup instead.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>デフォルト</value>
@@ -213,14 +211,14 @@ API key (if provided) will be used as backup.</value>
   <data name="English" xml:space="preserve">
     <value>英語</value>
   </data>
-  <data name="EU" xml:space="preserve">
-    <value>EU</value>
-  </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>フリーカンパニー</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>フランス語</value>
+  </data>
+  <data name="GenericChannels" xml:space="preserve">
+    <value>Generic</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>ドイツ語</value>
@@ -228,17 +226,17 @@ API key (if provided) will be used as backup.</value>
   <data name="GGstr" xml:space="preserve">
     <value>お疲れ様でした。</value>
   </data>
-  <data name="HK" xml:space="preserve">
-    <value>HK</value>
-  </data>
   <data name="Japanese" xml:space="preserve">
     <value>日本語</value>
   </data>
   <data name="Korean" xml:space="preserve">
     <value>韓国語</value>
   </data>
-  <data name="LLMProxy" xml:space="preserve">
-    <value>LLMProxy</value>
+  <data name="LLMProvider" xml:space="preserve">
+    <value>LLMProvider</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>Self-hosted gemma-2-27b-it proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -264,17 +262,11 @@ API key (if provided) will be used as backup.</value>
   <data name="Ls8" xml:space="preserve">
     <value>LS8</value>
   </data>
-  <data name="MachineTranslate" xml:space="preserve">
-    <value>機械翻訳</value>
-  </data>
   <data name="No" xml:space="preserve">
     <value>いいえ</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
     <value>ビギナーチャンネル</value>
-  </data>
-  <data name="OpenAI" xml:space="preserve">
-    <value>OpenAI</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>OpenAI APIキー</value>
@@ -287,13 +279,6 @@ API key (if provided) will be used as backup.</value>
   </data>
   <data name="PluginLanguage" xml:space="preserve">
     <value>プラグイン言語</value>
-  </data>
-  <data name="ProxyExplanation" xml:space="preserve">
-    <value>提供されるフリーのClaude-Haiku翻訳サービス、
-利用可能状況による。</value>
-  </data>
-  <data name="ProxyLatency" xml:space="preserve">
-    <value>サポートされていない地域のユーザーはより高い遅延を経験します。</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPチーム</value>
@@ -347,19 +332,8 @@ API key (if provided) will be used as backup.</value>
     <value>翻訳ボタンはメインウィンドウに翻訳されたテキストのみを表示します。
 チャットに翻訳されたテキストを送信したり、他のプレイヤーに見せたりするわけではありません。</value>
   </data>
-  <data name="TranslationMode" xml:space="preserve">
-    <value>翻訳モード</value>
-  </data>
-  <data name="TranslationModeExplanation" xml:space="preserve">
-    <value>Machine Translate: 
-    simple, poor multi-language performance
-DeepL: 
-    best translation quality, poor multi-language performance 
-OpenAI / LLM Proxy: 
-    high latency, good mult-language performance</value>
-  </data>
-  <data name="US" xml:space="preserve">
-    <value>US</value>
+  <data name="TranslationEngine" xml:space="preserve">
+    <value>Translation Engine</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>カスタム言語を使用</value>
