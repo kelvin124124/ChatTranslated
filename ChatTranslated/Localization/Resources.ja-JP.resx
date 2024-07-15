@@ -176,7 +176,7 @@
     <value>カスタム言語</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>You will be forced to use Google translate if you use custom languages.</value>
+    <value>カスタム言語を使用する場合、Google翻訳を使用する必要があります。</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>カスタムターゲット言語</value>
@@ -185,12 +185,12 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (Optional)</value>
+    <value>DeepL APIキー（任意）</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL will be used to translate chat messages. 
-Google and Bing translate will be used as backup.
-If DeepL API key is provided below, it will be used as backup instead.</value>
+    <value>DeepLはチャットメッセージの翻訳に使用されます。
+GoogleとBing翻訳はバックアップとして使用されます。
+以下にDeepL APIキーが提供されている場合は、代わりに使用されます。</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>デフォルト</value>
@@ -218,7 +218,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>フランス語</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>Generic</value>
+    <value>汎用</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>ドイツ語</value>
@@ -236,7 +236,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy</value>
+    <value>Self-hosted gemma-2-27b-it プロキシ</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -333,7 +333,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
 チャットに翻訳されたテキストを送信したり、他のプレイヤーに見せたりするわけではありません。</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Translation Engine</value>
+    <value>翻訳エンジン</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>カスタム言語を使用</value>
