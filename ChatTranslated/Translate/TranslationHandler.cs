@@ -61,6 +61,12 @@ namespace ChatTranslated.Translate
                 return cachedTranslation;
             }
 
+            if (Service.configuration.UseCustomLanguage && !Service.configuration.CustomTargetLanguage.IsNullOrEmpty())
+            {
+                var (result, _) = await Translator.Translate(message, Service.configuration.CustomTargetLanguage, Configuration.TranslationMode.MachineTranslate);
+                return result;
+            }
+
             var (translatedText, mode) = await Translator.Translate(message, targetLanguage);
             if (cache && !translatedText.IsNullOrWhitespace() && mode != Configuration.TranslationMode.MachineTranslate)
             {
