@@ -176,7 +176,7 @@
     <value>自定义语言</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>You will be forced to use Google translate if you use custom languages.</value>
+    <value>如果使用自定义语言，您将被迫使用Google翻译。</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>自定义目标语言</value>
@@ -185,12 +185,12 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (Optional)</value>
+    <value>DeepL API密钥（可选）</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL will be used to translate chat messages. 
-Google and Bing translate will be used as backup.
-If DeepL API key is provided below, it will be used as backup instead.</value>
+    <value>DeepL将用于翻译聊天消息。
+Google和Bing翻译将作为备份。
+如果下面提供了DeepL API密钥，它将作为备份使用。</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>默认</value>
@@ -218,7 +218,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>法语</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>Generic</value>
+    <value>通用</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>德语</value>
@@ -233,10 +233,10 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>韩语</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>LLMProvider</value>
+    <value>LLM提供者</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy</value>
+    <value>自托管的gemma-2-27b-it代理</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通讯贝1</value>
@@ -333,7 +333,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
 它不会在聊天中发送翻译的文本或使其对其他玩家可见。</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Translation Engine</value>
+    <value>翻译引擎</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>使用自定义语言</value>
