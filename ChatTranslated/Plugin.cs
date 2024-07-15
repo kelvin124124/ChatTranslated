@@ -58,6 +58,8 @@ namespace ChatTranslated
                 HelpMessage = "Open Chat Translated main window. '/pchat config' to open config window."
             });
 
+            ConfigWindow.SetLanguageCulture(Service.configuration.SelectedPluginLanguage);
+
             if (Service.configuration.Version != 4)
             {
                 OutputChatLine("Plugin has been updated and requires a config reset.");

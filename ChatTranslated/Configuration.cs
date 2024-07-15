@@ -34,9 +34,9 @@ namespace ChatTranslated
 
         public List<string> SelectedSourceLanguages { get; set; } = [];
 
-        public string SelectedTargetLanguage = "English";
-        public string SelectedMainWindowTargetLanguage = "Japanese";
-        public string SelectedPluginLanguage = "English";
+        public string SelectedTargetLanguage { get; set; } = "English";
+        public string SelectedMainWindowTargetLanguage { get; set; } = "Japanese";
+        public string SelectedPluginLanguage { get; set; } = "English";
 
         public bool Enabled { get; set; } = true;
         public bool ChatIntegration { get; set; } = true;
