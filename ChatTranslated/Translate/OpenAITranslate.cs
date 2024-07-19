@@ -29,7 +29,7 @@ namespace ChatTranslated.Translate
                 $"Output only the translated text in a single line.\nMessage to translate: {message}";
             var requestData = new
             {
-                model = "gpt-3.5-turbo",
+                model = "gpt-4o-mini",
                 temperature = 0.6,
                 max_tokens = Math.Min(Math.Max(message.Length * 2, 20), 150),
                 messages = new[]
