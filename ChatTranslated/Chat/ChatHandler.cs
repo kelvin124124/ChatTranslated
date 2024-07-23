@@ -7,6 +7,7 @@ using Dalamud.Game.Text.SeStringHandling.Payloads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -92,14 +93,14 @@ namespace ChatTranslated.Utils
 
         public static string RemoveNonTextPayloads(SeString inputMsg)
         {
-            var message = new SeString(new List<Payload>());
+            var sb = new StringBuilder();
             for (int i = 0; i < inputMsg.Payloads.Count; i++)
             {
                 var payload = inputMsg.Payloads[i];
                 switch (payload)
                 {
                     case TextPayload textPayload:
-                        message.Payloads.Add(textPayload);
+                        sb.Append(textPayload.Text);
                         break;
                     case PlayerPayload _:
                         i += 2;
@@ -117,7 +118,7 @@ namespace ChatTranslated.Utils
                         break;
                 }
             }
-            return Sanitize(AutoTranslateRegex().Replace(message.TextValue, string.Empty));
+            return Sanitize(AutoTranslateRegex().Replace(sb.ToString(), string.Empty));
         }
 
         private bool IsFilteredMessage(string playerName, string messageText)

@@ -22,7 +22,7 @@ public class ConfigWindow : Window
     private readonly string[] supportedLanguages =
     ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
 
-    public static readonly List<XivChatType> genericChatTypes =
+    public static readonly HashSet<XivChatType> genericChatTypes =
     [
         XivChatType.Say,
         XivChatType.Shout,
@@ -35,7 +35,7 @@ public class ConfigWindow : Window
         XivChatType.CrossParty,
         XivChatType.PvPTeam
     ];
-    public static readonly List<XivChatType> lsChatTypes =
+    public static readonly HashSet<XivChatType> lsChatTypes =
     [
         XivChatType.Ls1,
         XivChatType.Ls2,
@@ -46,7 +46,7 @@ public class ConfigWindow : Window
         XivChatType.Ls7,
         XivChatType.Ls8
     ];
-    public static readonly List<XivChatType> cwlsChatTypes =
+    public static readonly HashSet<XivChatType> cwlsChatTypes =
     [
         XivChatType.CrossLinkShell1,
         XivChatType.CrossLinkShell2,

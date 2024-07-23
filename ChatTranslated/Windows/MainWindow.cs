@@ -4,9 +4,9 @@ using ChatTranslated.Utils;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -116,24 +116,29 @@ namespace ChatTranslated.Windows
         private static void AddSoftReturnsToText(ref string str, float multilineWidth)
         {
             var lines = str.Split('\n');
-            str = string.Join("\r\n", lines.SelectMany(line => WrapLine(line, multilineWidth)));
+            var wrappedLines = new StringBuilder();
+            foreach (var line in lines)
+            {
+                var wrappedLine = WrapLine(line, multilineWidth);
+                wrappedLines.AppendLine(wrappedLine);
+            }
+            str = wrappedLines.ToString().TrimEnd();
         }
 
-        private static IEnumerable<string> WrapLine(string line, float multilineWidth)
+        private static string WrapLine(string line, float multilineWidth)
         {
-            var wrappedLine = string.Empty;
+            var wrappedLine = new StringBuilder();
             var words = WordRegex().Matches(line).Cast<Match>().Select(m => m.Value);
 
             foreach (var word in words)
             {
                 if (ImGui.CalcTextSize(wrappedLine + word).X + 20f > multilineWidth)
                 {
-                    yield return wrappedLine.TrimEnd();
-                    wrappedLine = string.Empty;
+                    wrappedLine.AppendLine();
                 }
-                wrappedLine += word;
+                wrappedLine.Append(word);
             }
-            yield return wrappedLine.TrimEnd();
+            return wrappedLine.ToString().TrimEnd();
         }
 
         private static string RemoveSoftReturns(string str) => str.Replace("\r\n", string.Empty);
