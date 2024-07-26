@@ -10,9 +10,9 @@
       },
       "GTranslate": {
         "type": "Direct",
-        "requested": "[2.2.0, )",
-        "resolved": "2.2.0",
-        "contentHash": "dm3rI9LofEC/vx3Y0+TyOMp9FRmcBnz81UtNPxhWQZFtIzo6h4XZ+whSnq2PjKj6u14Mhydq3VhzAL4FdD9arg=="
+        "requested": "[2.2.3, )",
+        "resolved": "2.2.3",
+        "contentHash": "6FPm211NQGQeYK/Pt5lC1gX/i0BVd2Gylnv7z+ueiB4zojPShFoNWObLpKdz4a2omp4d4nAPs2GUyIb+zSWeTA=="
       }
     }
   }
