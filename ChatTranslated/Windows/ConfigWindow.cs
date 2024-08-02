@@ -416,7 +416,7 @@ public class ConfigWindow : Window
                 }
                 else
                 {
-                    ImGui.TextUnformatted("GPT-3.5-turbo\nMay be restricted if you live in unsupported region.");
+                    ImGui.TextUnformatted("GPT-4o-mini\nMay be restricted if you live in unsupported region.");
                     ImGui.Separator();
                     DrawOpenAISettings(configuration);
                 }
