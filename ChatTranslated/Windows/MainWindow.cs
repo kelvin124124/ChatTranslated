@@ -35,7 +35,6 @@ namespace ChatTranslated.Windows
         {
             float scale = ImGuiHelpers.GlobalScale;
             DrawOutputField(scale);
-            DrawLanguageSelector();
             DrawInputField(scale);
         }
 
@@ -71,6 +70,23 @@ namespace ChatTranslated.Windows
             }
         }
 
+        private void DrawInputField(float scale)
+        {
+            DrawLanguageSelector();
+
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - 100 * scale);
+            ImGui.InputText("##input", ref inputText, 500);
+            ImGui.SameLine();
+            if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
+            {
+                ProcessInput(inputText);
+                inputText = "";
+            }
+            ImGui.SameLine();
+            ImGui.TextDisabled("?");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
+        }
+
         private void DrawLanguageSelector()
         {
             int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage);
@@ -83,21 +99,6 @@ namespace ChatTranslated.Windows
                 TranslationHandler.ClearTranslationCache();
                 Service.configuration.Save();
             }
-        }
-
-        private void DrawInputField(float scale)
-        {
-            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - 100 * scale);
-            ImGui.InputText("##input", ref inputText, 500);
-            ImGui.SameLine();
-            if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
-            {
-                ProcessInput(inputText);
-                inputText = "";
-            }
-            ImGui.SameLine();
-            ImGui.TextDisabled("?");
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
         }
 
         private static void ProcessInput(string input) => Task.Run(() => TranslationHandler.TranslateMainWindowMessage(input));
