@@ -55,6 +55,20 @@ namespace ChatTranslated.Windows
             ImGui.SetScrollHereY(1.0f);
             ImGui.EndChild();
             ImGui.Separator();
+
+
+            if (ImGui.IsKeyPressed(ImGuiKey.C) && (ImGui.GetIO().KeyCtrl || ImGui.GetIO().KeySuper))
+            {
+                Task.Run(() =>
+                {
+                    string clipboardText = ImGui.GetClipboardText();
+                    string cleanedText = RemoveSoftReturns(clipboardText);
+                    if (clipboardText != cleanedText)
+                    {
+                        ImGui.SetClipboardText(cleanedText);
+                    }
+                });
+            }
         }
 
         private void DrawLanguageSelector()
