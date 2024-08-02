@@ -1,6 +1,7 @@
 using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
+using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
@@ -32,16 +33,16 @@ namespace ChatTranslated.Windows
 
         public override void Draw()
         {
-            DrawOutputField();
+            float scale = ImGuiHelpers.GlobalScale;
+            DrawOutputField(scale);
             DrawLanguageSelector();
-            DrawInputField();
+            DrawInputField(scale);
         }
 
-        private void DrawOutputField()
+        private void DrawOutputField(float scale)
         {
-            ImGui.BeginChild("outputField", new Vector2(-1, -55), false);
+            ImGui.BeginChild("outputField", new Vector2(-1, -55 * scale), false);
             float outputFieldWidth = ImGui.GetContentRegionAvail().X;
-
             if (!isOutputFieldWrapped || Math.Abs(outputFieldWidth - lastOutputFieldWidth) > 0.1f)
             {
                 lastOutputFieldWidth = outputFieldWidth;
@@ -50,24 +51,9 @@ namespace ChatTranslated.Windows
                 outputText = wrappedText;
                 isOutputFieldWrapped = true;
             }
-
             ImGui.InputTextMultiline("##output", ref outputText, 0, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
             ImGui.SetScrollHereY(1.0f);
             ImGui.EndChild();
-
-            if (ImGui.IsKeyPressed(ImGuiKey.C) && (ImGui.GetIO().KeyCtrl || ImGui.GetIO().KeySuper))
-            {
-                Task.Run(() =>
-                {
-                    string clipboardText = ImGui.GetClipboardText();
-                    string cleanedText = RemoveSoftReturns(clipboardText);
-                    if (clipboardText != cleanedText)
-                    {
-                        ImGui.SetClipboardText(cleanedText);
-                    }
-                });
-            }
-
             ImGui.Separator();
         }
 
@@ -85,23 +71,19 @@ namespace ChatTranslated.Windows
             }
         }
 
-        private void DrawInputField()
+        private void DrawInputField(float scale)
         {
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - 100 * scale);
             ImGui.InputText("##input", ref inputText, 500);
-
             ImGui.SameLine();
-            if (ImGui.Button(Resources.Translate))
+            if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
             {
                 ProcessInput(inputText);
                 inputText = "";
             }
-
             ImGui.SameLine();
             ImGui.TextDisabled("?");
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.SetTooltip(Resources.TranslateButtonTooltip);
-            }
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
         }
 
         private static void ProcessInput(string input) => Task.Run(() => TranslationHandler.TranslateMainWindowMessage(input));
