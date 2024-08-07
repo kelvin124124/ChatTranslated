@@ -53,15 +53,15 @@ namespace ChatTranslated.Utils
             if (type == XivChatType.TellOutgoing)
                 playerName = Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty);
 
-            if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
-            {
-                Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
-                if (Service.configuration.SendChatToDB)
-                {
-                    SendChatAsync(message.TextValue);
-                }
-                return;
-            }
+            //if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
+            //{
+            //    Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
+            //    if (Service.configuration.SendChatToDB)
+            //    {
+            //        SendChatAsync(message.TextValue);
+            //    }
+            //    return;
+            //}
 
             string messageText = RemoveNonTextPayloads(message);
             if (IsFilteredMessage(playerName, messageText))
