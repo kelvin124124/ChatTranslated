@@ -498,7 +498,7 @@ public class ConfigWindow : Window
     private static void DrawOpenAISettings(Configuration configuration)
     {
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
-        ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 100);
+        ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 200);
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply + "###OpenAI_API_Key"))
         {
