@@ -129,6 +129,7 @@ public class ConfigWindow : Window
     {
         bool _Enabled = configuration.Enabled;
         bool _ChatIntegration = configuration.ChatIntegration;
+        bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
         bool _EnabledInDuty = configuration.EnabledInDuty;
         bool _SendChatToDB = configuration.SendChatToDB;
 
@@ -144,6 +145,16 @@ public class ConfigWindow : Window
         {
             configuration.ChatIntegration = _ChatIntegration;
             configuration.Save();
+        }
+
+        if (configuration.ChatIntegration)
+        {
+            // Hide original message when outputing translated message
+            if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref _ChatIntegration_HideOriginal))
+            {
+                configuration.ChatIntegration_HideOriginal = _ChatIntegration_HideOriginal;
+                configuration.Save();
+            }
         }
 
         // Enable in duties

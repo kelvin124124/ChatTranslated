@@ -40,8 +40,11 @@ namespace ChatTranslated.Utils
             Service.chatGui.ChatMessage += OnChatMessage;
         }
 
-        private void OnChatMessage(XivChatType type, int _, ref SeString sender, ref SeString message, ref bool _1)
+        private void OnChatMessage(XivChatType type, int _, ref SeString sender, ref SeString message, ref bool isHandled)
         {
+            if (isHandled)
+                return;
+
             if (!Service.configuration.Enabled || sender.TextValue.Contains("[CT]") || !Service.configuration.SelectedChatTypes.Contains(type))
                 return;
 
@@ -137,17 +140,26 @@ namespace ChatTranslated.Utils
 
             if (JPWelcomeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.WelcomeStr);
+                if (!Service.configuration.ChatIntegration_HideOriginal)
+                    message = $"{message} || " + Resources.WelcomeStr;
+
+                TranslationHandler.OutputTranslation(type, sender, message);
                 return true;
             }
             if (JPByeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.GGstr);
+                if (!Service.configuration.ChatIntegration_HideOriginal)
+                    message = $"{message} || " + Resources.GGstr;
+
+                TranslationHandler.OutputTranslation(type, sender, message);
                 return true;
             }
             if (JPDomaRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.DomaStr);
+                if (!Service.configuration.ChatIntegration_HideOriginal)
+                    message = $"{message} || " + Resources.DomaStr;
+
+                TranslationHandler.OutputTranslation(type, sender, message);
                 return true;
             }
 

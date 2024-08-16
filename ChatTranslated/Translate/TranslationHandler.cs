@@ -30,7 +30,9 @@ namespace ChatTranslated.Translate
             var translatedText = await TranslateMessage(message, Service.configuration.SelectedTargetLanguage, true);
             if (!translatedText.IsNullOrWhitespace())
             {
-                OutputTranslation(type, sender, $"{message} || {translatedText}");
+                if (!Service.configuration.ChatIntegration_HideOriginal)
+                    message = $"{message} || {translatedText}";
+                OutputTranslation(type, sender, message);
             }
         }
 
@@ -50,7 +52,9 @@ namespace ChatTranslated.Translate
             var translatedText = await TranslateMessage(message, Service.configuration.SelectedTargetLanguage, true);
             if (!translatedText.IsNullOrWhitespace())
             {
-                OutputTranslation(XivChatType.Say, "PF", $"{message} || {translatedText}");
+                if (!Service.configuration.ChatIntegration_HideOriginal)
+                    message = $"{message} || {translatedText}";
+                OutputTranslation(XivChatType.Say, "PF", message);
             }
         }
 
