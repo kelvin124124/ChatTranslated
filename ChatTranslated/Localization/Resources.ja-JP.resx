@@ -350,4 +350,19 @@ GoogleとBing翻訳はバックアップとして使用されます。
   <data name="Yes" xml:space="preserve">
     <value>はい</value>
   </data>
+  <data name="ChatIntegration_HideOriginal" xml:space="preserve">
+    <value>Hide original message when outputing translated message</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="Chat Channels" xml:space="preserve">
+    <value>Chat Channels</value>
+  </data>
+  <data name="Translation Mode" xml:space="preserve">
+    <value>Translation Mode</value>
+  </data>
 </root>
