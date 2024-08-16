@@ -351,18 +351,18 @@ Google 및 Bing 번역은 백업으로 사용됩니다.
     <value>네</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputing translated message</value>
+    <value>Hide original message when outputting translated message</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>일반</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>Languages</value>
+    <value>언어</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
-    <value>Chat Channels</value>
+    <value>채팅 채널</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
-    <value>Translation Mode</value>
+    <value>번역 모드</value>
   </data>
 </root>
