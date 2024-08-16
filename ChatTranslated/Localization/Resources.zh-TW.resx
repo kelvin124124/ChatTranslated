@@ -351,18 +351,18 @@ Google 和 Bing 翻譯將被用作備用。
     <value>是</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputing translated message</value>
+    <value>Hide original message when outputting translated message</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>通用</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>Languages</value>
+    <value>語言</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
-    <value>Chat Channels</value>
+    <value>聊天頻道</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
-    <value>Translation Mode</value>
+    <value>翻譯模式</value>
   </data>
 </root>
