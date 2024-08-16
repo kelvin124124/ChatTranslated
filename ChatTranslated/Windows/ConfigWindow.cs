@@ -151,7 +151,7 @@ public class ConfigWindow : Window
         {
             ImGui.TextUnformatted("    ");
             ImGui.SameLine();
-            // Hide original message when outputing translated message
+            // Hide original message when outputting translated message
             if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref _ChatIntegration_HideOriginal))
             {
                 configuration.ChatIntegration_HideOriginal = _ChatIntegration_HideOriginal;
