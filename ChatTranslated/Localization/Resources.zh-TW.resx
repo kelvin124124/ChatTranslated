@@ -350,4 +350,19 @@ Google 和 Bing 翻譯將被用作備用。
   <data name="Yes" xml:space="preserve">
     <value>是</value>
   </data>
+  <data name="ChatIntegration_HideOriginal" xml:space="preserve">
+    <value>Hide original message when outputting translated message</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>通用</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>語言</value>
+  </data>
+  <data name="Chat Channels" xml:space="preserve">
+    <value>聊天頻道</value>
+  </data>
+  <data name="Translation Mode" xml:space="preserve">
+    <value>翻譯模式</value>
+  </data>
 </root>

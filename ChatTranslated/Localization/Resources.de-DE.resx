@@ -350,4 +350,19 @@ Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere S
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
   </data>
+  <data name="ChatIntegration_HideOriginal" xml:space="preserve">
+    <value>Hide original message when outputting translated message</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Allgemein</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Sprachen</value>
+  </data>
+  <data name="Chat Channels" xml:space="preserve">
+    <value>Chat-Kanäle</value>
+  </data>
+  <data name="Translation Mode" xml:space="preserve">
+    <value>Übersetzungsmodus</value>
+  </data>
 </root>
