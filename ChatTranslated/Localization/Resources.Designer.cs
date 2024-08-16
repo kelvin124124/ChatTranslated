@@ -116,11 +116,29 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chat Channels.
+        /// </summary>
+        internal static string Chat_Channels {
+            get {
+                return ResourceManager.GetString("Chat Channels", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chat Integration.
         /// </summary>
         internal static string ChatIntegration {
             get {
                 return ResourceManager.GetString("ChatIntegration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hide original message when outputing translated message.
+        /// </summary>
+        internal static string ChatIntegration_HideOriginal {
+            get {
+                return ResourceManager.GetString("ChatIntegration_HideOriginal", resourceCulture);
             }
         }
         
@@ -353,6 +371,15 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        internal static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Generic.
         /// </summary>
         internal static string GenericChannels {
@@ -394,6 +421,15 @@ namespace ChatTranslated.Localization {
         internal static string Korean {
             get {
                 return ResourceManager.GetString("Korean", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Languages.
+        /// </summary>
+        internal static string Languages {
+            get {
+                return ResourceManager.GetString("Languages", resourceCulture);
             }
         }
         
@@ -686,6 +722,15 @@ namespace ChatTranslated.Localization {
         internal static string TranslateButtonTooltip {
             get {
                 return ResourceManager.GetString("TranslateButtonTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translation Mode.
+        /// </summary>
+        internal static string Translation_Mode {
+            get {
+                return ResourceManager.GetString("Translation Mode", resourceCulture);
             }
         }
         

@@ -77,7 +77,7 @@ public class ConfigWindow : Window
     public override void Draw()
     {
         Configuration configuration = Service.configuration;
-        string[] tabs = ["General", "Languages", "Chat Channels", "Translation Mode"];
+        string[] tabs = [Resources.General, Resources.Languages, Resources.Chat_Channels, Resources.Translation_Mode];
 
         ImGui.Columns(2, "ConfigColumns", false);
         ImGui.SetColumnWidth(0, 200); // Increased width for the tab box
