@@ -32,6 +32,9 @@ namespace ChatTranslated.Translate
             {
                 if (!Service.configuration.ChatIntegration_HideOriginal)
                     message = $"{message} || {translatedText}";
+                else
+                    message = translatedText;
+
                 OutputTranslation(type, sender, message);
             }
         }
@@ -54,6 +57,9 @@ namespace ChatTranslated.Translate
             {
                 if (!Service.configuration.ChatIntegration_HideOriginal)
                     message = $"{message} || {translatedText}";
+                else
+                    message = translatedText;
+
                 OutputTranslation(XivChatType.Say, "PF", message);
             }
         }

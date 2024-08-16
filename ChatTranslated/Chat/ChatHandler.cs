@@ -142,6 +142,8 @@ namespace ChatTranslated.Utils
             {
                 if (!Service.configuration.ChatIntegration_HideOriginal)
                     message = $"{message} || " + Resources.WelcomeStr;
+                else
+                    message = Resources.WelcomeStr;
 
                 TranslationHandler.OutputTranslation(type, sender, message);
                 return true;
@@ -150,6 +152,8 @@ namespace ChatTranslated.Utils
             {
                 if (!Service.configuration.ChatIntegration_HideOriginal)
                     message = $"{message} || " + Resources.GGstr;
+                else
+                    message = Resources.GGstr;
 
                 TranslationHandler.OutputTranslation(type, sender, message);
                 return true;
@@ -158,6 +162,8 @@ namespace ChatTranslated.Utils
             {
                 if (!Service.configuration.ChatIntegration_HideOriginal)
                     message = $"{message} || " + Resources.DomaStr;
+                else
+                    message = Resources.DomaStr;
 
                 TranslationHandler.OutputTranslation(type, sender, message);
                 return true;
