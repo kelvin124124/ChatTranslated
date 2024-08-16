@@ -21,7 +21,7 @@ namespace ChatTranslated.Utils
             message = message.Replace("\uE040", "{[").Replace("\uE041", "]}");
             message = ChatHandler.Sanitize(message);
 
-            var pbData = new { sentence = message, Client };
+            var pbData = new { sentence = message, client = Client };
             var json = Newtonsoft.Json.JsonConvert.SerializeObject(pbData);
             var data = new StringContent(json, Encoding.UTF8, "application/json");
 

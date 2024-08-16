@@ -5,6 +5,7 @@ using Dalamud.Game.Command;
 using Dalamud.Game.Gui.ContextMenu;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
+using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
@@ -91,7 +92,7 @@ namespace ChatTranslated
             Service.chatGui.Print(new XivChatEntry
             {
                 Type = type,
-                Name = "[CT] " + sender,
+                Name = new SeString(new PlayerPayload("[CT] " + sender, 0)), // use player payload to fake chat bubbles
                 Message = new SeStringBuilder().AddUiForegroundOff().Append(message).Build()
             });
         }

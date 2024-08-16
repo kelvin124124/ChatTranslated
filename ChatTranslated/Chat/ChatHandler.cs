@@ -7,6 +7,7 @@ using Dalamud.Game.Text.SeStringHandling.Payloads;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -39,8 +40,11 @@ namespace ChatTranslated.Utils
             Service.chatGui.ChatMessage += OnChatMessage;
         }
 
-        private void OnChatMessage(XivChatType type, int _, ref SeString sender, ref SeString message, ref bool _1)
+        private void OnChatMessage(XivChatType type, int _, ref SeString sender, ref SeString message, ref bool isHandled)
         {
+            if (isHandled)
+                return;
+
             if (!Service.configuration.Enabled || sender.TextValue.Contains("[CT]") || !Service.configuration.SelectedChatTypes.Contains(type))
                 return;
 
@@ -92,14 +96,14 @@ namespace ChatTranslated.Utils
 
         public static string RemoveNonTextPayloads(SeString inputMsg)
         {
-            var message = new SeString(new List<Payload>());
+            var sb = new StringBuilder();
             for (int i = 0; i < inputMsg.Payloads.Count; i++)
             {
                 var payload = inputMsg.Payloads[i];
                 switch (payload)
                 {
                     case TextPayload textPayload:
-                        message.Payloads.Add(textPayload);
+                        sb.Append(textPayload.Text);
                         break;
                     case PlayerPayload _:
                         i += 2;
@@ -117,7 +121,7 @@ namespace ChatTranslated.Utils
                         break;
                 }
             }
-            return Sanitize(AutoTranslateRegex().Replace(message.TextValue, string.Empty));
+            return Sanitize(AutoTranslateRegex().Replace(sb.ToString(), string.Empty));
         }
 
         private bool IsFilteredMessage(string playerName, string messageText)
@@ -136,17 +140,32 @@ namespace ChatTranslated.Utils
 
             if (JPWelcomeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.WelcomeStr);
+                if (!Service.configuration.ChatIntegration_HideOriginal)
+                    message = $"{message} || " + Resources.WelcomeStr;
+                else
+                    message = Resources.WelcomeStr;
+
+                TranslationHandler.OutputTranslation(type, sender, message);
                 return true;
             }
             if (JPByeRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.GGstr);
+                if (!Service.configuration.ChatIntegration_HideOriginal)
+                    message = $"{message} || " + Resources.GGstr;
+                else
+                    message = Resources.GGstr;
+
+                TranslationHandler.OutputTranslation(type, sender, message);
                 return true;
             }
             if (JPDomaRegex().IsMatch(messageText))
             {
-                TranslationHandler.OutputTranslation(type, sender, $"{message} || " + Resources.DomaStr);
+                if (!Service.configuration.ChatIntegration_HideOriginal)
+                    message = $"{message} || " + Resources.DomaStr;
+                else
+                    message = Resources.DomaStr;
+
+                TranslationHandler.OutputTranslation(type, sender, message);
                 return true;
             }
 

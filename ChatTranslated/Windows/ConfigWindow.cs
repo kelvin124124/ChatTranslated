@@ -22,7 +22,7 @@ public class ConfigWindow : Window
     private readonly string[] supportedLanguages =
     ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
 
-    public static readonly List<XivChatType> genericChatTypes =
+    public static readonly HashSet<XivChatType> genericChatTypes =
     [
         XivChatType.Say,
         XivChatType.Shout,
@@ -35,7 +35,7 @@ public class ConfigWindow : Window
         XivChatType.CrossParty,
         XivChatType.PvPTeam
     ];
-    public static readonly List<XivChatType> lsChatTypes =
+    public static readonly HashSet<XivChatType> lsChatTypes =
     [
         XivChatType.Ls1,
         XivChatType.Ls2,
@@ -46,7 +46,7 @@ public class ConfigWindow : Window
         XivChatType.Ls7,
         XivChatType.Ls8
     ];
-    public static readonly List<XivChatType> cwlsChatTypes =
+    public static readonly HashSet<XivChatType> cwlsChatTypes =
     [
         XivChatType.CrossLinkShell1,
         XivChatType.CrossLinkShell2,
@@ -62,7 +62,7 @@ public class ConfigWindow : Window
         "Chat Translated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Size = new Vector2(800, 340);
+        Size = new Vector2(600, 340);
     }
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
@@ -77,7 +77,7 @@ public class ConfigWindow : Window
     public override void Draw()
     {
         Configuration configuration = Service.configuration;
-        string[] tabs = ["General", "Languages", "Chat Channels", "Translation Mode"];
+        string[] tabs = [Resources.General, Resources.Languages, Resources.Chat_Channels, Resources.Translation_Mode];
 
         ImGui.Columns(2, "ConfigColumns", false);
         ImGui.SetColumnWidth(0, 200); // Increased width for the tab box
@@ -129,6 +129,7 @@ public class ConfigWindow : Window
     {
         bool _Enabled = configuration.Enabled;
         bool _ChatIntegration = configuration.ChatIntegration;
+        bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
         bool _EnabledInDuty = configuration.EnabledInDuty;
         bool _SendChatToDB = configuration.SendChatToDB;
 
@@ -144,6 +145,18 @@ public class ConfigWindow : Window
         {
             configuration.ChatIntegration = _ChatIntegration;
             configuration.Save();
+        }
+
+        if (configuration.ChatIntegration)
+        {
+            ImGui.TextUnformatted("    ");
+            ImGui.SameLine();
+            // Hide original message when outputting translated message
+            if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref _ChatIntegration_HideOriginal))
+            {
+                configuration.ChatIntegration_HideOriginal = _ChatIntegration_HideOriginal;
+                configuration.Save();
+            }
         }
 
         // Enable in duties
@@ -400,7 +413,7 @@ public class ConfigWindow : Window
         switch (configuration.SelectedTranslationEngine)
         {
             case TranslationEngine.DeepL:
-                ImGui.TextUnformatted(Resources.DeepLExplanation);
+                ImGui.TextWrapped(Resources.DeepLExplanation);
                 ImGui.Separator();
                 DrawDeepLSettings(configuration);
                 break;
@@ -416,7 +429,7 @@ public class ConfigWindow : Window
                 }
                 else
                 {
-                    ImGui.TextUnformatted("GPT-3.5-turbo\nMay be restricted if you live in unsupported region.");
+                    ImGui.TextUnformatted("GPT-4o-mini\nMay be restricted if you live in unsupported region.");
                     ImGui.Separator();
                     DrawOpenAISettings(configuration);
                 }
@@ -485,7 +498,7 @@ public class ConfigWindow : Window
     private static void DrawOpenAISettings(Configuration configuration)
     {
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
-        ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 100);
+        ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 200);
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply + "###OpenAI_API_Key"))
         {

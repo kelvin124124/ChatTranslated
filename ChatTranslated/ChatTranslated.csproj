@@ -5,7 +5,7 @@
     <PropertyGroup>
         <Authors>kelvin124124</Authors>
         <Company></Company>
-        <Version>3.1.0.0</Version>
+        <Version>3.1.0.4</Version>
         <Description>In-game chat translator.</Description>
         <Copyright></Copyright>
         <PackageProjectUrl>https://github.com/kelvin124124/ChatTranslated</PackageProjectUrl>
@@ -14,7 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="GTranslate" Version="2.2.0" />
+        <PackageReference Include="GTranslate" Version="2.2.5" />
     </ItemGroup>
 
     <ItemGroup>
@@ -36,16 +36,16 @@
       <PackageReference Update="DalamudPackager" Version="2.1.13" />
     </ItemGroup>
 
-    <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv2)' != ''">
+    <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv3)' != ''">
         <PropertyGroup>
-            <SecretPath>$(ProjectDir)Resources\cfv2.secret</SecretPath>
+            <SecretPath>$(ProjectDir)Resources\cfv3.secret</SecretPath>
         </PropertyGroup>
-        <WriteLinesToFile File="$(SecretPath)" Lines="$(PLOGON_SECRET_cfv2)" Overwrite="true" />
+        <WriteLinesToFile File="$(SecretPath)" Lines="$(PLOGON_SECRET_cfv3)" Overwrite="true" />
     </Target>
 
     <Target Name="EmbedSecrets" BeforeTargets="PrepareForBuild" AfterTargets="Secrets">
         <ItemGroup>
-            <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.cfv2.secret" />
+            <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.cfv3.secret" />
         </ItemGroup>
     </Target>
 </Project>

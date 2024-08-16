@@ -18,7 +18,7 @@ namespace ChatTranslated.Translate
 
         public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
         {
-            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9\-]{32,}$"))
+            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9\-_]{32,}$"))
             {
                 Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
                 return await MachineTranslate.Translate(message, targetLanguage);
@@ -29,7 +29,7 @@ namespace ChatTranslated.Translate
                 $"Output only the translated text in a single line.\nMessage to translate: {message}";
             var requestData = new
             {
-                model = "gpt-3.5-turbo",
+                model = "gpt-4o-mini",
                 temperature = 0.6,
                 max_tokens = Math.Min(Math.Max(message.Length * 2, 20), 150),
                 messages = new[]

@@ -1,12 +1,13 @@
 using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
+using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
 using ImGuiNET;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -32,16 +33,15 @@ namespace ChatTranslated.Windows
 
         public override void Draw()
         {
-            DrawOutputField();
-            DrawLanguageSelector();
-            DrawInputField();
+            float scale = ImGuiHelpers.GlobalScale;
+            DrawOutputField(scale);
+            DrawInputField(scale);
         }
 
-        private void DrawOutputField()
+        private void DrawOutputField(float scale)
         {
-            ImGui.BeginChild("outputField", new Vector2(-1, -55), false);
+            ImGui.BeginChild("outputField", new Vector2(-1, -55 * scale), false);
             float outputFieldWidth = ImGui.GetContentRegionAvail().X;
-
             if (!isOutputFieldWrapped || Math.Abs(outputFieldWidth - lastOutputFieldWidth) > 0.1f)
             {
                 lastOutputFieldWidth = outputFieldWidth;
@@ -50,10 +50,11 @@ namespace ChatTranslated.Windows
                 outputText = wrappedText;
                 isOutputFieldWrapped = true;
             }
-
             ImGui.InputTextMultiline("##output", ref outputText, 0, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
             ImGui.SetScrollHereY(1.0f);
             ImGui.EndChild();
+            ImGui.Separator();
+
 
             if (ImGui.IsKeyPressed(ImGuiKey.C) && (ImGui.GetIO().KeyCtrl || ImGui.GetIO().KeySuper))
             {
@@ -67,8 +68,23 @@ namespace ChatTranslated.Windows
                     }
                 });
             }
+        }
 
-            ImGui.Separator();
+        private void DrawInputField(float scale)
+        {
+            DrawLanguageSelector();
+
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - 100 * scale);
+            ImGui.InputText("##input", ref inputText, 500);
+            ImGui.SameLine();
+            if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
+            {
+                ProcessInput(inputText);
+                inputText = "";
+            }
+            ImGui.SameLine();
+            ImGui.TextDisabled("?");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
         }
 
         private void DrawLanguageSelector()
@@ -85,25 +101,6 @@ namespace ChatTranslated.Windows
             }
         }
 
-        private void DrawInputField()
-        {
-            ImGui.InputText("##input", ref inputText, 500);
-
-            ImGui.SameLine();
-            if (ImGui.Button(Resources.Translate))
-            {
-                ProcessInput(inputText);
-                inputText = "";
-            }
-
-            ImGui.SameLine();
-            ImGui.TextDisabled("?");
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.SetTooltip(Resources.TranslateButtonTooltip);
-            }
-        }
-
         private static void ProcessInput(string input) => Task.Run(() => TranslationHandler.TranslateMainWindowMessage(input));
 
         public void PrintToOutput(string message)
@@ -116,24 +113,29 @@ namespace ChatTranslated.Windows
         private static void AddSoftReturnsToText(ref string str, float multilineWidth)
         {
             var lines = str.Split('\n');
-            str = string.Join("\r\n", lines.SelectMany(line => WrapLine(line, multilineWidth)));
+            var wrappedLines = new StringBuilder();
+            foreach (var line in lines)
+            {
+                var wrappedLine = WrapLine(line, multilineWidth);
+                wrappedLines.AppendLine(wrappedLine);
+            }
+            str = wrappedLines.ToString().TrimEnd();
         }
 
-        private static IEnumerable<string> WrapLine(string line, float multilineWidth)
+        private static string WrapLine(string line, float multilineWidth)
         {
-            var wrappedLine = string.Empty;
+            var wrappedLine = new StringBuilder();
             var words = WordRegex().Matches(line).Cast<Match>().Select(m => m.Value);
 
             foreach (var word in words)
             {
                 if (ImGui.CalcTextSize(wrappedLine + word).X + 20f > multilineWidth)
                 {
-                    yield return wrappedLine.TrimEnd();
-                    wrappedLine = string.Empty;
+                    wrappedLine.AppendLine();
                 }
-                wrappedLine += word;
+                wrappedLine.Append(word);
             }
-            yield return wrappedLine.TrimEnd();
+            return wrappedLine.ToString().TrimEnd();
         }
 
         private static string RemoveSoftReturns(string str) => str.Replace("\r\n", string.Empty);
