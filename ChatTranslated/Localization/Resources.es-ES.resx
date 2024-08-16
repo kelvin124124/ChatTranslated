@@ -351,18 +351,18 @@ No envía el texto traducido en el chat ni lo hace visible para otros jugadores.
     <value>Sí</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputing translated message</value>
+    <value>Hide original message when outputting translated message</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>Languages</value>
+    <value>Idiomas</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
-    <value>Chat Channels</value>
+    <value>Canales de chat</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
-    <value>Translation Mode</value>
+    <value>Modo de traducción</value>
   </data>
 </root>
