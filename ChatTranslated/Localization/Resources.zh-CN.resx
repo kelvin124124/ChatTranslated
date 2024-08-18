@@ -236,11 +236,11 @@ Google和Bing翻译将作为备份。
     <value>LLM提供者</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy
+    <value>自托管的 gemma-2-27b-it 代理
 
-Note: 
-DeepL have better accuracy in single-language translation. 
-LLM is better only if message is long or contain multiple languages.</value>
+注意：
+DeepL 在单一语言翻译中的准确性更高。
+只有当消息很长或包含多种语言时，LLM 才更好。</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通讯贝1</value>
