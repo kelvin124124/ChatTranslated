@@ -236,11 +236,11 @@ Wenn unten ein DeepL API-Schlüssel angegeben ist, wird dieser stattdessen als B
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy
+    <value>Selbstgehosteter gemma-2-27b-it Proxy
 
-Note: 
-DeepL have better accuracy in single-language translation. 
-LLM is better only if message is long or contain multiple languages.</value>
+Hinweis: 
+DeepL ist bei einsprachigen Übersetzungen genauer.
+LLM ist nur besser, wenn die Nachricht lang ist oder mehrere Sprachen enthält.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
