@@ -5,7 +5,7 @@
     <PropertyGroup>
         <Authors>kelvin124124</Authors>
         <Company></Company>
-        <Version>3.1.0.4</Version>
+        <Version>3.1.0.5</Version>
         <Description>In-game chat translator.</Description>
         <Copyright></Copyright>
         <PackageProjectUrl>https://github.com/kelvin124124/ChatTranslated</PackageProjectUrl>
