@@ -236,7 +236,11 @@ Google 및 Bing 번역은 백업으로 사용됩니다.
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>셀프 호스팅된 gemma-2-27b-it 프록시</value>
+    <value>Self-hosted gemma-2-27b-it proxy
+
+Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -351,7 +355,7 @@ Google 및 Bing 번역은 백업으로 사용됩니다.
     <value>네</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputting translated message</value>
+    <value>번역된 메시지를 출력할 때 원본 메시지 숨기기</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>일반</value>
