@@ -67,6 +67,7 @@ namespace ChatTranslated.Translate
                 "Chinese (Simplified)" => "ZH",
                 "Chinese (Traditional)" => "ZH",
                 "Spanish" => "ES",
+                "Italian" => "IT",
                 _ => null
             };
             return !string.IsNullOrEmpty(languageCode);

@@ -20,7 +20,7 @@ public class ConfigWindow : Window
     private readonly string[] supportedDetectedLanguages =
     ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
     private readonly string[] supportedLanguages =
-    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
+    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish", "Italian"];
 
     public static readonly HashSet<XivChatType> genericChatTypes =
     [

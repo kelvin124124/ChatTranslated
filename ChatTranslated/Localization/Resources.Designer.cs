@@ -134,7 +134,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hide original message when outputing translated message.
+        ///   Looks up a localized string similar to Hide original message when outputting translated message.
         /// </summary>
         internal static string ChatIntegration_HideOriginal {
             get {
@@ -434,7 +434,11 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Self-hosted gemma-2-27b-it proxy.
+        ///   Looks up a localized string similar to Self-hosted gemma-2-27b-it proxy
+        ///
+        ///Note: 
+        ///DeepL have better accuracy in single-language translation. 
+        ///LLM is better only if message is long or contain multiple languages..
         /// </summary>
         internal static string LLM_Explanation {
             get {

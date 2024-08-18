@@ -14,7 +14,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="GTranslate" Version="2.2.5" />
+        <PackageReference Include="GTranslate" Version="2.2.7" />
     </ItemGroup>
 
     <ItemGroup>

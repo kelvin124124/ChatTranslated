@@ -236,7 +236,11 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy</value>
+    <value>Self-hosted gemma-2-27b-it proxy
+
+Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Ls1</value>
