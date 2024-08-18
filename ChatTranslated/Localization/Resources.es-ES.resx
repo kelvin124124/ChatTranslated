@@ -236,7 +236,11 @@ Si se proporciona una clave API de DeepL a continuación, se usará como respald
     <value>Proveedor de LLM</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Proxy auto-alojado gemma-2-27b-it</value>
+    <value>Proxy gemma-2-27b-it autogestionado
+
+Nota:
+DeepL tiene mejor precisión en la traducción de un solo idioma.
+LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Comunicador1</value>
@@ -351,7 +355,7 @@ No envía el texto traducido en el chat ni lo hace visible para otros jugadores.
     <value>Sí</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputting translated message</value>
+    <value>Ocultar el mensaje original al mostrar el mensaje traducido</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>General</value>

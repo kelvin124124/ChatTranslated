@@ -236,7 +236,11 @@ Wenn unten ein DeepL API-Schlüssel angegeben ist, wird dieser stattdessen als B
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Selbstgehosteter gemma-2-27b-it-Proxy</value>
+    <value>Selbstgehosteter gemma-2-27b-it Proxy
+
+Hinweis: 
+DeepL ist bei einsprachigen Übersetzungen genauer.
+LLM ist nur besser, wenn die Nachricht lang ist oder mehrere Sprachen enthält.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -351,7 +355,7 @@ Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere S
     <value>Ja</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputting translated message</value>
+    <value>Beim Ausgeben der übersetzten Nachricht die Originalnachricht ausblenden</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>Allgemein</value>

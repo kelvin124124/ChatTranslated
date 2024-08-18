@@ -236,7 +236,11 @@ GoogleとBing翻訳はバックアップとして使用されます。
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it プロキシ</value>
+    <value>セルフホスティング gemma-2-27b-it プロキシ
+
+注意： 
+DeepLは単一の言語の翻訳においてより高い精度を持ちます。
+LLMはメッセージが長い場合や複数言語を含む場合にのみ優れています。</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -351,7 +355,7 @@ GoogleとBing翻訳はバックアップとして使用されます。
     <value>はい</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputting translated message</value>
+    <value>翻訳されたメッセージを出力する際に元のメッセージを非表示にする</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>一般</value>
