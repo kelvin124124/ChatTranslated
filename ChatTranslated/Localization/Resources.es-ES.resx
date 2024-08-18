@@ -236,11 +236,11 @@ Si se proporciona una clave API de DeepL a continuación, se usará como respald
     <value>Proveedor de LLM</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy
+    <value>Proxy gemma-2-27b-it autogestionado
 
-Note: 
-DeepL have better accuracy in single-language translation. 
-LLM is better only if message is long or contain multiple languages.</value>
+Nota:
+DeepL tiene mejor precisión en la traducción de un solo idioma.
+LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Comunicador1</value>
