@@ -236,7 +236,11 @@ Google 和 Bing 翻譯將被用作備用。
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>自托管 gemma-2-27b-it 代理</value>
+    <value>Self-hosted gemma-2-27b-it proxy
+
+Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通訊貝1</value>
@@ -351,7 +355,7 @@ Google 和 Bing 翻譯將被用作備用。
     <value>是</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputting translated message</value>
+    <value>輸出翻譯訊息時隱藏原始訊息</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>通用</value>
