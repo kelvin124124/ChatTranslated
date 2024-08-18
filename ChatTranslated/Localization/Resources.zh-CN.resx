@@ -236,7 +236,11 @@ Google和Bing翻译将作为备份。
     <value>LLM提供者</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>自托管的gemma-2-27b-it代理</value>
+    <value>Self-hosted gemma-2-27b-it proxy
+
+Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通讯贝1</value>
@@ -351,7 +355,7 @@ Google和Bing翻译将作为备份。
     <value>是</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputting translated message</value>
+    <value>输出翻译消息时隐藏原始消息</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>常规</value>
