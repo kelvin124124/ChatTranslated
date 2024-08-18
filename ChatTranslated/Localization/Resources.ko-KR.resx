@@ -236,11 +236,11 @@ Google 및 Bing 번역은 백업으로 사용됩니다.
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy
+    <value>개인 호스팅 gemma-2-27b-it 프록시
 
-Note: 
-DeepL have better accuracy in single-language translation. 
-LLM is better only if message is long or contain multiple languages.</value>
+참고: 
+DeepL은 단일 언어 번역에서 더 높은 정확성을 제공합니다. 
+LLM은 메시지가 길거나 여러 언어를 포함할 때 더 좋습니다.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
