@@ -358,7 +358,7 @@ public class ConfigWindow : Window
 
             if (ImGui.Button(Resources.SeeLanguageList))
             {
-                Process.Start(new ProcessStartInfo { FileName = "https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L148", UseShellExecute = true });
+                Process.Start(new ProcessStartInfo { FileName = "https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L164", UseShellExecute = true });
             }
             ImGui.SameLine();
             if (ImGui.Button(Resources.Apply + "###ApplyCustomLanguage"))
