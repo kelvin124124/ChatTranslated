@@ -185,12 +185,12 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (<b>Optional)</b></value>
+    <value>DeepL API密钥（非必要）</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
     <value>DeepL 将用于翻译聊天讯息。
-Google 和 Bing 翻译将被用作备份。
-如果提供了下面的 DeepL API 密钥，将用作备份。</value>
+Google 和 Bing 翻译将被用作备用。
+如果提供了下面的 DeepL API 密钥，将用作备用。</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>默认</value>
@@ -233,7 +233,7 @@ Google 和 Bing 翻译将被用作备份。
     <value>韩语</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>LLMProvider</value>
+    <value>LLM提供者</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
     <value>自托管 gemma-2-27b-it 代理
