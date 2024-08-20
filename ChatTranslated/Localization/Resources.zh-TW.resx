@@ -176,7 +176,7 @@
     <value>自訂語言</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>如果您使用自訂語言，將被迫使用Google翻譯。</value>
+    <value>如果您使用自訂語言，將强制使用Google翻譯。</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>自定義目標語言</value>
@@ -240,7 +240,7 @@ Google 和 Bing 翻譯將被用作備用。
 
 注意：
 DeepL 在單語言翻譯中的準確性更高。
-僅當消息較長或包含多種語言時，LLM 才更好。</value>
+僅當消息較長或包含多種語言時，LLM 才會有更好表現。</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通訊貝1</value>
