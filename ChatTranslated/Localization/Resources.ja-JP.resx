@@ -124,8 +124,8 @@
     <value>全ての言語</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>警告: APIキーはプラグイン設定にプレーンテキストとして保存されます。
-マルウェアや第三者のプラグインがアクセスする可能性があります。</value>
+    <value>警告：API キーがプラグインの設定にプレーンテキストとして保存されます。
+マルウェアやサードパーティ製プラグインがキーにアクセスできる可能性があります。</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>適用</value>
@@ -137,7 +137,7 @@
     <value>チャンネル選択</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>チャット統合</value>
+    <value>Chat Integration</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
     <value>中国語（簡体字）</value>
@@ -170,13 +170,13 @@
     <value>CWLS8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>クロスパーティー</value>
+    <value>CrossParty</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
     <value>カスタム言語</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>カスタム言語を使用する場合、Google翻訳を使用する必要があります。</value>
+    <value>カスタム言語を使用する場合、Google翻訳を強制使用します。</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>カスタムターゲット言語</value>
@@ -185,19 +185,19 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL APIキー（任意）</value>
+    <value>DeepL API Key (Optional)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepLはチャットメッセージの翻訳に使用されます。
-GoogleとBing翻訳はバックアップとして使用されます。
-以下にDeepL APIキーが提供されている場合は、代わりに使用されます。</value>
+    <value>チャットメッセージの翻訳には DeepL が使用されます。
+バックアップとして Google と Bing 翻訳が使用されます。
+下記に DeepL API キーが提供された場合は、代わりにバックアップとして使用されます。</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>デフォルト</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>推奨されます。非ラテンベースの言語を翻訳します。
-（日本語、韓国語、中国語など）</value>
+    <value>Recommended. Translate non-Latin based languages.
+(Japanese, Korean, Chinese, etc.)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
     <value>大丈夫です！</value>
@@ -218,7 +218,7 @@ GoogleとBing翻訳はバックアップとして使用されます。
     <value>フランス語</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>汎用</value>
+    <value>一般</value>
   </data>
   <data name="German" xml:space="preserve">
     <value>ドイツ語</value>
@@ -236,11 +236,11 @@ GoogleとBing翻訳はバックアップとして使用されます。
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>セルフホスティング gemma-2-27b-it プロキシ
+    <value>自ホスト gemma-2-27b-it プロキシ
 
-注意： 
-DeepLは単一の言語の翻訳においてより高い精度を持ちます。
-LLMはメッセージが長い場合や複数言語を含む場合にのみ優れています。</value>
+注意：
+DeepL は単一言語翻訳において高い精度を持っています。
+LLM はメッセージが長い場合または複数言語を含む場合のみに優れています。</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -273,31 +273,31 @@ LLMはメッセージが長い場合や複数言語を含む場合にのみ優�
     <value>ビギナーチャンネル</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
-    <value>OpenAI APIキー</value>
+    <value>OpenAI API キー</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>価格予測: $0.2 /月</value>
+    <value>価格見積もり：$0.2/月</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Party</value>
   </data>
   <data name="PluginLanguage" xml:space="preserve">
-    <value>プラグイン言語</value>
+    <value>Plugin Language</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvPチーム</value>
+    <value>PvPTeam</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>地域</value>
+    <value>Region</value>
   </data>
   <data name="Say" xml:space="preserve">
     <value>Say</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
-    <value>言語リストを表示</value>
+    <value>言語リストを見る</value>
   </data>
   <data name="SendChat" xml:space="preserve">
-    <value>チャットをDBに送信</value>
+    <value>チャットをデータベースに送信</value>
   </data>
   <data name="SendChatDisclaimer" xml:space="preserve">
     <value>送信前に個人識別情報や機密情報は削除されます。</value>
@@ -312,13 +312,13 @@ LLMはメッセージが長い場合や複数言語を含む場合にのみ優�
     <value>翻訳する言語</value>
   </data>
   <data name="SourceLangSelection" xml:space="preserve">
-    <value>ソース言語選択</value>
+    <value>ソース言語の選択</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>スペイン語</value>
   </data>
   <data name="TargetLang" xml:space="preserve">
-    <value>翻訳する</value>
+    <value>翻訳先</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
     <value>Tell</value>
@@ -330,11 +330,11 @@ LLMはメッセージが長い場合や複数言語を含む場合にのみ優�
     <value>すべての受信メッセージを翻訳します。
 
 言語選択にご希望の言語が見つかりませんか？
-プラグインインストーラーからフィードバックを送信してください！</value>
+プラグインインストーラーからフィードバックをお送りください！</value>
   </data>
   <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>翻訳ボタンはメインウィンドウに翻訳されたテキストのみを表示します。
-チャットに翻訳されたテキストを送信したり、他のプレイヤーに見せたりするわけではありません。</value>
+    <value>翻訳ボタンはメインウィンドウに翻訳文を表示するだけです。
+チャットに翻訳文を送信したり、他のプレイヤーに見えるようにすることはありません。</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
     <value>翻訳エンジン</value>
@@ -343,7 +343,7 @@ LLMはメッセージが長い場合や複数言語を含む場合にのみ優�
     <value>カスタム言語を使用</value>
   </data>
   <data name="UseDeepLSpoof" xml:space="preserve">
-    <value>Use DeepL spoof</value>
+    <value>DeepL スプーフを使用</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>よろしくお願いします！</value>
@@ -355,7 +355,7 @@ LLMはメッセージが長い場合や複数言語を含む場合にのみ優�
     <value>はい</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>翻訳されたメッセージを出力する際に元のメッセージを非表示にする</value>
+    <value>翻訳メッセージを出力する際に元のメッセージを非表示にする</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>一般</value>
