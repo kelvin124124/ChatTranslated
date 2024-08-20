@@ -124,14 +124,14 @@
     <value>TodosLosIdiomas</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>Advertencia: la clave API se almacenará como texto plano en la configuración del plugin,
+    <value>Advertencia: La clave API se almacenará como texto sin formato en la configuración del plugin,
 cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Aplicar</value>
   </data>
   <data name="AskProceed" xml:space="preserve">
-    <value>¿Continuar?</value>
+    <value>¿Proceder?</value>
   </data>
   <data name="ChannelSelection" xml:space="preserve">
     <value>Selección de Canal</value>
@@ -170,13 +170,13 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
     <value>CrossLinkShell8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>CruzPartido</value>
+    <value>CrossParty</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
     <value>IdiomasPersonalizados</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>Se verá obligado a usar Google Translate si utiliza idiomas personalizados.</value>
+    <value>Se te obligará a usar Google Translate si usas idiomas personalizados.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Idioma objetivo personalizado</value>
@@ -185,22 +185,22 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>Clave API de DeepL (Opcional)</value>
+    <value>Clave API de DeepL (opcional)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL se usará para traducir mensajes de chat. 
-Google y Bing Translate se usarán como respaldo.
-Si se proporciona una clave API de DeepL a continuación, se usará como respaldo en su lugar.</value>
+    <value>DeepL será utilizado para traducir mensajes de chat.
+Google y Bing Translate serán utilizados como respaldo.
+Si se proporciona la clave API de DeepL a continuación, se utilizará como respaldo en su lugar.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Predeterminado</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>Recomendado. Traduce idiomas no basados en el alfabeto latino.
+    <value>Recomendado. Traducir idiomas no basados en el alfabeto latino.
 (Japonés, Coreano, Chino, etc.)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>¡No pasa nada!</value>
+    <value>¡Está bien!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
     <value>Habilitar en tareas</value>
@@ -233,44 +233,44 @@ Si se proporciona una clave API de DeepL a continuación, se usará como respald
     <value>Coreano</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>Proveedor de LLM</value>
+    <value>Proveedor LLM</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Proxy gemma-2-27b-it autogestionado
+    <value>Proxy autohospedado gemma-2-27b-it
 
 Nota:
 DeepL tiene mejor precisión en la traducción de un solo idioma.
 LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>Comunicador1</value>
+    <value>Ls1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>Comunicador2</value>
+    <value>Ls2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>Comunicador3</value>
+    <value>Ls3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>Comunicador4</value>
+    <value>Ls4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>Comunicador5</value>
+    <value>Ls5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>Comunicador6</value>
+    <value>Ls6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>Comunicador7</value>
+    <value>Ls7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>Comunicador8</value>
+    <value>Ls8</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>RedDeNuevos</value>
+    <value>RedDeNovatos</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>Clave API de OpenAI</value>
@@ -279,31 +279,31 @@ LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
     <value>Estimación de precio: $0.2 /mes</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>Partido</value>
+    <value>Grupo</value>
   </data>
   <data name="PluginLanguage" xml:space="preserve">
-    <value>Idioma del plugin</value>
+    <value>Idioma del Plugin</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvPTeam</value>
+    <value>EquipoPvP</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Región</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>Decir</value>
+    <value>Hablar</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
-    <value>Ver lista de idiomas</value>
+    <value>Ver la lista de idiomas</value>
   </data>
   <data name="SendChat" xml:space="preserve">
-    <value>Enviar chat a DB</value>
+    <value>Enviar chat a la BD</value>
   </data>
   <data name="SendChatDisclaimer" xml:space="preserve">
     <value>Los identificadores personales y la información sensible se eliminarán antes de su uso.</value>
   </data>
   <data name="SendChatExplaination" xml:space="preserve">
-    <value>Recopile mensajes de chat salientes para mejorar las traducciones.</value>
+    <value>Recopilar mensajes de chat salientes para mejorar las traducciones.</value>
   </data>
   <data name="Shout" xml:space="preserve">
     <value>Gritar</value>
@@ -312,7 +312,7 @@ LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
     <value>Qué traducir</value>
   </data>
   <data name="SourceLangSelection" xml:space="preserve">
-    <value>Selección de idioma de origen</value>
+    <value>Selección del idioma de origen</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>Español</value>
@@ -321,7 +321,7 @@ LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
     <value>Traducir a</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>TellIncoming</value>
+    <value>Mensaje entrante</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>Traducir</value>
@@ -329,24 +329,24 @@ LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
   <data name="TranslateAllExplaination" xml:space="preserve">
     <value>Traducir todos los mensajes entrantes.
 
-¿No encontró su idioma en la selección de idiomas?
-¡Envíe comentarios desde el instalador del plugin!</value>
+¿No encontraste tu idioma en la selección de idiomas?
+¡Envía tus comentarios desde la instalación del complemento!</value>
   </data>
   <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>El botón de traducción solo imprime el texto traducido en la ventana principal.
-No envía el texto traducido en el chat ni lo hace visible para otros jugadores.</value>
+    <value>El botón de traducir solo imprime el texto traducido en la ventana principal.
+No envía texto traducido en el chat ni lo hace visible para otros jugadores.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Motor de Traducción</value>
+    <value>Motor de traducción</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>Usar idioma personalizado</value>
   </data>
   <data name="UseDeepLSpoof" xml:space="preserve">
-    <value>Usar suplantación de DeepL</value>
+    <value>Usar falsificación de DeepL</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
-    <value>¡Vamos a hacerlo!</value>
+    <value>¡Hagámoslo!</value>
   </data>
   <data name="Yell" xml:space="preserve">
     <value>Gritar</value>
@@ -355,7 +355,7 @@ No envía el texto traducido en el chat ni lo hace visible para otros jugadores.
     <value>Sí</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Ocultar el mensaje original al mostrar el mensaje traducido</value>
+    <value>Ocultar mensaje original al mostrar mensaje traducido</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
