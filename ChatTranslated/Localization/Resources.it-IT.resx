@@ -200,7 +200,7 @@ Se sotto viene fornita una chiave API DeepL, questa verrà utilizzata come backu
 (Giapponese, Coreano, Cinese, ecc.)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>Va bene!</value>
+    <value>Va bene così!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
     <value>Abilita in missioni</value>
@@ -224,7 +224,7 @@ Se sotto viene fornita una chiave API DeepL, questa verrà utilizzata come backu
     <value>Tedesco</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>Buona partita!</value>
+    <value>Grande gioco!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>Giapponese</value>
@@ -233,7 +233,7 @@ Se sotto viene fornita una chiave API DeepL, questa verrà utilizzata come backu
     <value>Coreano</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>LLMProvider</value>
+    <value>Provider LLM</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
     <value>Proxy gemma-2-27b-it autogestito
