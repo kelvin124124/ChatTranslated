@@ -121,23 +121,23 @@
     <value>Alliance</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>AllLanguages</value>
+    <value>Toutes les langues</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>Warning: API key will be stored as plain text in plugin configuration,
-any malware or third party plugins may have access to the key.</value>
+    <value>Attention : la clé API sera stockée sous forme de texte brut dans la configuration du plugin,
+tout logiciel malveillant ou plugin tiers peut avoir accès à la clé.</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>Appliquer</value>
   </data>
   <data name="AskProceed" xml:space="preserve">
-    <value>Proceed?</value>
+    <value>Procéder?</value>
   </data>
   <data name="ChannelSelection" xml:space="preserve">
-    <value>Channel Selection</value>
+    <value>Sélection des chaînes</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>Chat Integration</value>
+    <value>Intégration du chat</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
     <value>Chinois (Simplifié)</value>
@@ -173,7 +173,7 @@ any malware or third party plugins may have access to the key.</value>
     <value>CrossParty</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
-    <value>CustomLanguages</value>
+    <value>Langues personnalisées</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
     <value>Vous serez obligé d'utiliser Google Traduction si vous utilisez des langues personnalisées.</value>
@@ -185,7 +185,7 @@ any malware or third party plugins may have access to the key.</value>
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>Clé API DeepL (Optionnel)</value>
+    <value>Clé API DeepL (Facultatif)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
     <value>DeepL sera utilisé pour traduire les messages de chat. 
@@ -196,41 +196,41 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Default</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.
-(Japanese, Korean, Chinese, etc.)</value>
+    <value>Recommandé. Traduisez des langues non latines.
+(japonais, coréen, chinois, etc.)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>It's okay!</value>
+    <value>Ce n'est pas grave!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>Enable in duties</value>
+    <value>Activer en mission</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
-    <value>Enable plugin</value>
+    <value>Activer le plugin</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English</value>
+    <value>Anglais</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>FreeCompany</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>French</value>
+    <value>Français</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
     <value>Générique</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>German</value>
+    <value>Allemand</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>Good game!</value>
+    <value>Bon jeu!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>Japanese</value>
+    <value>Japonais</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>Korean</value>
+    <value>Coréen</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
     <value>Fournisseur LLM</value>
@@ -243,28 +243,28 @@ DeepL a une meilleure précision dans la traduction monolingue.
 LLM est meilleur uniquement si le message est long ou contient plusieurs langues.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>Ls1</value>
+    <value>LS1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>Ls2</value>
+    <value>LS2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>Ls3</value>
+    <value>LS3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>Ls4</value>
+    <value>LS4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>Ls5</value>
+    <value>LS5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>Ls6</value>
+    <value>LS6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>Ls7</value>
+    <value>LS7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>Ls8</value>
+    <value>LS8</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
@@ -273,10 +273,10 @@ LLM est meilleur uniquement si le message est long ou contient plusieurs langues
     <value>NoviceNetwork</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
-    <value>OpenAI API Key</value>
+    <value>Clé API OpenAI</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Price estimation: $0.2 /month</value>
+    <value>Estimation du prix : 0,2 $/mois</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Party</value>
