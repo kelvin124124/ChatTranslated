@@ -185,7 +185,7 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API 密鑰（可選）</value>
+    <value>DeepL API 密鑰（非必要）</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
     <value>DeepL 將用於翻譯聊天訊息。
