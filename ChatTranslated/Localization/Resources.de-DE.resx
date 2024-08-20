@@ -124,8 +124,8 @@
     <value>Alle Sprachen</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>Warnung: Der API-Schlüssel wird als Klartext in der Plugin-Konfiguration gespeichert, 
-jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.</value>
+    <value>Warnung: API-Schlüssel wird als Klartext in der Plugin-Konfiguration gespeichert,
+jede Malware oder Drittanbieter-Plugins können auf den Schlüssel zugreifen.</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Anwenden</value>
@@ -137,7 +137,7 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>Chat-Kanäle Auswahl</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>Chat-Integration</value>
+    <value>Chat Integration</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
     <value>Chinesisch (vereinfacht)</value>
@@ -176,7 +176,7 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>Benutzerdefinierte Sprachen</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>Sie werden gezwungen sein, Google Translate zu verwenden, wenn Sie benutzerdefinierte Sprachen verwenden.</value>
+    <value>Sie müssen Google Translate verwenden, wenn Sie benutzerdefinierte Sprachen verwenden.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Benutzerdefinierte Zielsprache</value>
@@ -188,22 +188,22 @@ jede Malware oder jedes Drittanbieter-Plugin kann auf den Schlüssel zugreifen.<
     <value>DeepL API-Schlüssel (Optional)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL wird verwendet, um Chatnachrichten zu übersetzen.
+    <value>DeepL wird verwendet, um Chatnachrichten zu übersetzen. 
 Google und Bing Translate werden als Backup verwendet.
-Wenn unten ein DeepL API-Schlüssel angegeben ist, wird dieser stattdessen als Backup verwendet.</value>
+Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als Backup verwendet.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>Standard</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>Empfohlen. Übersetzen Sie nicht-lateinische Sprachen. 
-(Japanisch, Koreanisch, Chinesisch, etc.)</value>
+    <value>Empfohlen. Übersetzen Sie nicht-lateinische Sprachen.
+(Japanisch, Koreanisch, Chinesisch usw.)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>Ist okay!</value>
+    <value>Kein Problem!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>Im Einsatz aktivieren</value>
+    <value>In Aufgaben aktivieren</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
     <value>Plugin aktivieren</value>
@@ -236,10 +236,10 @@ Wenn unten ein DeepL API-Schlüssel angegeben ist, wird dieser stattdessen als B
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Selbstgehosteter gemma-2-27b-it Proxy
+    <value>Selbstgehostete gemma-2-27b-it Proxy
 
 Hinweis: 
-DeepL ist bei einsprachigen Übersetzungen genauer.
+DeepL hat eine bessere Genauigkeit bei der einsprachigen Übersetzung. 
 LLM ist nur besser, wenn die Nachricht lang ist oder mehrere Sprachen enthält.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
@@ -273,7 +273,7 @@ LLM ist nur besser, wenn die Nachricht lang ist oder mehrere Sprachen enthält.<
     <value>Neulingsnetzwerk</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
-    <value>OpenAI API-Schlüssel</value>
+    <value>OpenAI API Key</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
     <value>Preisabschätzung: 0,2$ /Monat</value>
@@ -294,47 +294,47 @@ LLM ist nur besser, wenn die Nachricht lang ist oder mehrere Sprachen enthält.<
     <value>Sagen</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
-    <value>Siehe Sprachliste</value>
+    <value>Sprachliste ansehen</value>
   </data>
   <data name="SendChat" xml:space="preserve">
-    <value>Chat an DB senden</value>
+    <value>Chat in DB senden</value>
   </data>
   <data name="SendChatDisclaimer" xml:space="preserve">
-    <value>Personenbezogene Kennungen und sensible Informationen werden vor der Verwendung entfernt.</value>
+    <value>Persönliche Identifikatoren und sensible Informationen werden vor der Verwendung entfernt.</value>
   </data>
   <data name="SendChatExplaination" xml:space="preserve">
     <value>Sammelt ausgehende Chatnachrichten, um Übersetzungen zu verbessern.</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>Schreien</value>
+    <value>Rufen</value>
   </data>
   <data name="SourceLang" xml:space="preserve">
     <value>Was zu übersetzen</value>
   </data>
   <data name="SourceLangSelection" xml:space="preserve">
-    <value>Quellsprache auswählen</value>
+    <value>Quellsprachauswahl</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>Spanisch</value>
   </data>
   <data name="TargetLang" xml:space="preserve">
-    <value>Übersetzen zu</value>
+    <value>Übersetzen nach</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>EingehendeFlüstern</value>
+    <value>TellIncoming</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>Übersetzen</value>
   </data>
   <data name="TranslateAllExplaination" xml:space="preserve">
-    <value>Alle eingehenden Nachrichten übersetzen.
+    <value>Übersetze alle eingehenden Nachrichten.
 
-Haben Sie Ihre Sprache nicht in der Sprachenauswahl gefunden? 
-Senden Sie Feedback vom Plugin-Installationsprogramm!</value>
+Keine Sprache in der Sprachauswahl gefunden?
+Feedback vom Plugin-Installer senden!</value>
   </data>
   <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>Die Schaltfläche „Übersetzen“ druckt nur den übersetzten Text im Hauptfenster aus. 
-Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere Spieler sichtbar.</value>
+    <value>Die Übersetzungsschaltfläche druckt nur den übersetzten Text im Hauptfenster.
+Sie sendet die übersetzte Nachricht nicht im Chat und macht sie für andere Spieler nicht sichtbar.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
     <value>Übersetzungsmaschine</value>
@@ -346,16 +346,16 @@ Sie sendet den übersetzten Text nicht im Chat und macht ihn nicht für andere S
     <value>DeepL-Spoof verwenden</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
-    <value>Los geht's!</value>
+    <value>Lass es uns tun!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Schrei</value>
+    <value>Rufen</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Beim Ausgeben der übersetzten Nachricht die Originalnachricht ausblenden</value>
+    <value>Originalnachricht ausblenden, wenn die übersetzte Nachricht ausgegeben wird</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>Allgemein</value>
