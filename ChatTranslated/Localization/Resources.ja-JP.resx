@@ -137,7 +137,7 @@
     <value>チャンネル選択</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>Chat Integration</value>
+    <value>チャット統合</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
     <value>中国語（簡体字）</value>
@@ -170,7 +170,7 @@
     <value>CWLS8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>CrossParty</value>
+    <value>クロスパーティー</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
     <value>カスタム言語</value>
@@ -185,7 +185,7 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (Optional)</value>
+    <value>DeepL APIキー（任意）</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
     <value>チャットメッセージの翻訳には DeepL が使用されます。
@@ -196,8 +196,8 @@
     <value>デフォルト</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>Recommended. Translate non-Latin based languages.
-(Japanese, Korean, Chinese, etc.)</value>
+    <value>推奨されます。非ラテンベースの言語を翻訳します。
+（日本語、韓国語、中国語など）</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
     <value>大丈夫です！</value>
@@ -282,13 +282,13 @@ LLM はメッセージが長い場合または複数言語を含む場合のみ�
     <value>Party</value>
   </data>
   <data name="PluginLanguage" xml:space="preserve">
-    <value>Plugin Language</value>
+    <value>プラグイン言語</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvPTeam</value>
+    <value>PvPチーム</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>地域</value>
   </data>
   <data name="Say" xml:space="preserve">
     <value>Say</value>
