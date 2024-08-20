@@ -121,7 +121,7 @@
     <value>연합 파티</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>AllLanguages</value>
+    <value>모든 언어</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
     <value>경고: API 키가 플러그인 구성에 일반 텍스트로 저장됩니다. 
