@@ -176,7 +176,7 @@
     <value>自定义语言</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>如果使用自定义语言，您将被迫使用Google翻译。</value>
+    <value>如果您使用自定义语言，将强制使用Google翻译。</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>自定义目标语言</value>
@@ -185,12 +185,12 @@
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API密钥（可选）</value>
+    <value>DeepL API Key (<b>Optional)</b></value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL将用于翻译聊天消息。
-Google和Bing翻译将作为备份。
-如果下面提供了DeepL API密钥，它将作为备份使用。</value>
+    <value>DeepL 将用于翻译聊天讯息。
+Google 和 Bing 翻译将被用作备份。
+如果提供了下面的 DeepL API 密钥，将用作备份。</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>默认</value>
@@ -233,14 +233,14 @@ Google和Bing翻译将作为备份。
     <value>韩语</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>LLM提供者</value>
+    <value>LLMProvider</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>自托管的 gemma-2-27b-it 代理
+    <value>自托管 gemma-2-27b-it 代理
 
 注意：
-DeepL 在单一语言翻译中的准确性更高。
-只有当消息很长或包含多种语言时，LLM 才更好。</value>
+DeepL 在单语言翻译中的准确性更高。
+仅当消息较长或包含多种语言时，LLM 才会有更好表现。</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通讯贝1</value>
@@ -343,7 +343,7 @@ DeepL 在单一语言翻译中的准确性更高。
     <value>使用自定义语言</value>
   </data>
   <data name="UseDeepLSpoof" xml:space="preserve">
-    <value>Use DeepL spoof</value>
+    <value>使用 DeepL 请求伪装</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>请多指教！</value>
@@ -355,10 +355,10 @@ DeepL 在单一语言翻译中的准确性更高。
     <value>是</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>输出翻译消息时隐藏原始消息</value>
+    <value>输出翻译讯息时隐藏原始讯息</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>常规</value>
+    <value>通用</value>
   </data>
   <data name="Languages" xml:space="preserve">
     <value>语言</value>
