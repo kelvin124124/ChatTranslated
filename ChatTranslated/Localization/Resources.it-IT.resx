@@ -118,255 +118,255 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alliance" xml:space="preserve">
-    <value>團隊</value>
+    <value>Alleanza</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>所有語言</value>
+    <value>TutteLeLingue</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>警告：API 密鑰將以純文字形式儲存在插件配置中，
-任何惡意軟體或第三方插件都可能有權存取該密鑰。</value>
+    <value>Attenzione: la chiave API verrà memorizzata in testo semplice nella configurazione del plugin,
+qualsiasi malware o plugin di terze parti potrebbe avere accesso alla chiave.</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>應用</value>
+    <value>Applica</value>
   </data>
   <data name="AskProceed" xml:space="preserve">
-    <value>要繼續嗎？</value>
+    <value>Procedere?</value>
   </data>
   <data name="ChannelSelection" xml:space="preserve">
-    <value>頻道選項</value>
+    <value>Selezione del Canale</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>聊天集成</value>
+    <value>Integrazione della Chat</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>簡體中文</value>
+    <value>Cinese (Semplificato)</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>繁體中文</value>
+    <value>Cinese (Tradizionale)</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>跨服通訊貝1</value>
+    <value>CrossLinkShell1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>跨服通訊貝2</value>
+    <value>CrossLinkShell2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>跨服通訊貝3</value>
+    <value>CrossLinkShell3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>跨服通訊貝4</value>
+    <value>CrossLinkShell4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>跨服通訊貝5</value>
+    <value>CrossLinkShell5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>跨服通訊貝6</value>
+    <value>CrossLinkShell6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>跨服通訊貝7</value>
+    <value>CrossLinkShell7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>跨服通訊貝8</value>
+    <value>CrossLinkShell8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>跨服小隊</value>
+    <value>CrossParty</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
-    <value>自訂語言</value>
+    <value>LinguePersonalizzate</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>如果您使用自訂語言，將强制使用Google翻譯。</value>
+    <value>Sarai costretto a utilizzare Google Translate se usi lingue personalizzate.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
-    <value>自定義目標語言</value>
+    <value>Lingua personalizzata di destinazione</value>
   </data>
   <data name="DeepL" xml:space="preserve">
     <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API 密鑰（非必要）</value>
+    <value>Chiave API DeepL (Opzionale)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL 將用於翻譯聊天訊息。
-Google 和 Bing 翻譯將被用作備用。
-如果提供了下面的 DeepL API 密鑰，將用作備用。</value>
+    <value>DeepL sarà utilizzato per tradurre i messaggi di chat. 
+Google e Bing Translate verranno utilizzati come backup.
+Se sotto viene fornita una chiave API DeepL, questa verrà utilizzata come backup.</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>預設</value>
+    <value>Predefinito</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>推薦選項，翻譯非拉丁語言
-（日文、韓文、中文等）</value>
+    <value>Consigliato. Traduci lingue non basate sul latino.
+(Giapponese, Coreano, Cinese, ecc.)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>別在意。</value>
+    <value>Va bene così!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>在任務中啟用</value>
+    <value>Abilita in missioni</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
-    <value>啟用插件</value>
+    <value>Abilita plugin</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>英語</value>
+    <value>Inglese</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>部隊</value>
+    <value>CompagniaLibera</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>法語</value>
+    <value>Francese</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>通用</value>
+    <value>Generico</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>德語</value>
+    <value>Tedesco</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>打得好！辛苦了！</value>
+    <value>Grande gioco!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>日語</value>
+    <value>Giapponese</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>韓語</value>
+    <value>Coreano</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>LLMProvider</value>
+    <value>Provider LLM</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>自託管 gemma-2-27b-it 代理
+    <value>Proxy gemma-2-27b-it autogestito
 
-注意：
-DeepL 在單語言翻譯中的準確性更高。
-僅當消息較長或包含多種語言時，LLM 才會有更好表現。</value>
+Nota: 
+DeepL ha una precisione migliore nella traduzione in una sola lingua. 
+LLM è migliore solo se il messaggio è lungo o contiene più lingue.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>通訊貝1</value>
+    <value>LinkShell1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>通訊貝2</value>
+    <value>LinkShell2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>通訊貝3</value>
+    <value>LinkShell3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>通訊貝4</value>
+    <value>LinkShell4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>通訊貝5</value>
+    <value>LinkShell5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>通訊貝6</value>
+    <value>LinkShell6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>通訊貝7</value>
+    <value>LinkShell7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>通訊貝8</value>
+    <value>LinkShell8</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>否</value>
+    <value>No</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>新人頻道</value>
+    <value>NetworkPerPrincipianti</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
-    <value>OpenAI API 密鑰</value>
+    <value>Chiave API di OpenAI</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>價格預計：$0.2/月</value>
+    <value>Stima dei costi: $0.2 /mese</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>小隊</value>
+    <value>Squadra</value>
   </data>
   <data name="PluginLanguage" xml:space="preserve">
-    <value>插件語言</value>
+    <value>Lingua del Plugin</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>戰隊</value>
+    <value>SquadraPvP</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>地區</value>
+    <value>Regione</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>説話</value>
+    <value>Parlara</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
-    <value>查看語言列表</value>
+    <value>Vedi l'elenco delle lingue</value>
   </data>
   <data name="SendChat" xml:space="preserve">
-    <value>將聊天傳輸到資料庫</value>
+    <value>Invia chat al database</value>
   </data>
   <data name="SendChatDisclaimer" xml:space="preserve">
-    <value>個人訊息和敏感資訊將在使用前刪除。</value>
+    <value>Gli identificatori personali e le informazioni sensibili verranno rimossi prima dell'uso.</value>
   </data>
   <data name="SendChatExplaination" xml:space="preserve">
-    <value>收集發送的聊天訊息以改進翻譯。</value>
+    <value>Raccogliere i messaggi di chat in uscita per migliorare le traduzioni.</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>喊話</value>
+    <value>Grido</value>
   </data>
   <data name="SourceLang" xml:space="preserve">
-    <value>翻譯對象</value>
+    <value>Cosa tradurre</value>
   </data>
   <data name="SourceLangSelection" xml:space="preserve">
-    <value>翻譯對象語言選擇</value>
+    <value>Selezione della lingua di origine</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>西班牙語</value>
+    <value>Spagnolo</value>
   </data>
   <data name="TargetLang" xml:space="preserve">
-    <value>翻譯至</value>
+    <value>Tradurre in</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>悄悄話</value>
+    <value>Messaggio in arrivo</value>
   </data>
   <data name="Translate" xml:space="preserve">
-    <value>翻譯</value>
+    <value>Tradurre</value>
   </data>
   <data name="TranslateAllExplaination" xml:space="preserve">
-    <value>翻譯所有收到的訊息。
-在語言選擇中沒有找到您的語言？
+    <value>Tradurre tutti i messaggi in arrivo.
 
-在插件安裝界面發送反饋！</value>
+Non hai trovato la tua lingua nella selezione delle lingue?
+Invia feedback dal programma di installazione del plugin!</value>
   </data>
   <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>翻譯按鈕僅在主視窗中列印翻譯後的文字。
-它不會在聊天中發送翻譯文字或使其對其他玩家可見。</value>
+    <value>Il pulsante di traduzione stampa solo il testo tradotto nella finestra principale.
+Non invia il testo tradotto nella chat né lo rende visibile agli altri giocatori.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>翻譯引擎</value>
+    <value>Motore di traduzione</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
-    <value>使用自定義語言</value>
+    <value>Usa lingua personalizzata</value>
   </data>
   <data name="UseDeepLSpoof" xml:space="preserve">
-    <value>使用 DeepL 請求偽裝</value>
+    <value>Usa DeepL spoof</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
-    <value>請多指教！</value>
+    <value>Facciamolo!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>呼喊</value>
+    <value>Grida</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>是</value>
+    <value>Sì</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>輸出翻譯訊息時隱藏原始訊息</value>
+    <value>Nascondi il messaggio originale quando si outputta il messaggio tradotto</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>通用</value>
+    <value>Generale</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>語言</value>
+    <value>Lingue</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
-    <value>聊天頻道</value>
+    <value>Canali di chat</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
-    <value>翻譯模式</value>
+    <value>Modalità di traduzione</value>
   </data>
 </root>
