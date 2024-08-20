@@ -121,17 +121,17 @@
     <value>연합 파티</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>모든 언어</value>
+    <value>AllLanguages</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>경고: API 키는 플러그인 구성에서 일반 텍스트로 저장됩니다.
-악성 프로그램 또는 타사 플러그인이 키에 접근할 수 있습니다.</value>
+    <value>경고: API 키가 플러그인 구성에 일반 텍스트로 저장됩니다. 
+악성 소프트웨어나 타사 플러그인이 키에 액세스할 수 있습니다.</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>적용</value>
   </data>
   <data name="AskProceed" xml:space="preserve">
-    <value>진행하시겠습니까?</value>
+    <value>계속하시겠습니까?</value>
   </data>
   <data name="ChannelSelection" xml:space="preserve">
     <value>채널 선택</value>
@@ -176,10 +176,10 @@
     <value>사용자 정의 언어</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>사용자 지정 언어를 사용하는 경우 Google 번역을 강제로 사용해야 합니다.</value>
+    <value>사용자 정의 언어를 사용하는 경우 Google 번역을 강제로 사용해야 합니다.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
-    <value>사용자 지정 대상 언어</value>
+    <value>사용자 정의 대상 언어</value>
   </data>
   <data name="DeepL" xml:space="preserve">
     <value>DeepL</value>
@@ -189,18 +189,18 @@
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
     <value>DeepL은 채팅 메시지를 번역하는 데 사용됩니다.
-Google 및 Bing 번역은 백업으로 사용됩니다.
-아래에서 DeepL API 키를 제공하면 대신 백업으로 사용됩니다.</value>
+Google 및 Bing 번역은 백업용으로 사용됩니다.
+아래에 DeepL API 키를 제공하면 대신 백업용으로 사용됩니다.</value>
   </data>
   <data name="Default" xml:space="preserve">
     <value>기본값</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>권장합니다. 비라틴계 언어 번역.
+    <value>권장 사항입니다. 비 라틴어 기반 언어를 번역합니다. 
 (일본어, 한국어, 중국어 등)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>괜찮아!</value>
+    <value>괜찮아요!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
     <value>임무 중 활성화</value>
@@ -224,7 +224,7 @@ Google 및 Bing 번역은 백업으로 사용됩니다.
     <value>독일어</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>잘했어!</value>
+    <value>잘 했어요!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>일본어</value>
@@ -233,14 +233,14 @@ Google 및 Bing 번역은 백업으로 사용됩니다.
     <value>한국어</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>LLMProvider</value>
+    <value>LLM 제공자</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>개인 호스팅 gemma-2-27b-it 프록시
+    <value>자체 호스팅 gemma-2-27b-it 프록시
 
-참고: 
-DeepL은 단일 언어 번역에서 더 높은 정확성을 제공합니다. 
-LLM은 메시지가 길거나 여러 언어를 포함할 때 더 좋습니다.</value>
+주의:
+DeepL은 단일 언어 번역에서 더 높은 정확도를 제공합니다.
+메시지가 길거나 여러 언어를 포함하는 경우에만 LLM의 성능이 더 좋습니다.</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -276,7 +276,7 @@ LLM은 메시지가 길거나 여러 언어를 포함할 때 더 좋습니다.</
     <value>OpenAI API 키</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>가격 예상: $0.2 /월</value>
+    <value>가격 측정: $0.2 /월</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>파티</value>
@@ -297,22 +297,22 @@ LLM은 메시지가 길거나 여러 언어를 포함할 때 더 좋습니다.</
     <value>언어 목록 보기</value>
   </data>
   <data name="SendChat" xml:space="preserve">
-    <value>DB에 채팅 전송</value>
+    <value>채팅을 DB로 보내기</value>
   </data>
   <data name="SendChatDisclaimer" xml:space="preserve">
-    <value>사용 전에 개인 식별자 및 민감한 정보가 제거됩니다.</value>
+    <value>사용하기 전에 개인 식별자와 민감한 정보는 제거됩니다.</value>
   </data>
   <data name="SendChatExplaination" xml:space="preserve">
-    <value>번역을 개선하기 위해 발신 채팅 메시지를 수집합니다.</value>
+    <value>번역 품질을 향상시키기 위해 발신 채팅 메시지를 수집합니다.</value>
   </data>
   <data name="Shout" xml:space="preserve">
     <value>외치기</value>
   </data>
   <data name="SourceLang" xml:space="preserve">
-    <value>번역할 항목</value>
+    <value>무엇을 번역할까요</value>
   </data>
   <data name="SourceLangSelection" xml:space="preserve">
-    <value>출처 언어 선택</value>
+    <value>소스 언어 선택</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>스페인어</value>
@@ -321,7 +321,7 @@ LLM은 메시지가 길거나 여러 언어를 포함할 때 더 좋습니다.</
     <value>번역할 언어</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>받은 귓속말</value>
+    <value>받는 메시지를 알려주세요</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>번역</value>
@@ -333,26 +333,26 @@ LLM은 메시지가 길거나 여러 언어를 포함할 때 더 좋습니다.</
 플러그인 인스톨러에서 피드백을 보내주세요!</value>
   </data>
   <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>번역 버튼은 메인 창에 번역된 텍스트만 출력합니다.
-번역된 텍스트를 채팅에서 전송하거나 다른 플레이어에게 표시하는 것은 아닙니다.</value>
+    <value>번역 버튼은 메인 창에 번역된 텍스트만 인쇄합니다.
+번역된 텍스트를 채팅에 보내거나 다른 플레이어에게 표시하지 않습니다.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
     <value>번역 엔진</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
-    <value>사용자 지정 언어 사용</value>
+    <value>사용자 정의 언어 사용</value>
   </data>
   <data name="UseDeepLSpoof" xml:space="preserve">
-    <value>Use DeepL spoof</value>
+    <value>DeepL 스푸핑 사용</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>해보자!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>외침</value>
+    <value>외치기</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>네</value>
+    <value>예</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
     <value>번역된 메시지를 출력할 때 원본 메시지 숨기기</value>
