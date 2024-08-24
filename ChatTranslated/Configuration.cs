@@ -59,6 +59,8 @@ namespace ChatTranslated
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
         public string Proxy_Url { get; set; } = "https://cfv3.kelpcc.com";
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
+        public bool UseExperimentalLLM { get; set; } = false;
+        public string Experimental_API_Key { get; set; } = "YOUR-API-KEY";
 
         public void Save()
         {

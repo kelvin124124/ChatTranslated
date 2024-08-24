@@ -3,6 +3,7 @@ using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
+using Dalamud.Utility;
 using GTranslate;
 using ImGuiNET;
 using System;
@@ -71,6 +72,7 @@ public class ConfigWindow : Window
 #if DEBUG
     private static string ProxyBaseUrl = Service.configuration.Proxy_Url;
     private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
+    private static string ExperimentalApiKeyInput = Service.configuration.Experimental_API_Key;
 #endif
 
     private static short CurrentTab = 0;
@@ -358,7 +360,7 @@ public class ConfigWindow : Window
 
             if (ImGui.Button(Resources.SeeLanguageList))
             {
-                Process.Start(new ProcessStartInfo { FileName = "https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L164", UseShellExecute = true });
+                Util.OpenLink("https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L164");
             }
             ImGui.SameLine();
             if (ImGui.Button(Resources.Apply + "###ApplyCustomLanguage"))
@@ -491,6 +493,26 @@ public class ConfigWindow : Window
             configuration.Proxy_API_Key = ProxyApiKeyInput;
             configuration.Save();
             Plugin.OutputChatLine($"Proxy API Key {configuration.Proxy_API_Key} saved successfully.");
+        }
+
+        bool _UseExperimentalLLM = configuration.UseExperimentalLLM;
+        if (ImGui.Checkbox("Use experimental version", ref _UseExperimentalLLM))
+        {
+            configuration.UseExperimentalLLM = _UseExperimentalLLM;
+            configuration.Save();
+        }
+
+        if (configuration.UseExperimentalLLM)
+        {
+            ImGui.TextUnformatted("Experimental API Key");
+            ImGui.InputText("##ExperimentalAPIKey", ref ExperimentalApiKeyInput, 100);
+            ImGui.SameLine();
+            if (ImGui.Button("Save###Experimental_API_Key"))
+            {
+                configuration.Experimental_API_Key = ExperimentalApiKeyInput;
+                configuration.Save();
+                Plugin.OutputChatLine($"Experimental API Key {configuration.Experimental_API_Key} saved successfully.");
+            }
         }
     }
 #endif
