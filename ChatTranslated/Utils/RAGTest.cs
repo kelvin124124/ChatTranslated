@@ -1,11 +1,10 @@
-using ChatTranslated.Utils;
 using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace ChatTranslated.Translate
+namespace ChatTranslated.Utils
 {
     internal class RAGTest
     {
@@ -14,18 +13,18 @@ namespace ChatTranslated.Translate
         public static async Task<string> Translate(string message, string targetLanguage)
         {
             var client = new HttpClient();
-            string ApiKey = Service.configuration.Experimental_API_Key;
+            var ApiKey = Service.configuration.Experimental_API_Key;
             client.DefaultRequestHeaders.Add("Authorization", $"Bearer {ApiKey}");
 
             var inputs = new
             {
-                targetLanguage = targetLanguage,
-                message = message
+                targetLanguage,
+                message
             };
 
             var requestBody = new
             {
-                inputs = inputs,
+                inputs,
                 response_mode = "blocking",
                 user = "dev"
             };

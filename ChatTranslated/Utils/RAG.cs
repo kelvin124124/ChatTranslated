@@ -1,4 +1,4 @@
-using ChatTranslated.Utils;
+using ChatTranslated.Translate;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
@@ -10,9 +10,9 @@ using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ChatTranslated.Translate
+namespace ChatTranslated.Utils
 {
-    internal static class RAGSystem
+    internal static class RAG
     {
         private const string DefaultContentType = "application/json";
         private static List<(string Content, Vector<float> Embedding)> KnowledgeBase;

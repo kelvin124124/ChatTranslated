@@ -25,7 +25,7 @@ namespace ChatTranslated.Translate
             }
 
             // TODO: skip RAG if message is too short or disabled
-            var topResults = await RAGSystem.GetTopResults(message);
+            var topResults = await RAG.GetTopResults(message);
             var context = string.Join("\n", topResults);
 
             var prompt = BuildPrompt(context, message);
