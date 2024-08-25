@@ -276,7 +276,7 @@ DeepL은 단일 언어 번역에서 더 높은 정확도를 제공합니다.
     <value>OpenAI API 키</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>가격 측정: $0.2 /월</value>
+    <value>Price estimation: $0.4 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>파티</value>
@@ -368,5 +368,8 @@ DeepL은 단일 언어 번역에서 더 높은 정확도를 제공합니다.
   </data>
   <data name="Translation Mode" xml:space="preserve">
     <value>번역 모드</value>
+  </data>
+  <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
+    <value>Show colored text when outputting translated message</value>
   </data>
 </root>
