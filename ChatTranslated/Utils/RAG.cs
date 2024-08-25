@@ -2,10 +2,9 @@ using ChatTranslated.Translate;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -15,59 +14,105 @@ namespace ChatTranslated.Utils
     internal static class RAG
     {
         private const string DefaultContentType = "application/json";
-        private static List<(string Content, Vector<float> Embedding)> KnowledgeBase;
+        private const string EmbeddingsArchivePath = "ChatTranslated/Utils/embeddings/embeddings.zip";
+        private const string OpenAIEmbeddingsEndpoint = "https://api.openai.com/v1/embeddings";
+        private const string EmbeddingModel = "text-embedding-3-large";
 
-        public static void Initialize(List<(string Content, float[] Embedding)> knowledgeBase)
+        private static readonly List<KnowledgeItem> KnowledgeBase = [];
+
+        public static void Initialize()
         {
-            // TODO: import knowledge base from file
-            KnowledgeBase = knowledgeBase
-                .Select(item => (item.Content, Vector<float>.Build.DenseOfArray(item.Embedding)))
-                .ToList();
+            using var archive = ZipFile.OpenRead(EmbeddingsArchivePath);
+            foreach (var entry in archive.Entries.Where(e => e.FullName.EndsWith(".json", StringComparison.OrdinalIgnoreCase)))
+            {
+                using var stream = entry.Open();
+                var embeddingsData = JsonSerializer.Deserialize<EmbeddingsData>(stream);
+                if (embeddingsData is null)
+                {
+                    Service.pluginLog.Warning($"RAG: Failed to deserialize embeddings data from {entry.FullName}");
+                    continue;
+                }
+
+                KnowledgeBase.AddRange(embeddingsData.Embeddings.Select(item => new KnowledgeItem(item.chunk, item.embedding)));
+            }
+
+            Service.pluginLog.Information($"RAG: Initialized knowledge base with {KnowledgeBase.Count} entries.");
         }
 
-        public static async Task<List<string>> GetTopResults(string query, int topK = 3)
+        public static IReadOnlyList<string> GetTopResults(Vector<float> query, int topK = 3)
         {
-            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9\-_]{32,}$"))
+            if (!IsValidApiKey(Service.configuration.OpenAI_API_Key))
             {
                 Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration.");
-                return new List<string>();
+                return [];
             }
 
             try
             {
-                var queryEmbedding = Vector<float>.Build.DenseOfArray(await GenerateEmbedding(query));
+                var queryNorm = query.L2Norm();
                 return KnowledgeBase
-                    .OrderByDescending(doc => doc.Embedding.DotProduct(queryEmbedding) / (doc.Embedding.L2Norm() * queryEmbedding.L2Norm()))
+                    .Select(doc => (doc.Content, Similarity: ComputeCosineSimilarity(doc.Embedding, query, doc.EmbeddingNorm, queryNorm)))
+                    .OrderByDescending(result => result.Similarity)
                     .Take(topK)
-                    .Select(doc => doc.Content)
-                    .ToList();
+                    .Select(result => result.Content)
+                    .ToArray();
             }
             catch (Exception ex)
             {
-                Service.pluginLog.Warning($"RAG: failed to process query.\n{ex.Message}");
-                return new List<string>();
+                Service.pluginLog.Warning($"RAG: Failed to process query.\n{ex.Message}");
+                return [];
             }
         }
 
-        private static async Task<float[]> GenerateEmbedding(string text)
+        public static async Task<Vector<float>> GenerateEmbedding(string text)
         {
-            using var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/embeddings")
+            using var request = new HttpRequestMessage(HttpMethod.Post, OpenAIEmbeddingsEndpoint)
             {
-                Content = new StringContent(JsonSerializer.Serialize(new
-                {
-                    input = text,
-                    model = "text-embedding-ada-002"
-                }), Encoding.UTF8, DefaultContentType),
-                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {Service.configuration.OpenAI_API_Key}" } }
+                Content = new StringContent(JsonSerializer.Serialize(new { input = text, model = EmbeddingModel }), System.Text.Encoding.UTF8, DefaultContentType),
+                Headers = { { "Authorization", $"Bearer {Service.configuration.OpenAI_API_Key}" } }
             };
 
             using var response = await Translator.HttpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync();
 
-            using var document = JsonDocument.Parse(jsonResponse);
-            var embeddingElement = document.RootElement.GetProperty("data")[0].GetProperty("embedding");
-            return embeddingElement.EnumerateArray().Select(e => e.GetSingle()).ToArray();
+            using var responseStream = await response.Content.ReadAsStreamAsync();
+            using var document = await JsonDocument.ParseAsync(responseStream);
+            var embeddingData = document.RootElement.GetProperty("data")[0].GetProperty("embedding");
+
+            return Vector<float>.Build.DenseOfEnumerable(embeddingData.EnumerateArray().Select(e => e.GetSingle()));
         }
+
+        private static bool IsValidApiKey(string apiKey) =>
+            Regex.IsMatch(apiKey, @"^sk-[a-zA-Z0-9\-_]{32,}$");
+
+        private static double ComputeCosineSimilarity(Vector<float> a, Vector<float> b, double aNorm, double bNorm) =>
+            a.DotProduct(b) / (aNorm * bNorm);
+    }
+
+    internal readonly struct KnowledgeItem
+    {
+        public string Content { get; }
+        public Vector<float> Embedding { get; }
+        public double EmbeddingNorm { get; }
+
+        public KnowledgeItem(string content, float[] embedding)
+        {
+            Content = content;
+            Embedding = Vector<float>.Build.Dense(embedding);
+            EmbeddingNorm = Embedding.L2Norm();
+        }
+    }
+
+    internal class EmbeddingsData
+    {
+        public DateTime Generated { get; set; }
+        public List<EmbeddingItem> Embeddings { get; set; } = null!;
+    }
+
+    internal class EmbeddingItem
+    {
+        public List<string> keywords { get; set; } = null!;
+        public string chunk { get; set; } = null!;
+        public float[] embedding { get; set; } = null!;
     }
 }

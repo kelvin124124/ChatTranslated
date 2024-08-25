@@ -18,14 +18,15 @@ namespace ChatTranslated.Translate
 
         public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
         {
-            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9\-_]{32,}$"))
+            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9\-_]{32,}$", RegexOptions.Compiled))
             {
                 Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
                 return await MachineTranslate.Translate(message, targetLanguage);
             }
 
             // TODO: skip RAG if message is too short or disabled
-            var topResults = await RAG.GetTopResults(message);
+            var queryEmbeddings = await RAG.GenerateEmbedding(message);
+            var topResults = RAG.GetTopResults(queryEmbeddings);
             var context = string.Join("\n", topResults);
 
             var prompt = BuildPrompt(context, message);
