@@ -276,7 +276,7 @@ LLM è migliore solo se il messaggio è lungo o contiene più lingue.</value>
     <value>Chiave API di OpenAI</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Stima dei costi: $0.2 /mese</value>
+    <value>Price estimation: $0.4 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Squadra</value>
@@ -368,5 +368,8 @@ Non invia il testo tradotto nella chat né lo rende visibile agli altri giocator
   </data>
   <data name="Translation Mode" xml:space="preserve">
     <value>Modalità di traduzione</value>
+  </data>
+  <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
+    <value>Show colored text when outputting translated message</value>
   </data>
 </root>
