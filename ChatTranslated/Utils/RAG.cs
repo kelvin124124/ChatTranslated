@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Utils
 {
-    // TODO: take keyword search into consideration
+    // TODO: take keyword search into consideration, and set score threshold
     internal static class RAG
     {
         private const string DefaultContentType = "application/json";
