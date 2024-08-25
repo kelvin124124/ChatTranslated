@@ -276,7 +276,7 @@ LLM is better only if message is long or contain multiple languages.</value>
     <value>OpenAI API Key</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Price estimation: $0.2 /month</value>
+    <value>Price estimation: $0.4 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Party</value>
@@ -368,5 +368,8 @@ It does not send translated text in chat or make it visible to other players.</v
   </data>
   <data name="Translation Mode" xml:space="preserve">
     <value>Translation Mode</value>
+  </data>
+  <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
+    <value>Show colored text when outputting translated message</value>
   </data>
 </root>
