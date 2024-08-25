@@ -276,7 +276,7 @@ DeepL 在單語言翻譯中的準確性更高。
     <value>OpenAI API 密鑰</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>價格預計：$0.2/月</value>
+    <value>Price estimation: $0.4 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>小隊</value>
@@ -368,5 +368,8 @@ DeepL 在單語言翻譯中的準確性更高。
   </data>
   <data name="Translation Mode" xml:space="preserve">
     <value>翻譯模式</value>
+  </data>
+  <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
+    <value>Show colored text when outputting translated message</value>
   </data>
 </root>
