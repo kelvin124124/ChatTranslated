@@ -41,6 +41,7 @@ namespace ChatTranslated
         public bool Enabled { get; set; } = true;
         public bool ChatIntegration { get; set; } = true;
         public bool ChatIntegration_HideOriginal { get; set; } = false;
+        public bool ChatIntegration_ShowColoredText { get; set; } = false;
         public bool EnabledInDuty { get; set; } = false;
         public bool SendChatToDB { get; set; } = false;
 

@@ -369,4 +369,7 @@ It does not send translated text in chat or make it visible to other players.</v
   <data name="Translation Mode" xml:space="preserve">
     <value>Translation Mode</value>
   </data>
+  <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
+    <value>Show colored text when outputting translated message</value>
+  </data>
 </root>

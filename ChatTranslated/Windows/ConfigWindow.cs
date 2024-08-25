@@ -131,6 +131,7 @@ public class ConfigWindow : Window
         bool _Enabled = configuration.Enabled;
         bool _ChatIntegration = configuration.ChatIntegration;
         bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
+        bool _ChatIntegration_ShowColoredText = configuration.ChatIntegration_ShowColoredText;
         bool _EnabledInDuty = configuration.EnabledInDuty;
         bool _SendChatToDB = configuration.SendChatToDB;
 
@@ -156,6 +157,12 @@ public class ConfigWindow : Window
             if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref _ChatIntegration_HideOriginal))
             {
                 configuration.ChatIntegration_HideOriginal = _ChatIntegration_HideOriginal;
+                configuration.Save();
+            }
+            // Show colored text when outputting translated message
+            if (ImGui.Checkbox(Resources.ChatIntegration_ShowColoredText, ref _ChatIntegration_ShowColoredText))
+            {
+                configuration.ChatIntegration_ShowColoredText = _ChatIntegration_ShowColoredText;
                 configuration.Save();
             }
         }
