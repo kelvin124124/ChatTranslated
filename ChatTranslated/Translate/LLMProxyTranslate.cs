@@ -26,11 +26,6 @@ namespace ChatTranslated.Translate
         public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
         {
 #if DEBUG
-            if (Service.configuration.UseExperimentalLLM)
-            {
-                var result = await RAGTest.Translate(message, targetLanguage);
-                return (result, TranslationMode.LLMProxy);
-            }
             string Cfv3 = Service.configuration.Proxy_API_Key;
 #else
             if (string.IsNullOrEmpty(Cfv3))

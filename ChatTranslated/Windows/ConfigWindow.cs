@@ -72,7 +72,6 @@ public class ConfigWindow : Window
 #if DEBUG
     private static string ProxyBaseUrl = Service.configuration.Proxy_Url;
     private static string ProxyApiKeyInput = Service.configuration.Proxy_API_Key;
-    private static string ExperimentalApiKeyInput = Service.configuration.Experimental_API_Key;
 #endif
 
     private static short CurrentTab = 0;
@@ -494,31 +493,13 @@ public class ConfigWindow : Window
             configuration.Save();
             Plugin.OutputChatLine($"Proxy API Key {configuration.Proxy_API_Key} saved successfully.");
         }
-
-        bool _UseExperimentalLLM = configuration.UseExperimentalLLM;
-        if (ImGui.Checkbox("Use experimental version", ref _UseExperimentalLLM))
-        {
-            configuration.UseExperimentalLLM = _UseExperimentalLLM;
-            configuration.Save();
-        }
-
-        if (configuration.UseExperimentalLLM)
-        {
-            ImGui.TextUnformatted("Experimental API Key");
-            ImGui.InputText("##ExperimentalAPIKey", ref ExperimentalApiKeyInput, 100);
-            ImGui.SameLine();
-            if (ImGui.Button("Save###Experimental_API_Key"))
-            {
-                configuration.Experimental_API_Key = ExperimentalApiKeyInput;
-                configuration.Save();
-                Plugin.OutputChatLine($"Experimental API Key {configuration.Experimental_API_Key} saved successfully.");
-            }
-        }
     }
 #endif
 
     private static void DrawOpenAISettings(Configuration configuration)
     {
+        bool _OpenAI_UseRAG = configuration.OpenAI_UseRAG;
+
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 200);
         ImGui.SameLine();
@@ -529,6 +510,14 @@ public class ConfigWindow : Window
             configuration.Save();
         }
         ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
+
+        if (ImGui.Checkbox("Use RAG [experimental]", ref _OpenAI_UseRAG))
+        {
+            configuration.OpenAI_UseRAG = _OpenAI_UseRAG;
+            configuration.Save();
+        }
+        ImGui.TextWrapped("Improve translation quality at the cost of 5-10x token usage.");
+
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
     }

@@ -276,7 +276,7 @@ LLM is better only if message is long or contain multiple languages.</value>
     <value>OpenAI API Key</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Price estimation: $0.2 /month</value>
+    <value>Price estimation: $0.4 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Party</value>

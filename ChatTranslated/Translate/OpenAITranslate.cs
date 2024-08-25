@@ -24,10 +24,29 @@ namespace ChatTranslated.Translate
                 return await MachineTranslate.Translate(message, targetLanguage);
             }
 
-            // TODO: skip RAG if message is too short or disabled
-            var queryEmbeddings = await RAG.GenerateEmbedding(message);
-            var topResults = RAG.GetTopResults(queryEmbeddings);
-            var context = string.Join("\n", topResults);
+            string? context = null;
+            if (message.Length <= 5 || !Service.configuration.OpenAI_UseRAG)
+            {
+                Service.pluginLog.Information("Skipping RAG.");
+                return await MachineTranslate.Translate(message, targetLanguage);
+            }
+            else
+            {
+                var queryEmbeddings = await RAG.GenerateEmbedding(message);
+                var topResults = RAG.GetTopResults(queryEmbeddings);
+                
+                if (topResults.Count > 0)
+                {
+                    Service.pluginLog.Information("Top results from RAG:");
+                    foreach (var result in topResults)
+                    {
+                        var firstSentence = result.Split('\n')[0];
+                        Service.pluginLog.Information(firstSentence + "\n...");
+                    }
+                }
+
+                context = string.Join("\n", topResults);
+            }
 
             var prompt = BuildPrompt(context, message);
             var requestData = new
@@ -83,7 +102,7 @@ namespace ChatTranslated.Translate
                 sb.AppendLine("</context>");
                 sb.AppendLine("Avoid mentioning that you obtained the information from the context.");
             }
-            sb.AppendLine("Translate the following FFXIV Party Finder message into Chinese.");
+            sb.AppendLine($"Translate the following FFXIV Party Finder message into {Service.configuration.SelectedTargetLanguage}");
             sb.AppendLine("Maintain the original format without omitting any information. Use the following format, \"{xxx}\" means a placeholder.");
             sb.AppendLine("#### Original Text ");
             sb.AppendLine(message);

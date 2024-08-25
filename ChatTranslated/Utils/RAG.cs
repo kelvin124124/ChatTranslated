@@ -2,6 +2,7 @@ using ChatTranslated.Translate;
 using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
@@ -11,14 +12,20 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Utils
 {
+    // TODO: add keyword search
     internal static class RAG
     {
         private const string DefaultContentType = "application/json";
-        private const string EmbeddingsArchivePath = "ChatTranslated/Utils/embeddings/embeddings.zip";
+        private static readonly string EmbeddingsArchivePath = Path.Join(Service.pluginInterface.AssemblyLocation.DirectoryName, "Utils", "embeddings", "embeddings.zip");
         private const string OpenAIEmbeddingsEndpoint = "https://api.openai.com/v1/embeddings";
         private const string EmbeddingModel = "text-embedding-3-large";
 
         private static readonly List<KnowledgeItem> KnowledgeBase = [];
+
+        static RAG()
+        {
+            Initialize();
+        }
 
         public static void Initialize()
         {
@@ -77,6 +84,7 @@ namespace ChatTranslated.Utils
 
             using var responseStream = await response.Content.ReadAsStreamAsync();
             using var document = await JsonDocument.ParseAsync(responseStream);
+
             var embeddingData = document.RootElement.GetProperty("data")[0].GetProperty("embedding");
 
             return Vector<float>.Build.DenseOfEnumerable(embeddingData.EnumerateArray().Select(e => e.GetSingle()));
