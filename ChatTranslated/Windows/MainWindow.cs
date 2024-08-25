@@ -74,7 +74,7 @@ namespace ChatTranslated.Windows
         {
             DrawLanguageSelector();
 
-            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - 100 * scale);
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (100 * scale));
             ImGui.InputText("##input", ref inputText, 500);
             ImGui.SameLine();
             if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))

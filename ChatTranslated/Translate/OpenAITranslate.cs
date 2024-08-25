@@ -34,7 +34,7 @@ namespace ChatTranslated.Translate
             {
                 var queryEmbeddings = await RAG.GenerateEmbedding(message);
                 var topResults = RAG.GetTopResults(queryEmbeddings);
-                
+
                 if (topResults.Count > 0)
                 {
                     Service.pluginLog.Information("Top results from RAG:");

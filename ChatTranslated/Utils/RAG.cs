@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Utils
 {
-    // TODO: add keyword search
+    // TODO: take keyword search into consideration
     internal static class RAG
     {
         private const string DefaultContentType = "application/json";
