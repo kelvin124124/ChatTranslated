@@ -28,7 +28,6 @@ namespace ChatTranslated.Translate
             if (message.Length <= 5 || !Service.configuration.OpenAI_UseRAG)
             {
                 Service.pluginLog.Information("Skipping RAG.");
-                return await MachineTranslate.Translate(message, targetLanguage);
             }
             else
             {
