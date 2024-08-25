@@ -41,6 +41,7 @@ namespace ChatTranslated
         public bool Enabled { get; set; } = true;
         public bool ChatIntegration { get; set; } = true;
         public bool ChatIntegration_HideOriginal { get; set; } = false;
+        public bool ChatIntegration_ShowColoredText { get; set; } = false;
         public bool EnabledInDuty { get; set; } = false;
         public bool SendChatToDB { get; set; } = false;
 
@@ -59,6 +60,7 @@ namespace ChatTranslated
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
         public string Proxy_Url { get; set; } = "https://cfv3.kelpcc.com";
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
+        public bool OpenAI_UseRAG { get; set; } = false;
 
         public void Save()
         {

@@ -143,6 +143,15 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show colored text when outputting translated message.
+        /// </summary>
+        internal static string ChatIntegration_ShowColoredText {
+            get {
+                return ResourceManager.GetString("ChatIntegration_ShowColoredText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chinese (Simplified).
         /// </summary>
         internal static string Chinese__Simplified_ {
@@ -555,7 +564,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Price estimation: $0.2 /month.
+        ///   Looks up a localized string similar to Price estimation: $0.4 /month.
         /// </summary>
         internal static string OpenAIPriceEstimation {
             get {

@@ -89,11 +89,16 @@ namespace ChatTranslated
 
         public static void OutputChatLine(XivChatType type, string sender, string message)
         {
+            var sb = new SeStringBuilder();
+            if (!Service.configuration.ChatIntegration_ShowColoredText)
+                sb.AddUiForegroundOff();
+            sb.Append(message);
+
             Service.chatGui.Print(new XivChatEntry
             {
                 Type = type,
                 Name = new SeString(new PlayerPayload("[CT] " + sender, 0)), // use player payload to fake chat bubbles
-                Message = new SeStringBuilder().AddUiForegroundOff().Append(message).Build()
+                Message = sb.Build()
             });
         }
 

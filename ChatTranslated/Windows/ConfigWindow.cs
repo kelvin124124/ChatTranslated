@@ -3,6 +3,7 @@ using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
+using Dalamud.Utility;
 using GTranslate;
 using ImGuiNET;
 using System;
@@ -130,6 +131,7 @@ public class ConfigWindow : Window
         bool _Enabled = configuration.Enabled;
         bool _ChatIntegration = configuration.ChatIntegration;
         bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
+        bool _ChatIntegration_ShowColoredText = configuration.ChatIntegration_ShowColoredText;
         bool _EnabledInDuty = configuration.EnabledInDuty;
         bool _SendChatToDB = configuration.SendChatToDB;
 
@@ -155,6 +157,12 @@ public class ConfigWindow : Window
             if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref _ChatIntegration_HideOriginal))
             {
                 configuration.ChatIntegration_HideOriginal = _ChatIntegration_HideOriginal;
+                configuration.Save();
+            }
+            // Show colored text when outputting translated message
+            if (ImGui.Checkbox(Resources.ChatIntegration_ShowColoredText, ref _ChatIntegration_ShowColoredText))
+            {
+                configuration.ChatIntegration_ShowColoredText = _ChatIntegration_ShowColoredText;
                 configuration.Save();
             }
         }
@@ -358,7 +366,7 @@ public class ConfigWindow : Window
 
             if (ImGui.Button(Resources.SeeLanguageList))
             {
-                Process.Start(new ProcessStartInfo { FileName = "https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L164", UseShellExecute = true });
+                Util.OpenLink("https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L164");
             }
             ImGui.SameLine();
             if (ImGui.Button(Resources.Apply + "###ApplyCustomLanguage"))
@@ -497,6 +505,8 @@ public class ConfigWindow : Window
 
     private static void DrawOpenAISettings(Configuration configuration)
     {
+        bool _OpenAI_UseRAG = configuration.OpenAI_UseRAG;
+
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 200);
         ImGui.SameLine();
@@ -507,6 +517,14 @@ public class ConfigWindow : Window
             configuration.Save();
         }
         ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
+
+        if (ImGui.Checkbox("Use RAG [experimental]", ref _OpenAI_UseRAG))
+        {
+            configuration.OpenAI_UseRAG = _OpenAI_UseRAG;
+            configuration.Save();
+        }
+        ImGui.TextWrapped("Improve translation quality at the cost of 5-10x token usage.");
+
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
     }
