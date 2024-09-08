@@ -159,6 +159,9 @@ public class ConfigWindow : Window
                 configuration.ChatIntegration_HideOriginal = _ChatIntegration_HideOriginal;
                 configuration.Save();
             }
+
+            ImGui.TextUnformatted("    ");
+            ImGui.SameLine();
             // Show colored text when outputting translated message
             if (ImGui.Checkbox(Resources.ChatIntegration_ShowColoredText, ref _ChatIntegration_ShowColoredText))
             {

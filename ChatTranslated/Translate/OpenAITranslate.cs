@@ -103,7 +103,7 @@ namespace ChatTranslated.Translate
                 sb.AppendLine("</context>");
                 sb.AppendLine("Avoid mentioning that you obtained the information from the context.");
             }
-            sb.AppendLine($"Translate the following FFXIV Party Finder message into {Service.configuration.SelectedTargetLanguage}");
+            sb.AppendLine($"Translate the following FFXIV message into {Service.configuration.SelectedTargetLanguage}");
             sb.AppendLine("Maintain the original format without omitting any information. Use the following format, \"{xxx}\" means a placeholder.");
             sb.AppendLine("#### Original Text ");
             sb.AppendLine(message);
