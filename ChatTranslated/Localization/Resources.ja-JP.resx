@@ -276,7 +276,7 @@ LLM はメッセージが長い場合または複数言語を含む場合のみ�
     <value>OpenAI API キー</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>価格見積もり：$0.2/月</value>
+    <value>Price estimation: $0.4 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Party</value>
@@ -368,5 +368,8 @@ LLM はメッセージが長い場合または複数言語を含む場合のみ�
   </data>
   <data name="Translation Mode" xml:space="preserve">
     <value>翻訳モード</value>
+  </data>
+  <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
+    <value>Show colored text when outputting translated message</value>
   </data>
 </root>

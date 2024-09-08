@@ -276,7 +276,7 @@ LLM est meilleur uniquement si le message est long ou contient plusieurs langues
     <value>Clé API OpenAI</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Estimation du prix : 0,2 $/mois</value>
+    <value>Price estimation: $0.4 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Party</value>
@@ -368,5 +368,8 @@ Il n'envoie pas le texte traduit dans le chat ni ne le rend visible pour les aut
   </data>
   <data name="Translation Mode" xml:space="preserve">
     <value>Mode de traduction</value>
+  </data>
+  <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
+    <value>Show colored text when outputting translated message</value>
   </data>
 </root>
