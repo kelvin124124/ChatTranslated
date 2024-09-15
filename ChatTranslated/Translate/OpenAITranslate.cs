@@ -109,11 +109,11 @@ namespace ChatTranslated.Translate
                 sb.AppendLine("Avoid mentioning that you obtained the information from the context.\n");
             }
             sb.AppendLine($"Translate the following FFXIV message into {Service.configuration.SelectedTargetLanguage}");
-            sb.AppendLine("Maintain the original format without omitting any information. Use the following format, \"{xxx}\" means a placeholder.");
+            sb.AppendLine("Maintain the original format without omitting any information. Use the following format.");
             sb.AppendLine("#### Original Text ");
             sb.AppendLine(message);
             sb.AppendLine("#### Translation ");
-            sb.AppendLine("{Result of translation}");
+            sb.AppendLine("{Translated message}");
             return sb.ToString();
         }
     }

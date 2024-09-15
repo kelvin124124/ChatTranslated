@@ -443,15 +443,22 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Self-hosted gemma-2-27b-it proxy
-        ///
-        ///Note: 
+        ///   Looks up a localized string similar to Note: 
         ///DeepL have better accuracy in single-language translation. 
         ///LLM is better only if message is long or contain multiple languages..
         /// </summary>
         internal static string LLM_Explanation {
             get {
                 return ResourceManager.GetString("LLM_Explanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Self-hosted gemma-2-27b-it proxy.
+        /// </summary>
+        internal static string LLM_Proxy_Explanation {
+            get {
+                return ResourceManager.GetString("LLM_Proxy_Explanation", resourceCulture);
             }
         }
         

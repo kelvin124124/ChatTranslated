@@ -162,8 +162,8 @@ public class ConfigWindow : Window
 
         if (configuration.ChatIntegration)
         {
-            ImGui.TextUnformatted("    ");
-            ImGui.SameLine();
+            ImGui.Indent(20);
+
             // Hide original message when outputting translated message
             if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref _ChatIntegration_HideOriginal))
             {
@@ -171,14 +171,14 @@ public class ConfigWindow : Window
                 configuration.Save();
             }
 
-            ImGui.TextUnformatted("    ");
-            ImGui.SameLine();
             // Show colored text when outputting translated message
             if (ImGui.Checkbox(Resources.ChatIntegration_ShowColoredText, ref _ChatIntegration_ShowColoredText))
             {
                 configuration.ChatIntegration_ShowColoredText = _ChatIntegration_ShowColoredText;
                 configuration.Save();
             }
+
+            ImGui.Unindent(20);
         }
 
         // Enable in duties
@@ -424,6 +424,8 @@ public class ConfigWindow : Window
             configuration.Save();
         }
 
+        ImGui.TextUnformatted(Resources.LLM_Explanation);
+
         switch (configuration.SelectedTranslationEngine)
         {
             case TranslationEngine.DeepL:
@@ -436,7 +438,7 @@ public class ConfigWindow : Window
                 switch (configuration.LLM_Provider)
                 {
                     case 0: // LLM Proxy
-                        ImGui.TextUnformatted(Resources.LLM_Explanation);
+                        ImGui.TextUnformatted(Resources.LLM_Proxy_Explanation);
 #if DEBUG
                         ImGui.Separator();
                         DrawLLMProxySettings(configuration);
@@ -474,26 +476,24 @@ public class ConfigWindow : Window
     private static void DrawProviderSelection(Configuration configuration)
     {
         ImGui.TextUnformatted(Resources.LLMProvider + ":");
-        ImGui.SameLine();
-
+        ImGui.Indent(20);
         int selectedProvider = configuration.LLM_Provider;
         if (ImGui.RadioButton("LLM Proxy", ref selectedProvider, 0))
         {
             configuration.LLM_Provider = 0;
             configuration.Save();
         }
-        ImGui.SameLine();
         if (ImGui.RadioButton("OpenAI", ref selectedProvider, 1))
         {
             configuration.LLM_Provider = 1;
             configuration.Save();
         }
-        ImGui.SameLine();
         if (ImGui.RadioButton("OpenAI-compatible API", ref selectedProvider, 2))
         {
             configuration.LLM_Provider = 2;
             configuration.Save();
         }
+        ImGui.Unindent(20);
     }
 
 #if DEBUG

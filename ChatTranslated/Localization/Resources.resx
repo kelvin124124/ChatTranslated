@@ -235,12 +235,8 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
   <data name="LLMProvider" xml:space="preserve">
     <value>LLMProvider</value>
   </data>
-  <data name="LLM_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy
-
-Note: 
-DeepL have better accuracy in single-language translation. 
-LLM is better only if message is long or contain multiple languages.</value>
+  <data name="LLM_Proxy_Explanation" xml:space="preserve">
+    <value>Self-hosted gemma-2-27b-it proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Ls1</value>
@@ -378,5 +374,10 @@ May be restricted if you live in unsupported region.</value>
   </data>
   <data name="LLMApiEndpoint" xml:space="preserve">
     <value>Endpoint URL</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
 </root>
