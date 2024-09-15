@@ -43,7 +43,6 @@ namespace ChatTranslated
         public bool ChatIntegration_HideOriginal { get; set; } = false;
         public bool ChatIntegration_ShowColoredText { get; set; } = false;
         public bool EnabledInDuty { get; set; } = false;
-        public bool SendChatToDB { get; set; } = false;
 
         public string CustomTargetLanguage = "";
         public bool UseCustomLanguage = false;

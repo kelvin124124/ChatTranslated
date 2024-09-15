@@ -38,13 +38,7 @@ namespace ChatTranslated.Translate
                         throw new Exception("Translation not found in the expected JSON structure.");
                     }
 
-                    if (targetLanguage == "Chinese (Traditional)")
-                    {
-                        var (result, mode) = await MachineTranslate.Translate(translated, "Chinese (Traditional)");
-                        return (result, TranslationMode.DeepL);
-                    }
-                    else
-                        return (translated, TranslationMode.DeepL);
+                    return (translated, TranslationMode.DeepL);
                 }
                 catch (Exception ex)
                 {
@@ -63,11 +57,33 @@ namespace ChatTranslated.Translate
                 "Japanese" => "JA",
                 "German" => "DE",
                 "French" => "FR",
+                "Chinese (Simplified)" => "ZH-HANS",
+                "Chinese (Traditional)" => "ZH-HANT",
                 "Korean" => "KO",
-                "Chinese (Simplified)" => "ZH",
-                "Chinese (Traditional)" => "ZH",
                 "Spanish" => "ES",
+                "Arabic" => "AR",
+                "Bulgarian" => "BG",
+                "Czech" => "CS",
+                "Danish" => "DA",
+                "Dutch" => "NL",
+                "Estonian" => "ET",
+                "Finnish" => "FI",
+                "Greek" => "EL",
+                "Hungarian" => "HU",
+                "Indonesian" => "ID",
                 "Italian" => "IT",
+                "Latvian" => "LV",
+                "Lithuanian" => "LT",
+                "Norwegian Bokmal" => "NB",
+                "Polish" => "PL",
+                "Portuguese" => "PT",
+                "Romanian" => "RO",
+                "Russian" => "RU",
+                "Slovak" => "SK",
+                "Slovenian" => "SL",
+                "Swedish" => "SV",
+                "Turkish" => "TR",
+                "Ukrainian" => "UK",
                 _ => null
             };
             return !string.IsNullOrEmpty(languageCode);

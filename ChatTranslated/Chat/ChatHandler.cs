@@ -59,10 +59,6 @@ namespace ChatTranslated.Utils
             if (playerName == Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty))
             {
                 Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
-                if (Service.configuration.SendChatToDB)
-                {
-                    SendChatAsync(message.TextValue);
-                }
                 return;
             }
 
@@ -87,11 +83,6 @@ namespace ChatTranslated.Utils
                     Task.Run(() => TranslationHandler.TranslateChat(type, playerName, capturedMessage.TextValue));
                     break;
             }
-        }
-
-        private static async void SendChatAsync(string message)
-        {
-            await ChatStore.SendToDB(message);
         }
 
         public static string RemoveNonTextPayloads(SeString inputMsg)

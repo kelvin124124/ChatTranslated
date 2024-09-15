@@ -627,33 +627,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Send chat to DB.
-        /// </summary>
-        internal static string SendChat {
-            get {
-                return ResourceManager.GetString("SendChat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Personal identifiers and sensitive info will be removed before use..
-        /// </summary>
-        internal static string SendChatDisclaimer {
-            get {
-                return ResourceManager.GetString("SendChatDisclaimer", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Collect outgoing chat messages to improve translations..
-        /// </summary>
-        internal static string SendChatExplaination {
-            get {
-                return ResourceManager.GetString("SendChatExplaination", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Shout.
         /// </summary>
         internal static string Shout {
@@ -762,15 +735,6 @@ namespace ChatTranslated.Localization {
         internal static string UseCustomTargetLanguage {
             get {
                 return ResourceManager.GetString("UseCustomTargetLanguage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use DeepL spoof.
-        /// </summary>
-        internal static string UseDeepLSpoof {
-            get {
-                return ResourceManager.GetString("UseDeepLSpoof", resourceCulture);
             }
         }
         

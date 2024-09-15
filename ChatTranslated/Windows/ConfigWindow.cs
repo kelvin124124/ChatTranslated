@@ -20,8 +20,17 @@ public class ConfigWindow : Window
 {
     private readonly string[] supportedDetectedLanguages =
     ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
-    private readonly string[] supportedLanguages =
-    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish", "Italian"];
+    private readonly string[] supportedDisplayLanguages =
+    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
+    private readonly string[] supportedTranslationLanguages =
+    ["English", "Japanese", "German", "French", 
+        "Chinese (Simplified)", "Chinese (Traditional)", 
+        "Korean", "Spanish", "Arabic", "Bulgarian", 
+        "Czech", "Danish", "Dutch", "Estonian", 
+        "Finnish", "Greek", "Hungarian", "Indonesian", 
+        "Italian", "Latvian", "Lithuanian", "Norwegian Bokmal", 
+        "Polish", "Portuguese", "Romanian", "Russian", "Slovak", 
+        "Slovenian", "Swedish", "Turkish", "Ukrainian"];
 
     public static readonly HashSet<XivChatType> genericChatTypes =
     [
@@ -133,7 +142,6 @@ public class ConfigWindow : Window
         bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
         bool _ChatIntegration_ShowColoredText = configuration.ChatIntegration_ShowColoredText;
         bool _EnabledInDuty = configuration.EnabledInDuty;
-        bool _SendChatToDB = configuration.SendChatToDB;
 
         // Enabled
         if (ImGui.Checkbox(Resources.EnablePlugin, ref _Enabled))
@@ -176,14 +184,6 @@ public class ConfigWindow : Window
             configuration.EnabledInDuty = _EnabledInDuty;
             configuration.Save();
         }
-
-        // Send chat to DB
-        if (ImGui.Checkbox(Resources.SendChat, ref _SendChatToDB))
-        {
-            configuration.SendChatToDB = _SendChatToDB;
-        }
-        ImGui.TextUnformatted("    " + Resources.SendChatExplaination);
-        ImGui.TextUnformatted("    " + Resources.SendChatDisclaimer);
     }
 
     private void DrawPluginLangSelection(Configuration configuration)
@@ -194,7 +194,7 @@ public class ConfigWindow : Window
 
         string currentSelection = configuration.SelectedPluginLanguage;
 
-        int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
+        int currentIndex = Array.IndexOf(supportedDisplayLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
         ImGui.SameLine();
@@ -203,10 +203,10 @@ public class ConfigWindow : Window
             Process.Start(new ProcessStartInfo { FileName = "https://crowdin.com/project/chattranslated", UseShellExecute = true });
         }
 
-        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
-        if (ImGui.Combo("##pluginLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
+        string[] localizedSupportedDisplayLanguages = supportedDisplayLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
+        if (ImGui.Combo("##pluginLanguage", ref currentIndex, localizedSupportedDisplayLanguages, supportedDisplayLanguages.Length))
         {
-            configuration.SelectedPluginLanguage = supportedLanguages[currentIndex];
+            configuration.SelectedPluginLanguage = supportedDisplayLanguages[currentIndex];
             configuration.Save();
             SetLanguageCulture(configuration.SelectedPluginLanguage);
         }
@@ -341,14 +341,14 @@ public class ConfigWindow : Window
 
         string currentSelection = configuration.SelectedTargetLanguage;
 
-        int currentIndex = Array.IndexOf(supportedLanguages, currentSelection);
+        int currentIndex = Array.IndexOf(supportedTranslationLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        string[] localizedSupportedLanguages = supportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
+        string[] localizedSupportedTranslationLanguages = supportedTranslationLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
         if (configuration.UseCustomLanguage) ImGui.BeginDisabled();
-        if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedLanguages, supportedLanguages.Length))
+        if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedTranslationLanguages, supportedTranslationLanguages.Length))
         {
-            configuration.SelectedTargetLanguage = supportedLanguages[currentIndex];
+            configuration.SelectedTargetLanguage = supportedTranslationLanguages[currentIndex];
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
