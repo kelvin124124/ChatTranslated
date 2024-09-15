@@ -35,7 +35,7 @@ namespace ChatTranslated.Translate
                 var topResults = RAG.GetTopResults(queryEmbeddings);
 
 #if DEBUG
-                if (topResults.Count > 0)
+                if (topResults != null && topResults.Count > 0)
                 {
                     Service.pluginLog.Information("Top results from RAG:");
                     foreach (var result in topResults)
@@ -44,9 +44,14 @@ namespace ChatTranslated.Translate
                         Service.pluginLog.Information(firstSentence + "\n...");
                     }
                 }
+                else
+                {
+                    Service.pluginLog.Information("No results above the minimum score threshold.");
+                }
 #endif
 
-                context = string.Join("\n", topResults);
+                context = (topResults != null) ? 
+                    string.Join("\n", topResults) : null;
             }
 
             var prompt = BuildPrompt(context, message);

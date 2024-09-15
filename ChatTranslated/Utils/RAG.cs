@@ -46,28 +46,31 @@ namespace ChatTranslated.Utils
             Service.pluginLog.Information($"RAG: Initialized knowledge base with {KnowledgeBase.Count} entries.");
         }
 
-        public static IReadOnlyList<string> GetTopResults(Vector<float> query, int topK = 3)
+        public static IReadOnlyList<string>? GetTopResults(Vector<float> query, int topK = 3, float minScore = 0.3f)
         {
             if (!IsValidApiKey(Service.configuration.OpenAI_API_Key))
             {
                 Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration.");
-                return [];
+                return null;
             }
-
             try
             {
                 var queryNorm = query.L2Norm();
-                return KnowledgeBase
+                var results = KnowledgeBase
                     .Select(doc => (doc.Content, Similarity: ComputeCosineSimilarity(doc.Embedding, query, doc.EmbeddingNorm, queryNorm)))
+                    .Where(result => result.Similarity >= minScore)
                     .OrderByDescending(result => result.Similarity)
                     .Take(topK)
                     .Select(result => result.Content)
                     .ToArray();
+
+                return (results.Length > 0) ? 
+                    results : null;
             }
             catch (Exception ex)
             {
                 Service.pluginLog.Warning($"RAG: Failed to process query.\n{ex.Message}");
-                return [];
+                return null;
             }
         }
 
