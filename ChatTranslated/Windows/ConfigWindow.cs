@@ -23,13 +23,13 @@ public class ConfigWindow : Window
     private readonly string[] supportedDisplayLanguages =
     ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
     private readonly string[] supportedTranslationLanguages =
-    ["English", "Japanese", "German", "French", 
-        "Chinese (Simplified)", "Chinese (Traditional)", 
-        "Korean", "Spanish", "Arabic", "Bulgarian", 
-        "Czech", "Danish", "Dutch", "Estonian", 
-        "Finnish", "Greek", "Hungarian", "Indonesian", 
-        "Italian", "Latvian", "Lithuanian", "Norwegian Bokmal", 
-        "Polish", "Portuguese", "Romanian", "Russian", "Slovak", 
+    ["English", "Japanese", "German", "French",
+        "Chinese (Simplified)", "Chinese (Traditional)",
+        "Korean", "Spanish", "Arabic", "Bulgarian",
+        "Czech", "Danish", "Dutch", "Estonian",
+        "Finnish", "Greek", "Hungarian", "Indonesian",
+        "Italian", "Latvian", "Lithuanian", "Norwegian Bokmal",
+        "Polish", "Portuguese", "Romanian", "Russian", "Slovak",
         "Slovenian", "Swedish", "Turkish", "Ukrainian"];
 
     public static readonly HashSet<XivChatType> genericChatTypes =

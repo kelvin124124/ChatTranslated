@@ -3,12 +3,10 @@ using ChatTranslated.Utils;
 using ChatTranslated.Windows;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui.ContextMenu;
-using Dalamud.Game.Gui.PartyFinder.Types;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Interface.Windowing;
-using Dalamud.Memory;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.UI;
@@ -81,17 +79,28 @@ namespace ChatTranslated
             AddonLookingForGroupDetail* PfAddonPtr = (AddonLookingForGroupDetail*)args.AddonPtr;
             string description = PfAddonPtr->DescriptionString.ToString();
 
-            string category = PfAddonPtr->CategoriesString.ToString();
+            //string category = PfAddonPtr->CategoriesString.ToString();
+            //if (category.IsNullOrWhitespace())
+            //{
+            //    category = "unknown";
+            //    return;
+            //}
+            //category = new string(category.Where(c => !char.IsControl(c)).ToArray()).Trim();
+            //ChatHandler.Sanitize(category);
 
-            byte* dutyText = PfAddonPtr->DutyNameTextNode->GetText();
-            string duty = MemoryHelper.ReadSeStringNullTerminated((nint)dutyText).TextValue;
+            //byte* dutyText = PfAddonPtr->DutyNameTextNode->GetText();
+            //string duty = MemoryHelper.ReadSeStringNullTerminated((nint)dutyText).TextValue;
+            //if (duty.IsNullOrWhitespace())
+            //{
+            //    duty = "unknown";
+            //    return;
+            //}
+            //ChatHandler.Sanitize(duty);
 
             // fix weird characters in pf description
             description = description
                 .Replace("\u0002\u0012\u0002\u0037\u0003", " \uE040 ")
                 .Replace("\u0002\u0012\u0002\u0038\u0003", " \uE041 ");
-
-            OutputChatLine($"{category}: {duty}\ndescription: {description}");
 
             Task.Run(() => TranslationHandler.TranslatePFMessage(description));
         }
