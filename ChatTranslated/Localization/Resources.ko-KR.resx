@@ -233,11 +233,8 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
   <data name="LLMProvider" xml:space="preserve">
     <value>LLM 제공자</value>
   </data>
-  <data name="LLM_Explanation" xml:space="preserve">
-    <value>자체 호스팅 gemma-2-27b-it 프록시
-
-참고: DeepL은 단일 언어 번역에서 정확도가 더 높아요. 
-메시지가 길거나 여러 언어를 포함하는 경우에만 LLM의 성능이 더 좋아요.</value>
+  <data name="LLM_Proxy_Explanation" xml:space="preserve">
+    <value>Self-hosted gemma-2-27b-it proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -375,5 +372,10 @@ May be restricted if you live in unsupported region.</value>
   </data>
   <data name="LLMApiEndpoint" xml:space="preserve">
     <value>Endpoint URL</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
 </root>
