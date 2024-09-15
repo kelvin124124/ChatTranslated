@@ -235,12 +235,8 @@ Google 和 Bing 翻译将被用作备用。
   <data name="LLMProvider" xml:space="preserve">
     <value>LLM提供者</value>
   </data>
-  <data name="LLM_Explanation" xml:space="preserve">
-    <value>自托管 gemma-2-27b-it 代理
-
-注意：
-DeepL 在单语言翻译中的准确性更高。
-仅当消息较长或包含多种语言时，LLM 才会有更好表现。</value>
+  <data name="LLM_Proxy_Explanation" xml:space="preserve">
+    <value>Self-hosted gemma-2-27b-it proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通讯贝1</value>
@@ -378,5 +374,10 @@ May be restricted if you live in unsupported region.</value>
   </data>
   <data name="LLMApiEndpoint" xml:space="preserve">
     <value>Endpoint URL</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
 </root>
