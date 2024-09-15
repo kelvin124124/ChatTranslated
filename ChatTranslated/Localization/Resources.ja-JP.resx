@@ -235,12 +235,8 @@
   <data name="LLMProvider" xml:space="preserve">
     <value>LLMProvider</value>
   </data>
-  <data name="LLM_Explanation" xml:space="preserve">
-    <value>自ホスト gemma-2-27b-it プロキシ
-
-注意：
-DeepL は単一言語翻訳において高い精度を持っています。
-LLM はメッセージが長い場合または複数言語を含む場合のみに優れています。</value>
+  <data name="LLM_Proxy_Explanation" xml:space="preserve">
+    <value>Self-hosted gemma-2-27b-it proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -378,5 +374,10 @@ May be restricted if you live in unsupported region.</value>
   </data>
   <data name="LLMApiEndpoint" xml:space="preserve">
     <value>Endpoint URL</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
 </root>
