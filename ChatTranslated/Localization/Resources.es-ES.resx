@@ -236,7 +236,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Proveedor LLM</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Self-hosted gemma-2-27b-it proxy</value>
+    <value>Proxy autohospedado gemma-2-27b-it</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Ls1</value>
@@ -272,7 +272,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Clave API de OpenAI</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Price estimation: $0.4 /month</value>
+    <value>Estimación de precio: $0.4 /mes</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Grupo</value>
@@ -354,30 +354,30 @@ No envía texto traducido en el chat ni lo hace visible para otros jugadores.</v
     <value>Modo de traducción</value>
   </data>
   <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
-    <value>Show colored text when outputting translated message</value>
+    <value>Mostrar texto en color al mostrar el mensaje traducido</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
     <value>GPT-4o-mini
-May be restricted if you live in unsupported region.</value>
+Puede estar restringido si vives en una región no soportada.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
-    <value>Any custom providers with OpenAI-compatible API.</value>
+    <value>Cualquier proveedor personalizado con API compatible con OpenAI.</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>Models without system role is not supported.</value>
+    <value>Modelos sin rol de sistema no son soportados.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
-    <value>Api key</value>
+    <value>Clave API</value>
   </data>
   <data name="LLMModel" xml:space="preserve">
-    <value>Model</value>
+    <value>Modelo</value>
   </data>
   <data name="LLMApiEndpoint" xml:space="preserve">
-    <value>Endpoint URL</value>
+    <value>URL del punto de conexión</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Note: 
-DeepL have better accuracy in single-language translation. 
-LLM is better only if message is long or contain multiple languages.</value>
+    <value>Nota:
+DeepL tiene mejor precisión en traducción de un solo idioma.
+LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
   </data>
 </root>
