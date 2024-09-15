@@ -296,6 +296,15 @@ LLM is better only if message is long or contain multiple languages.</value>
   <data name="SeeLanguageList" xml:space="preserve">
     <value>See language list</value>
   </data>
+  <data name="SendChat" xml:space="preserve">
+    <value>Send chat to DB</value>
+  </data>
+  <data name="SendChatDisclaimer" xml:space="preserve">
+    <value>Personal identifiers and sensitive info will be removed before use.</value>
+  </data>
+  <data name="SendChatExplaination" xml:space="preserve">
+    <value>Collect outgoing chat messages to improve translations.</value>
+  </data>
   <data name="Shout" xml:space="preserve">
     <value>Shout</value>
   </data>
@@ -332,6 +341,9 @@ It does not send translated text in chat or make it visible to other players.</v
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
     <value>Use Custom Language</value>
+  </data>
+  <data name="UseDeepLSpoof" xml:space="preserve">
+    <value>Use DeepL spoof</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>Let's do it!</value>
