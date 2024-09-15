@@ -233,11 +233,8 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
   <data name="LLMProvider" xml:space="preserve">
     <value>LLM 제공자</value>
   </data>
-  <data name="LLM_Explanation" xml:space="preserve">
-    <value>자체 호스팅 gemma-2-27b-it 프록시
-
-참고: DeepL은 단일 언어 번역에서 정확도가 더 높아요. 
-메시지가 길거나 여러 언어를 포함하는 경우에만 LLM의 성능이 더 좋아요.</value>
+  <data name="LLM_Proxy_Explanation" xml:space="preserve">
+    <value>자체 호스팅 gemma-2-27b-it 프록시</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -356,5 +353,29 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
   </data>
   <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
     <value>번역한 메시지를 출력할 때 색깔 텍스트 표시</value>
+  </data>
+  <data name="OpenAIAPIExplanation" xml:space="preserve">
+    <value>GPT-4o-mini
+지원되지 않는 지역에 거주하는 경우 제한될 수 있습니다.</value>
+  </data>
+  <data name="OpenAICompatibleExplanation" xml:space="preserve">
+    <value>OpenAI와 호환되는 API를 가진 모든 사용자 정의 제공자.</value>
+  </data>
+  <data name="OpenAICompatibleInfo" xml:space="preserve">
+    <value>시스템 역할이 없는 모델은 지원되지 않습니다.</value>
+  </data>
+  <data name="LLMAPIKey" xml:space="preserve">
+    <value>API 키</value>
+  </data>
+  <data name="LLMModel" xml:space="preserve">
+    <value>모델</value>
+  </data>
+  <data name="LLMApiEndpoint" xml:space="preserve">
+    <value>엔드포인트 URL</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>참고: 
+DeepL은 단일 언어 번역에서 더 나은 정확성을 제공합니다.
+메시지가 길거나 여러 언어를 포함하는 경우에만 LLM이 더 좋습니다.</value>
   </data>
 </root>

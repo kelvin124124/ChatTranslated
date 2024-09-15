@@ -235,12 +235,8 @@ Google 和 Bing 翻译将被用作备用。
   <data name="LLMProvider" xml:space="preserve">
     <value>LLM提供者</value>
   </data>
-  <data name="LLM_Explanation" xml:space="preserve">
-    <value>自托管 gemma-2-27b-it 代理
-
-注意：
-DeepL 在单语言翻译中的准确性更高。
-仅当消息较长或包含多种语言时，LLM 才会有更好表现。</value>
+  <data name="LLM_Proxy_Explanation" xml:space="preserve">
+    <value>自托管 gemma-2-27b-it 代理</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通讯贝1</value>
@@ -276,7 +272,7 @@ DeepL 在单语言翻译中的准确性更高。
     <value>OpenAI API 密钥</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Price estimation: $0.4 /month</value>
+    <value>预计价格：0.4 美元/月</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>小队</value>
@@ -358,6 +354,30 @@ DeepL 在单语言翻译中的准确性更高。
     <value>翻译模式</value>
   </data>
   <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
-    <value>Show colored text when outputting translated message</value>
+    <value>输出翻译讯息时显示彩色文本</value>
+  </data>
+  <data name="OpenAIAPIExplanation" xml:space="preserve">
+    <value>GPT-4o-mini
+如果你居住在不支持的地区，可能会受到限制。</value>
+  </data>
+  <data name="OpenAICompatibleExplanation" xml:space="preserve">
+    <value>任何具有OpenAI兼容API的自定义提供商。</value>
+  </data>
+  <data name="OpenAICompatibleInfo" xml:space="preserve">
+    <value>不支持没有系统角色的模型。</value>
+  </data>
+  <data name="LLMAPIKey" xml:space="preserve">
+    <value>Api 密钥</value>
+  </data>
+  <data name="LLMModel" xml:space="preserve">
+    <value>模型</value>
+  </data>
+  <data name="LLMApiEndpoint" xml:space="preserve">
+    <value>端点URL</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>注意：
+DeepL 在单语言翻译中的准确性更高。
+仅当消息较长或包含多种语言时，LLM 才会有更好表现。</value>
   </data>
 </root>
