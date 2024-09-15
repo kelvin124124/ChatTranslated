@@ -456,6 +456,33 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Endpoint URL.
+        /// </summary>
+        internal static string LLMApiEndpoint {
+            get {
+                return ResourceManager.GetString("LLMApiEndpoint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Api key.
+        /// </summary>
+        internal static string LLMAPIKey {
+            get {
+                return ResourceManager.GetString("LLMAPIKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Model.
+        /// </summary>
+        internal static string LLMModel {
+            get {
+                return ResourceManager.GetString("LLMModel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to LLMProvider.
         /// </summary>
         internal static string LLMProvider {
@@ -555,11 +582,39 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GPT-4o-mini
+        ///May be restricted if you live in unsupported region..
+        /// </summary>
+        internal static string OpenAIAPIExplanation {
+            get {
+                return ResourceManager.GetString("OpenAIAPIExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OpenAI API Key.
         /// </summary>
         internal static string OpenAIAPIKey {
             get {
                 return ResourceManager.GetString("OpenAIAPIKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any custom providers with OpenAI-compatible API..
+        /// </summary>
+        internal static string OpenAICompatibleExplanation {
+            get {
+                return ResourceManager.GetString("OpenAICompatibleExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Models without system role is not supported..
+        /// </summary>
+        internal static string OpenAICompatibleInfo {
+            get {
+                return ResourceManager.GetString("OpenAICompatibleInfo", resourceCulture);
             }
         }
         

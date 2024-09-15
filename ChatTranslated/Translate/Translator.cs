@@ -32,9 +32,13 @@ namespace ChatTranslated.Translate
             return Service.configuration.SelectedTranslationEngine switch
             {
                 Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(text, targetLanguage),
-                Configuration.TranslationEngine.LLM => (Service.configuration.LLM_Provider == 0) ?
-                    await LLMProxyTranslate.Translate(text, targetLanguage) :
-                    await OpenAITranslate.Translate(text, targetLanguage),
+                Configuration.TranslationEngine.LLM => Service.configuration.LLM_Provider switch
+                {
+                    0 => await LLMProxyTranslate.Translate(text, targetLanguage),
+                    1 => await OpenAITranslate.Translate(text, targetLanguage),
+                    2 => await OpenAICompatible.Translate(text, targetLanguage),
+                    _ => (text, null)
+                },
                 _ => (text, null)
             };
         }

@@ -77,6 +77,9 @@ public class ConfigWindow : Window
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
+    private static string LLMApiEndpointInput = Service.configuration.LLM_API_endpoint;
+    private static string LLMApiKeyInput = Service.configuration.LLM_API_Key;
+    private static string LLMModelInput = Service.configuration.LLM_Model;
 
 #if DEBUG
     private static string ProxyBaseUrl = Service.configuration.Proxy_Url;
@@ -430,19 +433,25 @@ public class ConfigWindow : Window
                 break;
             case TranslationEngine.LLM:
                 DrawProviderSelection(configuration);
-                if (configuration.LLM_Provider == 0)
+                switch (configuration.LLM_Provider)
                 {
-                    ImGui.TextUnformatted(Resources.LLM_Explanation);
+                    case 0: // LLM Proxy
+                        ImGui.TextUnformatted(Resources.LLM_Explanation);
 #if DEBUG
-                    ImGui.Separator();
-                    DrawLLMProxySettings(configuration);
+                        ImGui.Separator();
+                        DrawLLMProxySettings(configuration);
 #endif
-                }
-                else
-                {
-                    ImGui.TextUnformatted("GPT-4o-mini\nMay be restricted if you live in unsupported region.");
-                    ImGui.Separator();
-                    DrawOpenAISettings(configuration);
+                        break;
+                    case 1: // OpenAI API
+                        ImGui.TextUnformatted(Resources.OpenAIAPIExplanation);
+                        ImGui.Separator();
+                        DrawOpenAISettings(configuration);
+                        break;
+                    case 2: // OpenAI-compatible API
+                        ImGui.TextUnformatted(Resources.OpenAICompatibleExplanation);
+                        ImGui.Separator();
+                        DrawLLMSettings(configuration);
+                        break;
                 }
                 break;
             default:
@@ -477,6 +486,12 @@ public class ConfigWindow : Window
         if (ImGui.RadioButton("OpenAI", ref selectedProvider, 1))
         {
             configuration.LLM_Provider = 1;
+            configuration.Save();
+        }
+        ImGui.SameLine();
+        if (ImGui.RadioButton("OpenAI-compatible API", ref selectedProvider, 2))
+        {
+            configuration.LLM_Provider = 2;
             configuration.Save();
         }
     }
@@ -530,5 +545,40 @@ public class ConfigWindow : Window
 
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
+    }
+
+    private static void DrawLLMSettings(Configuration configuration)
+    {
+        ImGui.TextUnformatted(Resources.LLMApiEndpoint);
+        ImGui.InputText("##APIEndpoint", ref LLMApiEndpointInput, 200);
+        ImGui.SameLine();
+        if (ImGui.Button(Resources.Apply + "###LLM_API_Endpoint"))
+        {
+            configuration.LLM_API_endpoint = LLMApiEndpointInput;
+            Plugin.OutputChatLine($"LLM API Endpoint {configuration.LLM_API_endpoint} saved successfully.");
+            configuration.Save();
+        }
+
+        ImGui.TextUnformatted(Resources.LLMAPIKey);
+        ImGui.InputText("##APIKey", ref LLMApiKeyInput, 200);
+        ImGui.SameLine();
+        if (ImGui.Button(Resources.Apply + "###LLM_API_Key"))
+        {
+            configuration.LLM_API_Key = LLMApiKeyInput;
+            Plugin.OutputChatLine($"LLM API Key {configuration.LLM_API_Key} saved successfully.");
+            configuration.Save();
+        }
+
+        ImGui.TextUnformatted(Resources.LLMModel);
+        ImGui.InputText("##Model", ref LLMModelInput, 200);
+        ImGui.SameLine();
+        if (ImGui.Button(Resources.Apply + "###LLM_Model"))
+        {
+            configuration.LLM_Model = LLMModelInput;
+            Plugin.OutputChatLine($"LLM Model {configuration.LLM_Model} saved successfully.");
+            configuration.Save();
+        }
+
+        ImGui.TextUnformatted(Resources.OpenAICompatibleInfo);
     }
 }

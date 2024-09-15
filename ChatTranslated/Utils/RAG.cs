@@ -64,7 +64,7 @@ namespace ChatTranslated.Utils
                     .Select(result => result.Content)
                     .ToArray();
 
-                return (results.Length > 0) ? 
+                return (results.Length > 0) ?
                     results : null;
             }
             catch (Exception ex)

@@ -20,7 +20,8 @@ namespace ChatTranslated
             MachineTranslate,
             DeepL,
             OpenAI,
-            LLMProxy
+            LLMProxy,
+            LLM
         }
         public TranslationEngine SelectedTranslationEngine { get; set; } = TranslationEngine.DeepL;
 
@@ -59,6 +60,9 @@ namespace ChatTranslated
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
         public string Proxy_Url { get; set; } = "https://cfv3.kelpcc.com";
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
+        public string LLM_API_Key { get; set; } = "YOUR-API-KEY";
+        public string LLM_API_endpoint { get; set; } = "https://openrouter.ai/api/v1/chat/completions";
+        public string LLM_Model { get; set; } = "sao10k/l3.1-euryale-70b";
         public bool OpenAI_UseRAG { get; set; } = false;
 
         public void Save()

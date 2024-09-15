@@ -12,52 +12,16 @@ using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Translate
 {
-    internal static class OpenAITranslate
+    internal static class OpenAICompatible
     {
         private const string DefaultContentType = "application/json";
 
         public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
         {
-            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9\-_]{32,}$", RegexOptions.Compiled))
-            {
-                Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
-                return await MachineTranslate.Translate(message, targetLanguage);
-            }
-
-            string? context = null;
-            if (message.Length <= 5 || !Service.configuration.OpenAI_UseRAG)
-            {
-                Service.pluginLog.Information("Skipping RAG.");
-            }
-            else
-            {
-                var queryEmbeddings = await RAG.GenerateEmbedding(message);
-                var topResults = RAG.GetTopResults(queryEmbeddings);
-
-#if DEBUG
-                if (topResults != null && topResults.Count > 0)
-                {
-                    Service.pluginLog.Information("Top results from RAG:");
-                    foreach (var result in topResults)
-                    {
-                        var firstSentence = result.Split('\n')[0];
-                        Service.pluginLog.Information(firstSentence + "\n...");
-                    }
-                }
-                else
-                {
-                    Service.pluginLog.Information("No results above the minimum score threshold.");
-                }
-#endif
-
-                context = (topResults != null) ?
-                    string.Join("\n", topResults) : null;
-            }
-
-            var prompt = BuildPrompt(context, message);
+            var prompt = BuildPrompt(null, message); // TODO: support context
             var requestData = new
             {
-                model = "gpt-4o-mini",
+                model = Service.configuration.LLM_Model,
                 temperature = 0.6,
                 max_tokens = Math.Min(Math.Max(message.Length * 2, 20), 175),
                 messages = new[]
@@ -67,10 +31,10 @@ namespace ChatTranslated.Translate
                 }
             };
 
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions")
+            var request = new HttpRequestMessage(HttpMethod.Post, Service.configuration.LLM_API_endpoint)
             {
                 Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType),
-                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {Service.configuration.OpenAI_API_Key}" } }
+                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {Service.configuration.LLM_API_Key}" } }
             };
 
             try
@@ -88,11 +52,11 @@ namespace ChatTranslated.Translate
                 var translationMatch = Regex.Match(translated, @"#### Translation\s*\n(.+)$", RegexOptions.Singleline);
                 translated = translationMatch.Success ? translationMatch.Groups[1].Value.Trim() : translated;
 
-                return (translated, TranslationMode.OpenAI);
+                return (translated, TranslationMode.LLM);
             }
             catch (Exception ex)
             {
-                Service.pluginLog.Warning($"OpenAI Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
+                Service.pluginLog.Warning($"LLM failed to translate. Falling back to machine translation.\n{ex.Message}");
                 return await MachineTranslate.Translate(message, targetLanguage);
             }
         }
@@ -117,4 +81,5 @@ namespace ChatTranslated.Translate
             return sb.ToString();
         }
     }
+
 }
