@@ -48,12 +48,7 @@ namespace ChatTranslated
         public string CustomTargetLanguage = "";
         public bool UseCustomLanguage = false;
 
-        public List<XivChatType> SelectedChatTypes { get; set; } =
-        [
-            XivChatType.Say, XivChatType.Shout, XivChatType.TellIncoming, XivChatType.Party,
-            XivChatType.Alliance, XivChatType.FreeCompany, XivChatType.NoviceNetwork,
-            XivChatType.Yell, XivChatType.CrossParty, XivChatType.PvPTeam,
-        ];
+        public List<XivChatType> SelectedChatTypes { get; set; } = null!;
 
         public short LLM_Provider { get; set; } = 0;
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";

@@ -32,7 +32,7 @@ public class ConfigWindow : Window
         "Polish", "Portuguese", "Romanian", "Russian", "Slovak",
         "Slovenian", "Swedish", "Turkish", "Ukrainian"];
 
-    public static readonly HashSet<XivChatType> genericChatTypes =
+    public static readonly List<XivChatType> genericChatTypes =
     [
         XivChatType.Say,
         XivChatType.Shout,
@@ -45,7 +45,7 @@ public class ConfigWindow : Window
         XivChatType.CrossParty,
         XivChatType.PvPTeam
     ];
-    public static readonly HashSet<XivChatType> lsChatTypes =
+    public static readonly List<XivChatType> lsChatTypes =
     [
         XivChatType.Ls1,
         XivChatType.Ls2,
@@ -56,7 +56,7 @@ public class ConfigWindow : Window
         XivChatType.Ls7,
         XivChatType.Ls8
     ];
-    public static readonly HashSet<XivChatType> cwlsChatTypes =
+    public static readonly List<XivChatType> cwlsChatTypes =
     [
         XivChatType.CrossLinkShell1,
         XivChatType.CrossLinkShell2,
