@@ -61,6 +61,9 @@ namespace ChatTranslated
 
             ConfigWindow.SetLanguageCulture(Service.configuration.SelectedPluginLanguage);
 
+            // initialize chat channels
+            Service.configuration.SelectedChatTypes ??= ConfigWindow.genericChatTypes;
+
             if (Service.configuration.Version != 5)
             {
                 // migrate channel settings
@@ -74,9 +77,6 @@ namespace ChatTranslated
                 Service.configuration.Version = 5;
                 Service.configuration.Save();
             }
-
-            // initialize chat channels
-            Service.configuration.SelectedChatTypes ??= ConfigWindow.genericChatTypes;
         }
 
         private void OnContextMenuOpened(IMenuOpenedArgs args)
