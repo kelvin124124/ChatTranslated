@@ -1,3 +1,4 @@
+using ChatTranslated.Chat;
 using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
@@ -101,7 +102,12 @@ namespace ChatTranslated.Windows
             }
         }
 
-        private static void ProcessInput(string input) => Task.Run(() => TranslationHandler.TranslateMainWindowMessage(input));
+        private static void ProcessInput(string input)
+        {
+            Message message = new Message(null!, MessageSource.MainWindow, input);
+            Task.Run(() => TranslationHandler.TranslateMainWindowMessage(message));
+        }
+
 
         public void PrintToOutput(string message)
         {

@@ -1,6 +1,6 @@
+using ChatTranslated.Chat;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
-using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Utility;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,57 +11,41 @@ namespace ChatTranslated.Translate
     {
         public static readonly Dictionary<string, string> TranslationCache = [];
 
-        internal static async Task DetermineLangAndTranslate(XivChatType type, string sender, SeString message)
+        internal static async Task DetermineLangAndTranslate(Message chatMessage)
         {
-            var messageText = ChatHandler.RemoveNonTextPayloads(message);
-            var language = await Translator.DetermineLanguage(messageText);
+            var language = await Translator.DetermineLanguage(chatMessage.CleanedContent);
             if (Service.configuration.SelectedSourceLanguages.Contains(language))
             {
-                await TranslateChat(type, sender, message.TextValue);
+                await TranslateChat(chatMessage);
             }
             else
             {
-                Service.mainWindow.PrintToOutput($"{sender}: {message.TextValue}");
+                Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.OriginalContent}");
             }
         }
 
-        public static async Task TranslateChat(XivChatType type, string sender, string message)
+        public static async Task TranslateChat(Message chatMessage)
         {
-            var translatedText = await TranslateMessage(message, Service.configuration.SelectedTargetLanguage, true);
-            if (!translatedText.IsNullOrWhitespace())
-            {
-                if (!Service.configuration.ChatIntegration_HideOriginal)
-                    message = $"{message} || {translatedText}";
-                else
-                    message = translatedText;
-
-                OutputTranslation(type, sender, message);
-            }
+            chatMessage.TranslatedContent = await TranslateMessage(chatMessage.OriginalContent.TextValue, Service.configuration.SelectedTargetLanguage, true);
+            OutputTranslation(chatMessage);
         }
 
-        public static async Task TranslateMainWindowMessage(string message)
+        public static async Task TranslateMainWindowMessage(Message message)
         {
-            var translatedText = await TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
-            if (!translatedText.IsNullOrWhitespace())
-            {
-                var reversedTranslationResult = await Translator.Translate(translatedText, Service.configuration.SelectedPluginLanguage, Configuration.TranslationMode.MachineTranslate);
-                var reversedTranslation = reversedTranslationResult.Item1;
-                Service.mainWindow.PrintToOutput($"Translation: {translatedText} || Original: {message} || Reverse Translation: {reversedTranslation}");
-            }
+            message.TranslatedContent = await TranslateMessage(message.OriginalContent.TextValue, Service.configuration.SelectedMainWindowTargetLanguage);
+
+            var reversedTranslationResult = await Translator.Translate(message.TranslatedContent,
+                Service.configuration.SelectedPluginLanguage, Configuration.TranslationMode.MachineTranslate);
+            var reversedTranslation = reversedTranslationResult.Item1;
+            Service.mainWindow.PrintToOutput($"Translation: {message.TranslatedContent} " +
+                $"|| Original: {message.OriginalContent} " +
+                $"|| Reverse Translation: {reversedTranslation}");
         }
 
-        public static async Task TranslatePFMessage(string message)
+        public static async Task TranslatePFMessage(Message PFmessage)
         {
-            var translatedText = await TranslateMessage(message, Service.configuration.SelectedTargetLanguage, true);
-            if (!translatedText.IsNullOrWhitespace())
-            {
-                if (!Service.configuration.ChatIntegration_HideOriginal)
-                    message = $"{message} || {translatedText}";
-                else
-                    message = translatedText;
-
-                OutputTranslation(XivChatType.Say, "PF", message);
-            }
+            PFmessage.TranslatedContent = await TranslateMessage(PFmessage.OriginalContent.TextValue, Service.configuration.SelectedTargetLanguage, true);
+            OutputTranslation(PFmessage);
         }
 
         private static async Task<string> TranslateMessage(string message, string targetLanguage, bool cache = false)
@@ -90,12 +74,17 @@ namespace ChatTranslated.Translate
             return translatedText;
         }
 
-        public static void OutputTranslation(XivChatType type, string sender, string message)
+        public static void OutputTranslation(Message chatMessage)
         {
-            Service.mainWindow.PrintToOutput($"{sender}: {message}");
+            Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.TranslatedContent}");
+
             if (Service.configuration.ChatIntegration)
             {
-                Plugin.OutputChatLine(type, sender, message);
+                string outputStr = Service.configuration.ChatIntegration_HideOriginal
+                    ? chatMessage.TranslatedContent!
+                    : $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
+
+                Plugin.OutputChatLine(chatMessage.Type ?? XivChatType.Say, chatMessage.Sender, outputStr);
             }
         }
 

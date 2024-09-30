@@ -1,3 +1,4 @@
+using ChatTranslated.Chat;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using ChatTranslated.Windows;
@@ -7,9 +8,11 @@ using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Interface.Windowing;
+using Dalamud.Memory;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ChatTranslated
@@ -90,30 +93,23 @@ namespace ChatTranslated
             AddonLookingForGroupDetail* PfAddonPtr = (AddonLookingForGroupDetail*)args.AddonPtr;
             string description = PfAddonPtr->DescriptionString.ToString();
 
-            //string category = PfAddonPtr->CategoriesString.ToString();
-            //if (category.IsNullOrWhitespace())
-            //{
-            //    category = "unknown";
-            //    return;
-            //}
-            //category = new string(category.Where(c => !char.IsControl(c)).ToArray()).Trim();
-            //ChatHandler.Sanitize(category);
-
-            //byte* dutyText = PfAddonPtr->DutyNameTextNode->GetText();
-            //string duty = MemoryHelper.ReadSeStringNullTerminated((nint)dutyText).TextValue;
-            //if (duty.IsNullOrWhitespace())
-            //{
-            //    duty = "unknown";
-            //    return;
-            //}
-            //ChatHandler.Sanitize(duty);
-
             // fix weird characters in pf description
             description = description
                 .Replace("\u0002\u0012\u0002\u0037\u0003", " \uE040 ")
                 .Replace("\u0002\u0012\u0002\u0038\u0003", " \uE041 ");
 
-            Task.Run(() => TranslationHandler.TranslatePFMessage(description));
+            Message PFmessage = new Message("PF", MessageSource.PartyFinder, description);
+
+            string category = PfAddonPtr->CategoriesString.ToString();
+            category = new string(category.Where(c => !char.IsControl(c)).ToArray()).Trim();
+
+            byte* dutyText = PfAddonPtr->DutyNameTextNode->GetText();
+            string duty = MemoryHelper.ReadSeStringNullTerminated((nint)dutyText).TextValue;
+
+            string context = $"Category: {category} \nDuty: {duty}";
+            PFmessage.Context = context;
+
+            Task.Run(() => TranslationHandler.TranslatePFMessage(PFmessage));
         }
 
         public static void OutputChatLine(XivChatType type, string sender, string message)
