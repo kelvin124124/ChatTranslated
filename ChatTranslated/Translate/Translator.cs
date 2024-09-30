@@ -1,7 +1,10 @@
+using ChatTranslated.Chat;
 using ChatTranslated.Utils;
 using Dalamud.Networking.Http;
+using Dalamud.Utility;
 using GTranslate.Translators;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -24,38 +27,47 @@ namespace ChatTranslated.Translate
         public static readonly GoogleTranslator GTranslator = new(HttpClient);
         public static readonly BingTranslator BingTranslator = new(HttpClient);
 
-        public static async Task<(string, Configuration.TranslationMode?)> Translate(string text, string targetLanguage)
-        {
-            text = ChatHandler.Sanitize(text);
-            if (string.IsNullOrWhiteSpace(text)) return (text, null);
+        public static readonly Dictionary<string, string> TranslationCache = [];
 
-            return Service.configuration.SelectedTranslationEngine switch
+        public static async Task<Message> TranslateMessage(Message message, string targetLanguage = null!)
+        {
+            targetLanguage ??= Service.configuration.SelectedTargetLanguage;
+
+            if (string.IsNullOrWhiteSpace(message.CleanedContent)) return message;
+
+            if (TranslationCache.TryGetValue(message.CleanedContent, out var cachedTranslation))
             {
-                Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(text, targetLanguage),
+                message.TranslatedContent = cachedTranslation;
+                return message;
+            }
+
+            string translatedText;
+            Configuration.TranslationMode? mode;
+
+            (translatedText, mode) = Service.configuration.SelectedTranslationEngine switch
+            {
+                Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(message.CleanedContent, targetLanguage),
                 Configuration.TranslationEngine.LLM => Service.configuration.LLM_Provider switch
                 {
-                    0 => await LLMProxyTranslate.Translate(text, targetLanguage),
-                    1 => await OpenAITranslate.Translate(text, targetLanguage),
-                    2 => await OpenAICompatible.Translate(text, targetLanguage),
-                    _ => (text, null)
+                    0 => await LLMProxyTranslate.Translate(message.CleanedContent, targetLanguage),
+                    1 => await OpenAITranslate.Translate(message.CleanedContent, targetLanguage),
+                    2 => await OpenAICompatible.Translate(message.CleanedContent, targetLanguage),
+                    _ => (message.CleanedContent, null)
                 },
-                _ => (text, null)
+                _ => (message.CleanedContent, null)
             };
-        }
 
-        public static async Task<(string, Configuration.TranslationMode?)> Translate(string text, string targetLanguage, Configuration.TranslationMode translationMode)
-        {
-            text = ChatHandler.Sanitize(text);
-            if (string.IsNullOrWhiteSpace(text)) return (text, null);
+            message.TranslatedContent = translatedText;
+            message.translationMode = mode;
 
-            return translationMode switch
+            if (!translatedText.IsNullOrWhitespace() 
+                && message.Source != MessageSource.MainWindow 
+                && message.translationMode != Configuration.TranslationMode.MachineTranslate)
             {
-                Configuration.TranslationMode.MachineTranslate => await MachineTranslate.Translate(text, targetLanguage),
-                Configuration.TranslationMode.DeepL => await DeeplsTranslate.Translate(text, targetLanguage),
-                Configuration.TranslationMode.OpenAI => await OpenAITranslate.Translate(text, targetLanguage),
-                Configuration.TranslationMode.LLMProxy => await LLMProxyTranslate.Translate(text, targetLanguage),
-                _ => (text, null)
-            };
+                TranslationCache[message.CleanedContent] = translatedText;
+            }
+
+            return message;
         }
 
         public static async Task<string> DetermineLanguage(string messageText)
@@ -85,5 +97,7 @@ namespace ChatTranslated.Translate
                 }
             }
         }
+
+        public static void ClearTranslationCache() => TranslationCache.Clear();
     }
 }

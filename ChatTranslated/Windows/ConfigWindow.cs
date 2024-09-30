@@ -1,5 +1,4 @@
 using ChatTranslated.Localization;
-using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;

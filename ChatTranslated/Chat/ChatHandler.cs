@@ -23,9 +23,12 @@ namespace ChatTranslated.Utils
 
         private void OnChatMessage(XivChatType type, int _, ref SeString sender, ref SeString message, ref bool isHandled)
         {
-            if (isHandled)
-                return;
+            if (isHandled) return;
+            HandleChatMessage(type, sender, message);
+        }
 
+        private async void HandleChatMessage(XivChatType type, SeString sender, SeString message)
+        {
             if (!Service.configuration.Enabled || sender.TextValue.Contains("[CT]") || !Service.configuration.SelectedChatTypes.Contains(type))
                 return;
 
@@ -44,26 +47,47 @@ namespace ChatTranslated.Utils
                 return;
             }
 
-            if (IsFilteredMessage(playerName, message.TextValue))
+            var chatMessage = new Message(playerName, MessageSource.Chat, message, type);
+
+            if (IsFilteredMessage(playerName, chatMessage.CleanedContent) || IsJPFilteredMessage(chatMessage))
             {
-                Service.mainWindow.PrintToOutput($"{playerName}: {message}");
+                OutputMessage(chatMessage);
                 return;
             }
 
-            var chatMessage = new Message(playerName, MessageSource.Chat, message, type);
-
-            switch (Service.configuration.SelectedLanguageSelectionMode)
+            bool needsTranslation = Service.configuration.SelectedLanguageSelectionMode switch
             {
-                case Configuration.LanguageSelectionMode.Default:
-                    if (ChatRegex.NonEnglishRegex().IsMatch(chatMessage.CleanedContent) && !IsJPFilteredMessage(chatMessage))
-                        Task.Run(() => TranslationHandler.TranslateChat(chatMessage));
-                    break;
-                case Configuration.LanguageSelectionMode.CustomLanguages:
-                    Task.Run(() => TranslationHandler.DetermineLangAndTranslate(chatMessage));
-                    break;
-                case Configuration.LanguageSelectionMode.AllLanguages:
-                    Task.Run(() => TranslationHandler.TranslateChat(chatMessage));
-                    break;
+                Configuration.LanguageSelectionMode.Default => ChatRegex.NonEnglishRegex().IsMatch(chatMessage.CleanedContent),
+                Configuration.LanguageSelectionMode.CustomLanguages => await IsCustomSourceLanguage(chatMessage),
+                Configuration.LanguageSelectionMode.AllLanguages => true,
+                _ => false
+            };
+
+            if (needsTranslation)
+            {
+                await Translator.TranslateMessage(chatMessage);
+            }
+
+            OutputMessage(chatMessage);
+        }
+
+        private async Task<bool> IsCustomSourceLanguage(Message chatMessage)
+        {
+            var language = await Translator.DetermineLanguage(chatMessage.CleanedContent);
+            return Service.configuration.SelectedSourceLanguages.Contains(language);
+        }
+
+        private static void OutputMessage(Message chatMessage)
+        {
+            Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.TranslatedContent ?? chatMessage.OriginalContent.TextValue}");
+
+            if (Service.configuration.ChatIntegration)
+            {
+                string outputStr = Service.configuration.ChatIntegration_HideOriginal
+                    ? chatMessage.TranslatedContent!
+                    : $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
+
+                Plugin.OutputChatLine(chatMessage.Type ?? XivChatType.Say, chatMessage.Sender, outputStr);
             }
         }
 
@@ -97,21 +121,21 @@ namespace ChatTranslated.Utils
             {
                 chatMessage.TranslatedContent = Resources.WelcomeStr;
 
-                TranslationHandler.OutputTranslation(chatMessage);
+                OutputMessage(chatMessage);
                 return true;
             }
             if (ChatRegex.JPByeRegex().IsMatch(chatMessage.CleanedContent))
             {
                 chatMessage.TranslatedContent = Resources.GGstr;
 
-                TranslationHandler.OutputTranslation(chatMessage);
+                OutputMessage(chatMessage);
                 return true;
             }
             if (ChatRegex.JPDomaRegex().IsMatch(chatMessage.CleanedContent))
             {
                 chatMessage.TranslatedContent = Resources.DomaStr;
 
-                TranslationHandler.OutputTranslation(chatMessage);
+                OutputMessage(chatMessage);
                 return true;
             }
 

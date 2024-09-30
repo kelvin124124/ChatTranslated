@@ -97,7 +97,7 @@ namespace ChatTranslated.Windows
             if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, localizedLanguages, languages.Length))
             {
                 Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];
-                TranslationHandler.ClearTranslationCache();
+                Translator.ClearTranslationCache();
                 Service.configuration.Save();
             }
         }
@@ -105,7 +105,7 @@ namespace ChatTranslated.Windows
         private static void ProcessInput(string input)
         {
             Message message = new Message(null!, MessageSource.MainWindow, input);
-            Task.Run(() => TranslationHandler.TranslateMainWindowMessage(message));
+            Task.Run(() => Translator.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage));
         }
 
 
