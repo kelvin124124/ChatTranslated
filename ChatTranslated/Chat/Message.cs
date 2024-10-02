@@ -14,11 +14,7 @@ namespace ChatTranslated.Chat
         public SeString OriginalContent { get; set; }
 
         private string? cleanedContent;
-        public string CleanedContent
-        {
-            get => cleanedContent ??= RemoveNonTextPayloads(OriginalContent);
-            set => cleanedContent = value;
-        }
+        public string CleanedContent => cleanedContent ??= RemoveNonTextPayloads(OriginalContent);
 
         public string? TranslatedContent { get; set; }
         public TranslationMode? translationMode { get; set; }

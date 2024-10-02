@@ -66,9 +66,12 @@ namespace ChatTranslated.Utils
             if (needsTranslation)
             {
                 await Translator.TranslateMessage(chatMessage);
+                OutputMessage(chatMessage);
             }
-
-            OutputMessage(chatMessage);
+            else
+            {
+                Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
+            }
         }
 
         private async Task<bool> IsCustomSourceLanguage(Message chatMessage)
