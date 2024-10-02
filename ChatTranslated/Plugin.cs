@@ -109,7 +109,14 @@ namespace ChatTranslated
             string context = $"Category: {category} \nDuty: {duty}";
             PFmessage.Context = context;
 
-            Task.Run(() => Translator.TranslateMessage(PFmessage));
+
+            Task.Run(() => TranslatePFmsg(PFmessage));
+        }
+
+        private async Task TranslatePFmsg(Message message)
+        {
+            await Translator.TranslateMessage(message);
+            ChatHandler.OutputMessage(message);
         }
 
         public static void OutputChatLine(XivChatType type, string sender, string message)

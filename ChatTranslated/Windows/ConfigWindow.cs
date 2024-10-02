@@ -1,4 +1,5 @@
 using ChatTranslated.Localization;
+using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
@@ -351,7 +352,7 @@ public class ConfigWindow : Window
         if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedTranslationLanguages, supportedTranslationLanguages.Length))
         {
             configuration.SelectedTargetLanguage = supportedTranslationLanguages[currentIndex];
-            TranslationHandler.ClearTranslationCache();
+            Translator.ClearTranslationCache();
             configuration.Save();
         }
         if (configuration.UseCustomLanguage) ImGui.EndDisabled();
@@ -379,7 +380,7 @@ public class ConfigWindow : Window
                 if (Language.TryGetLanguage(configuration.CustomTargetLanguage, out var lang))
                 {
                     Plugin.OutputChatLine("Language applied successfully.");
-                    TranslationHandler.ClearTranslationCache();
+                    Translator.ClearTranslationCache();
                     configuration.Save();
                 }
                 else
@@ -391,7 +392,7 @@ public class ConfigWindow : Window
             ImGui.SameLine();
             if (ImGui.Checkbox(Resources.UseCustomTargetLanguage, ref configuration.UseCustomLanguage))
             {
-                TranslationHandler.ClearTranslationCache();
+                Translator.ClearTranslationCache();
                 configuration.Save();
             }
         }
@@ -419,7 +420,7 @@ public class ConfigWindow : Window
         if (ImGui.Combo("##TranslationEngineCombo", ref selectedTranslationEngine, translationEngineNames, translationEngineNames.Length))
         {
             configuration.SelectedTranslationEngine = (TranslationEngine)selectedTranslationEngine;
-            TranslationHandler.ClearTranslationCache();
+            Translator.ClearTranslationCache();
             configuration.Save();
         }
 

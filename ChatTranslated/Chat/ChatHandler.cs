@@ -77,7 +77,7 @@ namespace ChatTranslated.Utils
             return Service.configuration.SelectedSourceLanguages.Contains(language);
         }
 
-        private static void OutputMessage(Message chatMessage)
+        internal static void OutputMessage(Message chatMessage)
         {
             Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.TranslatedContent ?? chatMessage.OriginalContent.TextValue}");
 

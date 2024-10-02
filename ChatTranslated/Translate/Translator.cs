@@ -60,8 +60,8 @@ namespace ChatTranslated.Translate
             message.TranslatedContent = translatedText;
             message.translationMode = mode;
 
-            if (!translatedText.IsNullOrWhitespace() 
-                && message.Source != MessageSource.MainWindow 
+            if (!translatedText.IsNullOrWhitespace()
+                && message.Source != MessageSource.MainWindow
                 && message.translationMode != Configuration.TranslationMode.MachineTranslate)
             {
                 TranslationCache[message.CleanedContent] = translatedText;
