@@ -41,9 +41,6 @@ namespace ChatTranslated.Utils
             if (type == XivChatType.TellOutgoing)
                 playerName = localPlayerName;
 
-            Service.pluginLog.Debug($"Chat message from {playerName}: {message.TextValue}" +
-                $"local player: {localPlayerName}, match: {playerName == localPlayerName}");
-
             if (playerName == localPlayerName)
             {
                 Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
@@ -54,7 +51,7 @@ namespace ChatTranslated.Utils
 
             if (IsFilteredMessage(playerName, chatMessage.CleanedContent) || IsJPFilteredMessage(chatMessage))
             {
-                OutputMessage(chatMessage);
+                Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 return;
             }
 

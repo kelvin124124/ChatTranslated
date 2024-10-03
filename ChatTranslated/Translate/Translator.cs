@@ -35,7 +35,7 @@ namespace ChatTranslated.Translate
 
             if (string.IsNullOrWhiteSpace(message.CleanedContent)) return message;
 
-            if (TranslationCache.TryGetValue(message.CleanedContent, out var cachedTranslation))
+            if (TranslationCache.TryGetValue(message.OriginalContent.TextValue, out var cachedTranslation))
             {
                 message.TranslatedContent = cachedTranslation;
                 return message;
@@ -46,15 +46,15 @@ namespace ChatTranslated.Translate
 
             (translatedText, mode) = Service.configuration.SelectedTranslationEngine switch
             {
-                Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(message.CleanedContent, targetLanguage),
+                Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(message.OriginalContent.TextValue, targetLanguage),
                 Configuration.TranslationEngine.LLM => Service.configuration.LLM_Provider switch
                 {
-                    0 => await LLMProxyTranslate.Translate(message.CleanedContent, targetLanguage),
-                    1 => await OpenAITranslate.Translate(message.CleanedContent, targetLanguage),
-                    2 => await OpenAICompatible.Translate(message.CleanedContent, targetLanguage),
-                    _ => (message.CleanedContent, null)
+                    0 => await LLMProxyTranslate.Translate(message.OriginalContent.TextValue, targetLanguage),
+                    1 => await OpenAITranslate.Translate(message.OriginalContent.TextValue, targetLanguage),
+                    2 => await OpenAICompatible.Translate(message.OriginalContent.TextValue, targetLanguage),
+                    _ => (message.OriginalContent.TextValue, null)
                 },
-                _ => (message.CleanedContent, null)
+                _ => (message.OriginalContent.TextValue, null)
             };
 
             message.TranslatedContent = translatedText;
@@ -64,7 +64,7 @@ namespace ChatTranslated.Translate
                 && message.Source != MessageSource.MainWindow
                 && message.translationMode != Configuration.TranslationMode.MachineTranslate)
             {
-                TranslationCache[message.CleanedContent] = translatedText;
+                TranslationCache[message.OriginalContent.TextValue] = translatedText;
             }
 
             return message;
