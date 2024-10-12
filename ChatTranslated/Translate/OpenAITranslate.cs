@@ -66,7 +66,7 @@ namespace ChatTranslated.Translate
                 messages = new[]
                 {
                     new { role = "system", content = prompt },
-                    new { role = "user", content = message.OriginalContent.TextValue }
+                    new { role = "user", content = userMsg }
                 }
             };
 
