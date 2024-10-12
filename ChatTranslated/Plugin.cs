@@ -67,6 +67,7 @@ namespace ChatTranslated
             // initialize chat channels
             Service.configuration.SelectedChatTypes ??= ConfigWindow.genericChatTypes;
 
+            // settings migration
             if (Service.configuration.Version != 5)
             {
                 // migrate channel settings
@@ -78,6 +79,12 @@ namespace ChatTranslated
                         Service.configuration.SelectedChatTypes.Add(type);
                 });
                 Service.configuration.Version = 5;
+                Service.configuration.Save();
+            }
+
+            if (Service.configuration.Proxy_Url == "https://cfv3.kelpcc.com")
+            {
+                Service.configuration.Proxy_Url = "https://cfv4.kelpcc.com";
                 Service.configuration.Save();
             }
         }

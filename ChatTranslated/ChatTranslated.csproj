@@ -46,16 +46,16 @@
       <PackageReference Update="DalamudPackager" Version="2.1.13" />
     </ItemGroup>
 
-    <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv3)' != ''">
+    <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv4)' != ''">
         <PropertyGroup>
-            <SecretPath>$(ProjectDir)Resources\cfv3.secret</SecretPath>
+            <SecretPath>$(ProjectDir)Resources\cfv4.secret</SecretPath>
         </PropertyGroup>
-        <WriteLinesToFile File="$(SecretPath)" Lines="$(PLOGON_SECRET_cfv3)" Overwrite="true" />
+        <WriteLinesToFile File="$(SecretPath)" Lines="$(PLOGON_SECRET_cfv4)" Overwrite="true" />
     </Target>
 
     <Target Name="EmbedSecrets" BeforeTargets="PrepareForBuild" AfterTargets="Secrets">
         <ItemGroup>
-            <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.cfv3.secret" />
+            <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.cfv4.secret" />
         </ItemGroup>
     </Target>
 </Project>

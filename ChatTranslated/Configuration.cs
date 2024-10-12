@@ -53,7 +53,7 @@ namespace ChatTranslated
         public short LLM_Provider { get; set; } = 0;
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
-        public string Proxy_Url { get; set; } = "https://cfv3.kelpcc.com";
+        public string Proxy_Url { get; set; } = "https://cfv4.kelpcc.com";
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
         public string LLM_API_Key { get; set; } = "YOUR-API-KEY";
         public string LLM_API_endpoint { get; set; } = "https://openrouter.ai/api/v1/chat/completions";
