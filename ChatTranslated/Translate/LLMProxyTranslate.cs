@@ -1,3 +1,4 @@
+using ChatTranslated.Chat;
 using ChatTranslated.Utils;
 using Dalamud.Utility;
 using Newtonsoft.Json.Linq;
@@ -23,7 +24,7 @@ namespace ChatTranslated.Translate
             return stream == null ? "" : new StreamReader(stream).ReadToEnd();
         }
 
-        public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
+        public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage)
         {
 #if DEBUG
             string Cfv3 = Service.configuration.Proxy_API_Key;
@@ -35,7 +36,7 @@ namespace ChatTranslated.Translate
             }
 #endif
 
-            var requestData = new { targetLanguage, message };
+            var requestData = new { targetLanguage, message.OriginalContent, message.Context };
             var request = new HttpRequestMessage(HttpMethod.Post, Service.configuration.Proxy_Url)
             {
                 Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType)
@@ -47,19 +48,24 @@ namespace ChatTranslated.Translate
                 var response = await Translator.HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
                 var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var translated = JObject.Parse(responseBody)["translated"]?.ToString().Trim();
+                var jsonResponse = JObject.Parse(responseBody);
+
+                var translated = jsonResponse["translated"]?.ToString().Trim();
+                var responseTime = jsonResponse["responseTime"]?.ToString();
 
                 if (translated.IsNullOrWhitespace() || translated == "{}")
                 {
                     throw new Exception("Translation not found in the expected JSON structure.");
                 }
 
+                Service.pluginLog.Info($"Request processed in: {responseTime}");
+
                 return (translated.Replace("\n", string.Empty), TranslationMode.LLMProxy);
             }
             catch (Exception ex)
             {
                 Service.pluginLog.Warning($"LLMProxy Translate failed to translate. Falling back to machine translate.\n{ex.Message}");
-                return await MachineTranslate.Translate(message, targetLanguage);
+                return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
             }
         }
     }

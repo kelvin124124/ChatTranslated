@@ -21,11 +21,12 @@ namespace ChatTranslated.Translate
         {
             DefaultRequestVersion = HttpVersion.Version30,
             DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower,
-            Timeout = TimeSpan.FromSeconds(10)
+            Timeout = TimeSpan.FromSeconds(20)
         };
 
         public static readonly GoogleTranslator GTranslator = new(HttpClient);
         public static readonly BingTranslator BingTranslator = new(HttpClient);
+        public static readonly YandexTranslator YTranslator = new(HttpClient);
 
         public static readonly Dictionary<string, string> TranslationCache = [];
 
@@ -49,8 +50,8 @@ namespace ChatTranslated.Translate
                 Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(message.OriginalContent.TextValue, targetLanguage),
                 Configuration.TranslationEngine.LLM => Service.configuration.LLM_Provider switch
                 {
-                    0 => await LLMProxyTranslate.Translate(message.OriginalContent.TextValue, targetLanguage),
-                    1 => await OpenAITranslate.Translate(message.OriginalContent.TextValue, targetLanguage),
+                    0 => await LLMProxyTranslate.Translate(message, targetLanguage),
+                    1 => await OpenAITranslate.Translate(message, targetLanguage),
                     2 => await OpenAICompatible.Translate(message.OriginalContent.TextValue, targetLanguage),
                     _ => (message.OriginalContent.TextValue, null)
                 },
@@ -72,30 +73,29 @@ namespace ChatTranslated.Translate
 
         public static async Task<string> DetermineLanguage(string messageText)
         {
-            try
+            var translators = new Func<Task<string>>[]
             {
-                var language = await GTranslator.DetectLanguageAsync(messageText);
-                Service.pluginLog.Debug($"{messageText}\n -> language: {language.Name}");
-#if DEBUG
-                Plugin.OutputChatLine($"{messageText}\n -> language: {language.Name}");
-#endif
-                return language.Name;
-            }
-            catch (Exception gEx)
+                async () => (await YTranslator.DetectLanguageAsync(messageText)).Name,
+                async () => (await GTranslator.DetectLanguageAsync(messageText)).Name,
+                async () => (await BingTranslator.DetectLanguageAsync(messageText)).Name
+            };
+
+            foreach (var translator in translators)
             {
-                Service.pluginLog.Warning($"Google Translate failed to detect language. {gEx}");
                 try
                 {
-                    var language = await BingTranslator.DetectLanguageAsync(messageText);
-                    Service.pluginLog.Debug($"{messageText}\n -> language: {language.Name}");
-                    return language.Name;
+                    var language = await translator();
+                    Service.pluginLog.Debug($"{messageText}\n -> language: {language}");
+                    return language;
                 }
-                catch (Exception bEx)
+                catch (Exception ex)
                 {
-                    Service.pluginLog.Warning($"Bing Translate failed to detect language. {bEx}");
-                    return "unknown";
+                    Service.pluginLog.Warning($"Failed to detect language: {ex.Message}");
                 }
             }
+
+            Service.pluginLog.Error("All language detection attempts failed.");
+            return "unknown";
         }
 
         public static void ClearTranslationCache() => TranslationCache.Clear();

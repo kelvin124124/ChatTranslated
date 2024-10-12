@@ -12,6 +12,7 @@ using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Translate
 {
+    // TODO: merge into OpenAITranslate
     internal static class OpenAICompatible
     {
         private const string DefaultContentType = "application/json";

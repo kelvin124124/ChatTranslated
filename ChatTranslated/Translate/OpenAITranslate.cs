@@ -1,3 +1,4 @@
+using ChatTranslated.Chat;
 using ChatTranslated.Utils;
 using Dalamud.Utility;
 using Newtonsoft.Json.Linq;
@@ -16,22 +17,23 @@ namespace ChatTranslated.Translate
     {
         private const string DefaultContentType = "application/json";
 
-        public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
+        public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage)
         {
             if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9\-_]{32,}$", RegexOptions.Compiled))
             {
                 Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
-                return await MachineTranslate.Translate(message, targetLanguage);
+                return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
             }
 
-            string? context = null;
-            if (message.Length <= 5 || !Service.configuration.OpenAI_UseRAG)
+            string? knowledge = null;
+            int messageLength = message.OriginalContent.TextValue.Length;
+            if (messageLength <= 5 || !Service.configuration.OpenAI_UseRAG)
             {
                 Service.pluginLog.Information("Skipping RAG.");
             }
             else
             {
-                var queryEmbeddings = await RAG.GenerateEmbedding(message);
+                var queryEmbeddings = await RAG.GenerateEmbedding(message.OriginalContent.TextValue);
                 var topResults = RAG.GetTopResults(queryEmbeddings);
 
 #if DEBUG
@@ -50,20 +52,20 @@ namespace ChatTranslated.Translate
                 }
 #endif
 
-                context = (topResults != null) ?
+                knowledge = (topResults != null) ?
                     string.Join("\n", topResults) : null;
             }
 
-            var prompt = BuildPrompt(context, message);
+            var prompt = BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context, knowledge);
             var requestData = new
             {
                 model = "gpt-4o-mini",
                 temperature = 0.6,
-                max_tokens = Math.Min(Math.Max(message.Length * 2, 20), 175),
+                max_tokens = Math.Min(Math.Max(messageLength * 2, 20), 175),
                 messages = new[]
                 {
                     new { role = "system", content = prompt },
-                    new { role = "user", content = message }
+                    new { role = "user", content = message.OriginalContent.TextValue }
                 }
             };
 
@@ -93,27 +95,44 @@ namespace ChatTranslated.Translate
             catch (Exception ex)
             {
                 Service.pluginLog.Warning($"OpenAI Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
-                return await MachineTranslate.Translate(message, targetLanguage);
+                return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
             }
         }
 
-        private static string BuildPrompt(string? context, string message)
+        public static string BuildPrompt(string targetLanguage, string? context, string? knowledge)
         {
-            var sb = new StringBuilder();
-            if (!string.IsNullOrWhiteSpace(context))
+            StringBuilder sb = new StringBuilder();
+
+            sb.AppendLine($"Translate the following FFXIV message into {targetLanguage}.");
+            sb.AppendLine("If you encounter any in-game terms, keep them in their original form.");
+            sb.AppendLine("Maintain the original format without omitting any information.");
+            sb.AppendLine("Do not provide any breakdown or explanation. Use the following format.");
+            sb.AppendLine("#### Original Text");
+            sb.AppendLine("{Message to translate}");
+            sb.AppendLine("#### Translation");
+            sb.AppendLine("{Translated message}\n");
+
+            if (knowledge != null)
             {
-                sb.AppendLine("Use the following context as your learned knowledge, inside <context></context> XML tags.");
+                sb.AppendLine("Use the following texts as your learned knowledge, inside <knowledge></knowledge> XML tags.");
+                sb.AppendLine("<knowledge>");
+                sb.AppendLine(knowledge);
+                sb.AppendLine("</knowledge>");
+                sb.AppendLine("Avoid mentioning that you obtained the information from the texts.\n");
+            }
+
+            if (context != null)
+            {
+                sb.AppendLine("Some context info is provided, inside <context></context> XML tags. They may or may not be useful.");
                 sb.AppendLine("<context>");
                 sb.AppendLine(context);
                 sb.AppendLine("</context>");
-                sb.AppendLine("Avoid mentioning that you obtained the information from the context.\n");
             }
-            sb.AppendLine($"Translate the following FFXIV message into {Service.configuration.SelectedTargetLanguage}");
-            sb.AppendLine("Maintain the original format without omitting any information. Use the following format.");
-            sb.AppendLine("#### Original Text ");
-            sb.AppendLine(message);
-            sb.AppendLine("#### Translation ");
-            sb.AppendLine("{Translated message}");
+
+#if DEBUG
+            Service.pluginLog.Information(sb.ToString());
+#endif
+
             return sb.ToString();
         }
     }

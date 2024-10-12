@@ -1,5 +1,4 @@
 using ChatTranslated.Translate;
-using MathNet.Numerics.LinearAlgebra;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,15 +11,16 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Utils
 {
-    // TODO: take keyword search into consideration
     internal static class RAG
     {
+        // TODO: use full text search for short texts
+
         private const string DefaultContentType = "application/json";
         private static readonly string EmbeddingsArchivePath = Path.Join(Service.pluginInterface.AssemblyLocation.DirectoryName, "Utils", "embeddings", "embeddings.zip");
         private const string OpenAIEmbeddingsEndpoint = "https://api.openai.com/v1/embeddings";
         private const string EmbeddingModel = "text-embedding-3-large";
 
-        private static readonly List<KnowledgeItem> KnowledgeBase = [];
+        private static readonly List<KnowledgeItem> KnowledgeBase = new List<KnowledgeItem>();
 
         static RAG()
         {
@@ -46,7 +46,7 @@ namespace ChatTranslated.Utils
             Service.pluginLog.Information($"RAG: Initialized knowledge base with {KnowledgeBase.Count} entries.");
         }
 
-        public static IReadOnlyList<string>? GetTopResults(Vector<float> query, int topK = 3, float minScore = 0.3f)
+        public static IReadOnlyList<string>? GetTopResults(float[] query, int topK = 3, float minScore = 0.3f)
         {
             if (!IsValidApiKey(Service.configuration.OpenAI_API_Key))
             {
@@ -55,17 +55,20 @@ namespace ChatTranslated.Utils
             }
             try
             {
-                var queryNorm = query.L2Norm();
-                var results = KnowledgeBase
+                var queryNorm = CalculateL2Norm(query);
+                var resultsWithScores = KnowledgeBase
                     .Select(doc => (doc.Content, Similarity: ComputeCosineSimilarity(doc.Embedding, query, doc.EmbeddingNorm, queryNorm)))
                     .Where(result => result.Similarity >= minScore)
                     .OrderByDescending(result => result.Similarity)
                     .Take(topK)
-                    .Select(result => result.Content)
-                    .ToArray();
+                    .ToList();
 
-                return (results.Length > 0) ?
-                    results : null;
+                var results = resultsWithScores.Select(r => r.Content).ToArray();
+#if DEBUG
+                Service.pluginLog.Information($"RAG: Found {results.Length} results above the minimum score threshold.");
+                Service.pluginLog.Information($"RAG: Top results: {string.Join(", ", results)}, scores: {string.Join(", ", resultsWithScores.Select(r => r.Similarity))}");
+#endif
+                return (results.Length > 0) ? results : null;
             }
             catch (Exception ex)
             {
@@ -74,7 +77,7 @@ namespace ChatTranslated.Utils
             }
         }
 
-        public static async Task<Vector<float>> GenerateEmbedding(string text)
+        public static async Task<float[]> GenerateEmbedding(string text)
         {
             using var request = new HttpRequestMessage(HttpMethod.Post, OpenAIEmbeddingsEndpoint)
             {
@@ -90,27 +93,44 @@ namespace ChatTranslated.Utils
 
             var embeddingData = document.RootElement.GetProperty("data")[0].GetProperty("embedding");
 
-            return Vector<float>.Build.DenseOfEnumerable(embeddingData.EnumerateArray().Select(e => e.GetSingle()));
+            return embeddingData.EnumerateArray().Select(e => e.GetSingle()).ToArray();
         }
 
         private static bool IsValidApiKey(string apiKey) =>
             Regex.IsMatch(apiKey, @"^sk-[a-zA-Z0-9\-_]{32,}$");
 
-        private static double ComputeCosineSimilarity(Vector<float> a, Vector<float> b, double aNorm, double bNorm) =>
-            a.DotProduct(b) / (aNorm * bNorm);
+        private static double ComputeCosineSimilarity(float[] a, float[] b, double aNorm, double bNorm)
+        {
+            double dotProduct = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                dotProduct += a[i] * b[i];
+            }
+            return dotProduct / (aNorm * bNorm);
+        }
+
+        internal static double CalculateL2Norm(float[] vector)
+        {
+            double sumOfSquares = 0;
+            for (int i = 0; i < vector.Length; i++)
+            {
+                sumOfSquares += vector[i] * vector[i];
+            }
+            return Math.Sqrt(sumOfSquares);
+        }
     }
 
     internal readonly struct KnowledgeItem
     {
         public string Content { get; }
-        public Vector<float> Embedding { get; }
+        public float[] Embedding { get; }
         public double EmbeddingNorm { get; }
 
         public KnowledgeItem(string content, float[] embedding)
         {
             Content = content;
-            Embedding = Vector<float>.Build.Dense(embedding);
-            EmbeddingNorm = Embedding.L2Norm();
+            Embedding = embedding;
+            EmbeddingNorm = RAG.CalculateL2Norm(embedding);
         }
     }
 

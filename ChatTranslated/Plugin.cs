@@ -102,13 +102,13 @@ namespace ChatTranslated
 
             string category = PfAddonPtr->CategoriesString.ToString();
             category = new string(category.Where(c => !char.IsControl(c)).ToArray()).Trim();
+            category = ChatHandler.Sanitize(category);
 
             byte* dutyText = PfAddonPtr->DutyNameTextNode->GetText();
             string duty = MemoryHelper.ReadSeStringNullTerminated((nint)dutyText).TextValue;
 
             string context = $"Category: {category} \nDuty: {duty}";
             PFmessage.Context = context;
-
 
             Task.Run(() => TranslatePFmsg(PFmessage));
         }
