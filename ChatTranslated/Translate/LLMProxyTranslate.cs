@@ -32,7 +32,7 @@ namespace ChatTranslated.Translate
             if (string.IsNullOrEmpty(Cfv4))
             {
                 Service.pluginLog.Warning("LLMProxy API key not found. Falling back to machine translate.");
-                return await MachineTranslate.Translate(message, targetLanguage);
+                return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
             }
 #endif
 
