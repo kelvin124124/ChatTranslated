@@ -105,6 +105,7 @@ namespace ChatTranslated.Windows
         private static void ProcessInput(string input)
         {
             Message message = new Message(null!, MessageSource.MainWindow, input);
+            message.Context = "null";
             Task.Run(() => Translator.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage));
         }
 
