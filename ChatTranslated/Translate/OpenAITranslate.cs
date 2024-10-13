@@ -57,7 +57,7 @@ namespace ChatTranslated.Translate
             }
 
             var prompt = BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context, knowledge);
-            var userMsg = $"Target language: {Service.configuration.SelectedTargetLanguage}\n#### Original Text\n{message.OriginalContent.TextValue}";
+            var userMsg = $"Translate to: {Service.configuration.SelectedTargetLanguage}\n#### Original Text\n{message.OriginalContent.TextValue}";
             var requestData = new
             {
                 model = "gpt-4o-mini",
