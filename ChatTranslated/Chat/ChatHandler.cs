@@ -15,7 +15,7 @@ namespace ChatTranslated.Utils
 {
     internal partial class ChatHandler
     {
-        private readonly Dictionary<string, DateTime> lastMessageTime = [];
+        private Dictionary<string, int> lastMessageTime = [];
 
         public ChatHandler()
         {
@@ -117,7 +117,7 @@ namespace ChatTranslated.Utils
 
             outputStr += Service.configuration.ChatIntegration_HideOriginal
                 ? chatMessage.TranslatedContent!
-    : $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
+                : $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
 
             Service.mainWindow.PrintToOutput(outputStr);
 
@@ -141,8 +141,8 @@ namespace ChatTranslated.Utils
 
         private bool IsMacroMessage(string playerName)
         {
-            var now = DateTime.Now;
-            if (lastMessageTime.TryGetValue(playerName, out var lastMsgTime) && (now - lastMsgTime).TotalMilliseconds < 600)
+            int now = Environment.TickCount;
+            if (lastMessageTime.TryGetValue(playerName, out int lastMsgTime) && now - lastMsgTime < 600)
             {
                 lastMessageTime[playerName] = now;
                 return true;
