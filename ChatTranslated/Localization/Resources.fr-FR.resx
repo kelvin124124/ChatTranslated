@@ -380,4 +380,7 @@ Peut être restreint si vous vivez dans une région non prise en charge.</value>
 DeepL offre une meilleure précision dans la traduction monolingue. 
 LLM est meilleur uniquement si le message est long ou contient plusieurs langues.</value>
   </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>Use context</value>
+  </data>
 </root>
