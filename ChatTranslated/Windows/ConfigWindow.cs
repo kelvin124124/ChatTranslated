@@ -424,8 +424,6 @@ public class ConfigWindow : Window
             configuration.Save();
         }
 
-        ImGui.TextUnformatted(Resources.LLM_Explanation);
-
         switch (configuration.SelectedTranslationEngine)
         {
             case TranslationEngine.DeepL:
@@ -434,6 +432,10 @@ public class ConfigWindow : Window
                 DrawDeepLSettings(configuration);
                 break;
             case TranslationEngine.LLM:
+                ImGui.TextUnformatted(Resources.LLM_Explanation);
+                ImGui.Spacing();
+                DrawContextSettings(configuration);
+                ImGui.Spacing();
                 DrawProviderSelection(configuration);
                 switch (configuration.LLM_Provider)
                 {
@@ -455,7 +457,6 @@ public class ConfigWindow : Window
                         DrawLLMSettings(configuration);
                         break;
                 }
-                DrawContextSettings(configuration);
                 break;
             default:
                 break;
@@ -477,31 +478,35 @@ public class ConfigWindow : Window
     private static void DrawProviderSelection(Configuration configuration)
     {
         ImGui.TextUnformatted(Resources.LLMProvider + ":");
-        ImGui.Indent(20);
+        ImGui.SameLine();
         int selectedProvider = configuration.LLM_Provider;
+
+        float posX = ImGui.GetCursorPosX() + 20; 
+
+        ImGui.SetCursorPosX(posX);
         if (ImGui.RadioButton("LLM Proxy", ref selectedProvider, 0))
         {
             configuration.LLM_Provider = 0;
             configuration.Save();
         }
+        ImGui.SetCursorPosX(posX);
         if (ImGui.RadioButton("OpenAI", ref selectedProvider, 1))
         {
             configuration.LLM_Provider = 1;
             configuration.Save();
         }
+        ImGui.SetCursorPosX(posX);
         if (ImGui.RadioButton("OpenAI-compatible API", ref selectedProvider, 2))
         {
             configuration.LLM_Provider = 2;
             configuration.Save();
         }
-        ImGui.Unindent(20);
     }
 
     private static void DrawContextSettings(Configuration configuration)
     {
         bool _UseContext = configuration.UseContext;
 
-        ImGui.TextUnformatted(Resources.UseContext);
         if (ImGui.Checkbox(Resources.UseContext, ref _UseContext))
         {
             configuration.UseContext = _UseContext;

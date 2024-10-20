@@ -117,7 +117,7 @@ namespace ChatTranslated.Utils
 
             outputStr += Service.configuration.ChatIntegration_HideOriginal
                 ? chatMessage.TranslatedContent!
-    :           $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
+    : $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
 
             Service.mainWindow.PrintToOutput(outputStr);
 
