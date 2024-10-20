@@ -380,4 +380,7 @@ Google 和 Bing 翻译将被用作备用。
 DeepL 在单语言翻译中的准确性更高。
 仅当消息较长或包含多种语言时，LLM 才会有更好表现。</value>
   </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>Use context</value>
+  </data>
 </root>
