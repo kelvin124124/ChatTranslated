@@ -122,7 +122,7 @@ namespace ChatTranslated.Translate
                 sb.AppendLine("Avoid mentioning that you obtained the information from the texts.\n");
             }
 
-            if (context != null)
+            if (Service.configuration.UseContext && context != null)
             {
                 sb.AppendLine("Some context info is provided, inside <context></context> XML tags. They may or may not be useful.");
                 sb.AppendLine("<context>");

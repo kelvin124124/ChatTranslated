@@ -455,6 +455,7 @@ public class ConfigWindow : Window
                         DrawLLMSettings(configuration);
                         break;
                 }
+                DrawContextSettings(configuration);
                 break;
             default:
                 break;
@@ -494,6 +495,25 @@ public class ConfigWindow : Window
             configuration.Save();
         }
         ImGui.Unindent(20);
+    }
+
+    private static void DrawContextSettings(Configuration configuration)
+    {
+        bool _UseContext = configuration.UseContext;
+
+        ImGui.TextUnformatted(Resources.UseContext);
+        if (ImGui.Checkbox(Resources.UseContext, ref _UseContext))
+        {
+            configuration.UseContext = _UseContext;
+            configuration.Save();
+        }
+
+        if (configuration.UseContext)
+        {
+            ImGui.Indent(20);
+            ImGui.TextUnformatted("Include messages in current chat tab in LLM prompt");
+            ImGui.Unindent(20);
+        }
     }
 
 #if DEBUG

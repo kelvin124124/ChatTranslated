@@ -792,6 +792,15 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Use context.
+        /// </summary>
+        internal static string UseContext {
+            get {
+                return ResourceManager.GetString("UseContext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Custom Language.
         /// </summary>
         internal static string UseCustomTargetLanguage {

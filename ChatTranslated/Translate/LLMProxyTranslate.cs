@@ -36,6 +36,11 @@ namespace ChatTranslated.Translate
             }
 #endif
 
+            if (!Service.configuration.UseContext)
+            {
+                message.Context = "null";
+            }
+
             var requestData = new { targetLanguage, message = message.OriginalContent.TextValue, context = message.Context };
             var request = new HttpRequestMessage(HttpMethod.Post, Service.configuration.Proxy_Url)
             {
