@@ -104,11 +104,29 @@ namespace ChatTranslated.Windows
 
         private static void ProcessInput(string input)
         {
+            if (string.IsNullOrWhiteSpace(input))
+                return;
+
             Message message = new Message(null!, MessageSource.MainWindow, input);
             message.Context = "null";
-            Task.Run(() => Translator.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage));
+            Task.Run(() => ProcessInputAsync(message));
         }
 
+        private static async void ProcessInputAsync(Message message)
+        {
+            var translatedMessage = await Translator.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
+
+            if (translatedMessage.TranslatedContent == null)
+                Service.mainWindow.PrintToOutput("[CT] Failed to process message.");
+
+            var reverseTranslationResult = await MachineTranslate.Translate(translatedMessage.TranslatedContent!, Service.configuration.SelectedPluginLanguage);
+
+            string output = $"\n Original:\n {translatedMessage.OriginalContent}" +
+                $" \nTranslated Content:\n  {translatedMessage.TranslatedContent}" +
+                $" \nReverse Translation:\n  {reverseTranslationResult.Item1}";
+
+            Service.mainWindow.PrintToOutput(output);
+        }
 
         public void PrintToOutput(string message)
         {
