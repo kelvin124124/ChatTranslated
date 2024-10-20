@@ -380,4 +380,7 @@ Kann eingeschränkt werden, wenn Sie sich in einer nicht unterstützten Region b
 DeepL hat eine bessere Genauigkeit bei Einzelsprachübersetzungen.
 LLM ist nur besser, wenn die Nachricht lang ist oder mehrere Sprachen enthält.</value>
   </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>Use context</value>
+  </data>
 </root>
