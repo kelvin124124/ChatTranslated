@@ -378,4 +378,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
 DeepL은 단일 언어 번역에서 더 나은 정확성을 제공합니다.
 메시지가 길거나 여러 언어를 포함하는 경우에만 LLM이 더 좋습니다.</value>
   </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>Use context</value>
+  </data>
 </root>
