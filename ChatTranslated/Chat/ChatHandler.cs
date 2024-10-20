@@ -5,7 +5,7 @@ using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
-using FFXIVClientStructs.FFXIV.Client.UI.Misc;
+using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +49,7 @@ namespace ChatTranslated.Utils
             }
 
             var chatMessage = new Message(playerName, MessageSource.Chat, message, type);
-            chatMessage.Context = GetChatMessageContext(type);
+            chatMessage.Context = GetChatMessageContext();
 
             if (IsFilteredMessage(playerName, chatMessage.CleanedContent) || IsJPFilteredMessage(chatMessage))
             {
@@ -76,20 +76,33 @@ namespace ChatTranslated.Utils
             }
         }
 
-        private unsafe string GetChatMessageContext(XivChatType type)
+        public unsafe string GetChatMessageContext()
         {
-            var log = RaptureLogModule.Instance();
-            var count = log->LogModule.LogMessageCount;
-            var messages = new List<string>();
-
-            for (int i = count - 1; i >= 0 && messages.Count < 15; i--)
+            try
             {
-                log->GetLogMessage(i, out byte[] message);
-                messages.Add(SeString.Parse(message).TextValue);
+                var chatLogPtr = Service.gameGui.GetAddonByName("ChatLogPanel_0");
+                if (chatLogPtr != 0)
+                {
+                    var chatLog = (AddonChatLogPanel*)chatLogPtr;
+                    var lines = SeString.Parse(chatLog->ChatText->GetText()).TextValue
+                        .Split('\r')
+                        .TakeLast(15)
+                        .ToList();
+
+                    if (Service.condition[ConditionFlag.BoundByDuty])
+                        lines.Add("In instanced area: true");
+                    if (Service.condition[ConditionFlag.InCombat])
+                        lines.Add("In combat: true");
+
+                    return string.Join('\n', lines);
+                }
+            }
+            catch (Exception ex)
+            {
+                Service.pluginLog.Error(ex, "Failed to read chat context.");
             }
 
-            messages.Reverse();
-            return string.Join("\n", messages);
+            return string.Empty;
         }
 
         private async Task<bool> IsCustomSourceLanguage(Message chatMessage)
@@ -100,15 +113,17 @@ namespace ChatTranslated.Utils
 
         internal static void OutputMessage(Message chatMessage)
         {
-            Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.TranslatedContent ?? chatMessage.OriginalContent.TextValue}");
+            string outputStr = $"{chatMessage.Sender}: ";
+
+            outputStr += Service.configuration.ChatIntegration_HideOriginal
+                ? chatMessage.TranslatedContent!
+    :           $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
+
+            Service.mainWindow.PrintToOutput(outputStr);
 
             if (Service.configuration.ChatIntegration)
             {
-                string outputStr = Service.configuration.ChatIntegration_HideOriginal
-                    ? chatMessage.TranslatedContent!
-                    : $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
-
-                Plugin.OutputChatLine(chatMessage.Type ?? XivChatType.Say, chatMessage.Sender, outputStr);
+                Plugin.OutputChatLine(outputStr);
             }
         }
 

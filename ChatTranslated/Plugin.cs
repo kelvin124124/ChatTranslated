@@ -13,6 +13,7 @@ using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ChatTranslated
@@ -108,13 +109,22 @@ namespace ChatTranslated
             Message PFmessage = new Message("PF", MessageSource.PartyFinder, description);
 
             string category = PfAddonPtr->CategoriesString.ToString();
-            category = new string(category.Where(c => !char.IsControl(c)).ToArray()).Trim();
-            category = ChatHandler.Sanitize(category);
+            category = string.Join(" ", Regex.Matches(category, @"\[[^\]]+\]")
+                                             .Cast<Match>()
+                                             .Select(m => m.Value));
+            if (string.IsNullOrWhiteSpace(category))
+            {
+                category = "null";
+            }
 
             byte* dutyText = PfAddonPtr->DutyNameTextNode->GetText();
             string duty = MemoryHelper.ReadSeStringNullTerminated((nint)dutyText).TextValue;
+            if (string.IsNullOrWhiteSpace(duty))
+            {
+                duty = "null";
+            }
 
-            string context = $"Category: {category} \nDuty: {duty}";
+            string context = $"Tags: {category}, Duty: {duty}";
             PFmessage.Context = context;
 
             Task.Run(() => TranslatePFmsg(PFmessage));
