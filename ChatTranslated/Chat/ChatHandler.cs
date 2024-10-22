@@ -113,7 +113,7 @@ namespace ChatTranslated.Utils
 
         internal static void OutputMessage(Message chatMessage)
         {
-            if (chatMessage.OriginalContent.TextValue == chatMessage.TranslatedContent) // no need to output if translation is the same
+            if (chatMessage.OriginalContent.TextValue == chatMessage.TranslatedContent && chatMessage.Source != MessageSource.MainWindow) // no need to output if translation is the same
                 return;
 
             string outputStr = $"{chatMessage.Sender}: ";
