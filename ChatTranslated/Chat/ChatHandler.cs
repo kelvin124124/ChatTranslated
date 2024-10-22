@@ -68,7 +68,7 @@ namespace ChatTranslated.Utils
             if (needsTranslation)
             {
                 await Translator.TranslateMessage(chatMessage);
-                OutputMessage(chatMessage);
+                OutputMessage(chatMessage, type);
             }
             else
             {
@@ -111,25 +111,24 @@ namespace ChatTranslated.Utils
             return Service.configuration.SelectedSourceLanguages.Contains(language);
         }
 
-        internal static void OutputMessage(Message chatMessage)
+        internal static void OutputMessage(Message chatMessage, XivChatType type = XivChatType.Say)
         {
-            if (chatMessage.OriginalContent.TextValue == chatMessage.TranslatedContent && chatMessage.Source != MessageSource.MainWindow) // no need to output if translation is the same
+            if (chatMessage.OriginalContent.TextValue == chatMessage.TranslatedContent 
+                && chatMessage.Source != MessageSource.MainWindow) // no need to output if translation is the same
             {
                 Service.pluginLog.Debug("Translation is the same as original. Skipping output.");
                 return;
             }
 
-            string outputStr = $"{chatMessage.Sender}: ";
-
-            outputStr += Service.configuration.ChatIntegration_HideOriginal
+            string outputStr = Service.configuration.ChatIntegration_HideOriginal
                 ? chatMessage.TranslatedContent!
                 : $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
 
-            Service.mainWindow.PrintToOutput(outputStr);
+            Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {outputStr}");
 
             if (Service.configuration.ChatIntegration)
             {
-                Plugin.OutputChatLine(outputStr);
+                Plugin.OutputChatLine(type, chatMessage.Sender, outputStr);
             }
         }
 

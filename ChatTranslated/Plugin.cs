@@ -127,10 +127,10 @@ namespace ChatTranslated
             string context = $"Tags: {category}, Duty: {duty}";
             PFmessage.Context = context;
 
-            Task.Run(() => TranslatePFmsg(PFmessage));
+            Task.Run(() => TranslatePFAsync(PFmessage));
         }
 
-        private async Task TranslatePFmsg(Message message)
+        private async Task TranslatePFAsync(Message message)
         {
             await Translator.TranslateMessage(message);
             ChatHandler.OutputMessage(message);
