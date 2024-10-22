@@ -63,11 +63,9 @@ namespace ChatTranslated.Translate
                     throw new Exception("Translation not found in the expected structure.");
                 }
 
-                var resultLanguage = await Translator.DetermineLanguage(translated);
-                if (resultLanguage != targetLanguage)
+                if (translated == message.OriginalContent.TextValue)
                 {
-                    Service.pluginLog.Warning($"Message was not translated to the expected language. Expected: {targetLanguage}, Detected: {resultLanguage}" +
-                        "\nFalling back to machine translate.");
+                    Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
                     return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
                 }
 
