@@ -162,21 +162,21 @@ namespace ChatTranslated.Utils
             {
                 chatMessage.TranslatedContent = Resources.WelcomeStr;
 
-                OutputMessage(chatMessage);
+                OutputMessage(chatMessage, chatMessage.Type);
                 return true;
             }
             if (ChatRegex.JPByeRegex().IsMatch(chatMessage.CleanedContent))
             {
                 chatMessage.TranslatedContent = Resources.GGstr;
 
-                OutputMessage(chatMessage);
+                OutputMessage(chatMessage, chatMessage.Type);
                 return true;
             }
             if (ChatRegex.JPDomaRegex().IsMatch(chatMessage.CleanedContent))
             {
                 chatMessage.TranslatedContent = Resources.DomaStr;
 
-                OutputMessage(chatMessage);
+                OutputMessage(chatMessage, chatMessage.Type);
                 return true;
             }
 

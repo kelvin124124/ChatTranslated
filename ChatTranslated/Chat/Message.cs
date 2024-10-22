@@ -18,7 +18,7 @@ namespace ChatTranslated.Chat
 
         public string? TranslatedContent { get; set; }
         public TranslationMode? translationMode { get; set; }
-        public XivChatType? Type { get; set; }
+        public XivChatType Type { get; set; }
         public string? Timestamp { get; set; }
         public string? Context { get; set; }
 
