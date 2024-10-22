@@ -58,9 +58,17 @@ namespace ChatTranslated.Translate
                 var translated = jsonResponse["translated"]?.ToString().Trim();
                 var responseTime = jsonResponse["responseTime"]?.ToString();
 
-                if (translated.IsNullOrWhitespace() || translated == "{}")
+                if (translated.IsNullOrWhitespace() || translated.StartsWith("####"))
                 {
-                    throw new Exception("Translation not found in the expected JSON structure.");
+                    throw new Exception("Translation not found in the expected structure.");
+                }
+
+                var resultLanguage = await Translator.DetermineLanguage(translated);
+                if (resultLanguage != targetLanguage)
+                {
+                    Service.pluginLog.Warning($"Message was not translated to the expected language. Expected: {targetLanguage}, Detected: {resultLanguage}" +
+                        "\nFalling back to machine translate.");
+                    return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
                 }
 
                 Service.pluginLog.Info($"Request processed in: {responseTime}");
