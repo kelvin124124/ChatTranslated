@@ -85,7 +85,13 @@ namespace ChatTranslated.Translate
 
                 if (translated.IsNullOrWhitespace())
                 {
-                    throw new Exception("Translation not found in the expected JSON structure.");
+                    throw new Exception("Translation not found in the expected structure.");
+                }
+
+                if (translated == message.OriginalContent.TextValue)
+                {
+                    Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
+                    return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
                 }
 
                 var translationMatch = Regex.Match(translated, @"#### Translation\s*\n(.+)$", RegexOptions.Singleline);

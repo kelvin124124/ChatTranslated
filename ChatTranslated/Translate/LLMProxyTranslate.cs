@@ -58,7 +58,7 @@ namespace ChatTranslated.Translate
                 var translated = jsonResponse["translated"]?.ToString().Trim();
                 var responseTime = jsonResponse["responseTime"]?.ToString();
 
-                if (translated.IsNullOrWhitespace() || translated.StartsWith("####"))
+                if (translated.IsNullOrWhitespace())
                 {
                     throw new Exception("Translation not found in the expected structure.");
                 }
