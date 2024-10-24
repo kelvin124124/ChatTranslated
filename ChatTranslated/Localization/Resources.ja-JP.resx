@@ -380,4 +380,7 @@
 DeepLは単一言語の翻訳でより高い精度を持ちます。
 LLMはメッセージが長い場合や複数の言語を含む場合のみ優れています。</value>
   </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>Use context</value>
+  </data>
 </root>
