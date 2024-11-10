@@ -124,8 +124,8 @@ namespace ChatTranslated.Translate
                             mode = "translate",
                             regionalVariant = targetLanguage switch
                             {
-                                "Chinese (Simplified)" => "zh",
-                                "Chinese (Traditional)" => "zh-TW",
+                                "Chinese (Simplified)" => "ZH-HANS",
+                                "Chinese (Traditional)" => "ZH-HANT",
                                 _ => default
                             }
                         },
