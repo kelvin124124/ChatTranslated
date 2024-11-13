@@ -106,36 +106,34 @@ namespace ChatTranslated.Translate
                 return ("Target language not supported by DeepL.", null);
             }
 
-            try
-            {
-                var id = ((ulong)Random.Next(8300000, 8400000) * 1000) + 1;
-                var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-                var iCount = message.Count(c => c == 'i');
-                var adjustedTimestamp = iCount == 0 ? timestamp : timestamp - (timestamp % (iCount + 1)) + iCount + 1;
+            var id = ((ulong)Random.Next(8300000, 8400000) * 1000) + 1;
+            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            var iCount = message.Count(c => c == 'i');
+            var adjustedTimestamp = iCount == 0 ? timestamp : timestamp - (timestamp % (iCount + 1)) + iCount + 1;
 
-                var requestBody = new
+            var requestBody = new
+            {
+                jsonrpc = "2.0",
+                method = "LMT_handle_jobs",
+                @params = new
                 {
-                    jsonrpc = "2.0",
-                    method = "LMT_handle_jobs",
-                    @params = new
+                    commonJobParams = new
                     {
-                        commonJobParams = new
+                        mode = "translate",
+                        regionalVariant = targetLanguage switch
                         {
-                            mode = "translate",
-                            regionalVariant = targetLanguage switch
-                            {
-                                "Chinese (Simplified)" => "ZH-HANS",
-                                "Chinese (Traditional)" => "ZH-HANT",
-                                _ => default
-                            }
-                        },
-                        lang = new
-                        {
-                            source_lang_computed = "auto",
-                            target_lang = langCode
-                        },
-                        jobs = new[]
-                        {
+                            "Chinese (Simplified)" => "ZH-HANS",
+                            "Chinese (Traditional)" => "ZH-HANT",
+                            _ => default
+                        }
+                    },
+                    lang = new
+                    {
+                        source_lang_computed = "auto",
+                        target_lang = langCode
+                    },
+                    jobs = new[]
+                    {
                         new
                         {
                             kind = "default",
@@ -148,22 +146,24 @@ namespace ChatTranslated.Translate
                             }
                         }
                     },
-                        priority = 1,
-                        timestamp = adjustedTimestamp
-                    },
-                    id
-                };
+                    priority = 1,
+                    timestamp = adjustedTimestamp
+                },
+                id
+            };
 
-                var postDataJson = JsonSerializer.Serialize(requestBody);
-                postDataJson = postDataJson.Replace("\"method\":\"", (id + 5) % 29 == 0 || (id + 3) % 13 == 0 ? "\"method\" : \"" : "\"method\": \"");
+            var postDataJson = JsonSerializer.Serialize(requestBody);
+            postDataJson = postDataJson.Replace("\"method\":\"", (id + 5) % 29 == 0 || (id + 3) % 13 == 0 ? "\"method\" : \"" : "\"method\": \"");
 
-                using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}?client={ClientInfo}&method=LMT_handle_jobs")
-                {
-                    Content = new StringContent(postDataJson, Encoding.UTF8, "application/json")
-                };
+            using var request = new HttpRequestMessage(HttpMethod.Post, $"{BaseUrl}?client={ClientInfo}&method=LMT_handle_jobs")
+            {
+                Content = new StringContent(postDataJson, Encoding.UTF8, "application/json")
+            };
 
-                SetHeaders(request);
+            SetHeaders(request);
 
+            try
+            {
                 var response = await Translator.HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
 
