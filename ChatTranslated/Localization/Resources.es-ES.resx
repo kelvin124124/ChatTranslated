@@ -203,7 +203,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>¡Está bien!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>Habilitar en tareas</value>
+    <value>Habilitar en instancias</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
     <value>Habilitar plugin</value>
@@ -212,7 +212,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Inglés</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>CompañíaLibre</value>
+    <value>FreeCompany</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>Francés</value>
@@ -224,7 +224,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Alemán</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>¡Buen juego!</value>
+    <value>¡Buena partida!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>Japonés</value>
