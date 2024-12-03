@@ -548,8 +548,6 @@ public class ConfigWindow : Window
 
     private static void DrawOpenAISettings(Configuration configuration)
     {
-        bool _OpenAI_UseRAG = configuration.OpenAI_UseRAG;
-
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 200);
         ImGui.SameLine();
