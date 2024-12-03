@@ -236,7 +236,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Proveedor LLM</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Proxy autohospedado gemma-2-27b-it</value>
+    <value>Self-hosted Gemini proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Ls1</value>
