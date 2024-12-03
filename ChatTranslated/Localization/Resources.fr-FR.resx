@@ -236,7 +236,7 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Fournisseur LLM</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Proxy auto-hébergé gemma-2-27b-it</value>
+    <value>Self-hosted Gemini proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
