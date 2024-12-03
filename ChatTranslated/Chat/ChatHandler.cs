@@ -109,7 +109,7 @@ namespace ChatTranslated.Utils
             return string.Empty;
         }
 
-        // Tab component node ids for in addon ChatLog
+        // Tab component node ids in addon ChatLog
         private static readonly uint[] NodeIds = [7, 70001, 70002, 70003];
 
         public unsafe ushort GetActiveChatLogPanel()

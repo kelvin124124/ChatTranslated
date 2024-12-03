@@ -16,7 +16,7 @@ namespace ChatTranslated.Translate
     internal static class LLMProxyTranslate
     {
         private const string DefaultContentType = "application/json";
-        private static readonly string? Cfv4 = ReadSecret("ChatTranslated.Resources.cfv5.secret").Replace("\n", string.Empty);
+        private static readonly string? Cfv5 = ReadSecret("ChatTranslated.Resources.cfv5.secret").Replace("\n", string.Empty);
 
         private static string ReadSecret(string resourceName)
         {
