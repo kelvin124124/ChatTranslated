@@ -383,4 +383,7 @@ LLM ist nur besser, wenn die Nachricht lang ist oder mehrere Sprachen enthält.<
   <data name="UseContext" xml:space="preserve">
     <value>Use context</value>
   </data>
+  <data name="ChatContextExplanation" xml:space="preserve">
+    <value>Include messages in current chat tab in LLM prompt.</value>
+  </data>
 </root>
