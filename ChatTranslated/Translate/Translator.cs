@@ -85,6 +85,10 @@ namespace ChatTranslated.Translate
                 try
                 {
                     var language = await translator();
+                    if (language.IsNullOrEmpty()) 
+                    {
+                        throw new Exception($"Language detection failed.");
+                    }
                     Service.pluginLog.Debug($"{messageText}\n -> language: {language}");
                     return language;
                 }
