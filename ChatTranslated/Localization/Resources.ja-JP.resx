@@ -236,7 +236,7 @@
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>セルフホスト型 gemma-2-27b-it プロキシ</value>
+    <value>Self-hosted Gemini proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
