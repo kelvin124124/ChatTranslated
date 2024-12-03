@@ -236,7 +236,7 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Selbstgehosteter gemma-2-27b-it-Proxy</value>
+    <value>Selbstgehosteter Gemini-Proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -379,5 +379,11 @@ Kann eingeschränkt werden, wenn Sie sich in einer nicht unterstützten Region b
     <value>Hinweis:
 DeepL hat eine bessere Genauigkeit bei Einzelsprachübersetzungen.
 LLM ist nur besser, wenn die Nachricht lang ist oder mehrere Sprachen enthält.</value>
+  </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>Kontext verwenden</value>
+  </data>
+  <data name="ChatContextExplanation" xml:space="preserve">
+    <value>Nachrichten im aktuellen Chat-Tab in der LLM-Eingabeaufforderung einbeziehen.</value>
   </data>
 </root>

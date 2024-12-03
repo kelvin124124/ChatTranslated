@@ -236,7 +236,7 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Fournisseur LLM</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Proxy auto-hébergé gemma-2-27b-it</value>
+    <value>Proxy Gemini auto-hébergé</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -379,5 +379,11 @@ Peut être restreint si vous vivez dans une région non prise en charge.</value>
     <value>Remarque : 
 DeepL offre une meilleure précision dans la traduction monolingue. 
 LLM est meilleur uniquement si le message est long ou contient plusieurs langues.</value>
+  </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>Utiliser le contexte</value>
+  </data>
+  <data name="ChatContextExplanation" xml:space="preserve">
+    <value>Inclure les messages de l'onglet de chat actuel dans l'invite LLM.</value>
   </data>
 </root>

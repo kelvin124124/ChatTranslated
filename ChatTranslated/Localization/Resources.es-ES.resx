@@ -203,7 +203,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>¡Está bien!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>Habilitar en tareas</value>
+    <value>Habilitar en instancias</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
     <value>Habilitar plugin</value>
@@ -212,7 +212,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Inglés</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>CompañíaLibre</value>
+    <value>FreeCompany</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>Francés</value>
@@ -224,7 +224,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Alemán</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>¡Buen juego!</value>
+    <value>¡Buena partida!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>Japonés</value>
@@ -236,7 +236,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Proveedor LLM</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Proxy autohospedado gemma-2-27b-it</value>
+    <value>Proxy Gemini autohospedado</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>Ls1</value>
@@ -379,5 +379,11 @@ Puede estar restringido si vives en una región no soportada.</value>
     <value>Nota:
 DeepL tiene mejor precisión en traducción de un solo idioma.
 LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
+  </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>Usar contexto</value>
+  </data>
+  <data name="ChatContextExplanation" xml:space="preserve">
+    <value>Incluir mensajes en la pestaña de chat actual en la solicitud de LLM.</value>
   </data>
 </root>

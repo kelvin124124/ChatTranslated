@@ -234,7 +234,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>LLM 제공자</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>자체 호스팅 gemma-2-27b-it 프록시</value>
+    <value>자가 호스팅 Gemini 프록시</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -377,5 +377,11 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>참고: 
 DeepL은 단일 언어 번역에서 더 나은 정확성을 제공합니다.
 메시지가 길거나 여러 언어를 포함하는 경우에만 LLM이 더 좋습니다.</value>
+  </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>컨텍스트 사용</value>
+  </data>
+  <data name="ChatContextExplanation" xml:space="preserve">
+    <value>LLM 프롬프트에 현재 채팅 탭의 메시지를 포함합니다.</value>
   </data>
 </root>
