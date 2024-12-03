@@ -125,6 +125,15 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Include messages in current chat tab in LLM prompt..
+        /// </summary>
+        internal static string ChatContextExplanation {
+            get {
+                return ResourceManager.GetString("ChatContextExplanation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chat Integration.
         /// </summary>
         internal static string ChatIntegration {
@@ -454,7 +463,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Self-hosted gemma-2-27b-it proxy.
+        ///   Looks up a localized string similar to Self-hosted Gemini proxy.
         /// </summary>
         internal static string LLM_Proxy_Explanation {
             get {

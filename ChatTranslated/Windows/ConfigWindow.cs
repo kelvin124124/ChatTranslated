@@ -516,7 +516,7 @@ public class ConfigWindow : Window
         if (configuration.UseContext)
         {
             ImGui.Indent(20);
-            ImGui.TextUnformatted("Include messages in current chat tab in LLM prompt");
+            ImGui.TextUnformatted(Resources.ChatContextExplanation);
             ImGui.Unindent(20);
         }
     }
