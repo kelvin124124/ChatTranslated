@@ -52,7 +52,7 @@ namespace ChatTranslated.Translate
                 {
                     0 => await LLMProxyTranslate.Translate(message, targetLanguage),
                     1 => await OpenAITranslate.Translate(message, targetLanguage),
-                    2 => await OpenAICompatible.Translate(message.OriginalContent.TextValue, targetLanguage),
+                    2 => await OpenAICompatible.Translate(message, targetLanguage),
                     _ => (message.OriginalContent.TextValue, null)
                 },
                 _ => (message.OriginalContent.TextValue, null)

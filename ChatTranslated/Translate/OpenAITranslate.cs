@@ -17,50 +17,28 @@ namespace ChatTranslated.Translate
     {
         private const string DefaultContentType = "application/json";
 
-        public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage)
+        public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
+            , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-4o-mini", string? apiKey = null)
         {
-            if (!Regex.IsMatch(Service.configuration.OpenAI_API_Key, @"^sk-[a-zA-Z0-9\-_]{32,}$", RegexOptions.Compiled))
+            if (apiKey == null)
             {
-                Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
-                return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
-            }
-
-            string? knowledge = null;
-            int messageLength = message.OriginalContent.TextValue.Length;
-            if (messageLength <= 5 || !Service.configuration.OpenAI_UseRAG)
-            {
-                Service.pluginLog.Information("Skipping RAG.");
-            }
-            else
-            {
-                var queryEmbeddings = await RAG.GenerateEmbedding(message.OriginalContent.TextValue);
-                var topResults = RAG.GetTopResults(queryEmbeddings);
-
-#if DEBUG
-                if (topResults != null && topResults.Count > 0)
+                if (!Service.configuration.OpenAI_API_Key.IsNullOrWhitespace()) 
                 {
-                    Service.pluginLog.Information("Top results from RAG:");
-                    foreach (var result in topResults)
-                    {
-                        var firstSentence = result.Split('\n')[0];
-                        Service.pluginLog.Information(firstSentence + "\n...");
-                    }
+                    apiKey = Service.configuration.OpenAI_API_Key;
                 }
                 else
                 {
-                    Service.pluginLog.Information("No results above the minimum score threshold.");
+                    Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
+                    return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
                 }
-#endif
-
-                knowledge = (topResults != null) ?
-                    string.Join("\n", topResults) : null;
             }
 
-            var prompt = BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context, knowledge);
+            var prompt = BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context);
+            int messageLength = message.OriginalContent.TextValue.Length;
             var userMsg = $"Translate to: {Service.configuration.SelectedTargetLanguage}\n#### Original Text\n{message.OriginalContent.TextValue}";
             var requestData = new
             {
-                model = "gpt-4o-mini",
+                model,
                 temperature = 0.6,
                 max_tokens = Math.Min(Math.Max(messageLength * 2, 20), 175),
                 messages = new[]
@@ -70,10 +48,10 @@ namespace ChatTranslated.Translate
                 }
             };
 
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.openai.com/v1/chat/completions")
+            var request = new HttpRequestMessage(HttpMethod.Post, baseUrl)
             {
                 Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType),
-                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {Service.configuration.OpenAI_API_Key}" } }
+                Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {apiKey}" } }
             };
 
             try
@@ -106,41 +84,46 @@ namespace ChatTranslated.Translate
             }
         }
 
-        public static string BuildPrompt(string targetLanguage, string? context, string? knowledge)
+        public static string BuildPrompt(string targetLanguage, string? context)
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendLine($"Translate the following FFXIV message into {targetLanguage}.");
-            sb.AppendLine("If you encounter any in-game terms, keep them in their original form.");
-            sb.AppendLine("Maintain the original format without omitting any information.");
-            sb.AppendLine("Do not provide any breakdown or explanation. Use the following format.");
-            sb.AppendLine("#### Original Text");
-            sb.AppendLine("{Message to translate}");
-            sb.AppendLine("#### Translation");
-            sb.AppendLine("{Translated message}\n");
+            sb.AppendLine($"You are a precise translator for FFXIV game content into {targetLanguage}.\n");
 
-            if (knowledge != null)
-            {
-                sb.AppendLine("Use the following texts as your learned knowledge, inside <knowledge></knowledge> XML tags.");
-                sb.AppendLine("<knowledge>");
-                sb.AppendLine(knowledge);
-                sb.AppendLine("</knowledge>");
-                sb.AppendLine("Avoid mentioning that you obtained the information from the texts.\n");
-            }
+            sb.AppendLine("TRANSLATION RULES:");
+            sb.AppendLine("1. Keep all FFXIV-specific terms, character names, and place names in their original form.");
+            sb.AppendLine("2. Preserve all formatting, including spaces and punctuation.");
+            sb.AppendLine("3. Maintain the exact meaning and tone of the original text.\n");
+
+            sb.AppendLine("OUTPUT RULES:");
+            sb.AppendLine("1. Your response must begin with exactly \"#### Translation\".");
+            sb.AppendLine("2. Write only the translated text after this header.");
+            sb.AppendLine("3. Do not include the original text.");
+            sb.AppendLine("4. Do not add any explanations or notes.\n");
+
+            sb.AppendLine("Example response format:");
+            sb.AppendLine("#### Translation");
+            sb.AppendLine("{Only the translated text goes here}");
 
             if (Service.configuration.UseContext && context != null)
             {
-                sb.AppendLine("Some context info is provided, inside <context></context> XML tags. They may or may not be useful.");
+                sb.AppendLine("\nCONTEXT:");
+                sb.AppendLine("Use the following context information if relevant (provided in XML tags):");
                 sb.AppendLine("<context>");
                 sb.AppendLine(context);
                 sb.AppendLine("</context>");
             }
 
-#if DEBUG
-            Service.pluginLog.Information(sb.ToString());
-#endif
-
             return sb.ToString();
+        }
+    }
+
+    internal static class OpenAICompatible
+    {
+        public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage)
+        {
+            return await OpenAITranslate.Translate(message, targetLanguage,
+                Service.configuration.LLM_API_endpoint, Service.configuration.LLM_Model, Service.configuration.LLM_API_Key);
         }
     }
 }
