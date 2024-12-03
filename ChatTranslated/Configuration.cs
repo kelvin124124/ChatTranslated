@@ -59,7 +59,6 @@ namespace ChatTranslated
         public string LLM_API_endpoint { get; set; } = "https://openrouter.ai/api/v1/chat/completions";
         public string LLM_Model { get; set; } = "sao10k/l3.1-euryale-70b";
         public bool UseContext { get; set; } = true;
-        public bool OpenAI_UseRAG { get; set; } = false;
 
         public void Save()
         {

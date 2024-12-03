@@ -561,13 +561,6 @@ public class ConfigWindow : Window
         }
         ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
 
-        if (ImGui.Checkbox("Use RAG [experimental]", ref _OpenAI_UseRAG))
-        {
-            configuration.OpenAI_UseRAG = _OpenAI_UseRAG;
-            configuration.Save();
-        }
-        ImGui.TextWrapped("Improve translation quality at the cost of 5-10x token usage.");
-
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
     }
