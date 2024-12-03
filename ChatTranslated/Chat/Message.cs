@@ -64,7 +64,7 @@ namespace ChatTranslated.Chat
             return Sanitize(ChatRegex.AutoTranslateRegex().Replace(sb.ToString(), string.Empty));
         }
 
-        public static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, " ");
+        public static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, "*");
     }
 
     public enum MessageSource

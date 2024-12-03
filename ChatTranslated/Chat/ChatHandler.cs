@@ -87,6 +87,7 @@ namespace ChatTranslated.Utils
                     var lines = SeString.Parse(chatLog->ChatText->GetText()).TextValue
                         .Split('\r')
                         .TakeLast(15)
+                        .Select(line => line.Trim())
                         .ToList();
 
                     if (Service.condition[ConditionFlag.BoundByDuty])
@@ -99,7 +100,7 @@ namespace ChatTranslated.Utils
             }
             catch (Exception ex)
             {
-                Service.pluginLog.Error(ex, "Failed to read chat context.");
+                Service.pluginLog.Error(ex, "Failed to read chat panel.");
             }
 
             return string.Empty;
@@ -183,7 +184,7 @@ namespace ChatTranslated.Utils
             return false;
         }
 
-        public static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, " ");
+        public static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, "*");
 
         public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
     }
