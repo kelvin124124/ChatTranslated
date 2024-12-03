@@ -234,7 +234,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>LLM 제공자</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>자체 호스팅 gemma-2-27b-it 프록시</value>
+    <value>Self-hosted Gemini proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
