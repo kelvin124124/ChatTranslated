@@ -83,9 +83,9 @@ namespace ChatTranslated
                 Service.configuration.Save();
             }
 
-            if (Service.configuration.Proxy_Url == "https://cfv3.kelpcc.com")
+            if (Service.configuration.Proxy_Url == "https://cfv5.kelpcc.com")
             {
-                Service.configuration.Proxy_Url = "https://cfv4.kelpcc.com";
+                Service.configuration.Proxy_Url = "https://cfv5.kelpcc.com";
                 Service.configuration.Save();
             }
         }

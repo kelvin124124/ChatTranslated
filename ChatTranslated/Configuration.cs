@@ -57,7 +57,7 @@ namespace ChatTranslated
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
         public string LLM_API_Key { get; set; } = "YOUR-API-KEY";
         public string LLM_API_endpoint { get; set; } = "https://openrouter.ai/api/v1/chat/completions";
-        public string LLM_Model { get; set; } = "sao10k/l3.1-euryale-70b";
+        public string LLM_Model { get; set; } = "google/gemini-pro-1.5";
         public bool UseContext { get; set; } = true;
 
         public void Save()
