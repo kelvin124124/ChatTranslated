@@ -236,7 +236,7 @@ Google 和 Bing 翻译将被用作备用。
     <value>LLM提供者</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>自托管 gemma-2-27b-it 代理</value>
+    <value>Self-hosted Gemini proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通讯贝1</value>
