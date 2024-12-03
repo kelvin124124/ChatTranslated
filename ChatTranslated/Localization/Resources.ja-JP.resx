@@ -236,7 +236,7 @@
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Self-hosted Gemini proxy</value>
+    <value>セルフホスト型 Gemini プロキシ</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
@@ -381,9 +381,9 @@ DeepLは単一言語の翻訳でより高い精度を持ちます。
 LLMはメッセージが長い場合や複数の言語を含む場合のみ優れています。</value>
   </data>
   <data name="UseContext" xml:space="preserve">
-    <value>Use context</value>
+    <value>コンテキストを使用</value>
   </data>
   <data name="ChatContextExplanation" xml:space="preserve">
-    <value>Include messages in current chat tab in LLM prompt.</value>
+    <value>LLM プロンプトに現在のチャットタブのメッセージを含めます。</value>
   </data>
 </root>
