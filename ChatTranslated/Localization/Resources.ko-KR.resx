@@ -381,4 +381,7 @@ DeepL은 단일 언어 번역에서 더 나은 정확성을 제공합니다.
   <data name="UseContext" xml:space="preserve">
     <value>Use context</value>
   </data>
+  <data name="ChatContextExplanation" xml:space="preserve">
+    <value>Include messages in current chat tab in LLM prompt.</value>
+  </data>
 </root>
