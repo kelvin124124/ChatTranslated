@@ -236,7 +236,7 @@ Google 和 Bing 翻译将被用作备用。
     <value>LLM提供者</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Self-hosted Gemini proxy</value>
+    <value>自托管 Gemini 代理</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>通讯贝1</value>
@@ -381,6 +381,9 @@ DeepL 在单语言翻译中的准确性更高。
 仅当消息较长或包含多种语言时，LLM 才会有更好表现。</value>
   </data>
   <data name="UseContext" xml:space="preserve">
-    <value>Use context</value>
+    <value>使用上下文</value>
+  </data>
+  <data name="ChatContextExplanation" xml:space="preserve">
+    <value>Include messages in current chat tab in LLM prompt.</value>
   </data>
 </root>
