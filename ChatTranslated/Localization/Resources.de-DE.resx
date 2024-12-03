@@ -236,7 +236,7 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>LLMProvider</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Selbstgehosteter gemma-2-27b-it-Proxy</value>
+    <value>Self-hosted Gemini proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
     <value>LS1</value>
