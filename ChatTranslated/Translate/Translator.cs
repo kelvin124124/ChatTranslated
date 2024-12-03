@@ -85,7 +85,7 @@ namespace ChatTranslated.Translate
                 try
                 {
                     var language = await translator();
-                    if (language.IsNullOrEmpty()) 
+                    if (language.IsNullOrEmpty())
                     {
                         throw new Exception($"Language detection failed.");
                     }

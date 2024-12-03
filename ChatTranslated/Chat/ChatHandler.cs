@@ -6,6 +6,7 @@ using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using FFXIVClientStructs.FFXIV.Component.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,13 +79,15 @@ namespace ChatTranslated.Utils
 
         public unsafe string GetChatMessageContext()
         {
+            var x = GetActiveChatLogPanel();
+
             try
             {
-                var chatLogPtr = Service.gameGui.GetAddonByName("ChatLogPanel_0");
-                if (chatLogPtr != 0)
+                var chatLogPanelPtr = Service.gameGui.GetAddonByName($"ChatLogPanel_{x}");
+                if (chatLogPanelPtr != 0)
                 {
-                    var chatLog = (AddonChatLogPanel*)chatLogPtr;
-                    var lines = SeString.Parse(chatLog->ChatText->GetText()).TextValue
+                    var chatLogPanel = (AddonChatLogPanel*)chatLogPanelPtr;
+                    var lines = SeString.Parse(chatLogPanel->ChatText->GetText()).TextValue
                         .Split('\r')
                         .TakeLast(15)
                         .Select(line => line.Trim())
@@ -106,6 +109,33 @@ namespace ChatTranslated.Utils
             return string.Empty;
         }
 
+        // Tab component node ids for in addon ChatLog
+        private static readonly uint[] NodeIds = [7, 70001, 70002, 70003];
+
+        public unsafe ushort GetActiveChatLogPanel()
+        {
+            var chatLogPtr = Service.gameGui.GetAddonByName("ChatLog");
+            if (chatLogPtr == 0)
+                return 0;
+
+            try
+            {
+                var chatLog = (AtkUnitBase*)chatLogPtr;
+                for (var i = 0; i < NodeIds.Length; i++)
+                {
+                    var node = (AtkComponentNode*)chatLog->GetNodeById(NodeIds[i]);
+                    if (node->Component->UldManager.NodeList[4]->IsVisible())
+                        return (ushort)i;
+                }
+            }
+            catch (Exception ex)
+            {
+                Service.pluginLog.Warning($"Error checking chat log panel visibility: {ex}");
+            }
+
+            return 0;
+        }
+
         private async Task<bool> IsCustomSourceLanguage(Message chatMessage)
         {
             var language = await Translator.DetermineLanguage(chatMessage.CleanedContent);
@@ -114,7 +144,7 @@ namespace ChatTranslated.Utils
 
         internal static void OutputMessage(Message chatMessage, XivChatType type = XivChatType.Say)
         {
-            if (chatMessage.OriginalContent.TextValue == chatMessage.TranslatedContent 
+            if (chatMessage.OriginalContent.TextValue == chatMessage.TranslatedContent
                 && chatMessage.Source != MessageSource.MainWindow) // no need to output if translation is the same
             {
                 Service.pluginLog.Debug("Translation is the same as original. Skipping output.");

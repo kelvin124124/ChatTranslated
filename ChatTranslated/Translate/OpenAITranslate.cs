@@ -22,7 +22,7 @@ namespace ChatTranslated.Translate
         {
             if (apiKey == null)
             {
-                if (!Service.configuration.OpenAI_API_Key.IsNullOrWhitespace()) 
+                if (!Service.configuration.OpenAI_API_Key.IsNullOrWhitespace())
                 {
                     apiKey = Service.configuration.OpenAI_API_Key;
                 }

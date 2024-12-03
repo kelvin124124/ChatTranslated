@@ -481,7 +481,7 @@ public class ConfigWindow : Window
         ImGui.SameLine();
         int selectedProvider = configuration.LLM_Provider;
 
-        float posX = ImGui.GetCursorPosX() + 20; 
+        float posX = ImGui.GetCursorPosX() + 20;
 
         ImGui.SetCursorPosX(posX);
         if (ImGui.RadioButton("LLM Proxy", ref selectedProvider, 0))
