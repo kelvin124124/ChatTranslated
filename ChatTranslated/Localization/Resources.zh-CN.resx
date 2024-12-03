@@ -384,6 +384,6 @@ DeepL 在单语言翻译中的准确性更高。
     <value>使用上下文</value>
   </data>
   <data name="ChatContextExplanation" xml:space="preserve">
-    <value>Include messages in current chat tab in LLM prompt.</value>
+    <value>在LLM指令中加入当前聊天标签页中的消息。</value>
   </data>
 </root>
