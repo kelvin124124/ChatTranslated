@@ -16,7 +16,7 @@ namespace ChatTranslated.Translate
     internal static class LLMProxyTranslate
     {
         private const string DefaultContentType = "application/json";
-        private static readonly string? Cfv4 = ReadSecret("ChatTranslated.Resources.cfv4.secret").Replace("\n", string.Empty);
+        private static readonly string? Cfv4 = ReadSecret("ChatTranslated.Resources.cfv5.secret").Replace("\n", string.Empty);
 
         private static string ReadSecret(string resourceName)
         {
@@ -27,9 +27,9 @@ namespace ChatTranslated.Translate
         public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage)
         {
 #if DEBUG
-            string Cfv4 = Service.configuration.Proxy_API_Key;
+            string Cfv5 = Service.configuration.Proxy_API_Key;
 #else
-            if (string.IsNullOrEmpty(Cfv4))
+            if (string.IsNullOrEmpty(Cfv5))
             {
                 Service.pluginLog.Warning("LLMProxy API key not found. Falling back to machine translate.");
                 return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
@@ -46,7 +46,7 @@ namespace ChatTranslated.Translate
             {
                 Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType)
             };
-            request.Headers.Add("x-api-key", Cfv4);
+            request.Headers.Add("x-api-key", Cfv5);
 
             try
             {
