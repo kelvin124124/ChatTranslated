@@ -38,8 +38,7 @@ namespace ChatTranslated.Utils
                 return;
 
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
-            string playerName = playerPayload?.PlayerName ?? sender.ToString();
-
+            string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString()).Trim();
             string localPlayerName = Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty).Trim();
             if (type == XivChatType.TellOutgoing)
                 playerName = localPlayerName;
