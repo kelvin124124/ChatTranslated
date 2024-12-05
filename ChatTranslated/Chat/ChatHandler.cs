@@ -43,7 +43,7 @@ namespace ChatTranslated.Utils
             if (type == XivChatType.TellOutgoing)
                 playerName = localPlayerName;
 
-            if (playerName == localPlayerName)
+            if (playerName.EndsWith(localPlayerName)) // symbol is appended before player name as of patch 7.1
             {
                 Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 return;
