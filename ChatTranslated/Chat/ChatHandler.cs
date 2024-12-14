@@ -6,7 +6,6 @@ using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using FFXIVClientStructs.FFXIV.Client.UI;
-using FFXIVClientStructs.FFXIV.Component.GUI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,32 +108,18 @@ namespace ChatTranslated.Utils
             return string.Empty;
         }
 
-        // Tab component node ids in addon ChatLog
-        private static readonly uint[] NodeIds = [7, 70001, 70002, 70003];
-
-        public unsafe ushort GetActiveChatLogPanel()
+        public unsafe nint GetActiveChatLogPanel()
         {
             var chatLogPtr = Service.gameGui.GetAddonByName("ChatLog");
-            if (chatLogPtr == 0)
-                return 0;
-
-            try
-            {
-                var chatLog = (AtkUnitBase*)chatLogPtr;
-                for (var i = 0; i < NodeIds.Length; i++)
-                {
-                    var node = (AtkComponentNode*)chatLog->GetNodeById(NodeIds[i]);
-                    if (node->Component->UldManager.NodeList[4]->IsVisible())
-                        return (ushort)i;
-                }
-            }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Warning($"Error checking chat log panel visibility: {ex}");
-            }
-
-            return 0;
+            return chatLogPtr == 0 ? 0 : *((byte*)chatLogPtr + 0x2AC);
         }
+
+        // change to this after CS PR merge
+        //public unsafe byte GetActiveChatLogPanel()
+        //{
+        //    var addon = (AddonChatLog*)Service.gameGui.GetAddonByName("ChatLog");
+        //    return addon == null ? 0 : addon->TabIndex;
+        //}
 
         private async Task<bool> IsCustomSourceLanguage(Message chatMessage)
         {
