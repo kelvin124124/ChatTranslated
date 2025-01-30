@@ -50,7 +50,7 @@ namespace ChatTranslated.Translate
 
             try
             {
-                var response = await Translator.HttpClient.SendAsync(request).ConfigureAwait(false);
+                var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
                 var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var jsonResponse = JObject.Parse(responseBody);

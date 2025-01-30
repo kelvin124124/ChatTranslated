@@ -30,7 +30,7 @@ namespace ChatTranslated.Translate
 
                 try
                 {
-                    var response = await Translator.HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
+                    var response = await TranslationHandler.HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
                     response.EnsureSuccessStatusCode();
                     var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
@@ -164,7 +164,7 @@ namespace ChatTranslated.Translate
 
             try
             {
-                var response = await Translator.HttpClient.SendAsync(request).ConfigureAwait(false);
+                var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
 
                 var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);

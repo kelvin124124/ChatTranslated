@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ChatTranslated.Translate
 {
-    internal static class Translator
+    internal static class TranslationHandler
     {
         internal static readonly HttpClient HttpClient = new(new SocketsHttpHandler
         {

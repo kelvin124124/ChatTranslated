@@ -97,7 +97,7 @@ namespace ChatTranslated.Windows
             if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, localizedLanguages, languages.Length))
             {
                 Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];
-                Translator.ClearTranslationCache();
+                TranslationHandler.ClearTranslationCache();
                 Service.configuration.Save();
             }
         }
@@ -114,7 +114,7 @@ namespace ChatTranslated.Windows
 
         private static async void ProcessInputAsync(Message message)
         {
-            var translatedMessage = await Translator.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
+            var translatedMessage = await TranslationHandler.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
 
             if (translatedMessage.TranslatedContent == null)
                 Service.mainWindow.PrintToOutput("[CT] Failed to process message.");

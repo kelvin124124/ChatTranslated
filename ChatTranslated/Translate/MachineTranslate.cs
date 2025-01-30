@@ -8,8 +8,8 @@ namespace ChatTranslated.Translate
 {
     internal static class MachineTranslate
     {
-        private static readonly Lazy<GoogleTranslator> LazyGTranslator = new(() => new GoogleTranslator(Translator.HttpClient));
-        private static readonly Lazy<BingTranslator> LazyBingTranslator = new(() => new BingTranslator(Translator.HttpClient));
+        private static readonly Lazy<GoogleTranslator> LazyGTranslator = new(() => new GoogleTranslator(TranslationHandler.HttpClient));
+        private static readonly Lazy<BingTranslator> LazyBingTranslator = new(() => new BingTranslator(TranslationHandler.HttpClient));
 
         public static GoogleTranslator GTranslator => LazyGTranslator.Value;
         public static BingTranslator BingTranslator => LazyBingTranslator.Value;

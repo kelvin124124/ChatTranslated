@@ -67,7 +67,7 @@ namespace ChatTranslated.Utils
 
             if (needsTranslation)
             {
-                await Translator.TranslateMessage(chatMessage);
+                await TranslationHandler.TranslateMessage(chatMessage);
                 OutputMessage(chatMessage, type);
             }
             else
@@ -110,20 +110,13 @@ namespace ChatTranslated.Utils
 
         public unsafe nint GetActiveChatLogPanel()
         {
-            var chatLogPtr = Service.gameGui.GetAddonByName("ChatLog");
-            return chatLogPtr == 0 ? 0 : *((byte*)chatLogPtr + 0x2AC);
+            var addon = (AddonChatLog*)Service.gameGui.GetAddonByName("ChatLog");
+            return addon == null ? 0 : addon->TabIndex;
         }
-
-        // change to this after CS PR merge
-        //public unsafe byte GetActiveChatLogPanel()
-        //{
-        //    var addon = (AddonChatLog*)Service.gameGui.GetAddonByName("ChatLog");
-        //    return addon == null ? 0 : addon->TabIndex;
-        //}
 
         private async Task<bool> IsCustomSourceLanguage(Message chatMessage)
         {
-            var language = await Translator.DetermineLanguage(chatMessage.CleanedContent);
+            var language = await TranslationHandler.DetermineLanguage(chatMessage.CleanedContent);
             return Service.configuration.SelectedSourceLanguages.Contains(language);
         }
 
@@ -132,7 +125,7 @@ namespace ChatTranslated.Utils
             if (chatMessage.OriginalContent.TextValue == chatMessage.TranslatedContent
                 && chatMessage.Source != MessageSource.MainWindow) // no need to output if translation is the same
             {
-                Service.pluginLog.Debug("Translation is the same as original. Skipping output.");
+                Service.pluginLog.Info("Translation is the same as original. Skipping output.");
                 return;
             }
 
