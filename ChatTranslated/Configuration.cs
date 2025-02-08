@@ -59,6 +59,7 @@ namespace ChatTranslated
         public string LLM_API_endpoint { get; set; } = "https://openrouter.ai/api/v1/chat/completions";
         public string LLM_Model { get; set; } = "google/gemini-pro-1.5";
         public bool UseContext { get; set; } = true;
+        public bool UseFineTunedModel { get; set; } = false;
 
         public void Save()
         {

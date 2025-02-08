@@ -72,7 +72,7 @@ public class ConfigWindow : Window
         "Chat Translated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
-        Size = new Vector2(600, 340);
+        Size = new Vector2(700, 340);
     }
 
     private static string DeepLApiKeyInput = Service.configuration.DeepL_API_Key;
@@ -352,7 +352,7 @@ public class ConfigWindow : Window
         if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedTranslationLanguages, supportedTranslationLanguages.Length))
         {
             configuration.SelectedTargetLanguage = supportedTranslationLanguages[currentIndex];
-            Translator.ClearTranslationCache();
+            TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
         if (configuration.UseCustomLanguage) ImGui.EndDisabled();
@@ -380,7 +380,7 @@ public class ConfigWindow : Window
                 if (Language.TryGetLanguage(configuration.CustomTargetLanguage, out var lang))
                 {
                     Plugin.OutputChatLine("Language applied successfully.");
-                    Translator.ClearTranslationCache();
+                    TranslationHandler.ClearTranslationCache();
                     configuration.Save();
                 }
                 else
@@ -392,7 +392,7 @@ public class ConfigWindow : Window
             ImGui.SameLine();
             if (ImGui.Checkbox(Resources.UseCustomTargetLanguage, ref configuration.UseCustomLanguage))
             {
-                Translator.ClearTranslationCache();
+                TranslationHandler.ClearTranslationCache();
                 configuration.Save();
             }
         }
@@ -420,7 +420,7 @@ public class ConfigWindow : Window
         if (ImGui.Combo("##TranslationEngineCombo", ref selectedTranslationEngine, translationEngineNames, translationEngineNames.Length))
         {
             configuration.SelectedTranslationEngine = (TranslationEngine)selectedTranslationEngine;
-            Translator.ClearTranslationCache();
+            TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
 
@@ -441,9 +441,11 @@ public class ConfigWindow : Window
                 {
                     case 0: // LLM Proxy
                         ImGui.TextUnformatted(Resources.LLM_Proxy_Explanation);
+                        ImGui.Separator();
+                        //DrawLLMProxySettings(configuration);
 #if DEBUG
                         ImGui.Separator();
-                        DrawLLMProxySettings(configuration);
+                        DrawLLMProxyDebugSettings(configuration);
 #endif
                         break;
                     case 1: // OpenAI API
@@ -521,8 +523,22 @@ public class ConfigWindow : Window
         }
     }
 
-#if DEBUG
     private static void DrawLLMProxySettings(Configuration configuration)
+    {
+        bool _UseFineTunedModel = configuration.UseFineTunedModel;
+        if (ImGui.Checkbox("Use fine-tuned model [experimental]", ref _UseFineTunedModel))
+        {
+            configuration.UseFineTunedModel = _UseFineTunedModel;
+            configuration.Save();
+        }
+        ImGui.Indent(30);
+        ImGui.TextUnformatted("Only available in certain region due to Google's policy.\n" +
+            "Only enable this option if you can use ChatGPT in your region.\n");
+        ImGui.Unindent(30);
+    }
+
+#if DEBUG
+    private static void DrawLLMProxyDebugSettings(Configuration configuration)
     {
         ImGui.TextUnformatted("Proxy Url");
         ImGui.InputText("##APIBaseUrl", ref ProxyBaseUrl, 100);
