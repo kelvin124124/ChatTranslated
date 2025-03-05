@@ -275,7 +275,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
   <data name="Party" xml:space="preserve">
     <value>파티</value>
   </data>
-  <data name="PluginLanguage" xml:space="preserve">
+  <data name="PluginUILanguage" xml:space="preserve">
     <value>플러그인 언어</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
