@@ -277,7 +277,7 @@ Google 和 Bing 翻译将被用作备用。
   <data name="Party" xml:space="preserve">
     <value>小队</value>
   </data>
-  <data name="PluginLanguage" xml:space="preserve">
+  <data name="PluginUILanguage" xml:space="preserve">
     <value>插件语言</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
