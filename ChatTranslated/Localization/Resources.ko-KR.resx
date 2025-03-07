@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Alliance" xml:space="preserve">
+    <value>연합</value>
+  </data>
+  <data name="AllLanguages" xml:space="preserve">
+    <value>모든 언어</value>
+  </data>
+  <data name="APIKeyWarn" xml:space="preserve">
+    <value>경고: API가 플러그인 구성에 일반 텍스트로 저장돼요. 멀웨어나 제삼자 플러그인이 키에 접근할 수도 있어요.</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>적용</value>
+  </data>
+  <data name="AskProceed" xml:space="preserve">
+    <value>계속할까요?</value>
+  </data>
+  <data name="ChannelSelection" xml:space="preserve">
+    <value>채널 선택</value>
+  </data>
+  <data name="ChatIntegration" xml:space="preserve">
+    <value>채팅 통합</value>
+  </data>
+  <data name="Chinese (Simplified)" xml:space="preserve">
+    <value>중국어(간체)</value>
+  </data>
+  <data name="Chinese (Traditional)" xml:space="preserve">
+    <value>중국어(번체)</value>
+  </data>
+  <data name="CrossLinkShell1" xml:space="preserve">
+    <value>CrossLinkShell1</value>
+  </data>
+  <data name="CrossLinkShell2" xml:space="preserve">
+    <value>CrossLinkShell2</value>
+  </data>
+  <data name="CrossLinkShell3" xml:space="preserve">
+    <value>CrossLinkShell3</value>
+  </data>
+  <data name="CrossLinkShell4" xml:space="preserve">
+    <value>CrossLinkShell4</value>
+  </data>
+  <data name="CrossLinkShell5" xml:space="preserve">
+    <value>CrossLinkShell5</value>
+  </data>
+  <data name="CrossLinkShell6" xml:space="preserve">
+    <value>CrossLinkShell6</value>
+  </data>
+  <data name="CrossLinkShell7" xml:space="preserve">
+    <value>CrossLinkShell7</value>
+  </data>
+  <data name="CrossLinkShell8" xml:space="preserve">
+    <value>CrossLinkShell8</value>
+  </data>
+  <data name="CrossParty" xml:space="preserve">
+    <value>크로스 파티</value>
+  </data>
+  <data name="CustomLanguages" xml:space="preserve">
+    <value>사용자 정의 언어</value>
+  </data>
+  <data name="CustomTargetLanguageExplanation" xml:space="preserve">
+    <value>사용자 정의 언어를 사용하는 경우 Google 번역을 반드시 사용해야 해요.</value>
+  </data>
+  <data name="CustomTargetLanguageHeader" xml:space="preserve">
+    <value>사용자 정의 대상 언어</value>
+  </data>
+  <data name="DeepL" xml:space="preserve">
+    <value>DeepL</value>
+  </data>
+  <data name="DeepLAPIKey" xml:space="preserve">
+    <value>DeepL API 키(선택 사항)</value>
+  </data>
+  <data name="DeepLExplanation" xml:space="preserve">
+    <value>DeepL은 대화 메시지를 번역하는 데 사용돼요. 
+Google 및 Bing 번역은 보조 수단으로 사용돼요.
+DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요.</value>
+  </data>
+  <data name="Default" xml:space="preserve">
+    <value>기본값</value>
+  </data>
+  <data name="DefaultFilteringExplaination" xml:space="preserve">
+    <value>권장해요. 라틴어 기반이 아닌 언어를 번역해요.(일본어, 한국어, 중국어 등)</value>
+  </data>
+  <data name="DomaStr" xml:space="preserve">
+    <value>괜찮아요!</value>
+  </data>
+  <data name="EnableInDuties" xml:space="preserve">
+    <value>임무 중 사용</value>
+  </data>
+  <data name="EnablePlugin" xml:space="preserve">
+    <value>플러그인 사용</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>영어</value>
+  </data>
+  <data name="FreeCompany" xml:space="preserve">
+    <value>자유 회사</value>
+  </data>
+  <data name="French" xml:space="preserve">
+    <value>프랑스어</value>
+  </data>
+  <data name="GenericChannels" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="German" xml:space="preserve">
+    <value>독일어</value>
+  </data>
+  <data name="GGstr" xml:space="preserve">
+    <value>잘 했어요!</value>
+  </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>일본어</value>
+  </data>
+  <data name="Korean" xml:space="preserve">
+    <value>한국어</value>
+  </data>
+  <data name="LLMProvider" xml:space="preserve">
+    <value>LLM 제공자</value>
+  </data>
+  <data name="LLM_Proxy_Explanation" xml:space="preserve">
+    <value>자가 호스팅 Gemini 프록시</value>
+  </data>
+  <data name="Ls1" xml:space="preserve">
+    <value>LS1</value>
+  </data>
+  <data name="Ls2" xml:space="preserve">
+    <value>LS2</value>
+  </data>
+  <data name="Ls3" xml:space="preserve">
+    <value>LS3</value>
+  </data>
+  <data name="Ls4" xml:space="preserve">
+    <value>LS4</value>
+  </data>
+  <data name="Ls5" xml:space="preserve">
+    <value>LS5</value>
+  </data>
+  <data name="Ls6" xml:space="preserve">
+    <value>LS6</value>
+  </data>
+  <data name="Ls7" xml:space="preserve">
+    <value>LS7</value>
+  </data>
+  <data name="Ls8" xml:space="preserve">
+    <value>LS8</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>아니요</value>
+  </data>
+  <data name="NoviceNetwork" xml:space="preserve">
+    <value>초보자 채널</value>
+  </data>
+  <data name="OpenAIAPIKey" xml:space="preserve">
+    <value>OpenAI API 키</value>
+  </data>
+  <data name="OpenAIPriceEstimation" xml:space="preserve">
+    <value>예상 가격: $0.4/월</value>
+  </data>
+  <data name="Party" xml:space="preserve">
+    <value>파티</value>
+  </data>
+  <data name="PluginUILanguage" xml:space="preserve">
+    <value>플러그인 언어</value>
+  </data>
+  <data name="PvPTeam" xml:space="preserve">
+    <value>PvP팀</value>
+  </data>
+  <data name="Region" xml:space="preserve">
+    <value>지역</value>
+  </data>
+  <data name="Say" xml:space="preserve">
+    <value>말하기</value>
+  </data>
+  <data name="SeeLanguageList" xml:space="preserve">
+    <value>언어 목록 보기</value>
+  </data>
+  <data name="Shout" xml:space="preserve">
+    <value>외치기</value>
+  </data>
+  <data name="SourceLang" xml:space="preserve">
+    <value>번역할 사항</value>
+  </data>
+  <data name="SourceLangSelection" xml:space="preserve">
+    <value>원본 언어 선택</value>
+  </data>
+  <data name="Spanish" xml:space="preserve">
+    <value>스페인어</value>
+  </data>
+  <data name="TargetLang" xml:space="preserve">
+    <value>번역할 언어</value>
+  </data>
+  <data name="TellIncoming" xml:space="preserve">
+    <value>받는 메시지를 알려주세요</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>번역</value>
+  </data>
+  <data name="TranslateAllExplaination" xml:space="preserve">
+    <value>수신한 모든 메시지를 번역해요.
+
+언어에서 원하는 언어를 찾지 못하셨나요?
+플러그인 설치기에서 의견을 보내주세요!</value>
+  </data>
+  <data name="TranslateButtonTooltip" xml:space="preserve">
+    <value>번역 버튼은 메인 창에 번역된 텍스트만 출력해요.
+번역된 텍스트를 대화 창에 보내거나 다른 플레이어에게 보이게 하는 것은 아니에요.</value>
+  </data>
+  <data name="TranslationEngine" xml:space="preserve">
+    <value>번역 엔진</value>
+  </data>
+  <data name="UseCustomTargetLanguage" xml:space="preserve">
+    <value>사용자 정의 언어 사용</value>
+  </data>
+  <data name="WelcomeStr" xml:space="preserve">
+    <value>해 보아요!</value>
+  </data>
+  <data name="Yell" xml:space="preserve">
+    <value>외치기</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>네</value>
+  </data>
+  <data name="ChatIntegration_HideOriginal" xml:space="preserve">
+    <value>번역된 메시지를 출력할 때 원본 메시지 숨기기</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>일반</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>언어</value>
+  </data>
+  <data name="Chat Channels" xml:space="preserve">
+    <value>채팅 채널</value>
+  </data>
+  <data name="Translation Mode" xml:space="preserve">
+    <value>번역 모드</value>
+  </data>
+  <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
+    <value>번역한 메시지를 출력할 때 색깔 텍스트 표시</value>
+  </data>
+  <data name="OpenAIAPIExplanation" xml:space="preserve">
+    <value>GPT-4o-mini
+지원되지 않는 지역에 거주하는 경우 제한될 수 있습니다.</value>
+  </data>
+  <data name="OpenAICompatibleExplanation" xml:space="preserve">
+    <value>OpenAI와 호환되는 API를 가진 모든 사용자 정의 제공자.</value>
+  </data>
+  <data name="OpenAICompatibleInfo" xml:space="preserve">
+    <value>시스템 역할이 없는 모델은 지원되지 않습니다.</value>
+  </data>
+  <data name="LLMAPIKey" xml:space="preserve">
+    <value>API 키</value>
+  </data>
+  <data name="LLMModel" xml:space="preserve">
+    <value>모델</value>
+  </data>
+  <data name="LLMApiEndpoint" xml:space="preserve">
+    <value>엔드포인트 URL</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>참고: 
+DeepL은 단일 언어 번역에서 더 나은 정확성을 제공합니다.
+메시지가 길거나 여러 언어를 포함하는 경우에만 LLM이 더 좋습니다.</value>
+  </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>컨텍스트 사용</value>
+  </data>
+  <data name="ChatContextExplanation" xml:space="preserve">
+    <value>LLM 프롬프트에 현재 채팅 탭의 메시지를 포함합니다.</value>
+  </data>
+</root>

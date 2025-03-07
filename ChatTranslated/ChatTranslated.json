@@ -1,0 +1,14 @@
+{
+    "Author": "kelvin124124",
+    "Name": "ChatTranslated",
+    "Punchline": "Ingame chat translator.",
+    "Description": "Ingame chat translator.",
+    "RepoUrl": "https://github.com/kelvin124124/ChatTranslated",
+    "InternalName": "ChatTranslated",
+    "ApplicableVersion": "any",
+    "Tags": [
+        "chat",
+        "translate",
+        "translation"
+    ]
+}

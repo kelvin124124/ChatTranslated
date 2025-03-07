@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="Dalamud.Plugin.Bootstrap.targets" />
+
+    <PropertyGroup>
+        <Authors>kelvin124124</Authors>
+        <Company></Company>
+        <Version>3.3.2.1</Version>
+        <Description>In-game chat translator.</Description>
+        <Copyright></Copyright>
+        <PackageProjectUrl>https://github.com/kelvin124124/ChatTranslated</PackageProjectUrl>
+        <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="GTranslate" Version="2.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Localization\Resources.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Resources.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Localization\Resources.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Update="DalamudPackager" Version="11.0.0" />
+    </ItemGroup>
+
+    <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv5)' != ''">
+        <PropertyGroup>
+            <SecretPath>$(ProjectDir)Resources\cfv5.secret</SecretPath>
+        </PropertyGroup>
+        <WriteLinesToFile File="$(SecretPath)" Lines="$(PLOGON_SECRET_cfv5)" Overwrite="true" />
+    </Target>
+
+    <Target Name="EmbedSecrets" BeforeTargets="PrepareForBuild" AfterTargets="Secrets">
+        <ItemGroup>
+            <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.cfv5.secret" />
+        </ItemGroup>
+    </Target>
+</Project>
