@@ -34,13 +34,13 @@ namespace ChatTranslated.Translate
             }
 
             var prompt = BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context);
-            int messageLength = message.OriginalContent.TextValue.Length;
+            int promptLength = prompt.Length;
             var userMsg = $"Translate to: {Service.configuration.SelectedTargetLanguage}\n#### Original Text\n{message.OriginalContent.TextValue}";
             var requestData = new
             {
                 model,
                 temperature = 0.6,
-                max_tokens = Math.Min(Math.Max(messageLength * 2, 20), 175),
+                max_tokens = Math.Max(promptLength, 80),
                 messages = new[]
                 {
                     new { role = "system", content = prompt },
