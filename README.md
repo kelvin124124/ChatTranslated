@@ -2,7 +2,8 @@
 A Dalamud plugin for the game FFXIV that allows users to translate in-game chat messages.
 
 ## Translation services
-- \[Default] DeepL translate, with Google and Bing translate as backup  
+- DeepL translate (Default)
+  - Google and Bing translate as backup
 - OpenAI compatible API (requires API key)  
 - LLM Proxy (Gemini model on openrouter)  
 
