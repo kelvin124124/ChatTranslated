@@ -1,6 +1,5 @@
 using ChatTranslated.Utils;
 using Dalamud.Utility;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,8 +32,13 @@ namespace ChatTranslated.Translate
                 {
                     var response = await TranslationHandler.HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
                     response.EnsureSuccessStatusCode();
-                    var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
+
+                    using var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                    using var jsonDoc = JsonDocument.Parse(responseStream);
+                    var translated = jsonDoc.RootElement
+                        .GetProperty("translations")[0]
+                        .GetProperty("text")
+                        .GetString();
 
                     if (translated.IsNullOrWhitespace())
                     {
@@ -172,31 +176,35 @@ namespace ChatTranslated.Translate
                 var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
 
-                var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                var contentEncoding = response.Content.Headers.ContentEncoding;
-                if (contentEncoding.Contains("gzip", StringComparer.OrdinalIgnoreCase))
+                string resultJson;
+                using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
                 {
-                    using var gzipStream = new System.IO.Compression.GZipStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
-                    using var streamReader = new System.IO.StreamReader(gzipStream, Encoding.UTF8);
-                    postDataJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                }
-                else if (contentEncoding.Contains("deflate", StringComparer.OrdinalIgnoreCase))
-                {
-                    using var deflateStream = new System.IO.Compression.DeflateStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
-                    using var streamReader = new System.IO.StreamReader(deflateStream, Encoding.UTF8);
-                    postDataJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                }
-                else if (contentEncoding.Contains("br", StringComparer.OrdinalIgnoreCase))
-                {
-                    throw new NotSupportedException("Brotli encoding is not supported.");
-                }
-                else
-                {
-                    postDataJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    var contentEncoding = response.Content.Headers.ContentEncoding;
+
+                    if (contentEncoding.Contains("gzip", StringComparer.OrdinalIgnoreCase))
+                    {
+                        using var gzipStream = new System.IO.Compression.GZipStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
+                        using var streamReader = new System.IO.StreamReader(gzipStream, Encoding.UTF8);
+                        resultJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                    }
+                    else if (contentEncoding.Contains("deflate", StringComparer.OrdinalIgnoreCase))
+                    {
+                        using var deflateStream = new System.IO.Compression.DeflateStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
+                        using var streamReader = new System.IO.StreamReader(deflateStream, Encoding.UTF8);
+                        resultJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                    }
+                    else if (contentEncoding.Contains("br", StringComparer.OrdinalIgnoreCase))
+                    {
+                        throw new NotSupportedException("Brotli encoding is not supported.");
+                    }
+                    else
+                    {
+                        using var streamReader = new System.IO.StreamReader(responseStream, Encoding.UTF8);
+                        resultJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                    }
                 }
 
-
-                using var jsonDoc = JsonDocument.Parse(postDataJson);
+                using var jsonDoc = JsonDocument.Parse(resultJson);
                 var translated = jsonDoc.RootElement
                     .GetProperty("result")
                     .GetProperty("translations")[0]

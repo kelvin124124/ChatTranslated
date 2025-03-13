@@ -156,7 +156,19 @@ namespace ChatTranslated.Chat
         private bool IsMacroMessage(string playerName)
         {
             int now = Environment.TickCount;
-            if (lastMessageTime.TryGetValue(playerName, out int lastMsgTime) && now - lastMsgTime < 600)
+
+            if (lastMessageTime.Count > 20)
+            {
+                var keysToRemove = lastMessageTime
+                    .Where(kv => now - kv.Value > 10000) // 10s
+                    .Select(kv => kv.Key)
+                    .ToList();
+
+                foreach (var key in keysToRemove)
+                    lastMessageTime.Remove(key);
+            }
+
+            if (lastMessageTime.TryGetValue(playerName, out int lastMsgTime) && now - lastMsgTime < 650) // 0.65s
             {
                 lastMessageTime[playerName] = now;
                 return true;

@@ -1,7 +1,6 @@
 using ChatTranslated.Chat;
 using ChatTranslated.Utils;
 using Dalamud.Utility;
-using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Net.Http;
@@ -52,11 +51,17 @@ namespace ChatTranslated.Translate
             {
                 var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
-                var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var jsonResponse = JObject.Parse(responseBody);
 
-                var translated = jsonResponse["translated"]?.ToString().Trim();
-                var responseTime = jsonResponse["responseTime"]?.ToString();
+                using var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                using var jsonDoc = JsonDocument.Parse(responseStream);
+
+                var translated = jsonDoc.RootElement
+                    .GetProperty("translated")
+                    .GetString()?.Trim();
+
+                var responseTime = jsonDoc.RootElement
+                    .GetProperty("responseTime")
+                    .GetString();
 
                 if (translated.IsNullOrWhitespace())
                 {

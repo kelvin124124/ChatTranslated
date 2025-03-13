@@ -5,6 +5,7 @@ using Dalamud.Utility;
 using GTranslate.Translators;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -28,6 +29,7 @@ namespace ChatTranslated.Translate
         public static readonly BingTranslator BingTranslator = new(HttpClient);
         public static readonly YandexTranslator YTranslator = new(HttpClient);
 
+        private const int MAX_CACHE_SIZE = 120;
         public static readonly Dictionary<string, string> TranslationCache = [];
 
         public static async Task<Message> TranslateMessage(Message message, string targetLanguage = null!)
@@ -38,6 +40,10 @@ namespace ChatTranslated.Translate
 
             if (TranslationCache.TryGetValue(message.OriginalContent.TextValue, out var cachedTranslation))
             {
+                // Move the hit item to the end of the cache
+                TranslationCache.Remove(message.OriginalContent.TextValue);
+                TranslationCache[message.OriginalContent.TextValue] = cachedTranslation;
+
                 message.TranslatedContent = cachedTranslation;
                 return message;
             }
@@ -65,6 +71,9 @@ namespace ChatTranslated.Translate
                 && message.Source != MessageSource.MainWindow
                 && message.translationMode != Configuration.TranslationMode.MachineTranslate)
             {
+                if (TranslationCache.Count >= MAX_CACHE_SIZE)
+                    TranslationCache.Remove(TranslationCache.Keys.First());  // remove the oldest item
+
                 TranslationCache[message.OriginalContent.TextValue] = translatedText;
             }
 
