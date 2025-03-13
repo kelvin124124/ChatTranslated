@@ -91,13 +91,13 @@ namespace ChatTranslated.Translate
             sb.AppendLine($"You are a precise translator for FFXIV game content into {targetLanguage}.\n");
 
             sb.AppendLine("TRANSLATION RULES:");
-            sb.AppendLine("1. Keep all FFXIV-specific terms, character names, and place names in their original form.");
-            sb.AppendLine("2. Preserve all formatting, including spaces and punctuation.");
-            sb.AppendLine("3. Maintain the exact meaning and tone of the original text.\n");
+            sb.AppendLine("1. Be mindful of FFXIV-specific terms, but translate all content appropriately");
+            sb.AppendLine("2. Preserve all formatting, including spaces and punctuation");
+            sb.AppendLine("3. Maintain the exact meaning and tone of the original text\n");
 
             sb.AppendLine("OUTPUT RULES:");
             sb.AppendLine("1. First, in a \"#### Reasoning\" section:");
-            sb.AppendLine("   - Identify any FFXIV-specific terms");
+            sb.AppendLine("   - Identify any FFXIV-specific terms and their meanings");
             sb.AppendLine("   - Consider multiple possible translations");
             sb.AppendLine("   - Explain your final translation choice");
             sb.AppendLine("2. Your response must then include \"#### Translation\".");
@@ -120,7 +120,6 @@ namespace ChatTranslated.Translate
                 sb.AppendLine(context);
                 sb.AppendLine("</context>");
             }
-
             return sb.ToString();
         }
     }
