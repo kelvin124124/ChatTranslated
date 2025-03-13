@@ -96,12 +96,19 @@ namespace ChatTranslated.Translate
             sb.AppendLine("3. Maintain the exact meaning and tone of the original text.\n");
 
             sb.AppendLine("OUTPUT RULES:");
-            sb.AppendLine("1. Your response must begin with exactly \"#### Translation\".");
-            sb.AppendLine("2. Write only the translated text after this header.");
-            sb.AppendLine("3. Do not include the original text.");
-            sb.AppendLine("4. Do not add any explanations or notes.\n");
+            sb.AppendLine("1. First, in a \"#### Reasoning\" section:");
+            sb.AppendLine("   - Identify any FFXIV-specific terms");
+            sb.AppendLine("   - Consider multiple possible translations");
+            sb.AppendLine("   - Explain your final translation choice");
+            sb.AppendLine("2. Your response must then include \"#### Translation\".");
+            sb.AppendLine("3. Write only the translated text after this header.");
+            sb.AppendLine("4. Do not include the original text.");
+            sb.AppendLine("5. Do not add any explanations or notes after the translation.\n");
 
             sb.AppendLine("Example response format:");
+            sb.AppendLine("#### Reasoning");
+            sb.AppendLine("{Your analysis and translation process}");
+            sb.AppendLine("");
             sb.AppendLine("#### Translation");
             sb.AppendLine("{Only the translated text goes here}");
 
