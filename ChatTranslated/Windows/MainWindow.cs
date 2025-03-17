@@ -16,6 +16,8 @@ namespace ChatTranslated.Windows
 {
     public partial class MainWindow : Window
     {
+        private static StringBuilder sb;
+
         private readonly string[] languages = ["Japanese", "English", "German", "French"];
         internal string outputText = "";
         private string cleanOutputText = "";
@@ -130,8 +132,11 @@ namespace ChatTranslated.Windows
 
         public void PrintToOutput(string message)
         {
-            string timeStampedMessage = $"[{DateTime.Now:HH:mm}] {message}\n";
-            cleanOutputText += timeStampedMessage;
+            sb ??= new StringBuilder();
+
+            sb.Append($"[{DateTime.Now:HH:mm}] {message}\n");
+            cleanOutputText = sb.ToString();
+
             isOutputFieldWrapped = false; // Force re-wrap on next Draw
         }
 

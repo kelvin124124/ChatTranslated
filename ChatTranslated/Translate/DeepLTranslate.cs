@@ -2,6 +2,7 @@ using ChatTranslated.Utils;
 using Dalamud.Utility;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -230,17 +231,25 @@ namespace ChatTranslated.Translate
         {
             request.Headers.Accept.Clear();
             request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
-            request.Headers.TryAddWithoutValidation("Accept-Language", "en-US,en;q=0.9");
-            request.Headers.TryAddWithoutValidation("User-Agent", "DeepL/1627620 CFNetwork/3826.500.62.2.1 Darwin/24.4.0");
-            request.Headers.TryAddWithoutValidation("Content-Type", "application/json");
-            request.Headers.TryAddWithoutValidation("X-App-Os-Name", "iOS");
-            request.Headers.TryAddWithoutValidation("X-App-Os-Version", "18.4.0");
-            request.Headers.TryAddWithoutValidation("Accept-Encoding", "gzip, deflate");
-            request.Headers.TryAddWithoutValidation("X-App-Device", "iPhone16,2");
-            request.Headers.Referrer = new Uri("https://www.deepl.com/");
-            request.Headers.TryAddWithoutValidation("X-Product", "translator");
-            request.Headers.TryAddWithoutValidation("X-App-Build", "1627620");
-            request.Headers.TryAddWithoutValidation("X-App-Version", "25.1");
+
+            var headers = new Dictionary<string, string>
+            {
+                { "Accept-Language", "en-US,en;q=0.9" },
+                { "User-Agent", "DeepL/1627620 CFNetwork/3826.500.62.2.1 Darwin/24.4.0" },
+                { "Content-Type", "application/json" },
+                { "X-App-Os-Name", "iOS" },
+                { "X-App-Os-Version", "18.4.0" },
+                { "Accept-Encoding", "gzip, deflate" }, // br is removed for simplicity
+                { "X-App-Device", "iPhone16,2" },
+                { "X-Product", "translator" },
+                { "X-App-Build", "1627620" },
+                { "X-App-Version", "25.1" }
+            };
+
+            foreach (var header in headers)
+            {
+                request.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
         }
     }
 }
