@@ -86,7 +86,7 @@ namespace ChatTranslated.Chat
                 if (chatLogPanelPtr != 0)
                 {
                     var chatLogPanel = (AddonChatLogPanel*)chatLogPanelPtr;
-                    var lines = SeString.Parse(chatLogPanel->ChatText->GetText()).TextValue
+                    var lines = SeString.Parse((byte*)chatLogPanel->ChatText->GetText()).TextValue
                         .Split('\r')
                         .TakeLast(15)
                         .Select(line => line.Trim())

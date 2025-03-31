@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
-    <Import Project="Dalamud.Plugin.Bootstrap.targets" />
+<Project Sdk="Dalamud.NET.Sdk/12.0.2">
 
     <PropertyGroup>
         <Authors>kelvin124124</Authors>
@@ -30,10 +29,6 @@
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <PackageReference Update="DalamudPackager" Version="11.0.0" />
     </ItemGroup>
 
     <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv5)' != ''">
