@@ -16,10 +16,10 @@ namespace ChatTranslated.Translate
         public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
         {
             // Try Bing first, then Google as fallback
-            foreach (var (translator, name) in new (dynamic, string)[]
+            foreach (var translator in new dynamic[]
             {
-                (BingTranslator, "Bing"),
-                (GTranslator, "Google")
+                BingTranslator,
+                GTranslator
             })
             {
                 try
@@ -28,16 +28,13 @@ namespace ChatTranslated.Translate
                     string resultText = result.Translation;
 
                     if (string.IsNullOrWhiteSpace(resultText) || resultText == text)
-                        throw new Exception($"{name} Translate returned an invalid translation.");
+                        throw new Exception($"{translator.Name} Translate returned an invalid translation.");
 
                     return (resultText, TranslationMode.MachineTranslate);
                 }
                 catch (Exception ex)
                 {
-                    if (name == "Bing")
-                        Service.pluginLog.Warning($"Bing Translate failed. Falling back to Google Translate.\n{ex.Message}");
-                    else
-                        Service.pluginLog.Error($"Google Translate failed. Returning original text.\n{ex.Message}");
+                    Service.pluginLog.Warning($"{translator.Name} failed.\n{ex.Message}");
                 }
             }
 
