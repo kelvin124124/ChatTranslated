@@ -14,4 +14,3 @@ A Dalamud plugin for the game FFXIV that allows users to translate in-game chat 
 ```/pchat integration``` to toggle chat integration (output translation in gane chat)
 
 ## Contribution
-Translate the plugin via [Crowdin](https://crowdin.com/project/chattranslated)
