@@ -130,7 +130,7 @@ namespace ChatTranslated
             Task.Run(() => TranslatePFAsync(PFmessage));
         }
 
-        private async Task TranslatePFAsync(Message message)
+        private static async Task TranslatePFAsync(Message message)
         {
             await TranslationHandler.TranslateMessage(message);
             ChatHandler.OutputMessage(message);

@@ -95,7 +95,7 @@ namespace ChatTranslated.Windows
             int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage);
             if (currentLanguageIndex == -1) currentLanguageIndex = 0;
 
-            string[] localizedLanguages = languages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
+            string[] localizedLanguages = [.. languages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang)];
             if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, localizedLanguages, languages.Length))
             {
                 Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];

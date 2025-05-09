@@ -114,7 +114,7 @@ namespace ChatTranslated.Chat
             return addon == null ? 0 : addon->TabIndex;
         }
 
-        private async Task<bool> IsCustomSourceLanguage(Message chatMessage)
+        private static async Task<bool> IsCustomSourceLanguage(Message chatMessage)
         {
             var language = await TranslationHandler.DetermineLanguage(chatMessage.CleanedContent);
             return Service.configuration.SelectedSourceLanguages.Contains(language);

@@ -18,8 +18,6 @@ namespace ChatTranslated.Windows;
 
 public class ConfigWindow : Window
 {
-    private readonly string[] supportedDetectedLanguages =
-    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
     private readonly string[] supportedDisplayLanguages =
     ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
 
@@ -217,7 +215,7 @@ public class ConfigWindow : Window
             Process.Start(new ProcessStartInfo { FileName = "https://crowdin.com/project/chattranslated", UseShellExecute = true });
         }
 
-        string[] localizedSupportedDisplayLanguages = supportedDisplayLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
+        string[] localizedSupportedDisplayLanguages = [.. supportedDisplayLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang)];
         if (ImGui.Combo("##pluginLanguage", ref currentIndex, localizedSupportedDisplayLanguages, supportedDisplayLanguages.Length))
         {
             configuration.SelectedPluginLanguage = supportedDisplayLanguages[currentIndex];
@@ -303,8 +301,8 @@ public class ConfigWindow : Window
 
         int selectedLanguageSelectionMode = (int)configuration.SelectedLanguageSelectionMode;
 
-        string[] languageSelectionModeNames = Enum.GetNames(typeof(LanguageSelectionMode));
-        string[] localizedlanguageSelectionModes = languageSelectionModeNames.Select(mode => Resources.ResourceManager.GetString(mode, Resources.Culture) ?? mode).ToArray();
+        string[] languageSelectionModeNames = Enum.GetNames<LanguageSelectionMode>();
+        string[] localizedlanguageSelectionModes = [.. languageSelectionModeNames.Select(mode => Resources.ResourceManager.GetString(mode, Resources.Culture) ?? mode)];
 
         if (ImGui.Combo("##LanguageSelectionModeCombo", ref selectedLanguageSelectionMode, localizedlanguageSelectionModes, languageSelectionModeNames.Length))
         {
@@ -358,7 +356,7 @@ public class ConfigWindow : Window
         int currentIndex = Array.IndexOf(supportedTranslationLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0; // Fallback to the first item if not found.
 
-        string[] localizedSupportedTranslationLanguages = supportedTranslationLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang).ToArray();
+        string[] localizedSupportedTranslationLanguages = [.. supportedTranslationLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang)];
         if (configuration.UseCustomLanguage) ImGui.BeginDisabled();
         if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedSupportedTranslationLanguages, supportedTranslationLanguages.Length))
         {
@@ -425,7 +423,7 @@ public class ConfigWindow : Window
 
         int selectedTranslationEngine = (int)configuration.SelectedTranslationEngine;
 
-        string[] translationEngineNames = Enum.GetNames(typeof(TranslationEngine));
+        string[] translationEngineNames = Enum.GetNames<TranslationEngine>();
 
         // update index when adding new modes
         if (ImGui.Combo("##TranslationEngineCombo", ref selectedTranslationEngine, translationEngineNames, translationEngineNames.Length))
