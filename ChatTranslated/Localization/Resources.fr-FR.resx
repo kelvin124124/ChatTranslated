@@ -59,7 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -131,7 +131,7 @@ tout logiciel malveillant ou plugin tiers peut avoir accès à la clé.</value>
     <value>Appliquer</value>
   </data>
   <data name="AskProceed" xml:space="preserve">
-    <value>Procéder?</value>
+    <value>Poursuivre ?</value>
   </data>
   <data name="ChannelSelection" xml:space="preserve">
     <value>Sélection des chaînes</value>
@@ -176,7 +176,7 @@ tout logiciel malveillant ou plugin tiers peut avoir accès à la clé.</value>
     <value>Langues personnalisées</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>Vous serez obligé d'utiliser Google Traduction si vous utilisez des langues personnalisées.</value>
+    <value>Vous serez obligé(e)d'utiliser Google Traduction si vous utilisez des langues personnalisées.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Langue cible personnalisée</value>
@@ -193,7 +193,7 @@ Google et Bing Traduction seront utilisés en tant que sauvegarde.
 Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sauvegarde à la place.</value>
   </data>
   <data name="Default" xml:space="preserve">
-    <value>Default</value>
+    <value>Par défaut</value>
   </data>
   <data name="DefaultFilteringExplaination" xml:space="preserve">
     <value>Recommandé. Traduisez des langues non latines.
@@ -224,7 +224,7 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Allemand</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>Bon jeu!</value>
+    <value>Bon jeu !</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>Japonais</value>
@@ -272,13 +272,13 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Clé API OpenAI</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Estimation du prix : 0,4 $/mois</value>
+    <value>Estimation du prix : 0,6 $/mois</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>Party</value>
+    <value>Groupe</value>
   </data>
   <data name="PluginUILanguage" xml:space="preserve">
-    <value>Plugin Language</value>
+    <value>Langue du greffon</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPTeam</value>
