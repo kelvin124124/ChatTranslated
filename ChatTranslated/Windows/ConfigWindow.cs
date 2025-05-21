@@ -8,7 +8,6 @@ using GTranslate;
 using ImGuiNET;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Numerics;
@@ -212,7 +211,7 @@ public class ConfigWindow : Window
         ImGui.SameLine();
         if (ImGui.Button("Help with localization!"))
         {
-            Process.Start(new ProcessStartInfo { FileName = "https://crowdin.com/project/chattranslated", UseShellExecute = true });
+            Dalamud.Utility.Util.OpenLink("https://hosted.weblate.org/projects/chattranslated/");
         }
 
         string[] localizedSupportedDisplayLanguages = [.. supportedDisplayLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang)];
