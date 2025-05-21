@@ -10,20 +10,22 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ChatTranslated.Windows
 {
     public partial class MainWindow : Window
     {
-        private static StringBuilder sb;
+        private static StringBuilder sb = new();
+        private static readonly Lock sbLock = new();
 
         private readonly string[] languages = ["Japanese", "English", "German", "French"];
         internal string outputText = "";
         private string cleanOutputText = "";
         internal string inputText = "";
         private float lastOutputFieldWidth = 0;
-        private bool isOutputFieldWrapped = false;
+        private volatile bool isOutputFieldWrapped = false;
 
         [GeneratedRegex(@"(\p{IsCJKUnifiedIdeographs}|[^\x00-\x7F]|\w+|\s+|[^\w\s])")]
         private static partial Regex WordRegex();
@@ -132,10 +134,13 @@ namespace ChatTranslated.Windows
 
         public void PrintToOutput(string message)
         {
-            sb ??= new StringBuilder();
+            lock (sbLock)
+            {
+                sb ??= new StringBuilder();
 
-            sb.Append($"[{DateTime.Now:HH:mm}] {message}\n");
-            cleanOutputText = sb.ToString();
+                sb.Append($"[{DateTime.Now:HH:mm}] {message}\n");
+                cleanOutputText = sb.ToString();
+            }
 
             isOutputFieldWrapped = false; // Force re-wrap on next Draw
         }
