@@ -62,6 +62,7 @@ namespace ChatTranslated.Chat
     {
         Chat,
         PartyFinder,
-        MainWindow
+        MainWindow,
+        Ipc
     }
 }
