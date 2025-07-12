@@ -38,6 +38,8 @@ namespace ChatTranslated
 
             Service.plugin = this;
 
+            IpcManager.Register(pluginInterface);
+
             Service.configWindow = new ConfigWindow(this);
             Service.mainWindow = new MainWindow(this);
 
@@ -161,6 +163,8 @@ namespace ChatTranslated
 
         public void Dispose()
         {
+            IpcManager.Unregister();
+
             WindowSystem?.RemoveAllWindows();
 
             Service.chatHandler?.Dispose();
