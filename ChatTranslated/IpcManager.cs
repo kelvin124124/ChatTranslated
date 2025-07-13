@@ -2,6 +2,7 @@ using ChatTranslated.Chat;
 using ChatTranslated.Translate;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Ipc;
+using System.Threading.Tasks;
 
 namespace ChatTranslated
 {
@@ -9,25 +10,25 @@ namespace ChatTranslated
     {
         // in: Original text, context, target language
         // out: Translated text
-        private static ICallGateProvider<string, string?, string, string>? CallGateTranslate;
+        private static ICallGateProvider<string, string?, string, Task<string>>? CallGateTranslate;
 
         public static void Register(IDalamudPluginInterface pi)
         {
             Unregister();
 
-            CallGateTranslate = pi.GetIpcProvider<string, string?, string, string>("ChatTranslated.Translate");
+            CallGateTranslate = pi.GetIpcProvider<string, string?, string, Task<string>>("ChatTranslated.Translate");
             CallGateTranslate.RegisterFunc(IpcTranslateText);
         }
 
-        private static string IpcTranslateText(string originalText, string? context, string toLang)
+        private static async Task<string> IpcTranslateText(string originalText, string? context, string toLang)
         {
             Message IpcMessage = new Message("IPC", MessageSource.Ipc, originalText)
             {
                 Context = context
             };
 
-            var translatedMessage = TranslationHandler.TranslateMessage(IpcMessage, toLang).Result;
-            return translatedMessage.TranslatedContent ?? string.Empty;
+            var translatedMessage = await TranslationHandler.TranslateMessage(IpcMessage, toLang);
+            return translatedMessage.TranslatedContent ?? null!;
         }
 
         public static void Unregister()
