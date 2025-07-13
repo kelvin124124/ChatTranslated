@@ -9,7 +9,7 @@ namespace ChatTranslated
     public static class IpcManager
     {
         // in: Original text, context, target language
-        // out: Translated text
+        // out: Task (translated text)
         private static ICallGateProvider<string, string?, string, Task<string>>? CallGateTranslate;
 
         public static void Register(IDalamudPluginInterface pi)
