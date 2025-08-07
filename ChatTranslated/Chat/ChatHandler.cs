@@ -85,7 +85,7 @@ namespace ChatTranslated.Chat
                 var chatLogPanelPtr = Service.gameGui.GetAddonByName($"ChatLogPanel_{x}");
                 if (chatLogPanelPtr != 0)
                 {
-                    var chatLogPanel = (AddonChatLogPanel*)chatLogPanelPtr;
+                    var chatLogPanel = (AddonChatLogPanel*)chatLogPanelPtr.Address;
                     var lines = SeString.Parse((byte*)chatLogPanel->ChatText->GetText()).TextValue
                         .Split('\r')
                         .TakeLast(15)
@@ -110,7 +110,7 @@ namespace ChatTranslated.Chat
 
         public unsafe nint GetActiveChatLogPanel()
         {
-            var addon = (AddonChatLog*)Service.gameGui.GetAddonByName("ChatLog");
+            var addon = (AddonChatLog*)Service.gameGui.GetAddonByName("ChatLog").Address;
             return addon == null ? 0 : addon->TabIndex;
         }
 
