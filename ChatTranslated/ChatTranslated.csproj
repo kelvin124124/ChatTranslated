@@ -31,6 +31,10 @@
       </EmbeddedResource>
     </ItemGroup>
 
+    <ItemGroup>
+      <PackageReference Update="DalamudPackager" Version="13.0.0" />
+    </ItemGroup>
+
     <Target Name="Secrets" BeforeTargets="PrepareForBuild" Condition="'$(PLOGON_SECRET_cfv5)' != ''">
         <PropertyGroup>
             <SecretPath>$(ProjectDir)Resources\cfv5.secret</SecretPath>
