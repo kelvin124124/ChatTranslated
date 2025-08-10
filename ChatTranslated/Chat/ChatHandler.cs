@@ -107,6 +107,12 @@ namespace ChatTranslated.Chat
                             break;
 
                         case PlayerPayload player:
+                            // remove duplicates
+                            if (stack.Count >= 2)
+                            {
+                                stack.Pop();
+                                stack.Pop();
+                            }
                             stack.Push(player.PlayerName);
                             // keep decrementing i to skip over any UI payloads
                             while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
