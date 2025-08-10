@@ -36,18 +36,18 @@ namespace ChatTranslated.Chat
                     case TextPayload textPayload:
                         sb.Append(textPayload.Text);
                         break;
-                    case PlayerPayload _:
+                    case PlayerPayload:
                         i += 2;
                         break;
-                    case ItemPayload _:
-                    case QuestPayload _:
-                    case MapLinkPayload _:
+                    case ItemPayload:
+                    case QuestPayload:
+                    case MapLinkPayload:
                         i += 7;
                         break;
-                    case StatusPayload _:
+                    case StatusPayload:
                         i += 10;
                         break;
-                    case PartyFinderPayload _:
+                    case PartyFinderPayload:
                         i += 6;
                         break;
                 }

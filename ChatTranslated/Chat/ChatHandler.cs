@@ -37,12 +37,12 @@ namespace ChatTranslated.Chat
                 return;
 
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
-            string playerName = Sanitize(playerPayload?.PlayerName ?? sender.ToString()).Trim();
-            string localPlayerName = Sanitize(Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty).Trim();
+            string playerName = playerPayload?.PlayerName ?? sender.ToString();
+            string localPlayerName = Service.clientState.LocalPlayer?.Name.ToString() ?? string.Empty;
             if (type == XivChatType.TellOutgoing)
                 playerName = localPlayerName;
 
-            if (playerName.EndsWith(localPlayerName)) // symbol is appended before player name as of patch 7.1
+            if (playerName.EndsWith(localPlayerName))
             {
                 Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 return;
@@ -79,33 +79,73 @@ namespace ChatTranslated.Chat
         public unsafe string GetChatMessageContext()
         {
             var x = GetActiveChatLogPanel();
-
             try
             {
                 var chatLogPanelPtr = Service.gameGui.GetAddonByName($"ChatLogPanel_{x}");
-                if (chatLogPanelPtr != 0)
+                if (chatLogPanelPtr == 0) return string.Empty;
+
+                var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)chatLogPanelPtr.Address)->ChatText->GetText()).Payloads;
+                var stack = new Stack<string>();
+
+                if (Service.condition[ConditionFlag.BoundByDuty])
+                    stack.Push("\nIn instanced area: true");
+                if (Service.condition[ConditionFlag.InCombat])
+                    stack.Push("\nIn combat: true");
+
+                int lines = 0;
+                for (int i = payloads.Count - 1; i >= 0 && lines < 15; i--)
                 {
-                    var chatLogPanel = (AddonChatLogPanel*)chatLogPanelPtr.Address;
-                    var lines = SeString.Parse((byte*)chatLogPanel->ChatText->GetText()).TextValue
-                        .Split('\r')
-                        .TakeLast(15)
-                        .Select(line => line.Trim())
-                        .ToList();
+                    switch (payloads[i])
+                    {
+                        case TextPayload text when !string.IsNullOrEmpty(text.Text):
+                            int newLines = text.Text.Count(c => c == '\r');
+                            if (lines + newLines <= 15)
+                            {
+                                stack.Push(text.Text);
+                                lines += newLines;
+                            }
+                            break;
 
-                    if (Service.condition[ConditionFlag.BoundByDuty])
-                        lines.Add("In instanced area: true");
-                    if (Service.condition[ConditionFlag.InCombat])
-                        lines.Add("In combat: true");
+                        case PlayerPayload player:
+                            stack.Push(player.PlayerName);
+                            // keep decrementing i to skip over any UI payloads
+                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
+                            continue;
 
-                    return string.Join('\n', lines);
+                        case ItemPayload:
+                            stack.Push("[Item]");
+                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
+                            continue;
+
+                        case QuestPayload:
+                            stack.Push("[Quest]");
+                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
+                            continue;
+
+                        case MapLinkPayload:
+                            stack.Push("[Map]");
+                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
+                            continue;
+
+                        case StatusPayload:
+                            stack.Push("[Status]");
+                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
+                            continue;
+
+                        case PartyFinderPayload:
+                            stack.Push("[PF]");
+                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
+                            continue;
+                    }
                 }
+
+                return ChatRegex.AutoTranslateRegex().Replace(string.Concat(stack), string.Empty);
             }
             catch (Exception ex)
             {
                 Service.pluginLog.Error(ex, "Failed to read chat panel.");
+                return string.Empty;
             }
-
-            return string.Empty;
         }
 
         public unsafe nint GetActiveChatLogPanel()

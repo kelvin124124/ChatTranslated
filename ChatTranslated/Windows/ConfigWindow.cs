@@ -1,11 +1,11 @@
 using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
+using Dalamud.Bindings.ImGui;
 using Dalamud.Game.Text;
 using Dalamud.Interface.Windowing;
 using Dalamud.Utility;
 using GTranslate;
-using Dalamud.Bindings.ImGui;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -195,6 +195,17 @@ public class ConfigWindow : Window
             configuration.EnabledInDuty = _EnabledInDuty;
             configuration.Save();
         }
+
+#if DEBUG
+        ImGui.Separator();
+        if (ImGui.Button("Magic button"))
+        {
+            // debug stuff
+            var str = Service.chatHandler?.GetChatMessageContext();
+            Service.pluginLog.Warning(str!);
+        }
+#endif
+
     }
 
     private void DrawPluginLangSelection(Configuration configuration)
