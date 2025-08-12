@@ -65,10 +65,10 @@ namespace ChatTranslated
                 HelpMessage = "Open Chat Translated main window."
             });
 
-            ConfigWindow.SetLanguageCulture(Service.configuration.SelectedPluginLanguage);
+            Windows.ConfigTabs.GeneralTab.SetLanguageCulture(Service.configuration.SelectedPluginLanguage);
 
             // initialize chat channels
-            Service.configuration.SelectedChatTypes ??= ConfigWindow.genericChatTypes;
+            Service.configuration.SelectedChatTypes ??= Windows.ConfigTabs.ChatChannelsTab.genericChatTypes;
 
             // settings migration
             if (Service.configuration.Version != 5)
