@@ -50,12 +50,15 @@ namespace ChatTranslated.Chat
                     case PartyFinderPayload:
                         i += 6;
                         break;
+                    case AutoTranslatePayload:
+                        i += 2;
+                        break;
                 }
             }
-            return Sanitize(ChatRegex.AutoTranslateRegex().Replace(sb.ToString(), string.Empty));
+            return Sanitize(sb.ToString());
         }
 
-        public static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, "*");
+        public static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, "\uFFFD"); // mark as unknown character
     }
 
     public enum MessageSource

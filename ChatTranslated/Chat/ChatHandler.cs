@@ -9,6 +9,7 @@ using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace ChatTranslated.Chat
@@ -85,67 +86,63 @@ namespace ChatTranslated.Chat
                 if (chatLogPanelPtr == 0) return string.Empty;
 
                 var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)chatLogPanelPtr.Address)->ChatText->GetText()).Payloads;
-                var stack = new Stack<string>();
+                var sb = new StringBuilder();
 
-                if (Service.condition[ConditionFlag.BoundByDuty])
-                    stack.Push("\nIn instanced area: true");
-                if (Service.condition[ConditionFlag.InCombat])
-                    stack.Push("\nIn combat: true");
-
-                int lines = 0;
-                for (int i = payloads.Count - 1; i >= 0 && lines < 15; i--)
+                for (int i = Math.Max(0, payloads.Count - 300); i < payloads.Count; i++)
                 {
                     switch (payloads[i])
                     {
-                        case TextPayload text when !string.IsNullOrEmpty(text.Text):
-                            int newLines = text.Text.Count(c => c == '\r');
-                            if (lines + newLines <= 15)
-                            {
-                                stack.Push(text.Text);
-                                lines += newLines;
-                            }
+                        case TextPayload textPayload:
+                            sb.Append(textPayload.Text);
                             break;
 
-                        case PlayerPayload player:
-                            // remove duplicates
-                            if (stack.Count >= 2)
-                            {
-                                stack.Pop();
-                                stack.Pop();
-                            }
-                            stack.Push(player.PlayerName);
-                            // keep decrementing i to skip over any UI payloads
-                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
-                            continue;
+                        case PlayerPayload playerPayload:
+                            sb.Append($"[{playerPayload.PlayerName}]");
+                            i += 2;
+                            break;
 
                         case ItemPayload:
-                            stack.Push("[Item]");
-                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
-                            continue;
+                            sb.Append("[Item] ");
+                            i += 5;
+                            break;
 
                         case QuestPayload:
-                            stack.Push("[Quest]");
-                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
-                            continue;
+                            sb.Append("[Quest] ");
+                            i += 7;
+                            break;
 
                         case MapLinkPayload:
-                            stack.Push("[Map]");
-                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
-                            continue;
+                            sb.Append("[Map] ");
+                            i += 7;
+                            break;
 
                         case StatusPayload:
-                            stack.Push("[Status]");
-                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
-                            continue;
+                            sb.Append("[Status] ");
+                            i += 10;
+                            break;
 
-                        case PartyFinderPayload:
-                            stack.Push("[PF]");
-                            while (--i >= 0 && payloads[i] is UIForegroundPayload or UIGlowPayload or RawPayload) { }
-                            continue;
+                        case PartyFinderPayload: // does not need to be tagged
+                            i += 6;
+                            break;
+
+                        case AutoTranslatePayload:
+                            i += 2;
+                            break;
                     }
                 }
 
-                return ChatRegex.AutoTranslateRegex().Replace(string.Concat(stack), string.Empty);
+                var lines = sb.ToString()
+                    .Split('\r')
+                    .TakeLast(15)
+                    .Select(line => line.Trim())
+                    .ToList();
+
+                if (Service.condition[ConditionFlag.BoundByDuty])
+                    lines.Add("In instanced area: true");
+                if (Service.condition[ConditionFlag.InCombat])
+                    lines.Add("In combat: true");
+
+                return string.Join('\n', lines);
             }
             catch (Exception ex)
             {
