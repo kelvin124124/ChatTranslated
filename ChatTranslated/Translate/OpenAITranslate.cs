@@ -18,7 +18,7 @@ namespace ChatTranslated.Translate
         private const string DefaultContentType = "application/json";
 
         public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
-            , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-5-mini", string? apiKey = null)
+            , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-4o-mini", string? apiKey = null)
         {
             if (apiKey == null)
             {

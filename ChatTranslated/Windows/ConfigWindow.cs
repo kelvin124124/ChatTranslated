@@ -10,7 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net.Http;
 using System.Numerics;
+using System.Threading.Tasks;
 using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Windows;
@@ -566,21 +568,86 @@ public class ConfigWindow : Window
     }
 #endif
 
+    private static bool? ApiKeyValid = null;
+
+    private static readonly string[] OpenAIModels =
+    [
+        "gpt-5-mini", "gpt-5",
+        "gpt-4.1-mini", "gpt-4.1",
+        "gpt-4o-mini", "gpt-4o"
+    ];
+
     private static void DrawOpenAISettings(Configuration configuration)
     {
+        // Model selector
+        ImGui.TextUnformatted("Model");
+        int currentModelIndex = Array.IndexOf(OpenAIModels, configuration.OpenAI_Model);
+        if (currentModelIndex == -1) currentModelIndex = 0;
+
+        if (ImGui.Combo("##OpenAIModel", ref currentModelIndex, OpenAIModels, OpenAIModels.Length))
+        {
+            configuration.OpenAI_Model = OpenAIModels[currentModelIndex];
+            TranslationHandler.ClearTranslationCache();
+            configuration.Save();
+        }
+
+        ImGui.Spacing();
+
+        // API Key input with validation
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
+        if (ApiKeyValid.HasValue)
+        {
+            ImGui.SameLine();
+            ImGui.TextColored(ApiKeyValid.Value ? new Vector4(0, 1, 0, 1) : new Vector4(1, 0, 0, 1),
+                             ApiKeyValid.Value ? "✓ valid" : "✗ invalid");
+        }
+        else
+        {
+            _ = ValidateOpenAIKey(OpenAIApiKeyInput);
+        }
+
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 200);
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply + "###OpenAI_API_Key"))
         {
             configuration.OpenAI_API_Key = OpenAIApiKeyInput;
-            Plugin.OutputChatLine($"OpenAI API Key {configuration.OpenAI_API_Key} saved successfully.");
             configuration.Save();
-        }
-        ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
+            Plugin.OutputChatLine($"OpenAI API Key {configuration.OpenAI_API_Key} saved successfully.");
 
+            _ = ValidateOpenAIKey(OpenAIApiKeyInput);
+        }
+
+        ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
+    }
+
+    private static async Task ValidateOpenAIKey(string apiKey)
+    {
+        ApiKeyValid = false;
+
+        if (string.IsNullOrWhiteSpace(apiKey) || apiKey == "sk-YOUR-API-KEY")
+        {
+            return;
+        }
+
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.openai.com/v1/models")
+            {
+                Headers = { { "Authorization", $"Bearer {apiKey}" } }
+            };
+
+            var response = await TranslationHandler.HttpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            ApiKeyValid = true;
+            Service.pluginLog.Information($"OpenAI API Key validation successful.");
+        }
+        catch
+        {
+            Service.pluginLog.Warning($"OpenAI API Key validation failed.");
+        }
     }
 
     private static void DrawLLMSettings(Configuration configuration)
