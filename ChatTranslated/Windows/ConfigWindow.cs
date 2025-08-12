@@ -720,8 +720,7 @@ public class ConfigWindow : Window
             return;
         }
 
-        endpoint = endpoint.TrimEnd('/');
-        endpoint.Replace("/chat/completions", "/models");
+        endpoint = endpoint.TrimEnd('/').Replace("/chat/completions", "/models");
 
         try
         {
