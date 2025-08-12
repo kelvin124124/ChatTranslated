@@ -101,6 +101,8 @@ public class TranslationModeTab
         {
             configuration.DeepL_API_Key = DeepLApiKeyInput;
             configuration.Save();
+
+            Plugin.OutputChatLine($"DeepL API Key {configuration.DeepL_API_Key[..12]}... saved successfully."); // only output part of the key
         }
     }
 
@@ -208,7 +210,7 @@ public class TranslationModeTab
         {
             configuration.OpenAI_API_Key = OpenAIApiKeyInput;
             configuration.Save();
-            Plugin.OutputChatLine($"OpenAI API Key {configuration.OpenAI_API_Key} saved successfully.");
+            Plugin.OutputChatLine($"OpenAI API Key {configuration.OpenAI_API_Key[..12]}... saved successfully."); // only output part of the key
             _ = ValidateOpenAIKey(OpenAIApiKeyInput);
         }
 
@@ -254,7 +256,7 @@ public class TranslationModeTab
         if (ImGui.Button(Resources.Apply + "###LLM_API_Key"))
         {
             configuration.LLM_API_Key = LLMApiKeyInput;
-            Plugin.OutputChatLine($"LLM API Key {configuration.LLM_API_Key} saved successfully.");
+            Plugin.OutputChatLine($"LLM API Key {configuration.LLM_API_Key[..12]}... saved successfully."); // only output part of the key
             configuration.Save();
             _ = ValidateLLMKey(LLMApiKeyInput, LLMApiEndpointInput);
         }
