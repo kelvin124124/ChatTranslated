@@ -655,6 +655,13 @@ public class ConfigWindow : Window
     private static void DrawLLMSettings(Configuration configuration)
     {
         ImGui.TextUnformatted(Resources.LLMApiEndpoint);
+        ImGui.SameLine();
+        ImGui.TextDisabled("?");
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.SetTooltip(Resources.LLMApiEndpointExample);
+        }
+
         ImGui.InputText("##APIEndpoint", ref LLMApiEndpointInput, 200);
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply + "###LLM_API_Endpoint"))
@@ -714,10 +721,7 @@ public class ConfigWindow : Window
         }
 
         endpoint = endpoint.TrimEnd('/');
-        if (!endpoint.EndsWith("/models"))
-        {
-            endpoint += "/models";
-        }
+        endpoint.Replace("/chat/completions", "/models");
 
         try
         {

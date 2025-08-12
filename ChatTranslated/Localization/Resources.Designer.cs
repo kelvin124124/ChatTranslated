@@ -481,6 +481,18 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Example:
+        ///https://api.openai.com/v1/chat/completions
+        ///https://openrouter.ai/api/v1/chat/completions
+        ///https://api.deepseek.com/chat/completions.
+        /// </summary>
+        internal static string LLMApiEndpointExample {
+            get {
+                return ResourceManager.GetString("LLMApiEndpointExample", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Api key.
         /// </summary>
         internal static string LLMAPIKey {

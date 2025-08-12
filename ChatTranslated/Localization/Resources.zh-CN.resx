@@ -59,7 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -385,5 +385,8 @@ DeepL 在单语言翻译中的准确性更高。
   </data>
   <data name="ChatContextExplanation" xml:space="preserve">
     <value>在LLM指令中加入当前聊天标签页中的消息。</value>
+  </data>
+  <data name="LLMApiEndpointExample" xml:space="preserve">
+    <value />
   </data>
 </root>

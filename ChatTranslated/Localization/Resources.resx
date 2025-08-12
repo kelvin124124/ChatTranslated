@@ -386,4 +386,10 @@ LLM is better only if message is long or contain multiple languages.</value>
   <data name="ChatContextExplanation" xml:space="preserve">
     <value>Include messages in current chat tab in LLM prompt.</value>
   </data>
+  <data name="LLMApiEndpointExample" xml:space="preserve">
+    <value>Example:
+https://api.openai.com/v1/chat/completions
+https://openrouter.ai/api/v1/chat/completions
+https://api.deepseek.com/chat/completions</value>
+  </data>
 </root>

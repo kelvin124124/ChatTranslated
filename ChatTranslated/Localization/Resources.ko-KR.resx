@@ -384,4 +384,7 @@ DeepL은 단일 언어 번역에서 더 나은 정확성을 제공합니다.
   <data name="ChatContextExplanation" xml:space="preserve">
     <value>LLM 프롬프트에 현재 채팅 탭의 메시지를 포함합니다.</value>
   </data>
+  <data name="LLMApiEndpointExample" xml:space="preserve">
+    <value />
+  </data>
 </root>
