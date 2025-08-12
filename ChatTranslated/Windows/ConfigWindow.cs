@@ -568,7 +568,7 @@ public class ConfigWindow : Window
     }
 #endif
 
-    private static bool? ApiKeyValid = null;
+    private static bool? OpenAIApiKeyValid = null;
 
     private static readonly string[] OpenAIModels =
     [
@@ -595,11 +595,11 @@ public class ConfigWindow : Window
 
         // API Key input with validation
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
-        if (ApiKeyValid.HasValue)
+        if (OpenAIApiKeyValid.HasValue)
         {
             ImGui.SameLine();
-            ImGui.TextColored(ApiKeyValid.Value ? new Vector4(0, 1, 0, 1) : new Vector4(1, 0, 0, 1),
-                             ApiKeyValid.Value ? "✓ valid" : "✗ invalid");
+            ImGui.TextColored(OpenAIApiKeyValid.Value ? new Vector4(0, 1, 0, 1) : new Vector4(1, 0, 0, 1),
+                             OpenAIApiKeyValid.Value ? "✓ valid" : "✗ invalid");
         }
         else
         {
@@ -622,9 +622,9 @@ public class ConfigWindow : Window
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
     }
 
-    private static async Task ValidateOpenAIKey(string apiKey)
+    private static async Task ValidateOpenAIKey(string apiKey, string endpoint = "https://api.openai.com/v1/models")
     {
-        ApiKeyValid = false;
+        OpenAIApiKeyValid = false;
 
         if (string.IsNullOrWhiteSpace(apiKey) || apiKey == "sk-YOUR-API-KEY")
         {
@@ -633,7 +633,7 @@ public class ConfigWindow : Window
 
         try
         {
-            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.openai.com/v1/models")
+            var request = new HttpRequestMessage(HttpMethod.Get, endpoint)
             {
                 Headers = { { "Authorization", $"Bearer {apiKey}" } }
             };
@@ -641,14 +641,16 @@ public class ConfigWindow : Window
             var response = await TranslationHandler.HttpClient.SendAsync(request);
             response.EnsureSuccessStatusCode();
 
-            ApiKeyValid = true;
-            Service.pluginLog.Information($"OpenAI API Key validation successful.");
+            OpenAIApiKeyValid = true;
+            Service.pluginLog.Information($"API Key validation successful.");
         }
         catch
         {
-            Service.pluginLog.Warning($"OpenAI API Key validation failed.");
+            Service.pluginLog.Warning($"API Key validation failed.");
         }
     }
+
+    private static bool? LLMApiKeyValid = null;
 
     private static void DrawLLMSettings(Configuration configuration)
     {
@@ -660,9 +662,22 @@ public class ConfigWindow : Window
             configuration.LLM_API_endpoint = LLMApiEndpointInput;
             Plugin.OutputChatLine($"LLM API Endpoint {configuration.LLM_API_endpoint} saved successfully.");
             configuration.Save();
+
+            _ = ValidateLLMKey(LLMApiKeyInput, LLMApiEndpointInput);
         }
 
         ImGui.TextUnformatted(Resources.LLMAPIKey);
+        if (LLMApiKeyValid.HasValue)
+        {
+            ImGui.SameLine();
+            ImGui.TextColored(LLMApiKeyValid.Value ? new Vector4(0, 1, 0, 1) : new Vector4(1, 0, 0, 1),
+                             LLMApiKeyValid.Value ? "✓ valid" : "✗ invalid");
+        }
+        else
+        {
+            _ = ValidateLLMKey(LLMApiKeyInput, LLMApiEndpointInput);
+        }
+
         ImGui.InputText("##APIKey", ref LLMApiKeyInput, 200);
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply + "###LLM_API_Key"))
@@ -670,6 +685,8 @@ public class ConfigWindow : Window
             configuration.LLM_API_Key = LLMApiKeyInput;
             Plugin.OutputChatLine($"LLM API Key {configuration.LLM_API_Key} saved successfully.");
             configuration.Save();
+
+            _ = ValidateLLMKey(LLMApiKeyInput, LLMApiEndpointInput);
         }
 
         ImGui.TextUnformatted(Resources.LLMModel);
@@ -680,8 +697,44 @@ public class ConfigWindow : Window
             configuration.LLM_Model = LLMModelInput;
             Plugin.OutputChatLine($"LLM Model {configuration.LLM_Model} saved successfully.");
             configuration.Save();
+
+            _ = ValidateLLMKey(LLMApiKeyInput, LLMApiEndpointInput);
         }
 
         ImGui.TextUnformatted(Resources.OpenAICompatibleInfo);
+    }
+
+    private static async Task ValidateLLMKey(string apiKey, string endpoint)
+    {
+        LLMApiKeyValid = false;
+
+        if (string.IsNullOrWhiteSpace(apiKey) || string.IsNullOrWhiteSpace(endpoint))
+        {
+            return;
+        }
+
+        endpoint = endpoint.TrimEnd('/');
+        if (!endpoint.EndsWith("/models"))
+        {
+            endpoint += "/models";
+        }
+
+        try
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, endpoint)
+            {
+                Headers = { { "Authorization", $"Bearer {apiKey}" } }
+            };
+
+            var response = await TranslationHandler.HttpClient.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            LLMApiKeyValid = true;
+            Service.pluginLog.Information($"API Key validation successful.");
+        }
+        catch
+        {
+            Service.pluginLog.Warning($"API Key validation failed.");
+        }
     }
 }
