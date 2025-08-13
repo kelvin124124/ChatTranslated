@@ -59,7 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -272,7 +272,7 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>OpenAI API Key</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Preisabschätzung: 0,4$ /Monat</value>
+    <value>Price estimation: $2.0 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Gruppe</value>

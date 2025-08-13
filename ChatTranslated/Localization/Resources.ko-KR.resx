@@ -59,7 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -270,7 +270,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>OpenAI API 키</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>예상 가격: $0.4/월</value>
+    <value>Price estimation: $2.0 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>파티</value>
