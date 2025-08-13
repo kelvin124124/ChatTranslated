@@ -647,7 +647,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Price estimation: $0.6 /month.
+        ///   Looks up a localized string similar to Price estimation: $2.0 /month.
         /// </summary>
         internal static string OpenAIPriceEstimation {
             get {

@@ -17,15 +17,14 @@ namespace ChatTranslated.Windows
 {
     public partial class MainWindow : Window
     {
-        private static StringBuilder sb = new();
+        private static readonly StringBuilder sb = new();
         private static readonly Lock sbLock = new();
-
         private readonly string[] languages = ["Japanese", "English", "German", "French"];
+
         internal string outputText = "";
-        private string cleanOutputText = "";
         internal string inputText = "";
         private float lastOutputFieldWidth = 0;
-        private volatile bool isOutputFieldWrapped = false;
+        private int lastContentHash = 0;
 
         [GeneratedRegex(@"(\p{IsCJKUnifiedIdeographs}|[^\x00-\x7F]|\w+|\s+|[^\w\s])")]
         private static partial Regex WordRegex();
@@ -46,20 +45,30 @@ namespace ChatTranslated.Windows
         private void DrawOutputField(float scale)
         {
             ImGui.BeginChild("outputField", new Vector2(-1, -55 * scale), false);
+
             float outputFieldWidth = ImGui.GetContentRegionAvail().X;
-            if (!isOutputFieldWrapped || Math.Abs(outputFieldWidth - lastOutputFieldWidth) > 0.1f)
+
+            string currentContent;
+            int currentHash;
+
+            lock (sbLock)
+            {
+                currentContent = sb.ToString();
+                currentHash = currentContent.GetHashCode();
+            }
+
+            if (currentHash != lastContentHash || Math.Abs(outputFieldWidth - lastOutputFieldWidth) > 0.1f)
             {
                 lastOutputFieldWidth = outputFieldWidth;
-                string wrappedText = cleanOutputText;
-                AddSoftReturnsToText(ref wrappedText, outputFieldWidth);
-                outputText = wrappedText;
-                isOutputFieldWrapped = true;
+                lastContentHash = currentHash;
+                outputText = currentContent;
+                AddSoftReturnsToText(ref outputText, outputFieldWidth);
             }
-            ImGui.InputTextMultiline("##output", ref outputText, 0, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
-            ImGui.SetScrollHereY(1.0f);
+
+            int bufferSize = Math.Max(outputText.Length + 4096, 8192);
+            ImGui.InputTextMultiline("##ChatTranslated_MainWindow_output", ref outputText, bufferSize, new Vector2(-1, -1), ImGuiInputTextFlags.ReadOnly);
             ImGui.EndChild();
             ImGui.Separator();
-
 
             if (ImGui.IsKeyPressed(ImGuiKey.C) && (ImGui.GetIO().KeyCtrl || ImGui.GetIO().KeySuper))
             {
@@ -68,52 +77,39 @@ namespace ChatTranslated.Windows
                     string clipboardText = ImGui.GetClipboardText();
                     string cleanedText = RemoveSoftReturns(clipboardText);
                     if (clipboardText != cleanedText)
-                    {
                         ImGui.SetClipboardText(cleanedText);
-                    }
                 });
             }
         }
 
         private void DrawInputField(float scale)
         {
-            DrawLanguageSelector();
+            // Language selector
+            int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
+            string[] localizedLangs = languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l).ToArray();
+            if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
+            {
+                Service.configuration.SelectedMainWindowTargetLanguage = languages[langIndex];
+                TranslationHandler.ClearTranslationCache();
+                Service.configuration.Save();
+            }
 
+            // Input field
             ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (100 * scale));
             ImGui.InputText("##input", ref inputText, 500);
             ImGui.SameLine();
             if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
             {
-                ProcessInput(inputText);
-                inputText = "";
+                if (!string.IsNullOrWhiteSpace(inputText))
+                {
+                    var message = new Message(null!, MessageSource.MainWindow, inputText) { Context = "null" };
+                    Task.Run(() => ProcessInputAsync(message));
+                    inputText = "";
+                }
             }
             ImGui.SameLine();
             ImGui.TextDisabled("?");
             if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
-        }
-
-        private void DrawLanguageSelector()
-        {
-            int currentLanguageIndex = Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage);
-            if (currentLanguageIndex == -1) currentLanguageIndex = 0;
-
-            string[] localizedLanguages = [.. languages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang)];
-            if (ImGui.Combo("##LanguageCombo", ref currentLanguageIndex, localizedLanguages, languages.Length))
-            {
-                Service.configuration.SelectedMainWindowTargetLanguage = languages[currentLanguageIndex];
-                TranslationHandler.ClearTranslationCache();
-                Service.configuration.Save();
-            }
-        }
-
-        private static void ProcessInput(string input)
-        {
-            if (string.IsNullOrWhiteSpace(input))
-                return;
-
-            Message message = new Message(null!, MessageSource.MainWindow, input);
-            message.Context = "null";
-            Task.Run(() => ProcessInputAsync(message));
         }
 
         private static async void ProcessInputAsync(Message message)
@@ -121,53 +117,44 @@ namespace ChatTranslated.Windows
             var translatedMessage = await TranslationHandler.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
 
             if (translatedMessage.TranslatedContent == null)
+            {
                 Service.mainWindow.PrintToOutput("[CT] Failed to process message.");
+                return;
+            }
 
-            var reverseTranslationResult = await MachineTranslate.Translate(translatedMessage.TranslatedContent!, Service.configuration.SelectedPluginLanguage);
-
-            string output = $"\n Original:\n {translatedMessage.OriginalContent}" +
-                $" \nTranslated Content:\n  {translatedMessage.TranslatedContent}" +
-                $" \nReverse Translation:\n  {reverseTranslationResult.Item1}";
-
-            Service.mainWindow.PrintToOutput(output);
+            var reverseTranslationResult = await MachineTranslate.Translate(translatedMessage.TranslatedContent, Service.configuration.SelectedPluginLanguage);
+            Service.mainWindow.PrintToOutput($"\n Original:\n        {translatedMessage.OriginalContent}" +
+                $" \nTranslated Content:\n        {translatedMessage.TranslatedContent}" +
+                $" \nReverse Translation:\n        {reverseTranslationResult.Item1}");
         }
 
         public void PrintToOutput(string message)
         {
             lock (sbLock)
             {
-                sb ??= new StringBuilder();
-
                 sb.Append($"[{DateTime.Now:HH:mm}] {message}\n");
-                cleanOutputText = sb.ToString();
             }
-
-            isOutputFieldWrapped = false; // Force re-wrap on next Draw
+            lastContentHash = 0;
         }
 
         private static void AddSoftReturnsToText(ref string str, float multilineWidth)
         {
-            var lines = str.Split('\n');
-            var wrappedLines = new StringBuilder();
-            foreach (var line in lines)
+            var sb = new StringBuilder();
+            foreach (var line in str.Split('\n'))
             {
-                var wrappedLine = WrapLine(line, multilineWidth);
-                wrappedLines.AppendLine(wrappedLine);
+                if (sb.Length > 0) sb.AppendLine();
+                sb.Append(WrapLine(line, multilineWidth));
             }
-            str = wrappedLines.ToString().TrimEnd();
+            str = sb.ToString();
         }
 
         private static string WrapLine(string line, float multilineWidth)
         {
             var wrappedLine = new StringBuilder();
-            var words = WordRegex().Matches(line).Cast<Match>().Select(m => m.Value);
-
-            foreach (var word in words)
+            foreach (var word in WordRegex().Matches(line).Cast<Match>().Select(m => m.Value))
             {
                 if (ImGui.CalcTextSize(wrappedLine + word).X + 20f > multilineWidth)
-                {
                     wrappedLine.AppendLine();
-                }
                 wrappedLine.Append(word);
             }
             return wrappedLine.ToString().TrimEnd();

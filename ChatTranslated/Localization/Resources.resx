@@ -272,7 +272,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>OpenAI API Key</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Price estimation: $0.6 /month</value>
+    <value>Price estimation: $2.0 /month</value>
   </data>
   <data name="Party" xml:space="preserve">
     <value>Party</value>
