@@ -15,13 +15,21 @@ namespace ChatTranslated.Translate
 
         public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
         {
-            // Try Bing first, then Google as fallback
-            foreach (var translator in new dynamic[]
+            // Get the configured priority order of machine translation engines
+            var priorityOrder = Service.configuration.MachineTranslationPriority ?? 
+                [Configuration.MachineTranslationEngine.Bing, Configuration.MachineTranslationEngine.Google];
+
+            foreach (var engineType in priorityOrder)
             {
-                BingTranslator,
-                GTranslator
-            })
-            {
+                dynamic translator = engineType switch
+                {
+                    Configuration.MachineTranslationEngine.Bing => BingTranslator,
+                    Configuration.MachineTranslationEngine.Google => GTranslator,
+                    _ => null
+                };
+
+                if (translator == null) continue;
+
                 try
                 {
                     var result = await translator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);

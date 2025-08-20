@@ -71,7 +71,7 @@ namespace ChatTranslated
             Service.configuration.SelectedChatTypes ??= Windows.ConfigTabs.ChatChannelsTab.genericChatTypes;
 
             // settings migration
-            if (Service.configuration.Version != 5)
+            if (Service.configuration.Version != 6)
             {
                 // migrate channel settings
                 var _ChatTypes = Service.configuration.SelectedChatTypes;
@@ -81,7 +81,12 @@ namespace ChatTranslated
                     if (!Service.configuration.SelectedChatTypes.Contains(type))
                         Service.configuration.SelectedChatTypes.Add(type);
                 });
-                Service.configuration.Version = 5;
+                
+                // Initialize machine translation priority if not set
+                Service.configuration.MachineTranslationPriority ??= 
+                    [Configuration.MachineTranslationEngine.Bing, Configuration.MachineTranslationEngine.Google];
+                
+                Service.configuration.Version = 6;
                 Service.configuration.Save();
             }
 

@@ -89,6 +89,10 @@ public class TranslationModeTab
                 }
                 break;
         }
+        
+        // Machine Translation Priority Settings (applies when falling back to machine translation)
+        ImGui.Separator();
+        DrawMachineTranslationPrioritySettings(configuration);
     }
 
     private static void DrawDeepLSettings(Configuration configuration)
@@ -273,6 +277,49 @@ public class TranslationModeTab
         }
 
         ImGui.TextUnformatted(Resources.OpenAICompatibleInfo);
+    }
+
+    private static void DrawMachineTranslationPrioritySettings(Configuration configuration)
+    {
+        ImGui.TextUnformatted("Machine Translation Priority:");
+        ImGui.TextDisabled("Configure the order of machine translation engines when primary translation fails");
+        
+        // Ensure priority list is initialized
+        configuration.MachineTranslationPriority ??= [MachineTranslationEngine.Bing, MachineTranslationEngine.Google];
+        
+        for (int i = 0; i < configuration.MachineTranslationPriority.Count; i++)
+        {
+            var engine = configuration.MachineTranslationPriority[i];
+            string engineName = engine.ToString();
+            
+            ImGui.TextUnformatted($"{i + 1}. {engineName}");
+            ImGui.SameLine();
+            
+            // Move up button
+            if (i > 0 && ImGui.Button($"↑##MoveUp{i}"))
+            {
+                (configuration.MachineTranslationPriority[i], configuration.MachineTranslationPriority[i - 1]) = 
+                    (configuration.MachineTranslationPriority[i - 1], configuration.MachineTranslationPriority[i]);
+                configuration.Save();
+            }
+            
+            if (i > 0) ImGui.SameLine();
+            
+            // Move down button
+            if (i < configuration.MachineTranslationPriority.Count - 1 && ImGui.Button($"↓##MoveDown{i}"))
+            {
+                (configuration.MachineTranslationPriority[i], configuration.MachineTranslationPriority[i + 1]) = 
+                    (configuration.MachineTranslationPriority[i + 1], configuration.MachineTranslationPriority[i]);
+                configuration.Save();
+            }
+        }
+        
+        // Reset to default button
+        if (ImGui.Button("Reset to Default"))
+        {
+            configuration.MachineTranslationPriority = [MachineTranslationEngine.Bing, MachineTranslationEngine.Google];
+            configuration.Save();
+        }
     }
 
     private static async Task ValidateOpenAIKey(string apiKey, string endpoint = "https://api.openai.com/v1/models")

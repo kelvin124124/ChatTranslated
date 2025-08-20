@@ -9,7 +9,7 @@ namespace ChatTranslated
     [Serializable]
     public class Configuration : IPluginConfiguration
     {
-        public int Version { get; set; } = 5;
+        public int Version { get; set; } = 6;
         public enum TranslationEngine
         {
             DeepL,
@@ -22,6 +22,11 @@ namespace ChatTranslated
             OpenAI,
             LLMProxy,
             LLM
+        }
+        public enum MachineTranslationEngine
+        {
+            Bing,
+            Google
         }
         public TranslationEngine SelectedTranslationEngine { get; set; } = TranslationEngine.DeepL;
 
@@ -60,6 +65,9 @@ namespace ChatTranslated
         public string LLM_API_endpoint { get; set; } = "https://openrouter.ai/api/v1/chat/completions";
         public string LLM_Model { get; set; } = "google/gemini-2.0-flash-001";
         public bool UseContext { get; set; } = true;
+
+        public List<MachineTranslationEngine> MachineTranslationPriority { get; set; } = 
+            [MachineTranslationEngine.Bing, MachineTranslationEngine.Google];
 
         public void Save()
         {
