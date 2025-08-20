@@ -9,7 +9,7 @@ namespace ChatTranslated
     [Serializable]
     public class Configuration : IPluginConfiguration
     {
-        public int Version { get; set; } = 6;
+        public int Version { get; set; } = 7;
         public enum TranslationEngine
         {
             DeepL,
@@ -25,6 +25,7 @@ namespace ChatTranslated
         }
         public enum MachineTranslationEngine
         {
+            DeepL,
             Bing,
             Google
         }
@@ -67,7 +68,7 @@ namespace ChatTranslated
         public bool UseContext { get; set; } = true;
 
         public List<MachineTranslationEngine> MachineTranslationPriority { get; set; } = 
-            [MachineTranslationEngine.Bing, MachineTranslationEngine.Google];
+            [MachineTranslationEngine.DeepL, MachineTranslationEngine.Google, MachineTranslationEngine.Bing];
 
         public void Save()
         {

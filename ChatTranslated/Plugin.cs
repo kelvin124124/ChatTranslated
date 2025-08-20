@@ -71,7 +71,7 @@ namespace ChatTranslated
             Service.configuration.SelectedChatTypes ??= Windows.ConfigTabs.ChatChannelsTab.genericChatTypes;
 
             // settings migration
-            if (Service.configuration.Version != 6)
+            if (Service.configuration.Version < 7)
             {
                 // migrate channel settings
                 var _ChatTypes = Service.configuration.SelectedChatTypes;
@@ -82,11 +82,19 @@ namespace ChatTranslated
                         Service.configuration.SelectedChatTypes.Add(type);
                 });
                 
-                // Initialize machine translation priority if not set
-                Service.configuration.MachineTranslationPriority ??= 
-                    [Configuration.MachineTranslationEngine.Bing, Configuration.MachineTranslationEngine.Google];
+                // Initialize or update machine translation priority
+                if (Service.configuration.MachineTranslationPriority == null || 
+                    !Service.configuration.MachineTranslationPriority.Contains(Configuration.MachineTranslationEngine.DeepL))
+                {
+                    // If DeepL is not in the list, add it to the front (highest priority)
+                    var currentPriority = Service.configuration.MachineTranslationPriority ?? 
+                        [Configuration.MachineTranslationEngine.Bing, Configuration.MachineTranslationEngine.Google];
+                    
+                    Service.configuration.MachineTranslationPriority = 
+                        [Configuration.MachineTranslationEngine.DeepL, .. currentPriority];
+                }
                 
-                Service.configuration.Version = 6;
+                Service.configuration.Version = 7;
                 Service.configuration.Save();
             }
 

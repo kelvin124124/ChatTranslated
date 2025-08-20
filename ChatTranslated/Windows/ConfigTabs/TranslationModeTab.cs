@@ -285,7 +285,7 @@ public class TranslationModeTab
         ImGui.TextDisabled("Configure the order of machine translation engines when primary translation fails");
         
         // Ensure priority list is initialized
-        configuration.MachineTranslationPriority ??= [MachineTranslationEngine.Bing, MachineTranslationEngine.Google];
+        configuration.MachineTranslationPriority ??= [MachineTranslationEngine.DeepL, MachineTranslationEngine.Google, MachineTranslationEngine.Bing];
         
         for (int i = 0; i < configuration.MachineTranslationPriority.Count; i++)
         {
@@ -317,7 +317,7 @@ public class TranslationModeTab
         // Reset to default button
         if (ImGui.Button("Reset to Default"))
         {
-            configuration.MachineTranslationPriority = [MachineTranslationEngine.Bing, MachineTranslationEngine.Google];
+            configuration.MachineTranslationPriority = [MachineTranslationEngine.DeepL, MachineTranslationEngine.Google, MachineTranslationEngine.Bing];
             configuration.Save();
         }
     }

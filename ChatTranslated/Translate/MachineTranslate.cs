@@ -17,32 +17,47 @@ namespace ChatTranslated.Translate
         {
             // Get the configured priority order of machine translation engines
             var priorityOrder = Service.configuration.MachineTranslationPriority ?? 
-                [Configuration.MachineTranslationEngine.Bing, Configuration.MachineTranslationEngine.Google];
+                [Configuration.MachineTranslationEngine.DeepL, Configuration.MachineTranslationEngine.Google, Configuration.MachineTranslationEngine.Bing];
 
             foreach (var engineType in priorityOrder)
             {
-                dynamic translator = engineType switch
-                {
-                    Configuration.MachineTranslationEngine.Bing => BingTranslator,
-                    Configuration.MachineTranslationEngine.Google => GTranslator,
-                    _ => null
-                };
-
-                if (translator == null) continue;
-
                 try
                 {
-                    var result = await translator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
-                    string resultText = result.Translation;
+                    string resultText;
+                    
+                    switch (engineType)
+                    {
+                        case Configuration.MachineTranslationEngine.DeepL:
+                            // Use DeepL translation - try DeeplsTranslate first, then fallback to DeepL API
+                            var (deeplResult, deeplMode) = await DeeplsTranslate.Translate(text, targetLanguage);
+                            if (deeplMode != null)
+                            {
+                                return (deeplResult, TranslationMode.MachineTranslate);
+                            }
+                            continue; // If DeepL fails, try next engine
+                            
+                        case Configuration.MachineTranslationEngine.Bing:
+                            var bingResult = await BingTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
+                            resultText = bingResult.Translation;
+                            break;
+                            
+                        case Configuration.MachineTranslationEngine.Google:
+                            var googleResult = await GTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
+                            resultText = googleResult.Translation;
+                            break;
+                            
+                        default:
+                            continue;
+                    }
 
                     if (string.IsNullOrWhiteSpace(resultText) || resultText == text)
-                        throw new Exception($"{translator.Name} Translate returned an invalid translation.");
+                        throw new Exception($"{engineType} Translate returned an invalid translation.");
 
                     return (resultText, TranslationMode.MachineTranslate);
                 }
                 catch (Exception ex)
                 {
-                    Service.pluginLog.Warning($"{translator.Name} failed.\n{ex.Message}");
+                    Service.pluginLog.Warning($"{engineType} failed.\n{ex.Message}");
                 }
             }
 
