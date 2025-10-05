@@ -235,15 +235,14 @@ namespace ChatTranslated.Translate
             var headers = new Dictionary<string, string>
             {
                 { "Accept-Language", "en-US,en;q=0.9" },
-                { "User-Agent", "DeepL/1627620 CFNetwork/3826.500.62.2.1 Darwin/24.4.0" },
-                { "Content-Type", "application/json" },
-                { "X-App-Os-Name", "iOS" },
-                { "X-App-Os-Version", "18.4.0" },
-                { "Accept-Encoding", "gzip, deflate" }, // br is removed for simplicity
-                { "X-App-Device", "iPhone16,2" },
-                { "X-Product", "translator" },
-                { "X-App-Build", "1627620" },
-                { "X-App-Version", "25.1" }
+                { "Accept-Encoding", "gzip, deflate" }, // removed br and zstd for simplicity
+                { "Origin", "https://www.deepl.com" },
+                { "Referer", "https://www.deepl.com/" },
+                { "Sec-Fetch-Dest", "empty" },
+                { "Sec-Fetch-Mode", "cors" },
+                { "Sec-Fetch-Site", "same-site" },
+                { "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0" },
+                { "Content-Type", "application/json" }
             };
 
             foreach (var header in headers)
