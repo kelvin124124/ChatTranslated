@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"></xsd:import>
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"></xsd:element>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"></xsd:attribute>
-              <xsd:attribute name="type" type="xsd:string"></xsd:attribute>
-              <xsd:attribute name="mimetype" type="xsd:string"></xsd:attribute>
-              <xsd:attribute ref="xml:space"></xsd:attribute>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"></xsd:attribute>
-              <xsd:attribute name="name" type="xsd:string"></xsd:attribute>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"></xsd:element>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"></xsd:attribute>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"></xsd:attribute>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"></xsd:attribute>
-              <xsd:attribute ref="xml:space"></xsd:attribute>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"></xsd:element>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"></xsd:attribute>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -118,13 +118,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Alliance" xml:space="preserve">
-    <value>연합</value>
+    <value>연합 파티</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
     <value>모든 언어</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>경고: API가 플러그인 구성에 일반 텍스트로 저장돼요. 멀웨어나 제삼자 플러그인이 키에 접근할 수도 있어요.</value>
+    <value>경고: API가 플러그인 구성에 일반 텍스트로 저장돼요. 악성 소프트웨어나 다른 플러그인이 키에 접근할 수도 있어요.</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>적용</value>
@@ -145,31 +145,31 @@
     <value>중국어(번체)</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>CrossLinkShell1</value>
+    <value>서버 초월 링크셸1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>CrossLinkShell2</value>
+    <value>서버 초월 링크셸2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>CrossLinkShell3</value>
+    <value>서버 초월 링크셸3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>CrossLinkShell4</value>
+    <value>서버 초월 링크셸4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>CrossLinkShell5</value>
+    <value>서버 초월 링크셸5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>CrossLinkShell6</value>
+    <value>서버 초월 링크셸6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>CrossLinkShell7</value>
+    <value>서버 초월 링크셸7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>CrossLinkShell8</value>
+    <value>서버 초월 링크셸8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>크로스 파티</value>
+    <value>서버 초월 파티</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
     <value>사용자 정의 언어</value>
@@ -204,13 +204,13 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>임무 중 사용</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
-    <value>플러그인 사용</value>
+    <value>플러그인 활성화</value>
   </data>
   <data name="English" xml:space="preserve">
     <value>영어</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>자유 회사</value>
+    <value>자유 부대</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>프랑스어</value>
@@ -222,7 +222,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>독일어</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>잘 했어요!</value>
+    <value>수고하셨습니다!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
     <value>일본어</value>
@@ -237,28 +237,28 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>자가 호스팅 Gemini 프록시</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>LS1</value>
+    <value>링크셸1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>LS2</value>
+    <value>링크셸2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>LS3</value>
+    <value>링크셸3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>LS4</value>
+    <value>링크셸4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>LS5</value>
+    <value>링크셸5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>LS6</value>
+    <value>링크셸6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>LS7</value>
+    <value>링크셸7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>LS8</value>
+    <value>링크셸8</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>아니요</value>
@@ -294,7 +294,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>외치기</value>
   </data>
   <data name="SourceLang" xml:space="preserve">
-    <value>번역할 사항</value>
+    <value>번역 대상 언어</value>
   </data>
   <data name="SourceLangSelection" xml:space="preserve">
     <value>원본 언어 선택</value>
@@ -303,16 +303,16 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>스페인어</value>
   </data>
   <data name="TargetLang" xml:space="preserve">
-    <value>번역할 언어</value>
+    <value>번역 결과 언어</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>받는 메시지를 알려주세요</value>
+    <value>귓속말</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>번역</value>
   </data>
   <data name="TranslateAllExplaination" xml:space="preserve">
-    <value>수신한 모든 메시지를 번역해요.
+    <value>수신받은 모든 메시지를 번역해요.
 
 언어에서 원하는 언어를 찾지 못하셨나요?
 플러그인 설치기에서 의견을 보내주세요!</value>
@@ -328,7 +328,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>사용자 정의 언어 사용</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
-    <value>해 보아요!</value>
+    <value>잘 부탁합니다!</value>
   </data>
   <data name="Yell" xml:space="preserve">
     <value>외치기</value>
