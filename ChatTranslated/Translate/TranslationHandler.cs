@@ -52,7 +52,7 @@ namespace ChatTranslated.Translate
                 Configuration.TranslationEngine.LLM => Service.configuration.LLM_Provider switch
                 {
                     0 => await LLMProxyTranslate.Translate(message, targetLanguage),
-                    1 => await OpenAITranslate.Translate(message, targetLanguage, model: Service.configuration.OpenAI_Model),
+                    1 => await OpenAITranslate.Translate(message, targetLanguage, model: Service.configuration.OpenAI_Model, customPrompt: Service.configuration.OpenAI_CustomPrompt),
                     2 => await OpenAICompatible.Translate(message, targetLanguage),
                     _ => (message.OriginalContent.TextValue, null)
                 },

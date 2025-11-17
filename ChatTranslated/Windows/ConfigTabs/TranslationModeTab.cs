@@ -18,6 +18,8 @@ public class TranslationModeTab
     private static string LLMApiEndpointInput = Service.configuration.LLM_API_endpoint;
     private static string LLMApiKeyInput = Service.configuration.LLM_API_Key;
     private static string LLMModelInput = Service.configuration.LLM_Model;
+    private static string OpenAICustomPromptInput = Service.configuration.OpenAI_CustomPrompt;
+    private static string LLMCustomPromptInput = Service.configuration.LLM_CustomPrompt;
 
 #if DEBUG
     private static string ProxyBaseUrl = Service.configuration.Proxy_Url;
@@ -218,6 +220,19 @@ public class TranslationModeTab
         ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
+
+        ImGui.Separator();
+        ImGui.Spacing();
+        DrawCustomPromptEditor(
+            "OpenAI",
+            ref OpenAICustomPromptInput,
+            () => Service.configuration.OpenAI_CustomPrompt,
+            (value) => {
+                configuration.OpenAI_CustomPrompt = value;
+                OpenAICustomPromptInput = value;
+                configuration.Save();
+            }
+        );
     }
 
     private static void DrawLLMSettings(Configuration configuration)
@@ -274,6 +289,85 @@ public class TranslationModeTab
         }
 
         ImGui.TextUnformatted(Resources.OpenAICompatibleInfo);
+
+        ImGui.Separator();
+        ImGui.Spacing();
+        DrawCustomPromptEditor(
+            "LLM",
+            ref LLMCustomPromptInput,
+            () => Service.configuration.LLM_CustomPrompt,
+            (value) => {
+                configuration.LLM_CustomPrompt = value;
+                LLMCustomPromptInput = value;
+                configuration.Save();
+            }
+        );
+    }
+
+    private static void DrawCustomPromptEditor(
+        string label,
+        ref string promptInput,
+        Func<string> getCurrentPrompt,
+        Action<string> savePrompt)
+    {
+        ImGui.TextUnformatted($"Custom Prompt ({label})");
+        ImGui.SameLine();
+        ImGui.TextDisabled("?");
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.SetTooltip(
+                "Customize the system prompt for translation.\n" +
+                "Use {targetLanguage} as a placeholder for the target language.\n" +
+                "Leave empty to use the default prompt.\n" +
+                "Context (if enabled) will be appended automatically."
+            );
+        }
+
+        bool isUsingCustomPrompt = !string.IsNullOrWhiteSpace(getCurrentPrompt());
+        if (isUsingCustomPrompt)
+        {
+            ImGui.SameLine();
+            ImGui.TextColored(new Vector4(0, 1, 0, 1), "(Custom)");
+        }
+        else
+        {
+            ImGui.SameLine();
+            ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1), "(Default)");
+        }
+
+        // Multi-line text input
+        ImGui.InputTextMultiline($"##{label}CustomPrompt", ref promptInput, 10000, new Vector2(-1, 200));
+
+        // Buttons row
+        if (ImGui.Button($"Apply##{label}CustomPromptApply"))
+        {
+            savePrompt(promptInput);
+            TranslationHandler.ClearTranslationCache();
+            Plugin.OutputChatLine($"{label} custom prompt saved successfully.");
+        }
+
+        ImGui.SameLine();
+        if (ImGui.Button($"Reset to Default##{label}CustomPromptReset"))
+        {
+            promptInput = "";
+            savePrompt("");
+            TranslationHandler.ClearTranslationCache();
+            Plugin.OutputChatLine($"{label} prompt reset to default.");
+        }
+
+        ImGui.SameLine();
+        if (ImGui.Button($"View Default##{label}ViewDefault"))
+        {
+            string defaultPrompt = OpenAITranslate.GetDefaultPrompt(Service.configuration.SelectedTargetLanguage);
+            ImGui.SetClipboardText(defaultPrompt);
+            Plugin.OutputChatLine($"Default prompt copied to clipboard.");
+        }
+
+        // Show a preview of what's being used
+        if (!isUsingCustomPrompt)
+        {
+            ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1), "Using default system prompt for FFXIV translation.");
+        }
     }
 
     private static async Task ValidateOpenAIKey(string apiKey, string endpoint = "https://api.openai.com/v1/models")

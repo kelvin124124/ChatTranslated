@@ -61,6 +61,10 @@ namespace ChatTranslated
         public string LLM_Model { get; set; } = "google/gemini-2.0-flash-001";
         public bool UseContext { get; set; } = true;
 
+        // Custom prompts for OpenAI and OpenAI-compatible APIs
+        public string OpenAI_CustomPrompt { get; set; } = "";
+        public string LLM_CustomPrompt { get; set; } = "";
+
         public void Save()
         {
             Service.pluginInterface?.SavePluginConfig(this);
