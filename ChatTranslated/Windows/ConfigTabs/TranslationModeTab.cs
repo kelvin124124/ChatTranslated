@@ -3,6 +3,7 @@ using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
 using System;
+using System.Linq;
 using System.Net.Http;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -306,7 +307,10 @@ public class TranslationModeTab
 
         if (string.IsNullOrWhiteSpace(apiKey) || string.IsNullOrWhiteSpace(endpoint)) return;
 
-        endpoint = endpoint.TrimEnd('/').Replace("/chat/completions", "/models");
+        if (endpoint.Contains("openrouter"))
+            endpoint = endpoint.TrimEnd('/').Replace("/chat/completions", "/auth/key");
+        else 
+            endpoint = endpoint.TrimEnd('/').Replace("/chat/completions", "/models");
 
         try
         {
