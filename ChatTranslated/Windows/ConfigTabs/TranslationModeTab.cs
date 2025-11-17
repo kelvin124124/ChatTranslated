@@ -18,8 +18,7 @@ public class TranslationModeTab
     private static string LLMApiEndpointInput = Service.configuration.LLM_API_endpoint;
     private static string LLMApiKeyInput = Service.configuration.LLM_API_Key;
     private static string LLMModelInput = Service.configuration.LLM_Model;
-    private static string OpenAICustomPromptInput = Service.configuration.OpenAI_CustomPrompt;
-    private static string LLMCustomPromptInput = Service.configuration.LLM_CustomPrompt;
+    private static string CustomPromptInput = GetCustomPromptInput();
 
 #if DEBUG
     private static string ProxyBaseUrl = Service.configuration.Proxy_Url;
@@ -223,16 +222,7 @@ public class TranslationModeTab
 
         ImGui.Separator();
         ImGui.Spacing();
-        DrawCustomPromptEditor(
-            "OpenAI",
-            ref OpenAICustomPromptInput,
-            () => Service.configuration.OpenAI_CustomPrompt,
-            (value) => {
-                configuration.OpenAI_CustomPrompt = value;
-                OpenAICustomPromptInput = value;
-                configuration.Save();
-            }
-        );
+        DrawCustomPromptEditor(configuration);
     }
 
     private static void DrawLLMSettings(Configuration configuration)
@@ -292,25 +282,22 @@ public class TranslationModeTab
 
         ImGui.Separator();
         ImGui.Spacing();
-        DrawCustomPromptEditor(
-            "LLM",
-            ref LLMCustomPromptInput,
-            () => Service.configuration.LLM_CustomPrompt,
-            (value) => {
-                configuration.LLM_CustomPrompt = value;
-                LLMCustomPromptInput = value;
-                configuration.Save();
-            }
-        );
+        DrawCustomPromptEditor(configuration);
     }
 
-    private static void DrawCustomPromptEditor(
-        string label,
-        ref string promptInput,
-        Func<string> getCurrentPrompt,
-        Action<string> savePrompt)
+    private static string GetCustomPromptInput()
     {
-        ImGui.TextUnformatted($"Custom Prompt ({label})");
+        // If no custom prompt is set, display the default prompt
+        if (string.IsNullOrWhiteSpace(Service.configuration.LLM_CustomPrompt))
+        {
+            return OpenAITranslate.GetDefaultPrompt(Service.configuration.SelectedTargetLanguage);
+        }
+        return Service.configuration.LLM_CustomPrompt;
+    }
+
+    private static void DrawCustomPromptEditor(Configuration configuration)
+    {
+        ImGui.TextUnformatted("Custom System Prompt");
         ImGui.SameLine();
         ImGui.TextDisabled("?");
         if (ImGui.IsItemHovered())
@@ -318,12 +305,13 @@ public class TranslationModeTab
             ImGui.SetTooltip(
                 "Customize the system prompt for translation.\n" +
                 "Use {targetLanguage} as a placeholder for the target language.\n" +
-                "Leave empty to use the default prompt.\n" +
-                "Context (if enabled) will be appended automatically."
+                "The text below shows the current prompt (default or custom).\n" +
+                "Context (if enabled) will be appended automatically.\n\n" +
+                "This prompt is shared between OpenAI and OpenAI-compatible APIs."
             );
         }
 
-        bool isUsingCustomPrompt = !string.IsNullOrWhiteSpace(getCurrentPrompt());
+        bool isUsingCustomPrompt = !string.IsNullOrWhiteSpace(configuration.LLM_CustomPrompt);
         if (isUsingCustomPrompt)
         {
             ImGui.SameLine();
@@ -335,38 +323,33 @@ public class TranslationModeTab
             ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1), "(Default)");
         }
 
-        // Multi-line text input
-        ImGui.InputTextMultiline($"##{label}CustomPrompt", ref promptInput, 10000, new Vector2(-1, 200));
+        // Multi-line text input - shows default prompt if no custom prompt is set
+        ImGui.InputTextMultiline("##CustomPrompt", ref CustomPromptInput, 10000, new Vector2(-1, 200));
 
         // Buttons row
-        if (ImGui.Button($"Apply##{label}CustomPromptApply"))
+        if (ImGui.Button("Apply##CustomPromptApply"))
         {
-            savePrompt(promptInput);
+            configuration.LLM_CustomPrompt = CustomPromptInput;
+            configuration.Save();
             TranslationHandler.ClearTranslationCache();
-            Plugin.OutputChatLine($"{label} custom prompt saved successfully.");
+            Plugin.OutputChatLine("Custom prompt saved successfully.");
         }
 
         ImGui.SameLine();
-        if (ImGui.Button($"Reset to Default##{label}CustomPromptReset"))
+        if (ImGui.Button("Reset to Default##CustomPromptReset"))
         {
-            promptInput = "";
-            savePrompt("");
+            configuration.LLM_CustomPrompt = "";
+            CustomPromptInput = OpenAITranslate.GetDefaultPrompt(configuration.SelectedTargetLanguage);
+            configuration.Save();
             TranslationHandler.ClearTranslationCache();
-            Plugin.OutputChatLine($"{label} prompt reset to default.");
+            Plugin.OutputChatLine("Prompt reset to default.");
         }
 
         ImGui.SameLine();
-        if (ImGui.Button($"View Default##{label}ViewDefault"))
+        if (ImGui.Button("Copy to Clipboard##CustomPromptCopy"))
         {
-            string defaultPrompt = OpenAITranslate.GetDefaultPrompt(Service.configuration.SelectedTargetLanguage);
-            ImGui.SetClipboardText(defaultPrompt);
-            Plugin.OutputChatLine($"Default prompt copied to clipboard.");
-        }
-
-        // Show a preview of what's being used
-        if (!isUsingCustomPrompt)
-        {
-            ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1), "Using default system prompt for FFXIV translation.");
+            ImGui.SetClipboardText(CustomPromptInput);
+            Plugin.OutputChatLine("Current prompt copied to clipboard.");
         }
     }
 
