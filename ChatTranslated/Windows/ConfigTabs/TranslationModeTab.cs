@@ -3,7 +3,6 @@ using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -18,6 +17,7 @@ public class TranslationModeTab
     private static string LLMApiEndpointInput = Service.configuration.LLM_API_endpoint;
     private static string LLMApiKeyInput = Service.configuration.LLM_API_Key;
     private static string LLMModelInput = Service.configuration.LLM_Model;
+    private static string CustomPromptInput = GetCustomPromptInput();
 
 #if DEBUG
     private static string ProxyBaseUrl = Service.configuration.Proxy_Url;
@@ -218,6 +218,26 @@ public class TranslationModeTab
         ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
         ImGui.NewLine();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
+
+        ImGui.Separator();
+        ImGui.Spacing();
+        DrawCustomPromptSettings(configuration);
+    }
+
+    private static void DrawCustomPromptSettings(Configuration configuration)
+    {
+        bool _UseCustomPrompt = configuration.UseCustomPrompt;
+
+        if (ImGui.Checkbox(Resources.UseCustomPrompt, ref _UseCustomPrompt))
+        {
+            configuration.UseCustomPrompt = _UseCustomPrompt;
+            configuration.Save();
+        }
+
+        if (configuration.UseCustomPrompt)
+        {
+            DrawCustomPromptEditor(configuration);
+        }
     }
 
     private static void DrawLLMSettings(Configuration configuration)
@@ -274,6 +294,54 @@ public class TranslationModeTab
         }
 
         ImGui.TextUnformatted(Resources.OpenAICompatibleInfo);
+
+        ImGui.Separator();
+        ImGui.Spacing();
+        DrawCustomPromptSettings(configuration);
+    }
+
+    private static string GetCustomPromptInput()
+    {
+        if (string.IsNullOrWhiteSpace(Service.configuration.LLM_CustomPrompt))
+        {
+            return OpenAITranslate.BuildPrompt("{targetLanguage}", null);
+        }
+        return Service.configuration.LLM_CustomPrompt;
+    }
+
+    private static void DrawCustomPromptEditor(Configuration configuration)
+    {
+        ImGui.TextUnformatted(Resources.CustomSystemPrompt);
+
+        ImGui.SameLine();
+        ImGui.TextDisabled("?");
+        if (ImGui.IsItemHovered())
+        {
+            ImGui.SetTooltip(Resources.CustomPromptTooltip);
+        }
+
+        ImGui.InputTextMultiline("##CustomPrompt", ref CustomPromptInput, 10000, new Vector2(-1, 200));
+
+        if (ImGui.Button("Apply##CustomPromptApply"))
+        {
+            configuration.LLM_CustomPrompt = CustomPromptInput;
+            configuration.Save();
+
+            TranslationHandler.ClearTranslationCache();
+            Plugin.OutputChatLine("Custom prompt saved successfully.");
+        }
+
+        ImGui.SameLine();
+        if (ImGui.Button("Reset to Default##CustomPromptReset"))
+        {
+            configuration.LLM_CustomPrompt = OpenAITranslate.BuildPrompt("{targetLanguage}", null);
+            configuration.Save();
+
+            CustomPromptInput = configuration.LLM_CustomPrompt;
+
+            TranslationHandler.ClearTranslationCache();
+            Plugin.OutputChatLine("Prompt reset to default.");
+        }
     }
 
     private static async Task ValidateOpenAIKey(string apiKey, string endpoint = "https://api.openai.com/v1/models")
@@ -309,7 +377,7 @@ public class TranslationModeTab
 
         if (endpoint.Contains("openrouter"))
             endpoint = endpoint.TrimEnd('/').Replace("/chat/completions", "/auth/key");
-        else 
+        else
             endpoint = endpoint.TrimEnd('/').Replace("/chat/completions", "/models");
 
         try

@@ -16,9 +16,9 @@ namespace ChatTranslated.Translate
     internal static class OpenAITranslate
     {
         private const string DefaultContentType = "application/json";
-
+        
         public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
-            , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-4o-mini", string? apiKey = null)
+            , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-5-mini", string? apiKey = null)
         {
             if (apiKey == null)
             {
@@ -33,7 +33,10 @@ namespace ChatTranslated.Translate
                 }
             }
 
-            var prompt = BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context);
+            var prompt = Service.configuration.UseCustomPrompt 
+                ? BuildCustomPrompt(Service.configuration.SelectedTargetLanguage, message.Context) 
+                : BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context);
+
             int promptLength = prompt.Length;
             var userMsg = $"Translate to: {Service.configuration.SelectedTargetLanguage}\n#### Original Text\n{message.OriginalContent.TextValue}";
             var requestData = new
@@ -122,6 +125,26 @@ namespace ChatTranslated.Translate
             }
 
             return sb.ToString();
+        }
+
+        public static string BuildCustomPrompt(string targetLanguage, string? context)
+        {
+            string prompt = Service.configuration.LLM_CustomPrompt.Replace("{targetLanguage}", targetLanguage);
+
+            if (Service.configuration.UseContext && context != null)
+            {
+                StringBuilder sb = new StringBuilder(prompt);
+
+                sb.AppendLine("\n\nCONTEXT:");
+                sb.AppendLine("Use the following context information if relevant (provided in XML tags):");
+                sb.AppendLine("<context>");
+                sb.AppendLine(context);
+                sb.AppendLine("</context>");
+
+                return sb.ToString();
+            }
+
+            return prompt;
         }
     }
 

@@ -52,7 +52,7 @@ namespace ChatTranslated
 
         public short LLM_Provider { get; set; } = 0;
         public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
-        public string OpenAI_Model { get; set; } = "gpt-4o-mini";
+        public string OpenAI_Model { get; set; } = "gpt-5-mini";
         public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
         public string Proxy_Url { get; set; } = "https://cfv5.kelpcc.com";
         public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
@@ -60,6 +60,8 @@ namespace ChatTranslated
         public string LLM_API_endpoint { get; set; } = "https://openrouter.ai/api/v1/chat/completions";
         public string LLM_Model { get; set; } = "google/gemini-2.0-flash-001";
         public bool UseContext { get; set; } = true;
+        public bool UseCustomPrompt { get; set; } = false;
+        public string LLM_CustomPrompt { get; set; } = "";
 
         public void Save()
         {

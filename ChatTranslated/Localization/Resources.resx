@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Alliance" xml:space="preserve">
+  <data name="gp" xml:space="preserve">
     <value>Alliance</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
@@ -357,7 +357,7 @@ It does not send translated text in chat or make it visible to other players.</v
     <value>Show colored text when outputting translated message</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>GPT-4o-mini
+    <value>GPT-5-mini
 May be restricted if you live in unsupported region.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
@@ -391,5 +391,20 @@ LLM is better only if message is long or contain multiple languages.</value>
 https://api.openai.com/v1/chat/completions
 https://openrouter.ai/api/v1/chat/completions
 https://api.deepseek.com/chat/completions</value>
+  </data>
+  <data name="UseCustomPrompt" xml:space="preserve">
+    <value>Use custom prompt</value>
+  </data>
+  <data name="CustomSystemPrompt" xml:space="preserve">
+    <value>Custom system prompt</value>
+  </data>
+  <data name="CustomPromptTooltip" xml:space="preserve">
+    <value>Customize the system prompt for translation.
+
+The text below shows the current prompt.
+Use {targetLanguage} as a placeholder for the target language.
+Context (if enabled) will be appended automatically.
+
+This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
   </data>
 </root>

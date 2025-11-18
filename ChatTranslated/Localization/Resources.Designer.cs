@@ -61,15 +61,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alliance.
-        /// </summary>
-        internal static string Alliance {
-            get {
-                return ResourceManager.GetString("Alliance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to AllLanguages.
         /// </summary>
         internal static string AllLanguages {
@@ -269,6 +260,30 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customize the system prompt for translation.
+        ///
+        ///The text below shows the current prompt.
+        ///Use {targetLanguage} as a placeholder for the target language.
+        ///Context (if enabled) will be appended automatically.
+        ///
+        ///This prompt is shared between OpenAI and OpenAI-compatible APIs..
+        /// </summary>
+        internal static string CustomPromptTooltip {
+            get {
+                return ResourceManager.GetString("CustomPromptTooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom system prompt.
+        /// </summary>
+        internal static string CustomSystemPrompt {
+            get {
+                return ResourceManager.GetString("CustomSystemPrompt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You will be forced to use Google translate if you use custom languages..
         /// </summary>
         internal static string CustomTargetLanguageExplanation {
@@ -421,6 +436,15 @@ namespace ChatTranslated.Localization {
         internal static string GGstr {
             get {
                 return ResourceManager.GetString("GGstr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Alliance.
+        /// </summary>
+        internal static string gp {
+            get {
+                return ResourceManager.GetString("gp", resourceCulture);
             }
         }
         
@@ -610,7 +634,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GPT-4o-mini
+        ///   Looks up a localized string similar to GPT-5-mini
         ///May be restricted if you live in unsupported region..
         /// </summary>
         internal static string OpenAIAPIExplanation {
@@ -818,6 +842,15 @@ namespace ChatTranslated.Localization {
         internal static string UseContext {
             get {
                 return ResourceManager.GetString("UseContext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use custom prompt.
+        /// </summary>
+        internal static string UseCustomPrompt {
+            get {
+                return ResourceManager.GetString("UseCustomPrompt", resourceCulture);
             }
         }
         
