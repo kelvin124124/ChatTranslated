@@ -3,7 +3,6 @@ using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
 using System;
-using System.Linq;
 using System.Net.Http;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -222,7 +221,23 @@ public class TranslationModeTab
 
         ImGui.Separator();
         ImGui.Spacing();
-        DrawCustomPromptEditor(configuration);
+        DrawCustomPromptSettings(configuration);
+    }
+
+    private static void DrawCustomPromptSettings(Configuration configuration)
+    {
+        bool _UseCustomPrompt = configuration.UseCustomPrompt;
+
+        if (ImGui.Checkbox(Resources.UseCustomPrompt, ref _UseCustomPrompt))
+        {
+            configuration.UseCustomPrompt = _UseCustomPrompt;
+            configuration.Save();
+        }
+
+        if (configuration.UseCustomPrompt)
+        {
+            DrawCustomPromptEditor(configuration);
+        }
     }
 
     private static void DrawLLMSettings(Configuration configuration)
@@ -282,55 +297,36 @@ public class TranslationModeTab
 
         ImGui.Separator();
         ImGui.Spacing();
-        DrawCustomPromptEditor(configuration);
+        DrawCustomPromptSettings(configuration);
     }
 
     private static string GetCustomPromptInput()
     {
-        // If no custom prompt is set, display the default prompt
         if (string.IsNullOrWhiteSpace(Service.configuration.LLM_CustomPrompt))
         {
-            return OpenAITranslate.GetDefaultPrompt(Service.configuration.SelectedTargetLanguage);
+            return OpenAITranslate.BuildPrompt("{targetLanguage}", null);
         }
         return Service.configuration.LLM_CustomPrompt;
     }
 
     private static void DrawCustomPromptEditor(Configuration configuration)
     {
-        ImGui.TextUnformatted("Custom System Prompt");
+        ImGui.TextUnformatted(Resources.CustomSystemPrompt);
+
         ImGui.SameLine();
         ImGui.TextDisabled("?");
         if (ImGui.IsItemHovered())
         {
-            ImGui.SetTooltip(
-                "Customize the system prompt for translation.\n" +
-                "Use {targetLanguage} as a placeholder for the target language.\n" +
-                "The text below shows the current prompt (default or custom).\n" +
-                "Context (if enabled) will be appended automatically.\n\n" +
-                "This prompt is shared between OpenAI and OpenAI-compatible APIs."
-            );
+            ImGui.SetTooltip(Resources.CustomPromptTooltip);
         }
 
-        bool isUsingCustomPrompt = !string.IsNullOrWhiteSpace(configuration.LLM_CustomPrompt);
-        if (isUsingCustomPrompt)
-        {
-            ImGui.SameLine();
-            ImGui.TextColored(new Vector4(0, 1, 0, 1), "(Custom)");
-        }
-        else
-        {
-            ImGui.SameLine();
-            ImGui.TextColored(new Vector4(0.7f, 0.7f, 0.7f, 1), "(Default)");
-        }
-
-        // Multi-line text input - shows default prompt if no custom prompt is set
         ImGui.InputTextMultiline("##CustomPrompt", ref CustomPromptInput, 10000, new Vector2(-1, 200));
 
-        // Buttons row
         if (ImGui.Button("Apply##CustomPromptApply"))
         {
             configuration.LLM_CustomPrompt = CustomPromptInput;
             configuration.Save();
+
             TranslationHandler.ClearTranslationCache();
             Plugin.OutputChatLine("Custom prompt saved successfully.");
         }
@@ -338,18 +334,13 @@ public class TranslationModeTab
         ImGui.SameLine();
         if (ImGui.Button("Reset to Default##CustomPromptReset"))
         {
-            configuration.LLM_CustomPrompt = "";
-            CustomPromptInput = OpenAITranslate.GetDefaultPrompt(configuration.SelectedTargetLanguage);
+            configuration.LLM_CustomPrompt = OpenAITranslate.BuildPrompt("{targetLanguage}", null);
             configuration.Save();
+
+            CustomPromptInput = configuration.LLM_CustomPrompt;
+
             TranslationHandler.ClearTranslationCache();
             Plugin.OutputChatLine("Prompt reset to default.");
-        }
-
-        ImGui.SameLine();
-        if (ImGui.Button("Copy to Clipboard##CustomPromptCopy"))
-        {
-            ImGui.SetClipboardText(CustomPromptInput);
-            Plugin.OutputChatLine("Current prompt copied to clipboard.");
         }
     }
 
@@ -386,7 +377,7 @@ public class TranslationModeTab
 
         if (endpoint.Contains("openrouter"))
             endpoint = endpoint.TrimEnd('/').Replace("/chat/completions", "/auth/key");
-        else 
+        else
             endpoint = endpoint.TrimEnd('/').Replace("/chat/completions", "/models");
 
         try

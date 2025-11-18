@@ -16,7 +16,7 @@ namespace ChatTranslated.Translate
     internal static class OpenAITranslate
     {
         private const string DefaultContentType = "application/json";
-
+        
         public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
             , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-5-mini", string? apiKey = null)
         {
@@ -33,7 +33,10 @@ namespace ChatTranslated.Translate
                 }
             }
 
-            var prompt = BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context, customPrompt);
+            var prompt = Service.configuration.UseCustomPrompt 
+                ? BuildCustomPrompt(Service.configuration.SelectedTargetLanguage, message.Context) 
+                : BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context);
+
             int promptLength = prompt.Length;
             var userMsg = $"Translate to: {Service.configuration.SelectedTargetLanguage}\n#### Original Text\n{message.OriginalContent.TextValue}";
             var requestData = new
@@ -84,71 +87,64 @@ namespace ChatTranslated.Translate
             }
         }
 
-        public static string BuildPrompt(string targetLanguage, string? context, string? customPrompt = null)
+        public static string BuildPrompt(string targetLanguage, string? context)
         {
-            // If a custom prompt is provided and not empty, use it
-            if (!string.IsNullOrWhiteSpace(customPrompt))
-            {
-                // Replace {targetLanguage} placeholder if present
-                string processedPrompt = customPrompt.Replace("{targetLanguage}", targetLanguage);
+            StringBuilder sb = new StringBuilder();
 
-                // Add context if enabled and available
-                if (Service.configuration.UseContext && context != null)
-                {
-                    StringBuilder sb = new StringBuilder(processedPrompt);
-                    sb.AppendLine("\n\nCONTEXT:");
-                    sb.AppendLine("Use the following context information if relevant (provided in XML tags):");
-                    sb.AppendLine("<context>");
-                    sb.AppendLine(context);
-                    sb.AppendLine("</context>");
-                    return sb.ToString();
-                }
+            sb.AppendLine($"You are a precise translator for FFXIV game content into {targetLanguage}.\n");
 
-                return processedPrompt;
-            }
+            sb.AppendLine("TRANSLATION RULES:");
+            sb.AppendLine("1. Be mindful of FFXIV-specific terms, but translate all content appropriately");
+            sb.AppendLine("2. Preserve all formatting, including spaces and punctuation");
+            sb.AppendLine("3. Maintain the exact meaning and tone of the original text\n");
 
-            // Default prompt
-            StringBuilder defaultSb = new StringBuilder();
+            sb.AppendLine("OUTPUT RULES:");
+            sb.AppendLine("1. First, in a \"#### Reasoning\" section, briefly:");
+            sb.AppendLine("   - Identify any FFXIV-specific terms and their meanings");
+            sb.AppendLine("   - Consider multiple possible translations");
+            sb.AppendLine("   - Explain your final translation choice");
+            sb.AppendLine("2. Your response must then include \"#### Translation\".");
+            sb.AppendLine("3. Write only the translated text after this header.");
+            sb.AppendLine("4. Do not include the original text.");
+            sb.AppendLine("5. Do not add any explanations or notes after the translation.\n");
 
-            defaultSb.AppendLine($"You are a precise translator for FFXIV game content into {targetLanguage}.\n");
-
-            defaultSb.AppendLine("TRANSLATION RULES:");
-            defaultSb.AppendLine("1. Be mindful of FFXIV-specific terms, but translate all content appropriately");
-            defaultSb.AppendLine("2. Preserve all formatting, including spaces and punctuation");
-            defaultSb.AppendLine("3. Maintain the exact meaning and tone of the original text\n");
-
-            defaultSb.AppendLine("OUTPUT RULES:");
-            defaultSb.AppendLine("1. First, in a \"#### Reasoning\" section, briefly:");
-            defaultSb.AppendLine("   - Identify any FFXIV-specific terms and their meanings");
-            defaultSb.AppendLine("   - Consider multiple possible translations");
-            defaultSb.AppendLine("   - Explain your final translation choice");
-            defaultSb.AppendLine("2. Your response must then include \"#### Translation\".");
-            defaultSb.AppendLine("3. Write only the translated text after this header.");
-            defaultSb.AppendLine("4. Do not include the original text.");
-            defaultSb.AppendLine("5. Do not add any explanations or notes after the translation.\n");
-
-            defaultSb.AppendLine("Example response format:");
-            defaultSb.AppendLine("#### Reasoning");
-            defaultSb.AppendLine("{Your analysis and translation process}");
-            defaultSb.AppendLine("");
-            defaultSb.AppendLine("#### Translation");
-            defaultSb.AppendLine("{Only the translated text goes here}");
+            sb.AppendLine("Example response format:");
+            sb.AppendLine("#### Reasoning");
+            sb.AppendLine("{Your analysis and translation process}");
+            sb.AppendLine("");
+            sb.AppendLine("#### Translation");
+            sb.AppendLine("{Only the translated text goes here}");
 
             if (Service.configuration.UseContext && context != null)
             {
-                defaultSb.AppendLine("\nCONTEXT:");
-                defaultSb.AppendLine("Use the following context information if relevant (provided in XML tags):");
-                defaultSb.AppendLine("<context>");
-                defaultSb.AppendLine(context);
-                defaultSb.AppendLine("</context>");
+                sb.AppendLine("\nCONTEXT:");
+                sb.AppendLine("Use the following context information if relevant (provided in XML tags):");
+                sb.AppendLine("<context>");
+                sb.AppendLine(context);
+                sb.AppendLine("</context>");
             }
 
-            return defaultSb.ToString();
+            return sb.ToString();
         }
 
-        public static string GetDefaultPrompt(string targetLanguage)
+        public static string BuildCustomPrompt(string targetLanguage, string? context)
         {
-            return BuildPrompt(targetLanguage, null, null);
+            string prompt = Service.configuration.LLM_CustomPrompt.Replace("{targetLanguage}", targetLanguage);
+
+            if (Service.configuration.UseContext && context != null)
+            {
+                StringBuilder sb = new StringBuilder(prompt);
+
+                sb.AppendLine("\n\nCONTEXT:");
+                sb.AppendLine("Use the following context information if relevant (provided in XML tags):");
+                sb.AppendLine("<context>");
+                sb.AppendLine(context);
+                sb.AppendLine("</context>");
+
+                return sb.ToString();
+            }
+
+            return prompt;
         }
     }
 
@@ -157,8 +153,7 @@ namespace ChatTranslated.Translate
         public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage)
         {
             return await OpenAITranslate.Translate(message, targetLanguage,
-                Service.configuration.LLM_API_endpoint, Service.configuration.LLM_Model, Service.configuration.LLM_API_Key,
-                Service.configuration.LLM_CustomPrompt);
+                Service.configuration.LLM_API_endpoint, Service.configuration.LLM_Model, Service.configuration.LLM_API_Key);
         }
     }
 }

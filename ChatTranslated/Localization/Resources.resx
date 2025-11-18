@@ -392,4 +392,19 @@ https://api.openai.com/v1/chat/completions
 https://openrouter.ai/api/v1/chat/completions
 https://api.deepseek.com/chat/completions</value>
   </data>
+  <data name="UseCustomPrompt" xml:space="preserve">
+    <value>Use custom prompt</value>
+  </data>
+  <data name="CustomSystemPrompt" xml:space="preserve">
+    <value>Custom system prompt</value>
+  </data>
+  <data name="CustomPromptTooltip" xml:space="preserve">
+    <value>Customize the system prompt for translation.
+
+The text below shows the current prompt.
+Use {targetLanguage} as a placeholder for the target language.
+Context (if enabled) will be appended automatically.
+
+This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
+  </data>
 </root>
