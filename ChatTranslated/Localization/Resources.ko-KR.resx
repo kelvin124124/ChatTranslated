@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Alliance" xml:space="preserve">
+  <data name="gp" xml:space="preserve">
     <value>연합 파티</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
@@ -355,7 +355,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>번역한 메시지를 출력할 때 색깔 텍스트 표시</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>GPT-4o-mini
+    <value>GPT-5-mini
 지원되지 않는 지역에 거주하는 경우 제한될 수 있습니다.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">

@@ -61,15 +61,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Alliance.
-        /// </summary>
-        internal static string Alliance {
-            get {
-                return ResourceManager.GetString("Alliance", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to AllLanguages.
         /// </summary>
         internal static string AllLanguages {
@@ -449,6 +440,15 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alliance.
+        /// </summary>
+        internal static string gp {
+            get {
+                return ResourceManager.GetString("gp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Japanese.
         /// </summary>
         internal static string Japanese {
@@ -634,7 +634,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GPT-4o-mini
+        ///   Looks up a localized string similar to GPT-5-mini
         ///May be restricted if you live in unsupported region..
         /// </summary>
         internal static string OpenAIAPIExplanation {

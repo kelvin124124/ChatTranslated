@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Alliance" xml:space="preserve">
+  <data name="gp" xml:space="preserve">
     <value>团队</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
@@ -357,7 +357,7 @@ Google 和 Bing 翻译将被用作备用。
     <value>输出翻译讯息时显示彩色文本</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>GPT-4o-mini
+    <value>GPT-5-mini
 如果你居住在不支持的地区，可能会受到限制。</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">

@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Alliance" xml:space="preserve">
+  <data name="gp" xml:space="preserve">
     <value>Alianza</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
@@ -357,7 +357,7 @@ No envía texto traducido en el chat ni lo hace visible para otros jugadores.</v
     <value>Mostrar texto en color al mostrar el mensaje traducido</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>GPT-4o-mini
+    <value>GPT-5-mini
 Puede estar restringido si vives en una región no soportada.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">

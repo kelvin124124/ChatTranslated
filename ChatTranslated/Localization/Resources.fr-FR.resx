@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Alliance" xml:space="preserve">
+  <data name="gp" xml:space="preserve">
     <value>Alliance</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
@@ -357,7 +357,7 @@ Il n'envoie pas le texte traduit dans le chat ni ne le rend visible pour les aut
     <value>Afficher du texte coloré lors de la sortie du message traduit</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>GPT-4o-mini
+    <value>GPT-5-mini
 Peut être restreint si vous vivez dans une région non prise en charge.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">

@@ -117,7 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Alliance" xml:space="preserve">
+  <data name="gp" xml:space="preserve">
     <value>アライアンス</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
@@ -357,7 +357,7 @@
     <value>翻訳されたメッセージを出力する際に色付きテキストを表示する</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>GPT-4o-mini
+    <value>GPT-5-mini
 サポートされていない地域に住んでいる場合、制限される可能性があります。</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
