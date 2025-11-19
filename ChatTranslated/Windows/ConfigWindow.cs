@@ -12,7 +12,7 @@ public class ConfigWindow : Window
     private static short CurrentTab = 0;
 
     private readonly GeneralTab generalTab;
-    private readonly TranslationModeTab translationEngineTab;
+    private readonly TranslationEngineTab translationEngineTab;
     private readonly LanguagesTab languagesTab;
     private readonly ChatTab chatTab;
 
@@ -23,7 +23,7 @@ public class ConfigWindow : Window
         Size = new Vector2(700, 340);
 
         generalTab = new GeneralTab();
-        translationEngineTab = new TranslationModeTab();
+        translationEngineTab = new TranslationEngineTab();
         languagesTab = new LanguagesTab();
         chatTab = new ChatTab();
     }
