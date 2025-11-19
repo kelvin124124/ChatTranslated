@@ -16,7 +16,7 @@ namespace ChatTranslated.Translate
     internal static class OpenAITranslate
     {
         private const string DefaultContentType = "application/json";
-        
+
         public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
             , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-5-mini", string? apiKey = null)
         {
@@ -33,8 +33,8 @@ namespace ChatTranslated.Translate
                 }
             }
 
-            var prompt = Service.configuration.UseCustomPrompt 
-                ? BuildCustomPrompt(Service.configuration.SelectedTargetLanguage, message.Context) 
+            var prompt = Service.configuration.UseCustomPrompt
+                ? BuildCustomPrompt(Service.configuration.SelectedTargetLanguage, message.Context)
                 : BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context);
 
             int promptLength = prompt.Length;

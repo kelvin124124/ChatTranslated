@@ -3,14 +3,9 @@ using ChatTranslated.Translate;
 using ChatTranslated.Windows.ConfigTabs.TranslationEngine;
 using Dalamud.Bindings.ImGui;
 using System;
-using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Windows.ConfigTabs;
 
-/// <summary>
-/// Main coordinator for translation engine configuration UI.
-/// Delegates to engine-specific settings components in the TranslationEngine subfolder.
-/// </summary>
 public class TranslationEngineTab
 {
     public void Draw(Configuration configuration)
@@ -24,11 +19,11 @@ public class TranslationEngineTab
         // Delegate to engine-specific settings
         switch (configuration.SelectedTranslationEngine)
         {
-            case TranslationEngine.DeepL:
+            case Configuration.TranslationEngine.DeepL:
                 DeepLSettings.Draw(configuration);
                 break;
 
-            case TranslationEngine.LLM:
+            case Configuration.TranslationEngine.LLM:
                 DrawLLMConfiguration(configuration);
                 break;
         }
@@ -41,11 +36,11 @@ public class TranslationEngineTab
         ImGui.SameLine();
 
         int selectedEngine = (int)configuration.SelectedTranslationEngine;
-        string[] engineNames = Enum.GetNames<TranslationEngine>();
+        string[] engineNames = Enum.GetNames<Configuration.TranslationEngine>();
 
         if (ImGui.Combo("##TranslationEngineCombo", ref selectedEngine, engineNames, engineNames.Length))
         {
-            configuration.SelectedTranslationEngine = (TranslationEngine)selectedEngine;
+            configuration.SelectedTranslationEngine = (Configuration.TranslationEngine)selectedEngine;
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
@@ -57,10 +52,10 @@ public class TranslationEngineTab
         ImGui.Spacing();
 
         // Common LLM settings
-        LLMCommonSettings.DrawContextSettings(configuration);
+        LLMSettings.DrawContextSettings(configuration);
         ImGui.Spacing();
 
-        LLMCommonSettings.DrawProviderSelection(configuration);
+        LLMSettings.DrawProviderSelection(configuration);
         ImGui.Spacing();
 
         // Provider-specific settings

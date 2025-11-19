@@ -3,7 +3,7 @@ using Dalamud.Bindings.ImGui;
 
 namespace ChatTranslated.Windows.ConfigTabs.TranslationEngine;
 
-public static class LLMCommonSettings
+public static class LLMSettings
 {
     public static void DrawContextSettings(Configuration configuration)
     {
