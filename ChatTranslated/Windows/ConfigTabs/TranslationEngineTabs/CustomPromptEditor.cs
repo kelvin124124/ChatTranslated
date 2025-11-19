@@ -26,14 +26,6 @@ public static class CustomPromptEditor
         }
     }
 
-    public static void DrawCollapsible(Configuration configuration)
-    {
-        if (ImGui.CollapsingHeader(Resources.UseCustomPrompt))
-        {
-            DrawSettings(configuration);
-        }
-    }
-
     private static void DrawEditor(Configuration configuration)
     {
         ImGui.TextUnformatted(Resources.CustomSystemPrompt);

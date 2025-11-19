@@ -72,7 +72,7 @@ public static class OpenAISettings
         ImGui.Separator();
 
         // Advanced Settings
-        CustomPromptEditor.DrawCollapsible(configuration);
+        CustomPromptEditor.DrawSettings(configuration);
     }
 
     private static async Task ValidateApiKey(string apiKey, string endpoint = "https://api.openai.com/v1/models")

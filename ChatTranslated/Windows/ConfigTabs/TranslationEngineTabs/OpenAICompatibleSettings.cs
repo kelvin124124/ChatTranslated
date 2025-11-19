@@ -85,7 +85,7 @@ public static class OpenAICompatibleSettings
         ImGui.Separator();
 
         // Advanced Settings
-        CustomPromptEditor.DrawCollapsible(configuration);
+        CustomPromptEditor.DrawSettings(configuration);
     }
 
     private static async Task ValidateApiKey(string apiKey, string endpoint)
