@@ -105,7 +105,16 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("ChannelSelection", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Chat.
+        /// </summary>
+        internal static string Chat {
+            get {
+                return ResourceManager.GetString("Chat", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Chat Channels.
         /// </summary>
@@ -817,7 +826,16 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("TranslateButtonTooltip", resourceCulture);
             }
         }
-        
+
+        /// <summary>
+        ///   Looks up a localized string similar to Translation Engine.
+        /// </summary>
+        internal static string Translation_Engine {
+            get {
+                return ResourceManager.GetString("Translation Engine", resourceCulture);
+            }
+        }
+
         /// <summary>
         ///   Looks up a localized string similar to Translation Mode.
         /// </summary>
@@ -826,7 +844,7 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("Translation Mode", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to Translation Engine.
         /// </summary>
