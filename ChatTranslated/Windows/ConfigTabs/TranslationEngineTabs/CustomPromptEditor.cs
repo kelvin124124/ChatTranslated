@@ -14,7 +14,7 @@ public static class CustomPromptEditor
     {
         bool _UseCustomPrompt = configuration.UseCustomPrompt;
 
-        if (ImGui.Checkbox(Resources.UseCustomPrompt, ref _UseCustomPrompt))
+        if (ImGui.Checkbox(Resources.UseCustomPrompt + "##UseCustomPromptCheckbox", ref _UseCustomPrompt))
         {
             configuration.UseCustomPrompt = _UseCustomPrompt;
             configuration.Save();
