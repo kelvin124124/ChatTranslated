@@ -398,14 +398,18 @@ https://api.openai.com/v1/chat/completions
 https://openrouter.ai/api/v1/chat/completions
 https://api.deepseek.com/chat/completions</value>
   </data>
+  <data name="UseCustomPrompt" xml:space="preserve">
+    <value>Usar prompt personalizado</value>
+  </data>
+  <data name="CustomSystemPrompt" xml:space="preserve">
+    <value>Prompt de sistema personalizado</value>
+  </data>
+  <data name="CustomPromptTooltip" xml:space="preserve">
+    <value>Personalice el prompt del sistema para la traducción.
+
+El texto a continuación muestra el prompt actual.
+Use {targetLanguage} como marcador de posición para el idioma de destino.
+El contexto (si está habilitado) se agregará automáticamente.</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="UseCustomPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="CustomSystemPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="CustomPromptTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
 </root>
