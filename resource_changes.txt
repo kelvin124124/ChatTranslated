@@ -1,0 +1,126 @@
+Resource File Changes for Plugin Configuration Reorganization
+================================================================
+
+This document lists the changes needed to the localization resource files.
+
+1. Resources.resx Changes
+--------------------------
+
+Add the following new resource entries after the "General" entry (around line 344):
+
+```xml
+  <data name="Translation Engine" xml:space="preserve">
+    <value>Translation Engine</value>
+  </data>
+```
+
+And:
+
+```xml
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+```
+
+Complete context (lines 344-361):
+```xml
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Translation Engine" xml:space="preserve">
+    <value>Translation Engine</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
+  <data name="Chat Channels" xml:space="preserve">
+    <value>Chat Channels</value>
+  </data>
+  <data name="Translation Mode" xml:space="preserve">
+    <value>Translation Mode</value>
+  </data>
+```
+
+2. Resources.Designer.cs Changes
+---------------------------------
+
+Add the following property after the ChannelSelection property (around line 108):
+
+```csharp
+        /// <summary>
+        ///   Looks up a localized string similar to Chat.
+        /// </summary>
+        internal static string Chat {
+            get {
+                return ResourceManager.GetString("Chat", resourceCulture);
+            }
+        }
+```
+
+And add this property before Translation_Mode property (around line 830):
+
+```csharp
+        /// <summary>
+        ///   Looks up a localized string similar to Translation Engine.
+        /// </summary>
+        internal static string Translation_Engine {
+            get {
+                return ResourceManager.GetString("Translation Engine", resourceCulture);
+            }
+        }
+```
+
+3. Localized Resource Files (Optional - For Future Translation)
+----------------------------------------------------------------
+
+For complete localization, the following files should also be updated with
+translated values for the new entries:
+
+- Resources.de-DE.resx (German)
+- Resources.es-ES.resx (Spanish)
+- Resources.fr-FR.resx (French)
+- Resources.ja-JP.resx (Japanese)
+- Resources.ko-KR.resx (Korean)
+- Resources.zh-CN.resx (Chinese Simplified)
+- Resources.zh-TW.resx (Chinese Traditional)
+
+Add these entries to each file with appropriate translations:
+
+```xml
+  <data name="Translation Engine" xml:space="preserve">
+    <value>[Translated value]</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>[Translated value]</value>
+  </data>
+```
+
+Example translations:
+- German: "Übersetzungsmodul" / "Chat"
+- Spanish: "Motor de Traducción" / "Chat"
+- French: "Moteur de Traduction" / "Chat"
+- Japanese: "翻訳エンジン" / "チャット"
+- Korean: "번역 엔진" / "채팅"
+- Chinese (Simplified): "翻译引擎" / "聊天"
+- Chinese (Traditional): "翻譯引擎" / "聊天"
+
+4. Usage in Code
+----------------
+
+The new resources are used in ConfigWindow.cs:
+
+```csharp
+string[] tabs = [Resources.General, Resources.Translation_Engine, Resources.Languages, Resources.Chat];
+```
+
+This creates the tab names:
+- General
+- Translation Engine
+- Languages
+- Chat
+
+Note: The existing "Translation Mode" and "Chat Channels" resources are kept for
+backward compatibility but are no longer used in the tab navigation.

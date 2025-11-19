@@ -344,14 +344,8 @@ It does not send translated text in chat or make it visible to other players.</v
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="Translation Engine" xml:space="preserve">
-    <value>Translation Engine</value>
-  </data>
   <data name="Languages" xml:space="preserve">
     <value>Languages</value>
-  </data>
-  <data name="Chat" xml:space="preserve">
-    <value>Chat</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
     <value>Chat Channels</value>

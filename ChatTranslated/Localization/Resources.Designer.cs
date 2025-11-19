@@ -107,15 +107,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Chat.
-        /// </summary>
-        internal static string Chat {
-            get {
-                return ResourceManager.GetString("Chat", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Chat Channels.
         /// </summary>
         internal static string Chat_Channels {
@@ -123,7 +114,7 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("Chat Channels", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Include messages in current chat tab in LLM prompt..
         /// </summary>
@@ -828,15 +819,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Translation Engine.
-        /// </summary>
-        internal static string Translation_Engine {
-            get {
-                return ResourceManager.GetString("Translation Engine", resourceCulture);
-            }
-        }
-
-        /// <summary>
         ///   Looks up a localized string similar to Translation Mode.
         /// </summary>
         internal static string Translation_Mode {
@@ -844,7 +826,7 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("Translation Mode", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Translation Engine.
         /// </summary>
