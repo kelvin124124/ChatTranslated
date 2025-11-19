@@ -344,8 +344,14 @@ Il n'envoie pas le texte traduit dans le chat ni ne le rend visible pour les aut
   <data name="General" xml:space="preserve">
     <value>Général</value>
   </data>
+  <data name="Translation Engine" xml:space="preserve">
+    <value>Moteur de traduction</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>Langues</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
     <value>Canaux de chat</value>

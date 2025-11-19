@@ -344,8 +344,14 @@
   <data name="General" xml:space="preserve">
     <value>一般</value>
   </data>
+  <data name="Translation Engine" xml:space="preserve">
+    <value>翻訳エンジン</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>言語</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>チャット</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
     <value>チャットチャンネル</value>

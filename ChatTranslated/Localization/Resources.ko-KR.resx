@@ -342,8 +342,14 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
   <data name="General" xml:space="preserve">
     <value>일반</value>
   </data>
+  <data name="Translation Engine" xml:space="preserve">
+    <value>번역 엔진</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>언어</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>채팅</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
     <value>채팅 채널</value>

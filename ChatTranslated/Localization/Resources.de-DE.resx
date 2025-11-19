@@ -344,8 +344,14 @@ Sie sendet die übersetzte Nachricht nicht im Chat und macht sie für andere Spi
   <data name="General" xml:space="preserve">
     <value>Allgemein</value>
   </data>
+  <data name="Translation Engine" xml:space="preserve">
+    <value>Übersetzungs-Engine</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>Sprachen</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
     <value>Chat-Kanäle</value>

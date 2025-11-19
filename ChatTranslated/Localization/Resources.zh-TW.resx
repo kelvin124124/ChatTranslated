@@ -344,8 +344,14 @@ Google 和 Bing 翻譯將被用作備用。
   <data name="General" xml:space="preserve">
     <value>通用</value>
   </data>
+  <data name="Translation Engine" xml:space="preserve">
+    <value>翻譯引擎</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>語言</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>聊天</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
     <value>聊天頻道</value>
