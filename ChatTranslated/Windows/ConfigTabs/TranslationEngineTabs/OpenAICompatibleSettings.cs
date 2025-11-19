@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace ChatTranslated.Windows.ConfigTabs.TranslationEngine;
+namespace ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
 
 public static class OpenAICompatibleSettings
 {

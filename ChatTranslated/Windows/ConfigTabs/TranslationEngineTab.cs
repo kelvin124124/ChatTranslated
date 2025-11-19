@@ -1,6 +1,6 @@
 using ChatTranslated.Localization;
 using ChatTranslated.Translate;
-using ChatTranslated.Windows.ConfigTabs.TranslationEngine;
+using ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
 using Dalamud.Bindings.ImGui;
 using System;
 
@@ -11,19 +11,24 @@ public class TranslationEngineTab
     public void Draw(Configuration configuration)
     {
         DrawEngineSelection(configuration);
-
-        ImGui.Spacing();
-        ImGui.Separator();
         ImGui.Spacing();
 
         // Delegate to engine-specific settings
         switch (configuration.SelectedTranslationEngine)
         {
             case Configuration.TranslationEngine.DeepL:
+                ImGui.TextWrapped(Resources.DeepLExplanation);
+                ImGui.Separator();
+                ImGui.Spacing();
+
                 DeepLSettings.Draw(configuration);
                 break;
 
             case Configuration.TranslationEngine.LLM:
+                ImGui.TextWrapped(Resources.LLM_Explanation);
+                ImGui.Separator();
+                ImGui.Spacing();
+
                 DrawLLMConfiguration(configuration);
                 break;
         }
@@ -48,10 +53,7 @@ public class TranslationEngineTab
 
     private static void DrawLLMConfiguration(Configuration configuration)
     {
-        ImGui.TextUnformatted(Resources.LLM_Explanation);
-        ImGui.Spacing();
-
-        // Common LLM settings
+        // Context settings
         LLMSettings.DrawContextSettings(configuration);
         ImGui.Spacing();
 

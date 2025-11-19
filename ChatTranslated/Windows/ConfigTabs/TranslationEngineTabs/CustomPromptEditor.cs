@@ -4,7 +4,7 @@ using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
 using System.Numerics;
 
-namespace ChatTranslated.Windows.ConfigTabs.TranslationEngine;
+namespace ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
 
 public static class CustomPromptEditor
 {

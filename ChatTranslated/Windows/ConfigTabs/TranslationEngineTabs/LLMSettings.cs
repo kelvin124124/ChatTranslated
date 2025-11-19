@@ -1,7 +1,7 @@
 using ChatTranslated.Localization;
 using Dalamud.Bindings.ImGui;
 
-namespace ChatTranslated.Windows.ConfigTabs.TranslationEngine;
+namespace ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
 
 public static class LLMSettings
 {

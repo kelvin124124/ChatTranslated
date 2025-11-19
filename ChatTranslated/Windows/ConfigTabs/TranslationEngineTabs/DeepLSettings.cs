@@ -2,7 +2,7 @@ using ChatTranslated.Localization;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
 
-namespace ChatTranslated.Windows.ConfigTabs.TranslationEngine;
+namespace ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
 
 public static class DeepLSettings
 {
@@ -10,9 +10,6 @@ public static class DeepLSettings
 
     public static void Draw(Configuration configuration)
     {
-        ImGui.TextWrapped(Resources.DeepLExplanation);
-        ImGui.Spacing();
-
         ImGui.TextUnformatted(Resources.DeepLAPIKey);
         ImGui.InputText("##APIKey", ref DeepLApiKeyInput, 100);
 

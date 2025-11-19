@@ -2,7 +2,7 @@ using ChatTranslated.Localization;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
 
-namespace ChatTranslated.Windows.ConfigTabs.TranslationEngine;
+namespace ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
 
 public static class LLMProxySettings
 {
