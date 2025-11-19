@@ -12,9 +12,9 @@ public class ConfigWindow : Window
     private static short CurrentTab = 0;
 
     private readonly GeneralTab generalTab;
+    private readonly TranslationModeTab translationEngineTab;
     private readonly LanguagesTab languagesTab;
-    private readonly ChatChannelsTab chatChannelsTab;
-    private readonly TranslationModeTab translationModeTab;
+    private readonly ChatTab chatTab;
 
     public ConfigWindow(Plugin plugin) : base(
         "Chat Translated config window",
@@ -23,15 +23,15 @@ public class ConfigWindow : Window
         Size = new Vector2(700, 340);
 
         generalTab = new GeneralTab();
+        translationEngineTab = new TranslationModeTab();
         languagesTab = new LanguagesTab();
-        chatChannelsTab = new ChatChannelsTab();
-        translationModeTab = new TranslationModeTab();
+        chatTab = new ChatTab();
     }
 
     public override void Draw()
     {
         Configuration configuration = Service.configuration;
-        string[] tabs = [Resources.General, Resources.Languages, Resources.Chat_Channels, Resources.Translation_Mode];
+        string[] tabs = [Resources.General, Resources.Translation_Engine, Resources.Languages, Resources.Chat];
 
         ImGui.Columns(2, "ConfigColumns", false);
         ImGui.SetColumnWidth(0, 200);
@@ -58,13 +58,13 @@ public class ConfigWindow : Window
                     generalTab.Draw(configuration);
                     break;
                 case 1:
-                    languagesTab.Draw(configuration);
+                    translationEngineTab.Draw(configuration);
                     break;
                 case 2:
-                    chatChannelsTab.Draw(configuration);
+                    languagesTab.Draw(configuration);
                     break;
                 case 3:
-                    translationModeTab.Draw(configuration);
+                    chatTab.Draw(configuration);
                     break;
             }
         }

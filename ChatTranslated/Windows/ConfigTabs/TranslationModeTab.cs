@@ -36,6 +36,7 @@ public class TranslationModeTab
 
     public void Draw(Configuration configuration)
     {
+        // Engine Selection
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted(Resources.TranslationEngine);
         ImGui.SameLine();
@@ -50,46 +51,82 @@ public class TranslationModeTab
             configuration.Save();
         }
 
+        ImGui.Spacing();
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        // Engine-specific settings
         switch (configuration.SelectedTranslationEngine)
         {
             case TranslationEngine.DeepL:
-                ImGui.TextWrapped(Resources.DeepLExplanation);
-
-                ImGui.Separator();
-                DrawDeepLSettings(configuration);
-
+                DrawDeepLConfiguration(configuration);
                 break;
 
             case TranslationEngine.LLM:
-                ImGui.TextUnformatted(Resources.LLM_Explanation);
-
-                ImGui.Spacing();
-                DrawContextSettings(configuration);
-
-                ImGui.Spacing();
-                DrawProviderSelection(configuration);
-                switch (configuration.LLM_Provider)
-                {
-                    case 0:
-                        ImGui.TextUnformatted(Resources.LLM_Proxy_Explanation);
-#if DEBUG
-                        ImGui.Separator();
-                        DrawLLMProxyDebugSettings(configuration);
-#endif
-                        break;
-                    case 1:
-                        ImGui.TextUnformatted(Resources.OpenAIAPIExplanation);
-                        ImGui.Separator();
-                        DrawOpenAISettings(configuration);
-                        break;
-                    case 2:
-                        ImGui.TextUnformatted(Resources.OpenAICompatibleExplanation);
-                        ImGui.Separator();
-                        DrawLLMSettings(configuration);
-                        break;
-                }
+                DrawLLMConfiguration(configuration);
                 break;
         }
+    }
+
+    private static void DrawDeepLConfiguration(Configuration configuration)
+    {
+        ImGui.TextWrapped(Resources.DeepLExplanation);
+        ImGui.Spacing();
+        DrawDeepLSettings(configuration);
+    }
+
+    private static void DrawLLMConfiguration(Configuration configuration)
+    {
+        ImGui.TextUnformatted(Resources.LLM_Explanation);
+        ImGui.Spacing();
+
+        // Context Settings
+        DrawContextSettings(configuration);
+        ImGui.Spacing();
+
+        // Provider Selection
+        DrawProviderSelection(configuration);
+        ImGui.Spacing();
+
+        // Provider-specific settings
+        switch (configuration.LLM_Provider)
+        {
+            case 0:
+                DrawLLMProxyConfiguration(configuration);
+                break;
+            case 1:
+                DrawOpenAIConfiguration(configuration);
+                break;
+            case 2:
+                DrawOpenAICompatibleConfiguration(configuration);
+                break;
+        }
+    }
+
+    private static void DrawLLMProxyConfiguration(Configuration configuration)
+    {
+        ImGui.TextUnformatted(Resources.LLM_Proxy_Explanation);
+#if DEBUG
+        ImGui.Spacing();
+        if (ImGui.CollapsingHeader("Debug Settings"))
+        {
+            DrawLLMProxyDebugSettings(configuration);
+        }
+#endif
+    }
+
+    private static void DrawOpenAIConfiguration(Configuration configuration)
+    {
+        ImGui.TextUnformatted(Resources.OpenAIAPIExplanation);
+        ImGui.Spacing();
+        DrawOpenAISettings(configuration);
+    }
+
+    private static void DrawOpenAICompatibleConfiguration(Configuration configuration)
+    {
+        ImGui.TextUnformatted(Resources.OpenAICompatibleExplanation);
+        ImGui.Spacing();
+        DrawLLMSettings(configuration);
     }
 
     private static void DrawDeepLSettings(Configuration configuration)
@@ -180,19 +217,7 @@ public class TranslationModeTab
 
     private static void DrawOpenAISettings(Configuration configuration)
     {
-        ImGui.TextUnformatted("Model");
-        int currentModelIndex = Array.IndexOf(OpenAIModels, configuration.OpenAI_Model);
-        if (currentModelIndex == -1) currentModelIndex = 0;
-
-        if (ImGui.Combo("##OpenAIModel", ref currentModelIndex, OpenAIModels, OpenAIModels.Length))
-        {
-            configuration.OpenAI_Model = OpenAIModels[currentModelIndex];
-            TranslationHandler.ClearTranslationCache();
-            configuration.Save();
-        }
-
-        ImGui.Spacing();
-
+        // API Configuration
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
         if (OpenAIApiKeyValid.HasValue)
         {
@@ -215,13 +240,33 @@ public class TranslationModeTab
             _ = ValidateOpenAIKey(OpenAIApiKeyInput);
         }
 
+        ImGui.Spacing();
+
+        // Model Selection
+        ImGui.TextUnformatted("Model");
+        int currentModelIndex = Array.IndexOf(OpenAIModels, configuration.OpenAI_Model);
+        if (currentModelIndex == -1) currentModelIndex = 0;
+
+        if (ImGui.Combo("##OpenAIModel", ref currentModelIndex, OpenAIModels, OpenAIModels.Length))
+        {
+            configuration.OpenAI_Model = OpenAIModels[currentModelIndex];
+            TranslationHandler.ClearTranslationCache();
+            configuration.Save();
+        }
+
+        ImGui.Spacing();
         ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
-        ImGui.NewLine();
+        ImGui.Spacing();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
 
-        ImGui.Separator();
         ImGui.Spacing();
-        DrawCustomPromptSettings(configuration);
+        ImGui.Separator();
+
+        // Advanced Settings
+        if (ImGui.CollapsingHeader(Resources.UseCustomPrompt))
+        {
+            DrawCustomPromptSettings(configuration);
+        }
     }
 
     private static void DrawCustomPromptSettings(Configuration configuration)
@@ -242,6 +287,7 @@ public class TranslationModeTab
 
     private static void DrawLLMSettings(Configuration configuration)
     {
+        // API Endpoint
         ImGui.TextUnformatted(Resources.LLMApiEndpoint);
         ImGui.SameLine();
         ImGui.TextDisabled("?");
@@ -260,6 +306,9 @@ public class TranslationModeTab
             _ = ValidateLLMKey(LLMApiKeyInput, LLMApiEndpointInput);
         }
 
+        ImGui.Spacing();
+
+        // API Key
         ImGui.TextUnformatted(Resources.LLMAPIKey);
         if (LLMApiKeyValid.HasValue)
         {
@@ -282,6 +331,9 @@ public class TranslationModeTab
             _ = ValidateLLMKey(LLMApiKeyInput, LLMApiEndpointInput);
         }
 
+        ImGui.Spacing();
+
+        // Model
         ImGui.TextUnformatted(Resources.LLMModel);
         ImGui.InputText("##Model", ref LLMModelInput, 200);
         ImGui.SameLine();
@@ -293,11 +345,17 @@ public class TranslationModeTab
             _ = ValidateLLMKey(LLMApiKeyInput, LLMApiEndpointInput);
         }
 
+        ImGui.Spacing();
         ImGui.TextUnformatted(Resources.OpenAICompatibleInfo);
 
-        ImGui.Separator();
         ImGui.Spacing();
-        DrawCustomPromptSettings(configuration);
+        ImGui.Separator();
+
+        // Advanced Settings
+        if (ImGui.CollapsingHeader(Resources.UseCustomPrompt))
+        {
+            DrawCustomPromptSettings(configuration);
+        }
     }
 
     private static string GetCustomPromptInput()
