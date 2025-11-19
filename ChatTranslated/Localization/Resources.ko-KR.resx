@@ -342,8 +342,14 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
   <data name="General" xml:space="preserve">
     <value>일반</value>
   </data>
+  <data name="Translation Engine" xml:space="preserve">
+    <value>번역 엔진</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>언어</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>채팅</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
     <value>채팅 채널</value>
@@ -390,14 +396,18 @@ https://api.openai.com/v1/chat/completions
 https://openrouter.ai/api/v1/chat/completions
 https://api.deepseek.com/chat/completions</value>
   </data>
+  <data name="UseCustomPrompt" xml:space="preserve">
+    <value>사용자 지정 프롬프트 사용</value>
+  </data>
+  <data name="CustomSystemPrompt" xml:space="preserve">
+    <value>사용자 지정 시스템 프롬프트</value>
+  </data>
+  <data name="CustomPromptTooltip" xml:space="preserve">
+    <value>번역을 위한 시스템 프롬프트를 사용자 지정합니다.
+
+아래 텍스트는 현재 프롬프트를 표시합니다.
+{targetLanguage}를 대상 언어의 자리 표시자로 사용하세요.
+컨텍스트(활성화된 경우)는 자동으로 추가됩니다.</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="UseCustomPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="CustomSystemPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="CustomPromptTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
 </root>

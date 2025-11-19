@@ -1,3 +1,0 @@
-files:
-  - source: /ChatTranslated/Localization/Resources.resx
-    translation: /ChatTranslated/Localization/Resources.%locale%.resx

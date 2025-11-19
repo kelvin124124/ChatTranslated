@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ChatTranslated.Windows.ConfigTabs;
 
-public class ChatChannelsTab
+public class ChatTab
 {
     public static readonly List<XivChatType> genericChatTypes =
     [
@@ -47,6 +47,51 @@ public class ChatChannelsTab
 
     public void Draw(Configuration configuration)
     {
+        DrawChatIntegrationSettings(configuration);
+
+        ImGui.Separator();
+        ImGui.Spacing();
+
+        DrawChatChannelSelection(configuration);
+    }
+
+    private static void DrawChatIntegrationSettings(Configuration configuration)
+    {
+        bool _ChatIntegration = configuration.ChatIntegration;
+        bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
+        bool _ChatIntegration_ShowColoredText = configuration.ChatIntegration_ShowColoredText;
+
+        if (ImGui.Checkbox(Resources.ChatIntegration, ref _ChatIntegration))
+        {
+            configuration.ChatIntegration = _ChatIntegration;
+            configuration.Save();
+        }
+
+        if (configuration.ChatIntegration)
+        {
+            ImGui.Indent(20);
+
+            if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref _ChatIntegration_HideOriginal))
+            {
+                configuration.ChatIntegration_HideOriginal = _ChatIntegration_HideOriginal;
+                configuration.Save();
+            }
+
+            if (ImGui.Checkbox(Resources.ChatIntegration_ShowColoredText, ref _ChatIntegration_ShowColoredText))
+            {
+                configuration.ChatIntegration_ShowColoredText = _ChatIntegration_ShowColoredText;
+                configuration.Save();
+            }
+
+            ImGui.Unindent(20);
+        }
+    }
+
+    private static void DrawChatChannelSelection(Configuration configuration)
+    {
+        ImGui.TextUnformatted(Resources.Chat_Channels);
+        ImGui.Spacing();
+
         ImGui.BeginTabBar("ChatChannelTabs");
 
         if (ImGui.BeginTabItem(Resources.GenericChannels))

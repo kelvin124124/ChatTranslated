@@ -344,8 +344,14 @@ Google 和 Bing 翻譯將被用作備用。
   <data name="General" xml:space="preserve">
     <value>通用</value>
   </data>
+  <data name="Translation Engine" xml:space="preserve">
+    <value>翻譯引擎</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>語言</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>聊天</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
     <value>聊天頻道</value>
@@ -392,14 +398,18 @@ https://api.openai.com/v1/chat/completions
 https://openrouter.ai/api/v1/chat/completions
 https://api.deepseek.com/chat/completions</value>
   </data>
+  <data name="UseCustomPrompt" xml:space="preserve">
+    <value>使用自訂提示詞</value>
+  </data>
+  <data name="CustomSystemPrompt" xml:space="preserve">
+    <value>自訂系統提示詞</value>
+  </data>
+  <data name="CustomPromptTooltip" xml:space="preserve">
+    <value>自訂翻譯的系統提示詞。
+
+下方文字顯示目前提示詞。
+使用 {targetLanguage} 作為目標語言的佔位符。
+上下文（如果啟用）將自動附加。</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="UseCustomPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="CustomSystemPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="CustomPromptTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
 </root>

@@ -344,8 +344,14 @@ Il n'envoie pas le texte traduit dans le chat ni ne le rend visible pour les aut
   <data name="General" xml:space="preserve">
     <value>Général</value>
   </data>
+  <data name="Translation Engine" xml:space="preserve">
+    <value>Moteur de traduction</value>
+  </data>
   <data name="Languages" xml:space="preserve">
     <value>Langues</value>
+  </data>
+  <data name="Chat" xml:space="preserve">
+    <value>Chat</value>
   </data>
   <data name="Chat Channels" xml:space="preserve">
     <value>Canaux de chat</value>
@@ -392,14 +398,18 @@ https://api.openai.com/v1/chat/completions
 https://openrouter.ai/api/v1/chat/completions
 https://api.deepseek.com/chat/completions</value>
   </data>
+  <data name="UseCustomPrompt" xml:space="preserve">
+    <value>Utiliser un prompt personnalisé</value>
+  </data>
+  <data name="CustomSystemPrompt" xml:space="preserve">
+    <value>Prompt système personnalisé</value>
+  </data>
+  <data name="CustomPromptTooltip" xml:space="preserve">
+    <value>Personnalisez le prompt système pour la traduction.
+
+Le texte ci-dessous affiche le prompt actuel.
+Utilisez {targetLanguage} comme espace réservé pour la langue cible.
+Le contexte (si activé) sera ajouté automatiquement.</value>
+  </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="UseCustomPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="CustomSystemPrompt" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
-  <data name="CustomPromptTooltip" type="System.Resources.ResXNullRef, System.Windows.Forms">
-    <value />
-  </data>
 </root>
