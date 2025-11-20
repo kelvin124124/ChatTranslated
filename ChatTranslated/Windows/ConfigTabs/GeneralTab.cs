@@ -14,20 +14,48 @@ public class GeneralTab
 
     public void Draw(Configuration configuration)
     {
-        DrawCoreSettings(configuration);
+        DrawGenericSettings(configuration);
         ImGui.Separator();
         DrawPluginLangSelection(configuration);
     }
 
-    private static void DrawCoreSettings(Configuration configuration)
+    private static void DrawGenericSettings(Configuration configuration)
     {
         bool _Enabled = configuration.Enabled;
+        bool _ChatIntegration = configuration.ChatIntegration;
+        bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
+        bool _ChatIntegration_ShowColoredText = configuration.ChatIntegration_ShowColoredText;
         bool _EnabledInDuty = configuration.EnabledInDuty;
 
         if (ImGui.Checkbox(Resources.EnablePlugin, ref _Enabled))
         {
             configuration.Enabled = _Enabled;
             configuration.Save();
+        }
+
+        if (ImGui.Checkbox(Resources.ChatIntegration, ref _ChatIntegration))
+        {
+            configuration.ChatIntegration = _ChatIntegration;
+            configuration.Save();
+        }
+
+        if (configuration.ChatIntegration)
+        {
+            ImGui.Indent(20);
+
+            if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref _ChatIntegration_HideOriginal))
+            {
+                configuration.ChatIntegration_HideOriginal = _ChatIntegration_HideOriginal;
+                configuration.Save();
+            }
+
+            if (ImGui.Checkbox(Resources.ChatIntegration_ShowColoredText, ref _ChatIntegration_ShowColoredText))
+            {
+                configuration.ChatIntegration_ShowColoredText = _ChatIntegration_ShowColoredText;
+                configuration.Save();
+            }
+
+            ImGui.Unindent(20);
         }
 
         if (ImGui.Checkbox(Resources.EnableInDuties, ref _EnabledInDuty))
