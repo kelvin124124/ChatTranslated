@@ -17,7 +17,7 @@ public class ConfigWindow : Window
     private readonly ChatTab chatTab;
 
     public ConfigWindow(Plugin plugin) : base(
-        "Chat Translated config window",
+        "ChatTranslated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
         Size = new Vector2(700, 340);

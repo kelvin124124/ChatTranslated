@@ -353,7 +353,7 @@ Google 和 Bing 翻译将被用作备用。
   <data name="Chat" xml:space="preserve">
     <value>聊天</value>
   </data>
-  <data name="Chat Channels" xml:space="preserve">
+  <data name="ChatChannels" xml:space="preserve">
     <value>聊天频道</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
@@ -363,8 +363,7 @@ Google 和 Bing 翻译将被用作备用。
     <value>输出翻译讯息时显示彩色文本</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>GPT-5-mini
-如果你居住在不支持的地区，可能会受到限制。</value>
+    <value>如果你居住在不支持的地区，可能会受到限制。</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
     <value>任何具有OpenAI兼容API的自定义提供商。</value>
@@ -411,5 +410,4 @@ https://api.deepseek.com/chat/completions</value>
 使用 {targetLanguage} 作为目标语言的占位符。
 上下文（如果启用）将自动附加。</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 </root>

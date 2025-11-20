@@ -29,7 +29,7 @@ namespace ChatTranslated.Windows
         [GeneratedRegex(@"(\p{IsCJKUnifiedIdeographs}|[^\x00-\x7F]|\w+|\s+|[^\w\s])")]
         private static partial Regex WordRegex();
 
-        public MainWindow(Plugin plugin) : base("Chat Translated", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse)
+        public MainWindow(Plugin plugin) : base("ChatTranslated", ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse)
         {
             Size = new Vector2(360, 220);
             SizeCondition = ImGuiCond.FirstUseEver;

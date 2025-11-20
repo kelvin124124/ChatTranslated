@@ -353,7 +353,7 @@ No envía texto traducido en el chat ni lo hace visible para otros jugadores.</v
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
   </data>
-  <data name="Chat Channels" xml:space="preserve">
+  <data name="ChatChannels" xml:space="preserve">
     <value>Canales de chat</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
@@ -363,8 +363,7 @@ No envía texto traducido en el chat ni lo hace visible para otros jugadores.</v
     <value>Mostrar texto en color al mostrar el mensaje traducido</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>GPT-5-mini
-Puede estar restringido si vives en una región no soportada.</value>
+    <value>Puede estar restringido si vives en una región no soportada.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
     <value>Cualquier proveedor personalizado con API compatible con OpenAI.</value>
@@ -411,5 +410,4 @@ El texto a continuación muestra el prompt actual.
 Use {targetLanguage} como marcador de posición para el idioma de destino.
 El contexto (si está habilitado) se agregará automáticamente.</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 </root>
