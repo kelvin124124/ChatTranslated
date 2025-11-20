@@ -68,7 +68,7 @@ namespace ChatTranslated
             Windows.ConfigTabs.GeneralTab.SetLanguageCulture(Service.configuration.SelectedPluginLanguage);
 
             // initialize chat channels
-            Service.configuration.SelectedChatTypes ??= Windows.ConfigTabs.ChatTab.genericChatTypes;
+            Service.configuration.SelectedChatTypes ??= Windows.ConfigTabs.ChatChannelsTab.genericChatTypes;
 
             // settings migration
             if (Service.configuration.Version != 5)
