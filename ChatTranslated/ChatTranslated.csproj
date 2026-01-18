@@ -12,10 +12,6 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
-    <PropertyGroup>
-        <RestoreSources>https://api.nuget.org/v3/index.json;$(RestoreSources)</RestoreSources>
-    </PropertyGroup>
-
     <ItemGroup>
         <PackageReference Include="GTranslate" Version="2.3.0" />
     </ItemGroup>
