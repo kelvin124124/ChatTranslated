@@ -280,6 +280,9 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
   <data name="PluginUILanguage" xml:space="preserve">
     <value>Idioma del Plugin</value>
   </data>
+  <data name="CustomEmote" xml:space="preserve">
+    <value>Custom Emote</value>
+  </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>EquipoPvP</value>
   </data>

@@ -278,6 +278,9 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
   <data name="PluginUILanguage" xml:space="preserve">
     <value>플러그인 언어</value>
   </data>
+  <data name="CustomEmote" xml:space="preserve">
+    <value>Custom Emote</value>
+  </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvP팀</value>
   </data>

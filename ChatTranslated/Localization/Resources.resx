@@ -280,6 +280,9 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
   <data name="PluginUILanguage" xml:space="preserve">
     <value>Plugin UI Language</value>
   </data>
+  <data name="CustomEmote" xml:space="preserve">
+    <value>Custom Emote</value>
+  </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPTeam</value>
   </data>
