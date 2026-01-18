@@ -18,7 +18,8 @@ public class ChatChannelsTab
         XivChatType.NoviceNetwork,
         XivChatType.Yell,
         XivChatType.CrossParty,
-        XivChatType.PvPTeam
+        XivChatType.PvPTeam,
+        XivChatType.CustomEmote
     ];
 
     public static readonly List<XivChatType> lsChatTypes =

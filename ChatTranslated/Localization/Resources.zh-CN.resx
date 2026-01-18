@@ -280,6 +280,9 @@ Google 和 Bing 翻译将被用作备用。
   <data name="PluginUILanguage" xml:space="preserve">
     <value>插件语言</value>
   </data>
+  <data name="CustomEmote" xml:space="preserve">
+    <value>Custom Emote</value>
+  </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>战队</value>
   </data>

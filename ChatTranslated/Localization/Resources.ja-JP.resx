@@ -280,6 +280,9 @@
   <data name="PluginUILanguage" xml:space="preserve">
     <value>プラグイン言語</value>
   </data>
+  <data name="CustomEmote" xml:space="preserve">
+    <value>Custom Emote</value>
+  </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPチーム</value>
   </data>

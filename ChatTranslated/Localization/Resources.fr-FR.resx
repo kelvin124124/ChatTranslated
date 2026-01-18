@@ -280,6 +280,9 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
   <data name="PluginUILanguage" xml:space="preserve">
     <value>Langue du greffon</value>
   </data>
+  <data name="CustomEmote" xml:space="preserve">
+    <value>Custom Emote</value>
+  </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPTeam</value>
   </data>

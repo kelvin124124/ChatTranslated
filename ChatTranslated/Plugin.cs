@@ -12,6 +12,7 @@ using Dalamud.Memory;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -68,10 +69,10 @@ namespace ChatTranslated
             Windows.ConfigTabs.GeneralTab.SetLanguageCulture(Service.configuration.SelectedPluginLanguage);
 
             // initialize chat channels
-            Service.configuration.SelectedChatTypes ??= Windows.ConfigTabs.ChatChannelsTab.genericChatTypes;
+            Service.configuration.SelectedChatTypes ??= new List<XivChatType>(Windows.ConfigTabs.ChatChannelsTab.genericChatTypes);
 
             // settings migration
-            if (Service.configuration.Version != 5)
+            if (Service.configuration.Version < 5)
             {
                 // migrate channel settings
                 var _ChatTypes = Service.configuration.SelectedChatTypes;
@@ -82,6 +83,16 @@ namespace ChatTranslated
                         Service.configuration.SelectedChatTypes.Add(type);
                 });
                 Service.configuration.Version = 5;
+                Service.configuration.Save();
+            }
+
+            if (Service.configuration.Version < 6)
+            {
+                if (!Service.configuration.SelectedChatTypes.Contains(XivChatType.CustomEmote))
+                {
+                    Service.configuration.SelectedChatTypes.Add(XivChatType.CustomEmote);
+                }
+                Service.configuration.Version = 6;
                 Service.configuration.Save();
             }
 
