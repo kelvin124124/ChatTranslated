@@ -280,6 +280,9 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
   <data name="PluginUILanguage" xml:space="preserve">
     <value>Plugin-Sprache</value>
   </data>
+  <data name="CustomEmote" xml:space="preserve">
+    <value>Custom Emote</value>
+  </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvpGruppe</value>
   </data>
@@ -353,7 +356,7 @@ Sie sendet die übersetzte Nachricht nicht im Chat und macht sie für andere Spi
   <data name="Chat" xml:space="preserve">
     <value>Chat</value>
   </data>
-  <data name="Chat Channels" xml:space="preserve">
+  <data name="ChatChannels" xml:space="preserve">
     <value>Chat-Kanäle</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
@@ -363,8 +366,7 @@ Sie sendet die übersetzte Nachricht nicht im Chat und macht sie für andere Spi
     <value>Zeigen Sie farbigen Text an, wenn die übersetzte Nachricht ausgegeben wird</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>GPT-5-mini
-May be restricted if you live in unsupported region.</value>
+    <value>Kann eingeschränkt werden, wenn Sie sich in einer nicht unterstützten Region befinden.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
     <value>Jeder benutzerdefinierte Anbieter mit OpenAI-kompatibler API.</value>
@@ -411,5 +413,4 @@ Der nachstehende Text zeigt den aktuellen Prompt.
 Verwenden Sie {targetLanguage} als Platzhalter für die Zielsprache.
 Der Kontext (falls aktiviert) wird automatisch angehängt.</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
 </root>

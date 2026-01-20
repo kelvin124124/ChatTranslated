@@ -9,7 +9,7 @@ namespace ChatTranslated
     [Serializable]
     public class Configuration : IPluginConfiguration
     {
-        public int Version { get; set; } = 5;
+        public int Version { get; set; } = 6;
         public enum TranslationEngine
         {
             DeepL,

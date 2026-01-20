@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Dalamud.NET.Sdk/13.1.0">
+<Project Sdk="Dalamud.NET.Sdk/14.0.1">
 
     <PropertyGroup>
         <Authors>kelvin124124</Authors>
         <Company></Company>
-        <Version>3.3.4.1</Version>
+        <Version>3.3.4.4</Version>
         <Description>In-game chat translator.</Description>
         <Copyright></Copyright>
         <PackageProjectUrl>https://github.com/kelvin124124/ChatTranslated</PackageProjectUrl>

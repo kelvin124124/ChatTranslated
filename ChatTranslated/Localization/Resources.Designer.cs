@@ -105,7 +105,7 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("ChannelSelection", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Chat.
         /// </summary>
@@ -114,13 +114,13 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("Chat", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Chat Channels.
         /// </summary>
-        internal static string Chat_Channels {
+        internal static string ChatChannels {
             get {
-                return ResourceManager.GetString("Chat Channels", resourceCulture);
+                return ResourceManager.GetString("ChatChannels", resourceCulture);
             }
         }
         
@@ -643,8 +643,7 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to GPT-5-mini
-        ///May be restricted if you live in unsupported region..
+        ///   Looks up a localized string similar to May be restricted if you live in unsupported region..
         /// </summary>
         internal static string OpenAIAPIExplanation {
             get {
@@ -826,7 +825,7 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("TranslateButtonTooltip", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Translation Engine.
         /// </summary>
@@ -835,7 +834,7 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("Translation Engine", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Translation Mode.
         /// </summary>
@@ -844,7 +843,7 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("Translation Mode", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Translation Engine.
         /// </summary>

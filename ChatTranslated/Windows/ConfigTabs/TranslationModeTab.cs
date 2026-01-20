@@ -6,7 +6,7 @@ using System;
 
 namespace ChatTranslated.Windows.ConfigTabs;
 
-public class TranslationEngineTab
+public class TranslationModeTab
 {
     public void Draw(Configuration configuration)
     {
