@@ -8,7 +8,7 @@ namespace ChatTranslated.Translate
 {
     internal static class MachineTranslate
     {
-        private static readonly DeeplsTranslator.DeeplsTranslator DeeplsTranslator = new();
+        private static readonly DeeplsTranslate DeeplsTranslator = new();
 
         private static readonly Lazy<GoogleTranslator> LazyGTranslator = new(() => new GoogleTranslator(TranslationHandler.HttpClient));
         private static readonly Lazy<BingTranslator> LazyBingTranslator = new(() => new BingTranslator(TranslationHandler.HttpClient));

@@ -48,7 +48,7 @@ namespace ChatTranslated.Translate
 
             (translatedText, mode) = Service.configuration.SelectedTranslationEngine switch
             {
-                Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(message.OriginalContent.TextValue, targetLanguage),
+                Configuration.TranslationEngine.DeepL => await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage),
                 Configuration.TranslationEngine.LLM => Service.configuration.LLM_Provider switch
                 {
                     0 => await LLMProxyTranslate.Translate(message, targetLanguage),

@@ -1,7 +1,7 @@
 using ProtoBuf;
 using System.Collections.Generic;
 
-namespace ChatTranslated.Translate.DeeplsTranslator
+namespace ChatTranslated.Translate
 {
     [ProtoContract]
     public class TextRange

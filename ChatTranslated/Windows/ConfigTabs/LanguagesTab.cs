@@ -1,7 +1,6 @@
 using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using Dalamud.Bindings.ImGui;
-using GTranslate;
 using System;
 using System.Linq;
 using static ChatTranslated.Configuration;
@@ -115,7 +114,7 @@ public class LanguagesTab
             ImGui.SameLine();
             if (ImGui.Button(Resources.Apply + "###ApplyCustomLanguage"))
             {
-                if (Language.TryGetLanguage(configuration.CustomTargetLanguage, out var lang))
+                if (GTranslate.Language.TryGetLanguage(configuration.CustomTargetLanguage, out var lang))
                 {
                     Plugin.OutputChatLine("Language applied successfully.");
                     TranslationHandler.ClearTranslationCache();

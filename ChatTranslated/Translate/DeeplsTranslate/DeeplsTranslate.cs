@@ -14,9 +14,9 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using static ChatTranslated.Configuration;
 
-namespace ChatTranslated.Translate.DeeplsTranslator
+namespace ChatTranslated.Translate
 {
-    public class DeeplsTranslator
+    public class DeeplsTranslate : IDisposable
     {
         private readonly SemaphoreSlim sessionLock = new(1, 1);
         private Connection? connection;
@@ -627,6 +627,11 @@ namespace ChatTranslated.Translate.DeeplsTranslator
                         return null;
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 
