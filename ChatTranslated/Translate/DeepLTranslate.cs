@@ -1,12 +1,12 @@
 using ChatTranslated.Utils;
 using Dalamud.Utility;
+using MessagePack;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Buffers;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -93,162 +93,93 @@ namespace ChatTranslated.Translate
         }
     }
 
-    // Based on DeepLX: https://github.com/OwO-Network/DeepLX
+    // Based on free-deepl-translator: https://github.com/RealDarkCraft/free-deepl-translator
     internal static class DeeplsTranslate
     {
-        private static readonly Random Random = new();
-        private const string BaseUrl = "https://www2.deepl.com/jsonrpc";
+        private static DeepLConnection? _connection;
+        private static string _input = "", _output = "";
 
         public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
         {
             if (!DeepLTranslate.TryGetLanguageCode(targetLanguage, out string? langCode))
-            {
                 return ("Target language not supported by DeepL.", null);
-            }
-
-            var id = ((ulong)Random.Next(8300000, 8400000) * 1000) + 1;
-            var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-            var iCount = message.Count(c => c == 'i');
-            var adjustedTimestamp = iCount == 0 ? timestamp : timestamp - (timestamp % (iCount + 1)) + iCount + 1;
-
-            var requestBody = new
-            {
-                jsonrpc = "2.0",
-                method = "LMT_handle_jobs",
-                @params = new
-                {
-                    commonJobParams = new
-                    {
-                        mode = "translate",
-                        formality = "undefined",
-                        transcribe_as = "romanize",
-                        advancedMode = false,
-                        textType = "plaintext",
-                        wasSpoken = false,
-                        regionalVariant = targetLanguage switch
-                        {
-                            "Chinese (Simplified)" => "ZH-HANS",
-                            "Chinese (Traditional)" => "ZH-HANT",
-                            _ => default
-                        }
-                    },
-                    lang = new
-                    {
-                        source_lang_user_selected = "auto",
-                        target_lang = langCode,
-                        source_lang_computed = "AUTO",
-                    },
-                    jobs = new[]
-                    {
-                        new
-                        {
-                            kind = "default",
-                            preferred_num_beams = 4,
-                            raw_en_context_before = Array.Empty<string>(),
-                            raw_en_context_after = Array.Empty<string>(),
-                            sentences = new[]
-                            {
-                                new { prefix = "", text = message, id = 0 }
-                            }
-                        }
-                    },
-                    timestamp = adjustedTimestamp
-                },
-                id
-            };
-
-            var postDataJson = JsonSerializer.Serialize(requestBody);
-            postDataJson = postDataJson.Replace("\"method\":\"", (id + 5) % 29 == 0 || (id + 3) % 13 == 0 ? "\"method\" : \"" : "\"method\": \"");
-
-            using var request = new HttpRequestMessage(HttpMethod.Post, BaseUrl)
-            {
-                Content = new StringContent(postDataJson, Encoding.UTF8, "application/json")
-            };
-
-            SetHeaders(request);
 
             try
             {
-                var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
-                response.EnsureSuccessStatusCode();
-
-                var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                var contentEncoding = response.Content.Headers.ContentEncoding;
-                if (contentEncoding.Contains("gzip", StringComparer.OrdinalIgnoreCase))
+                if (_connection is not { Connected: true })
                 {
-                    using var gzipStream = new System.IO.Compression.GZipStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
-                    using var streamReader = new System.IO.StreamReader(gzipStream, Encoding.UTF8);
-                    postDataJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                }
-                else if (contentEncoding.Contains("deflate", StringComparer.OrdinalIgnoreCase))
-                {
-                    using var deflateStream = new System.IO.Compression.DeflateStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
-                    using var streamReader = new System.IO.StreamReader(deflateStream, Encoding.UTF8);
-                    postDataJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-                }
-                else if (contentEncoding.Contains("br", StringComparer.OrdinalIgnoreCase))
-                {
-                    throw new NotSupportedException("Brotli encoding is not supported.");
-                }
-                else
-                {
-                    postDataJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (_connection is not null) await _connection.Close();
+                    _connection = new DeepLConnection();
+                    await _connection.Connect();
                 }
 
+                if (_connection is not { Connected: true })
+                    throw new Exception("Failed to establish DeepL session.");
 
-                using var jsonDoc = JsonDocument.Parse(postDataJson);
-                var translated = jsonDoc.RootElement
-                    .GetProperty("result")
-                    .GetProperty("translations")[0]
-                    .GetProperty("beams")[0]
-                    .GetProperty("sentences")[0]
-                    .GetProperty("text")
-                    .GetString();
+                var result = await GetTranslations(message, langCode!);
+                if (result is not null)
+                    return (result, TranslationMode.DeepL);
 
-                if (translated.IsNullOrWhitespace())
-                {
-                    throw new Exception("Translation not found in the expected JSON structure.");
-                }
-
-                if (translated == message)
-                {
-                    throw new Exception("Translation is the same as the original text.");
-                }
-
-                return (translated, TranslationMode.DeepL);
+                throw new Exception(_connection.OnErrorLast);
             }
             catch (Exception ex)
             {
-                Service.pluginLog.Warning($"DeeplsTranslate failed to translate. Falling back to DeepL API / machine translation.\n{ex.Message}");
-                if (Service.configuration.DeepL_API_Key != "YOUR-API-KEY:fx")
-                    return await DeepLTranslate.Translate(message, targetLanguage);
-                else
-                    return await MachineTranslate.Translate(message, targetLanguage);
+                Service.pluginLog.Warning($"DeeplsTranslate failed. Falling back.\n{ex.Message}");
+                return Service.configuration.DeepL_API_Key != "YOUR-API-KEY:fx"
+                    ? await DeepLTranslate.Translate(message, targetLanguage)
+                    : await MachineTranslate.Translate(message, targetLanguage);
             }
         }
 
-        private static void SetHeaders(HttpRequestMessage request)
+        private static async Task<string?> GetTranslations(string text, string targetLang)
         {
-            request.Headers.Accept.Clear();
-            request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+            var pid = new ParticipantId { Value = 2 };
+            List<FieldEvent> events =
+            [
+                new() { FieldName = 2, SetPropertyOperation = new() { PropertyName = 5, TranslatorRequestedTargetLanguageValue = new() { TargetLanguage = new() { Code = targetLang } } }, ParticipantId = pid },
+                new() { FieldName = 1, SetPropertyOperation = new() { PropertyName = 3 }, ParticipantId = pid },
+                new() { FieldName = 2, SetPropertyOperation = new() { PropertyName = 16, TranslatorLanguageModelValue = new() { LanguageModel = new() { Value = "next-gen" } } }, ParticipantId = pid },
+                new() { FieldName = 1, TextChangeOperation = new() { Range = new() { End = _input.Length }, Text = text }, ParticipantId = pid }
+            ];
 
-            var headers = new Dictionary<string, string>
-            {
-                { "Accept-Language", "en-US,en;q=0.9" },
-                { "Accept-Encoding", "gzip, deflate" }, // removed br and zstd for simplicity
-                { "Origin", "https://www.deepl.com" },
-                { "Referer", "https://www.deepl.com/" },
-                { "Sec-Fetch-Dest", "empty" },
-                { "Sec-Fetch-Mode", "cors" },
-                { "Sec-Fetch-Site", "same-site" },
-                { "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0" },
-                { "Content-Type", "application/json" }
-            };
+            (_input, _output) = (text, "");
 
-            foreach (var header in headers)
+            var request = new ParticipantRequest { AppendMessage = new() { Events = events, BaseVersion = new() { Version = new() { Value = _connection!.BVer } } } };
+            var buf = new ArrayBufferWriter<byte>();
+            var w = new MessagePackWriter(buf);
+            w.WriteArrayHeader(4); w.Write(2); w.WriteMapHeader(0); w.Write("1");
+            w.WriteExtensionFormat(new ExtensionResult(4, request.ToProtoBytes()));
+            w.Flush();
+
+            await _connection.SendFramed(buf.WrittenSpan.ToArray());
+
+            while (true)
             {
-                request.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                var msg = await _connection.PopMessageAsync();
+                if (msg is null || _connection.OnError) return null;
+                if (msg is not List<object> { Count: >= 4 } lst) continue;
+
+                var protoBytes = lst[3] switch { byte[] b => b, ExtensionResult e => e.Data.ToArray(), _ => null };
+                if (protoBytes is null) continue;
+
+                var resp = protoBytes.FromProtoBytes<ParticipantResponse>();
+                if (resp?.MetaInfoMessage?.Idle is not null) return _output;
+
+                if (resp?.PublishedMessage is { } pub)
+                {
+                    if (pub.CurrentVersion?.Version is not null) _connection.BVer = pub.CurrentVersion.Version.Value;
+                    foreach (var evt in pub.Events ?? [])
+                        if (evt.TextChangeOperation is { } op)
+                            if (evt.FieldName == 2) _output = ApplyTextChange(_output, op);
+                            else if (evt.FieldName == 1) _input = ApplyTextChange(_input, op);
+                }
             }
+        }
+
+        private static string ApplyTextChange(string orig, TextChangeOperation op)
+        {
+            var (start, end) = (Math.Clamp(op.Range?.Start ?? 0, 0, orig.Length), Math.Clamp(op.Range?.End ?? 0, 0, orig.Length));
+            return $"{orig[..start]}{op.Text ?? ""}{orig[end..]}";
         }
     }
 }

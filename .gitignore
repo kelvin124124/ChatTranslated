@@ -2,3 +2,6 @@
 obj/
 bin/
 *.user
+
+.claude/
+CLAUDE.md
