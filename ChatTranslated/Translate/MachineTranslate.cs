@@ -8,6 +8,8 @@ namespace ChatTranslated.Translate
 {
     internal static class MachineTranslate
     {
+        private static readonly DeeplsTranslator.DeeplsTranslator DeeplsTranslator = new();
+
         private static readonly Lazy<GoogleTranslator> LazyGTranslator = new(() => new GoogleTranslator(TranslationHandler.HttpClient));
         private static readonly Lazy<BingTranslator> LazyBingTranslator = new(() => new BingTranslator(TranslationHandler.HttpClient));
         public static GoogleTranslator GTranslator => LazyGTranslator.Value;
@@ -15,9 +17,10 @@ namespace ChatTranslated.Translate
 
         public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
         {
-            // Try Bing first, then Google as fallback
+            // fallback sequence
             foreach (var translator in new dynamic[]
             {
+                DeeplsTranslator,
                 BingTranslator,
                 GTranslator
             })
