@@ -27,8 +27,10 @@ namespace ChatTranslated.Translate
 
         public async Task<(string, TranslationMode?)> TranslateAsync(string text, string targetLanguage)
         {
+            Service.pluginLog.Warning($"[DeeplsTranslate] TranslateAsync called: text='{text}', targetLanguage='{targetLanguage}'"); // debug
             if (!TryGetLanguageCode(targetLanguage, out var targetLang))
             {
+                Service.pluginLog.Warning($"[DeeplsTranslate] Language '{targetLanguage}' not supported"); // debug
                 throw new Exception($"Target language '{targetLanguage}' not supported by DeepL.");
             }
 
@@ -36,43 +38,55 @@ namespace ChatTranslated.Translate
 
             for (int attempt = 0; attempt <= maxRetries; attempt++)
             {
+                Service.pluginLog.Warning($"[DeeplsTranslate] Attempt {attempt}/{maxRetries}, ensuring connection..."); // debug
                 await EnsureConnectedAsync().ConfigureAwait(false);
 
                 if (connection?.Connected != true)
                 {
+                    Service.pluginLog.Warning($"[DeeplsTranslate] Connection not established on attempt {attempt}"); // debug
                     if (attempt < maxRetries)
                     {
+                        Service.pluginLog.Warning("[DeeplsTranslate] Resetting connection for retry..."); // debug
                         await ResetConnectionAsync().ConfigureAwait(false);
                         continue;
                     }
+                    Service.pluginLog.Warning("[DeeplsTranslate] All retries exhausted, falling back to DeepL API"); // debug
                     return await TryDeepLApi(text, targetLang);
                 }
 
+                Service.pluginLog.Warning("[DeeplsTranslate] Connection active, calling GetTranslations..."); // debug
                 string? result = await GetTranslations(text, targetLang).ConfigureAwait(false);
 
                 if (!result.IsNullOrWhitespace())
                 {
+                    Service.pluginLog.Warning($"[DeeplsTranslate] Translation successful: '{result}'"); // debug
                     return (result!, TranslationMode.DeepL);
                 }
 
+                Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations returned empty on attempt {attempt}"); // debug
                 if (attempt < maxRetries)
                 {
+                    Service.pluginLog.Warning("[DeeplsTranslate] Resetting connection for retry..."); // debug
                     await ResetConnectionAsync().ConfigureAwait(false);
                     continue;
                 }
             }
 
+            Service.pluginLog.Warning("[DeeplsTranslate] All attempts failed, falling back to DeepL API"); // debug
             return await TryDeepLApi(text, targetLang);
         }
 
         private static async Task<(string, TranslationMode?)> TryDeepLApi(string text, string targetLang)
         {
+            Service.pluginLog.Warning($"[DeeplsTranslate] TryDeepLApi called, targetLang='{targetLang}'"); // debug
             if (!Service.configuration.DeepL_API_Key.IsNullOrWhitespace() &&
                 Service.configuration.DeepL_API_Key != "YOUR-API-KEY:fx")
             {
+                Service.pluginLog.Warning("[DeeplsTranslate] API key present, calling DeepL API..."); // debug
                 return await DeepLTranslate.Translate(text, targetLang);
             }
 
+            Service.pluginLog.Warning("[DeeplsTranslate] No valid API key, throwing exception"); // debug
             throw new Exception("Translation failed after retries.");
         }
 
@@ -97,24 +111,30 @@ namespace ChatTranslated.Translate
         {
             if (connection?.Connected == true)
             {
+                Service.pluginLog.Warning("[DeeplsTranslate] EnsureConnectedAsync: already connected"); // debug
                 return;
             }
 
+            Service.pluginLog.Warning("[DeeplsTranslate] EnsureConnectedAsync: acquiring lock to establish connection..."); // debug
             await sessionLock.WaitAsync().ConfigureAwait(false);
             try
             {
                 if (connection?.Connected == true)
                 {
+                    Service.pluginLog.Warning("[DeeplsTranslate] EnsureConnectedAsync: connected after acquiring lock"); // debug
                     return;
                 }
 
                 if (connection != null)
                 {
+                    Service.pluginLog.Warning("[DeeplsTranslate] EnsureConnectedAsync: closing stale connection"); // debug
                     await connection.Close().ConfigureAwait(false);
                 }
 
+                Service.pluginLog.Warning("[DeeplsTranslate] EnsureConnectedAsync: creating new Connection and connecting..."); // debug
                 connection = new Connection();
-                await connection.Connect().ConfigureAwait(false);
+                var connected = await connection.Connect().ConfigureAwait(false);
+                Service.pluginLog.Warning($"[DeeplsTranslate] EnsureConnectedAsync: Connect() returned {connected}"); // debug
             }
             finally
             {
@@ -124,13 +144,19 @@ namespace ChatTranslated.Translate
 
         private async Task ResetConnectionAsync()
         {
+            Service.pluginLog.Warning("[DeeplsTranslate] ResetConnectionAsync: resetting connection..."); // debug
             await sessionLock.WaitAsync().ConfigureAwait(false);
             try
             {
                 if (connection != null)
                 {
+                    Service.pluginLog.Warning("[DeeplsTranslate] ResetConnectionAsync: closing existing connection"); // debug
                     await connection.Close().ConfigureAwait(false);
                     connection = null;
+                }
+                else
+                {
+                    Service.pluginLog.Warning("[DeeplsTranslate] ResetConnectionAsync: no connection to close"); // debug
                 }
             }
             finally
@@ -141,6 +167,7 @@ namespace ChatTranslated.Translate
 
         private async Task<string?> GetTranslations(string text, string targetLang)
         {
+            Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: text='{text}', targetLang='{targetLang}', BVer={connection!.BVer}"); // debug
             var participantId = new ParticipantId { Value = 2 };
             var events = new List<FieldEvent>
             {
@@ -212,6 +239,7 @@ namespace ChatTranslated.Translate
             writer.WriteExtensionFormat(new ExtensionResult(4, proto));
             writer.Flush();
 
+            Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: sending request ({buf.WrittenCount} bytes)"); // debug
             await connection.SendFramed(buf.WrittenSpan.ToArray());
 
             while (true)
@@ -219,11 +247,13 @@ namespace ChatTranslated.Translate
                 var msg = await connection.PopMessageAsync();
                 if (msg is null || connection.OnError)
                 {
+                    Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: msg is null={msg is null}, OnError={connection.OnError}"); // debug
                     return null;
                 }
 
                 if (msg is not List<object> { Count: >= 4 } msgList)
                 {
+                    Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: skipping non-list or short message (type={msg.GetType().Name})"); // debug
                     continue;
                 }
 
@@ -236,12 +266,14 @@ namespace ChatTranslated.Translate
 
                 if (protoBytes is null)
                 {
+                    Service.pluginLog.Warning("[DeeplsTranslate] GetTranslations: protoBytes is null, skipping"); // debug
                     continue;
                 }
 
                 var response = protoBytes.FromProtoBytes<ParticipantResponse>();
                 if (response?.MetaInfoMessage?.Idle is not null)
                 {
+                    Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: received Idle, returning outputText='{outputText}'"); // debug
                     return outputText;
                 }
 
@@ -249,6 +281,7 @@ namespace ChatTranslated.Translate
                 {
                     if (published.CurrentVersion?.Version is not null)
                     {
+                        Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: updating BVer from {connection.BVer} to {published.CurrentVersion.Version.Value}"); // debug
                         connection.BVer = published.CurrentVersion.Version.Value;
                     }
 
@@ -259,10 +292,12 @@ namespace ChatTranslated.Translate
                             if (evt.FieldName == 2)
                             {
                                 outputText = ApplyTextChange(outputText, op);
+                                Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: output text change -> '{outputText}'"); // debug
                             }
                             else if (evt.FieldName == 1)
                             {
                                 inputText = ApplyTextChange(inputText, op);
+                                Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: input text change -> '{inputText}'"); // debug
                             }
                         }
                     }
@@ -348,10 +383,12 @@ namespace ChatTranslated.Translate
             {
                 if (Connected)
                 {
+                    Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: already connected"); // debug
                     return true;
                 }
 
                 (Connected, OnError) = (false, false);
+                Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: starting negotiation..."); // debug
 
                 try
                 {
@@ -360,41 +397,50 @@ namespace ChatTranslated.Translate
 
                     if (!response.IsSuccessStatusCode)
                     {
+                        Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: negotiate failed with status {response.StatusCode}"); // debug
                         return false;
                     }
 
                     var json = JsonSerializer.Deserialize<JsonElement>(await response.Content.ReadAsStringAsync());
                     if (!json.TryGetProperty("connectionToken", out var tokenElement))
                     {
+                        Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: no connectionToken in negotiate response"); // debug
                         return false;
                     }
 
                     token = tokenElement.GetString();
+                    Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: got token, starting receive loop"); // debug
                     cts = new CancellationTokenSource();
                     recvTask = ReceiveLoop(cts.Token);
 
                     await Send("{\"protocol\":\"messagepack\",\"version\":1}\x1e"u8.ToArray());
+                    Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: sent protocol handshake"); // debug
                     await PopMessageAsync();
 
                     // totally not sus
                     await Send(Convert.FromBase64String(
                         "TpUBgKEwrFN0YXJ0U2Vzc2lvbpHHOAEIARIwCgsIASIHCA5yAwjcCwohCAIiDQgFKgkKBwoFZW4tVVMiDggSkgEJCgcKBWVuLVVTGgIQAQ=="));
+                    Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: sent StartSession"); // debug
 
                     if (await PopMessageAsync() is not List<object> msg || OnError)
                     {
+                        Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: StartSession response invalid or OnError={OnError}"); // debug
                         return false;
                     }
 
                     if (ExtractProto(msg, 4) is not { } data)
                     {
+                        Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: failed to extract proto from StartSession response"); // debug
                         return false;
                     }
 
                     var sessionToken = data.FromProtoBytes<StartSessionResponse>()?.SessionToken;
+                    Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: got sessionToken={sessionToken != null}"); // debug
 
                     await SendFramed(MessagePackSerializer.Serialize<object?[]>(
                         [1, new object(), null, "AppendMessages", new[] { sessionToken }, new[] { "1" }],
                         MsgPackOptions));
+                    Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: sent AppendMessages"); // debug
 
                     var buf = new ArrayBufferWriter<byte>();
                     var writer = new MessagePackWriter(buf);
@@ -408,9 +454,11 @@ namespace ChatTranslated.Translate
                     writer.WriteExtensionFormat(new ExtensionResult(3, Array.Empty<byte>()));
                     writer.Flush();
                     await SendFramed(buf.WrittenSpan.ToArray());
+                    Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: sent GetMessages"); // debug
 
                     if (await PopMessageAsync() is not List<object> msg2)
                     {
+                        Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: GetMessages response invalid"); // debug
                         return false;
                     }
 
@@ -418,12 +466,15 @@ namespace ChatTranslated.Translate
                         data2.FromProtoBytes<ParticipantResponse>()?.PublishedMessage is { } published)
                     {
                         BVer = published.CurrentVersion?.Version?.Value ?? 0;
+                        Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: initial BVer={BVer}"); // debug
                     }
 
+                    Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: connected successfully"); // debug
                     return Connected = true;
                 }
-                catch
+                catch (Exception ex) // debug
                 {
+                    Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: exception: {ex.Message}"); // debug
                     return false;
                 }
             }
@@ -505,6 +556,7 @@ namespace ChatTranslated.Translate
 
             private async Task ReceiveLoop(CancellationToken ct)
             {
+                Service.pluginLog.Warning("[DeeplsTranslate] ReceiveLoop: started"); // debug
                 while (!ct.IsCancellationRequested)
                 {
                     try
@@ -512,6 +564,7 @@ namespace ChatTranslated.Translate
                         var response = await client.GetAsync(Url, ct);
                         if (!response.IsSuccessStatusCode)
                         {
+                            Service.pluginLog.Warning($"[DeeplsTranslate] ReceiveLoop: poll returned status {response.StatusCode}"); // debug
                             await Task.Delay(1000, ct);
                             continue;
                         }
@@ -524,6 +577,7 @@ namespace ChatTranslated.Translate
                             continue;
                         }
 
+                        Service.pluginLog.Warning($"[DeeplsTranslate] ReceiveLoop: received {data.Length} bytes"); // debug
                         foreach (var msgBytes in UnpackMessages(data))
                         {
                             var reader = new MessagePackReader(msgBytes);
@@ -537,28 +591,34 @@ namespace ChatTranslated.Translate
 
                             if (list is [_, _, _, "OnError", ..])
                             {
+                                Service.pluginLog.Warning("[DeeplsTranslate] ReceiveLoop: received OnError, closing connection"); // debug
                                 (OnError, Connected) = (true, false);
                                 await Close();
                             }
                             else if (list is [6, ..])
                             {
+                                Service.pluginLog.Warning("[DeeplsTranslate] ReceiveLoop: received ping, sending pong"); // debug
                                 await SendFramed(MessagePackSerializer.Serialize<object[]>([6], MsgPackOptions));
                             }
                             else
                             {
+                                Service.pluginLog.Warning($"[DeeplsTranslate] ReceiveLoop: queuing message (count={list.Count})"); // debug
                                 messages.Writer.TryWrite(list);
                             }
                         }
                     }
                     catch (OperationCanceledException)
                     {
+                        Service.pluginLog.Warning("[DeeplsTranslate] ReceiveLoop: cancelled"); // debug
                         break;
                     }
-                    catch
+                    catch (Exception ex) // debug
                     {
+                        Service.pluginLog.Warning($"[DeeplsTranslate] ReceiveLoop: exception: {ex.Message}"); // debug
                         await Task.Delay(1000, ct);
                     }
                 }
+                Service.pluginLog.Warning("[DeeplsTranslate] ReceiveLoop: exiting"); // debug
             }
 
             private static List<byte[]> UnpackMessages(byte[] data)
