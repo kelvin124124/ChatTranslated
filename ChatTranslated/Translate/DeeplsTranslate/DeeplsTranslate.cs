@@ -167,7 +167,7 @@ namespace ChatTranslated.Translate
 
         private async Task<string?> GetTranslations(string text, string targetLang)
         {
-            Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: text='{text}', targetLang='{targetLang}', BVer={connection!.BVer}"); // debug
+            Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: text='{text}', targetLang='{targetLang}', BVer={connection!.BVer}, inputText.Length={inputText.Length}"); // debug
             var participantId = new ParticipantId { Value = 2 };
             var events = new List<FieldEvent>
             {
@@ -257,6 +257,7 @@ namespace ChatTranslated.Translate
                     continue;
                 }
 
+                Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: msgList[0]={msgList[0]}, [1]={msgList[1]?.GetType().Name}, [2]={msgList[2]}, [3]={msgList[3]?.GetType().Name}"); // debug
                 var protoBytes = msgList[3] switch
                 {
                     byte[] b => b,
@@ -266,11 +267,12 @@ namespace ChatTranslated.Translate
 
                 if (protoBytes is null)
                 {
-                    Service.pluginLog.Warning("[DeeplsTranslate] GetTranslations: protoBytes is null, skipping"); // debug
+                    Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: protoBytes is null (element type={msgList[3]?.GetType().Name}), skipping"); // debug
                     continue;
                 }
 
                 var response = protoBytes.FromProtoBytes<ParticipantResponse>();
+                Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: deserialized response - hasIdle={response?.MetaInfoMessage?.Idle is not null}, hasPublished={response?.PublishedMessage is not null}, protoBytes.Length={protoBytes.Length}"); // debug
                 if (response?.MetaInfoMessage?.Idle is not null)
                 {
                     Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: received Idle, returning outputText='{outputText}'"); // debug
@@ -285,6 +287,7 @@ namespace ChatTranslated.Translate
                         connection.BVer = published.CurrentVersion.Version.Value;
                     }
 
+                    Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: published has {published.Events?.Count ?? 0} events"); // debug
                     foreach (var evt in published.Events ?? [])
                     {
                         if (evt.TextChangeOperation is { } op)
@@ -300,7 +303,15 @@ namespace ChatTranslated.Translate
                                 Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: input text change -> '{inputText}'"); // debug
                             }
                         }
+                        else if (evt.SetPropertyOperation is { } setProp)
+                        {
+                            Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: event fieldName={evt.FieldName}, setProp.PropertyName={setProp.PropertyName}"); // debug
+                        }
                     }
+                }
+                else
+                {
+                    Service.pluginLog.Warning($"[DeeplsTranslate] GetTranslations: response has neither Idle nor PublishedMessage, raw hex={Convert.ToHexString(protoBytes)}"); // debug
                 }
             }
         }
@@ -466,7 +477,14 @@ namespace ChatTranslated.Translate
                         data2.FromProtoBytes<ParticipantResponse>()?.PublishedMessage is { } published)
                     {
                         BVer = published.CurrentVersion?.Version?.Value ?? 0;
-                        Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: initial BVer={BVer}"); // debug
+                        Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: initial BVer={BVer}, events={published.Events?.Count ?? 0}"); // debug
+                        foreach (var evt in published.Events ?? []) // debug
+                        { // debug
+                            if (evt.TextChangeOperation is { } op) // debug
+                                Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: initial event fieldName={evt.FieldName}, textOp range=[{op.Range?.Start ?? 0},{op.Range?.End ?? 0}], text='{op.Text}'"); // debug
+                            else if (evt.SetPropertyOperation is { } setProp) // debug
+                                Service.pluginLog.Warning($"[DeeplsTranslate] Connection.Connect: initial event fieldName={evt.FieldName}, setProp={setProp.PropertyName}"); // debug
+                        } // debug
                     }
 
                     Service.pluginLog.Warning("[DeeplsTranslate] Connection.Connect: connected successfully"); // debug
@@ -591,7 +609,8 @@ namespace ChatTranslated.Translate
 
                             if (list is [_, _, _, "OnError", ..])
                             {
-                                Service.pluginLog.Warning("[DeeplsTranslate] ReceiveLoop: received OnError, closing connection"); // debug
+                                var errorDetails = list.Count > 4 ? string.Join(", ", list.Skip(4).Select(x => x?.ToString() ?? "null")) : "no details"; // debug
+                                Service.pluginLog.Warning($"[DeeplsTranslate] ReceiveLoop: received OnError [{string.Join(", ", list.Select(x => x?.ToString() ?? "null"))}], details: {errorDetails}"); // debug
                                 (OnError, Connected) = (true, false);
                                 await Close();
                             }
