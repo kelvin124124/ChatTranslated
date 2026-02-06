@@ -133,6 +133,8 @@ namespace ChatTranslated.Translate
 
                 Service.pluginLog.Warning("[DeeplsTranslate] EnsureConnectedAsync: creating new Connection and connecting..."); // debug
                 connection = new Connection();
+                inputText = "";
+                outputText = "";
                 var connected = await connection.Connect().ConfigureAwait(false);
                 Service.pluginLog.Warning($"[DeeplsTranslate] EnsureConnectedAsync: Connect() returned {connected}"); // debug
             }
@@ -572,6 +574,21 @@ namespace ChatTranslated.Translate
                 };
             }
 
+            // debug
+            private static string DumpObject(object? obj)
+            {
+                return obj switch
+                {
+                    null => "null",
+                    string s => $"\"{s}\"",
+                    byte[] b => $"bytes({b.Length}):{Convert.ToHexString(b)}",
+                    ExtensionResult e => $"ext({e.Header.TypeCode},{e.Data.Length}):{Convert.ToHexString(e.Data.ToArray())}",
+                    List<object> list => $"[{string.Join(", ", list.Select(DumpObject))}]",
+                    List<object?> list => $"[{string.Join(", ", list.Select(DumpObject))}]",
+                    _ => obj.ToString() ?? "?"
+                };
+            }
+
             private async Task ReceiveLoop(CancellationToken ct)
             {
                 Service.pluginLog.Warning("[DeeplsTranslate] ReceiveLoop: started"); // debug
@@ -609,8 +626,7 @@ namespace ChatTranslated.Translate
 
                             if (list is [_, _, _, "OnError", ..])
                             {
-                                var errorDetails = list.Count > 4 ? string.Join(", ", list.Skip(4).Select(x => x?.ToString() ?? "null")) : "no details"; // debug
-                                Service.pluginLog.Warning($"[DeeplsTranslate] ReceiveLoop: received OnError [{string.Join(", ", list.Select(x => x?.ToString() ?? "null"))}], details: {errorDetails}"); // debug
+                                Service.pluginLog.Warning($"[DeeplsTranslate] ReceiveLoop: received OnError: {DumpObject(list)}"); // debug
                                 (OnError, Connected) = (true, false);
                                 await Close();
                             }
