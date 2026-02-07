@@ -25,6 +25,7 @@ public class GeneralTab
         bool _ChatIntegration = configuration.ChatIntegration;
         bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
         bool _ChatIntegration_ShowColoredText = configuration.ChatIntegration_ShowColoredText;
+        bool _ChatIntegration_UseEchoChannel = configuration.ChatIntegration_UseEchoChannel;
         bool _EnabledInDuty = configuration.EnabledInDuty;
 
         if (ImGui.Checkbox(Resources.EnablePlugin, ref _Enabled))
@@ -52,6 +53,12 @@ public class GeneralTab
             if (ImGui.Checkbox(Resources.ChatIntegration_ShowColoredText, ref _ChatIntegration_ShowColoredText))
             {
                 configuration.ChatIntegration_ShowColoredText = _ChatIntegration_ShowColoredText;
+                configuration.Save();
+            }
+
+            if (ImGui.Checkbox(Resources.ChatIntegration_UseEchoChannel, ref _ChatIntegration_UseEchoChannel))
+            {
+                configuration.ChatIntegration_UseEchoChannel = _ChatIntegration_UseEchoChannel;
                 configuration.Save();
             }
 

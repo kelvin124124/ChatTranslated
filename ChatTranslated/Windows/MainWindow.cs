@@ -23,6 +23,7 @@ namespace ChatTranslated.Windows
 
         internal string outputText = "";
         internal string inputText = "";
+        private string lastTranslatedContent = "";
         private float lastOutputFieldWidth = 0;
         private int lastContentHash = 0;
 
@@ -95,7 +96,7 @@ namespace ChatTranslated.Windows
             }
 
             // Input field
-            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (100 * scale));
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (140 * scale));
             ImGui.InputText("##input", ref inputText, 500);
             ImGui.SameLine();
             if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
@@ -108,11 +109,17 @@ namespace ChatTranslated.Windows
                 }
             }
             ImGui.SameLine();
+            if (ImGui.Button(Resources.Copy, new Vector2(35 * scale, 0)))
+            {
+                if (!string.IsNullOrEmpty(lastTranslatedContent))
+                    ImGui.SetClipboardText(lastTranslatedContent);
+            }
+            ImGui.SameLine();
             ImGui.TextDisabled("?");
             if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
         }
 
-        private static async void ProcessInputAsync(Message message)
+        private async void ProcessInputAsync(Message message)
         {
             var translatedMessage = await TranslationHandler.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
 
@@ -121,6 +128,8 @@ namespace ChatTranslated.Windows
                 Service.mainWindow.PrintToOutput("[CT] Failed to process message.");
                 return;
             }
+
+            lastTranslatedContent = translatedMessage.TranslatedContent;
 
             var reverseTranslationResult = await MachineTranslate.Translate(translatedMessage.TranslatedContent, Service.configuration.SelectedPluginLanguage);
             Service.mainWindow.PrintToOutput($"\n Original:\n        {translatedMessage.OriginalContent}" +

@@ -180,7 +180,8 @@ namespace ChatTranslated.Chat
 
             if (Service.configuration.ChatIntegration)
             {
-                Plugin.OutputChatLine(type, chatMessage.Sender, outputStr);
+                var outputType = Service.configuration.ChatIntegration_UseEchoChannel ? XivChatType.Echo : type;
+                Plugin.OutputChatLine(outputType, chatMessage.Sender, outputStr);
             }
         }
 
