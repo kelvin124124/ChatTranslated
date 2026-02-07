@@ -46,7 +46,7 @@ namespace ChatTranslated.Windows
 
         private void DrawOutputField(float scale)
         {
-            ImGui.BeginChild("outputField", new Vector2(-1, -78 * scale), false);
+            ImGui.BeginChild("outputField", new Vector2(-1, -58 * scale), false);
 
             float outputFieldWidth = ImGui.GetContentRegionAvail().X;
 
@@ -86,11 +86,21 @@ namespace ChatTranslated.Windows
 
         private void DrawInputField(float scale)
         {
-            // Row 1: Input + Translate + Help
-            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (75 * scale));
+            // Row 1: Language + Input + Translate + Copy
+            int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
+            string[] localizedLangs = languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l).ToArray();
+            ImGui.SetNextItemWidth(80 * scale);
+            if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
+            {
+                Service.configuration.SelectedMainWindowTargetLanguage = languages[langIndex];
+                TranslationHandler.ClearTranslationCache();
+                Service.configuration.Save();
+            }
+            ImGui.SameLine();
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (115 * scale));
             ImGui.InputText("##input", ref inputText, 500);
             ImGui.SameLine();
-            if (ImGui.Button(Resources.Translate, new Vector2(70 * scale, 0)))
+            if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
             {
                 if (!string.IsNullOrWhiteSpace(inputText))
                 {
@@ -100,34 +110,23 @@ namespace ChatTranslated.Windows
                 }
             }
             ImGui.SameLine();
-            ImGui.TextDisabled("?");
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
-
-            // Row 2: Language selector + Translation output + Copy
-            float comboWidth = 80 * scale;
-            int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
-            string[] localizedLangs = languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l).ToArray();
-            ImGui.SetNextItemWidth(comboWidth);
-            if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
-            {
-                Service.configuration.SelectedMainWindowTargetLanguage = languages[langIndex];
-                TranslationHandler.ClearTranslationCache();
-                Service.configuration.Save();
-            }
-            ImGui.SameLine();
-            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (45 * scale));
-            ImGui.InputText("##translatedOutput", ref translatedText, 5000, ImGuiInputTextFlags.ReadOnly);
-            ImGui.SameLine();
-            if (ImGui.Button(Resources.Copy, new Vector2(40 * scale, 0)))
+            if (ImGui.Button(Resources.Copy, new Vector2(45 * scale, 0)))
             {
                 if (!string.IsNullOrEmpty(translatedText))
                     ImGui.SetClipboardText(translatedText);
             }
 
-            // Row 3: Reverse translation (aligned with output above)
-            ImGui.SetCursorPosX(ImGui.GetCursorPosX() + comboWidth + ImGui.GetStyle().ItemSpacing.X);
-            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X);
-            ImGui.InputText("##reverseOutput", ref reverseTranslatedText, 5000, ImGuiInputTextFlags.ReadOnly);
+            // Row 2: Translation output
+            ImGui.TextDisabled("TL:");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
+            ImGui.SameLine();
+            ImGui.TextUnformatted(translatedText);
+
+            // Row 3: Reverse translation
+            ImGui.TextDisabled("RT:");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Reverse translation");
+            ImGui.SameLine();
+            ImGui.TextUnformatted(reverseTranslatedText);
         }
 
         private async void ProcessInputAsync(Message message)
