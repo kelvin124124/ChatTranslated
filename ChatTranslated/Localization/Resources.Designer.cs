@@ -159,6 +159,24 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("ChatIntegration_ShowColoredText", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Output translated message to Echo channel.
+        /// </summary>
+        internal static string ChatIntegration_UseEchoChannel {
+            get {
+                return ResourceManager.GetString("ChatIntegration_UseEchoChannel", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        internal static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
+            }
+        }
         
         /// <summary>
         ///   Looks up a localized string similar to Chinese (Simplified).

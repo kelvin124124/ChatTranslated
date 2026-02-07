@@ -119,7 +119,13 @@ namespace ChatTranslated
                 .Replace("\u0002\u0012\u0002\u0037\u0003", " \uE040 ")
                 .Replace("\u0002\u0012\u0002\u0038\u0003", " \uE041 ");
 
-            Message PFmessage = new Message("PF", MessageSource.PartyFinder, description);
+            // extract recruiter name
+            byte* leaderText = PfAddonPtr->PartyLeaderTextNode->GetText();
+            string recruiterName = MemoryHelper.ReadSeStringNullTerminated((nint)leaderText).TextValue;
+            if (string.IsNullOrWhiteSpace(recruiterName))
+                recruiterName = "PF";
+
+            Message PFmessage = new Message(recruiterName, MessageSource.PartyFinder, description);
 
             string category = PfAddonPtr->CategoriesString.ToString();
             category = string.Join(" ", Regex.Matches(category, @"\[[^\]]+\]")

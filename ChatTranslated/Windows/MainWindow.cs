@@ -23,6 +23,8 @@ namespace ChatTranslated.Windows
 
         internal string outputText = "";
         internal string inputText = "";
+        private string translatedText = "";
+        private string reverseTranslatedText = "";
         private float lastOutputFieldWidth = 0;
         private int lastContentHash = 0;
 
@@ -44,7 +46,7 @@ namespace ChatTranslated.Windows
 
         private void DrawOutputField(float scale)
         {
-            ImGui.BeginChild("outputField", new Vector2(-1, -55 * scale), false);
+            ImGui.BeginChild("outputField", new Vector2(-1, -68 * scale), false);
 
             float outputFieldWidth = ImGui.GetContentRegionAvail().X;
 
@@ -84,18 +86,17 @@ namespace ChatTranslated.Windows
 
         private void DrawInputField(float scale)
         {
-            // Language selector
             int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
             string[] localizedLangs = languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l).ToArray();
+            ImGui.SetNextItemWidth(80 * scale);
             if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
             {
                 Service.configuration.SelectedMainWindowTargetLanguage = languages[langIndex];
                 TranslationHandler.ClearTranslationCache();
                 Service.configuration.Save();
             }
-
-            // Input field
-            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (100 * scale));
+            ImGui.SameLine();
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (120 * scale));
             ImGui.InputText("##input", ref inputText, 500);
             ImGui.SameLine();
             if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
@@ -108,24 +109,38 @@ namespace ChatTranslated.Windows
                 }
             }
             ImGui.SameLine();
-            ImGui.TextDisabled("?");
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
+            if (ImGui.Button(Resources.Copy, new Vector2(45 * scale, 0)))
+            {
+                if (!string.IsNullOrEmpty(translatedText))
+                    ImGui.SetClipboardText(translatedText);
+            }
+
+            ImGui.TextDisabled("TL:");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Translated text");
+            ImGui.SameLine();
+            ImGui.TextUnformatted(translatedText);
+
+            ImGui.TextDisabled("RT:");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Reverse translation");
+            ImGui.SameLine();
+            ImGui.TextUnformatted(reverseTranslatedText);
         }
 
-        private static async void ProcessInputAsync(Message message)
+        private async void ProcessInputAsync(Message message)
         {
             var translatedMessage = await TranslationHandler.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
 
             if (translatedMessage.TranslatedContent == null)
             {
-                Service.mainWindow.PrintToOutput("[CT] Failed to process message.");
+                translatedText = "Failed to translate.";
+                reverseTranslatedText = "";
                 return;
             }
 
+            translatedText = translatedMessage.TranslatedContent;
+
             var reverseTranslationResult = await MachineTranslate.Translate(translatedMessage.TranslatedContent, Service.configuration.SelectedPluginLanguage);
-            Service.mainWindow.PrintToOutput($"\n Original:\n        {translatedMessage.OriginalContent}" +
-                $" \nTranslated Content:\n        {translatedMessage.TranslatedContent}" +
-                $" \nReverse Translation:\n        {reverseTranslationResult.Item1}");
+            reverseTranslatedText = reverseTranslationResult.Item1;
         }
 
         public void PrintToOutput(string message)

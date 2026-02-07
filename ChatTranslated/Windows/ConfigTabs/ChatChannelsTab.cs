@@ -1,6 +1,7 @@
 using ChatTranslated.Localization;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Game.Text;
+using System;
 using System.Collections.Generic;
 
 namespace ChatTranslated.Windows.ConfigTabs;
@@ -52,42 +53,52 @@ public class ChatChannelsTab
 
         if (ImGui.BeginTabItem(Resources.GenericChannels))
         {
-            DrawChatTypes(genericChatTypes, configuration);
+            DrawChatTypesColumns(genericChatTypes, configuration);
             ImGui.EndTabItem();
         }
 
         if (ImGui.BeginTabItem("LS"))
         {
-            DrawChatTypes(lsChatTypes, configuration);
+            DrawChatTypesColumns(lsChatTypes, configuration);
             ImGui.EndTabItem();
         }
 
         if (ImGui.BeginTabItem("CWLS"))
         {
-            DrawChatTypes(cwlsChatTypes, configuration);
+            DrawChatTypesColumns(cwlsChatTypes, configuration);
             ImGui.EndTabItem();
         }
 
         ImGui.EndTabBar();
     }
 
-    private static void DrawChatTypes(IEnumerable<XivChatType> chatTypes, Configuration configuration)
+    private static void DrawChatTypesColumns(List<XivChatType> chatTypes, Configuration configuration)
     {
-        foreach (var type in chatTypes)
+        int rows = (int)Math.Ceiling(chatTypes.Count / 2.0);
+
+        ImGui.Columns(2, "ChatTypeColumns", false);
+        for (int i = 0; i < chatTypes.Count; i++)
         {
-            var typeEnabled = configuration.SelectedChatTypes.Contains(type);
-            if (ImGui.Checkbox(Resources.ResourceManager.GetString(type.ToString(), Resources.Culture) ?? type.ToString(), ref typeEnabled))
+            if (i == rows) ImGui.NextColumn();
+            DrawChatTypeCheckbox(chatTypes[i], configuration);
+        }
+        ImGui.Columns(1);
+    }
+
+    private static void DrawChatTypeCheckbox(XivChatType type, Configuration configuration)
+    {
+        var typeEnabled = configuration.SelectedChatTypes.Contains(type);
+        if (ImGui.Checkbox(Resources.ResourceManager.GetString(type.ToString(), Resources.Culture) ?? type.ToString(), ref typeEnabled))
+        {
+            if (typeEnabled && !configuration.SelectedChatTypes.Contains(type))
             {
-                if (typeEnabled && !configuration.SelectedChatTypes.Contains(type))
-                {
-                    configuration.SelectedChatTypes.Add(type);
-                }
-                else if (!typeEnabled)
-                {
-                    configuration.SelectedChatTypes.RemoveAll(t => t == type);
-                }
-                configuration.Save();
+                configuration.SelectedChatTypes.Add(type);
             }
+            else if (!typeEnabled)
+            {
+                configuration.SelectedChatTypes.RemoveAll(t => t == type);
+            }
+            configuration.Save();
         }
     }
 }
