@@ -23,7 +23,8 @@ namespace ChatTranslated.Windows
 
         internal string outputText = "";
         internal string inputText = "";
-        private string lastTranslatedContent = "";
+        private string translatedText = "";
+        private string reverseTranslatedText = "";
         private float lastOutputFieldWidth = 0;
         private int lastContentHash = 0;
 
@@ -45,7 +46,7 @@ namespace ChatTranslated.Windows
 
         private void DrawOutputField(float scale)
         {
-            ImGui.BeginChild("outputField", new Vector2(-1, -55 * scale), false);
+            ImGui.BeginChild("outputField", new Vector2(-1, -78 * scale), false);
 
             float outputFieldWidth = ImGui.GetContentRegionAvail().X;
 
@@ -85,7 +86,7 @@ namespace ChatTranslated.Windows
 
         private void DrawInputField(float scale)
         {
-            // Row 1: Input field + Translate button
+            // Row 1: Input + Translate + Help
             ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (75 * scale));
             ImGui.InputText("##input", ref inputText, 500);
             ImGui.SameLine();
@@ -98,11 +99,15 @@ namespace ChatTranslated.Windows
                     inputText = "";
                 }
             }
+            ImGui.SameLine();
+            ImGui.TextDisabled("?");
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
 
-            // Row 2: Language selector + Copy + Help
+            // Row 2: Language selector + Translation output + Copy
+            float comboWidth = 80 * scale;
             int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
             string[] localizedLangs = languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l).ToArray();
-            ImGui.SetNextItemWidth(100 * scale);
+            ImGui.SetNextItemWidth(comboWidth);
             if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
             {
                 Service.configuration.SelectedMainWindowTargetLanguage = languages[langIndex];
@@ -110,14 +115,19 @@ namespace ChatTranslated.Windows
                 Service.configuration.Save();
             }
             ImGui.SameLine();
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (45 * scale));
+            ImGui.InputText("##translatedOutput", ref translatedText, 5000, ImGuiInputTextFlags.ReadOnly);
+            ImGui.SameLine();
             if (ImGui.Button(Resources.Copy, new Vector2(40 * scale, 0)))
             {
-                if (!string.IsNullOrEmpty(lastTranslatedContent))
-                    ImGui.SetClipboardText(lastTranslatedContent);
+                if (!string.IsNullOrEmpty(translatedText))
+                    ImGui.SetClipboardText(translatedText);
             }
-            ImGui.SameLine();
-            ImGui.TextDisabled("?");
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
+
+            // Row 3: Reverse translation (aligned with output above)
+            ImGui.SetCursorPosX(ImGui.GetCursorPosX() + comboWidth + ImGui.GetStyle().ItemSpacing.X);
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X);
+            ImGui.InputText("##reverseOutput", ref reverseTranslatedText, 5000, ImGuiInputTextFlags.ReadOnly);
         }
 
         private async void ProcessInputAsync(Message message)
@@ -126,16 +136,15 @@ namespace ChatTranslated.Windows
 
             if (translatedMessage.TranslatedContent == null)
             {
-                Service.mainWindow.PrintToOutput("[CT] Failed to process message.");
+                translatedText = "Failed to translate.";
+                reverseTranslatedText = "";
                 return;
             }
 
-            lastTranslatedContent = translatedMessage.TranslatedContent;
+            translatedText = translatedMessage.TranslatedContent;
 
             var reverseTranslationResult = await MachineTranslate.Translate(translatedMessage.TranslatedContent, Service.configuration.SelectedPluginLanguage);
-            Service.mainWindow.PrintToOutput($"\n Original:\n        {translatedMessage.OriginalContent}" +
-                $" \nTranslated Content:\n        {translatedMessage.TranslatedContent}" +
-                $" \nReverse Translation:\n        {reverseTranslationResult.Item1}");
+            reverseTranslatedText = reverseTranslationResult.Item1;
         }
 
         public void PrintToOutput(string message)
