@@ -4,41 +4,40 @@ using System;
 using System.Threading.Tasks;
 using static ChatTranslated.Configuration;
 
-namespace ChatTranslated.Translate
+namespace ChatTranslated.Translate;
+
+internal static class MachineTranslate
 {
-    internal static class MachineTranslate
+    private static readonly Lazy<GoogleTranslator> LazyGTranslator = new(() => new GoogleTranslator(TranslationHandler.HttpClient));
+    private static readonly Lazy<BingTranslator> LazyBingTranslator = new(() => new BingTranslator(TranslationHandler.HttpClient));
+    public static GoogleTranslator GTranslator => LazyGTranslator.Value;
+    public static BingTranslator BingTranslator => LazyBingTranslator.Value;
+
+    public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
     {
-        private static readonly Lazy<GoogleTranslator> LazyGTranslator = new(() => new GoogleTranslator(TranslationHandler.HttpClient));
-        private static readonly Lazy<BingTranslator> LazyBingTranslator = new(() => new BingTranslator(TranslationHandler.HttpClient));
-        public static GoogleTranslator GTranslator => LazyGTranslator.Value;
-        public static BingTranslator BingTranslator => LazyBingTranslator.Value;
-
-        public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
+        // Try Bing first, then Google as fallback
+        foreach (var translator in new dynamic[]
         {
-            // Try Bing first, then Google as fallback
-            foreach (var translator in new dynamic[]
+            BingTranslator,
+            GTranslator
+        })
+        {
+            try
             {
-                BingTranslator,
-                GTranslator
-            })
-            {
-                try
-                {
-                    var result = await translator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
-                    string resultText = result.Translation;
+                var result = await translator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
+                string resultText = result.Translation;
 
-                    if (string.IsNullOrWhiteSpace(resultText) || resultText == text)
-                        throw new Exception($"{translator.Name} Translate returned an invalid translation.");
+                if (string.IsNullOrWhiteSpace(resultText) || resultText == text)
+                    throw new Exception($"{translator.Name} Translate returned an invalid translation.");
 
-                    return (resultText, TranslationMode.MachineTranslate);
-                }
-                catch (Exception ex)
-                {
-                    Service.pluginLog.Warning($"{translator.Name} failed.\n{ex.Message}");
-                }
+                return (resultText, TranslationMode.MachineTranslate);
             }
-
-            return (text, null);
+            catch (Exception ex)
+            {
+                Service.pluginLog.Warning($"{translator.Name} failed.\n{ex.Message}");
+            }
         }
+
+        return (text, null);
     }
 }
