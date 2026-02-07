@@ -34,11 +34,11 @@ namespace ChatTranslated.Translate
             }
 
             var prompt = Service.configuration.UseCustomPrompt
-                ? BuildCustomPrompt(Service.configuration.SelectedTargetLanguage, message.Context)
-                : BuildPrompt(Service.configuration.SelectedTargetLanguage, message.Context);
+                ? BuildCustomPrompt(targetLanguage, message.Context)
+                : BuildPrompt(targetLanguage, message.Context);
 
             int promptLength = prompt.Length;
-            var userMsg = $"Translate to: {Service.configuration.SelectedTargetLanguage}\n#### Original Text\n{message.OriginalContent.TextValue}";
+            var userMsg = $"Translate to: {targetLanguage}\n#### Original Text\n{message.OriginalContent.TextValue}";
             var requestData = new
             {
                 model,

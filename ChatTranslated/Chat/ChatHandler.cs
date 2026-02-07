@@ -31,49 +31,59 @@ namespace ChatTranslated.Chat
 
         private async void HandleChatMessage(XivChatType type, SeString sender, SeString message)
         {
-            if (!Service.configuration.Enabled || sender.TextValue.Contains("[CT]") || !Service.configuration.SelectedChatTypes.Contains(type))
-                return;
-
-            if (!Service.configuration.EnabledInDuty && Service.condition[ConditionFlag.BoundByDuty])
-                return;
-
-            var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
-            string playerName = playerPayload?.PlayerName ?? sender.ToString();
-            string localPlayerName = Service.playerState.CharacterName.ToString() ?? string.Empty;
-            if (type == XivChatType.TellOutgoing)
-                playerName = localPlayerName;
-
-            if (playerName.EndsWith(localPlayerName))
+            try
             {
-                Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
-                return;
+                if (!Service.configuration.Enabled || sender.TextValue.Contains("[CT]") || !Service.configuration.SelectedChatTypes.Contains(type))
+                    return;
+
+                if (!Service.configuration.EnabledInDuty && Service.condition[ConditionFlag.BoundByDuty])
+                    return;
+
+                var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
+                string playerName = playerPayload?.PlayerName ?? sender.ToString();
+                string localPlayerName = Service.playerState.CharacterName.ToString() ?? string.Empty;
+                if (type == XivChatType.TellOutgoing)
+                    playerName = localPlayerName;
+
+                if (playerName.EndsWith(localPlayerName))
+                {
+                    Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
+                    return;
+                }
+
+                var chatMessage = new Message(playerName, MessageSource.Chat, message, type);
+                chatMessage.Context = GetChatMessageContext();
+
+                if (IsFilteredMessage(playerName, chatMessage.CleanedContent))
+                {
+                    Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
+                    return;
+                }
+
+                if (IsJPFilteredMessage(chatMessage))
+                    return;
+
+                bool needsTranslation = Service.configuration.SelectedLanguageSelectionMode switch
+                {
+                    Configuration.LanguageSelectionMode.Default => ChatRegex.NonEnglishRegex().IsMatch(chatMessage.CleanedContent),
+                    Configuration.LanguageSelectionMode.CustomLanguages => await IsCustomSourceLanguage(chatMessage),
+                    Configuration.LanguageSelectionMode.AllLanguages => true,
+                    _ => false
+                };
+
+                if (needsTranslation)
+                {
+                    await TranslationHandler.TranslateMessage(chatMessage);
+                    OutputMessage(chatMessage, type);
+                }
+                else
+                {
+                    Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
+                }
             }
-
-            var chatMessage = new Message(playerName, MessageSource.Chat, message, type);
-            chatMessage.Context = GetChatMessageContext();
-
-            if (IsFilteredMessage(playerName, chatMessage.CleanedContent) || IsJPFilteredMessage(chatMessage))
+            catch (Exception ex)
             {
-                Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
-                return;
-            }
-
-            bool needsTranslation = Service.configuration.SelectedLanguageSelectionMode switch
-            {
-                Configuration.LanguageSelectionMode.Default => ChatRegex.NonEnglishRegex().IsMatch(chatMessage.CleanedContent),
-                Configuration.LanguageSelectionMode.CustomLanguages => await IsCustomSourceLanguage(chatMessage),
-                Configuration.LanguageSelectionMode.AllLanguages => true,
-                _ => false
-            };
-
-            if (needsTranslation)
-            {
-                await TranslationHandler.TranslateMessage(chatMessage);
-                OutputMessage(chatMessage, type);
-            }
-            else
-            {
-                Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
+                Service.pluginLog.Error(ex, "Error processing chat message.");
             }
         }
 
