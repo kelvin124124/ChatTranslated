@@ -45,14 +45,13 @@ namespace ChatTranslated.Chat
                 if (type == XivChatType.TellOutgoing)
                     playerName = localPlayerName;
 
-                if (playerName.EndsWith(localPlayerName))
+                if (!string.IsNullOrEmpty(localPlayerName) && playerName.EndsWith(localPlayerName))
                 {
                     Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                     return;
                 }
 
                 var chatMessage = new Message(playerName, MessageSource.Chat, message, type);
-                chatMessage.Context = GetChatMessageContext();
 
                 if (IsFilteredMessage(playerName, chatMessage.CleanedContent))
                 {
@@ -73,6 +72,7 @@ namespace ChatTranslated.Chat
 
                 if (needsTranslation)
                 {
+                    chatMessage.Context = GetChatMessageContext();
                     await TranslationHandler.TranslateMessage(chatMessage);
                     OutputMessage(chatMessage, type);
                 }
@@ -257,8 +257,6 @@ namespace ChatTranslated.Chat
 
             return false;
         }
-
-        public static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, "*");
 
         public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
     }
