@@ -11,16 +11,16 @@ public class TranslationModeTab
     public void Draw(Configuration configuration)
     {
         DrawEngineSelection(configuration);
+
+        ImGui.Separator();
         ImGui.Spacing();
 
-        // Delegate to engine-specific settings
         switch (configuration.SelectedTranslationEngine)
         {
             case Configuration.TranslationEngine.DeepL:
                 ImGui.TextWrapped(Resources.DeepLExplanation);
                 ImGui.Separator();
                 ImGui.Spacing();
-
                 DeepLSettings.Draw(configuration);
                 break;
 
@@ -28,7 +28,6 @@ public class TranslationModeTab
                 ImGui.TextWrapped(Resources.LLM_Explanation);
                 ImGui.Separator();
                 ImGui.Spacing();
-
                 DrawLLMConfiguration(configuration);
                 break;
         }
@@ -53,14 +52,16 @@ public class TranslationModeTab
 
     private static void DrawLLMConfiguration(Configuration configuration)
     {
-        // Context settings
         LLMSettings.DrawContextSettings(configuration);
+
+        ImGui.Separator();
         ImGui.Spacing();
 
         LLMSettings.DrawProviderSelection(configuration);
+
+        ImGui.Separator();
         ImGui.Spacing();
 
-        // Provider-specific settings
         switch (configuration.LLM_Provider)
         {
             case 0:

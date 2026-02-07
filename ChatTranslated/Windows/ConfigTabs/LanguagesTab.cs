@@ -98,40 +98,45 @@ public class LanguagesTab
 
         if (ImGui.CollapsingHeader(Resources.CustomTargetLanguageHeader, ImGuiTreeNodeFlags.None))
         {
-            ImGui.TextUnformatted(Resources.TargetLang);
-            ImGui.SameLine();
-            ImGui.InputText("##targetLanguageInput", ref configuration.CustomTargetLanguage, 50);
-            ImGui.SameLine();
-            ImGui.TextDisabled("?");
-            if (ImGui.IsItemHovered())
-            {
-                ImGui.SetTooltip(Resources.CustomTargetLanguageExplanation);
-            }
-
-            if (ImGui.Button(Resources.SeeLanguageList))
-            {
-                Dalamud.Utility.Util.OpenLink("https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L164");
-            }
-            ImGui.SameLine();
-            if (ImGui.Button(Resources.Apply + "###ApplyCustomLanguage"))
-            {
-                if (Language.TryGetLanguage(configuration.CustomTargetLanguage, out var lang))
-                {
-                    Plugin.OutputChatLine("Language applied successfully.");
-                    TranslationHandler.ClearTranslationCache();
-                    configuration.Save();
-                }
-                else
-                {
-                    configuration.CustomTargetLanguage = "";
-                    Plugin.OutputChatLine("Invalid language.");
-                }
-            }
-            ImGui.SameLine();
             if (ImGui.Checkbox(Resources.UseCustomTargetLanguage, ref configuration.UseCustomLanguage))
             {
                 TranslationHandler.ClearTranslationCache();
                 configuration.Save();
+            }
+
+            if (configuration.UseCustomLanguage)
+            {
+                ImGui.Indent(20);
+
+                ImGui.InputText("##targetLanguageInput", ref configuration.CustomTargetLanguage, 50);
+                ImGui.SameLine();
+                if (ImGui.Button(Resources.Apply + "###ApplyCustomLanguage"))
+                {
+                    if (Language.TryGetLanguage(configuration.CustomTargetLanguage, out var lang))
+                    {
+                        Plugin.OutputChatLine("Language applied successfully.");
+                        TranslationHandler.ClearTranslationCache();
+                        configuration.Save();
+                    }
+                    else
+                    {
+                        configuration.CustomTargetLanguage = "";
+                        Plugin.OutputChatLine("Invalid language.");
+                    }
+                }
+                ImGui.SameLine();
+                ImGui.TextDisabled("?");
+                if (ImGui.IsItemHovered())
+                {
+                    ImGui.SetTooltip(Resources.CustomTargetLanguageExplanation);
+                }
+
+                if (ImGui.Button(Resources.SeeLanguageList))
+                {
+                    Dalamud.Utility.Util.OpenLink("https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L164");
+                }
+
+                ImGui.Unindent(20);
             }
         }
 
