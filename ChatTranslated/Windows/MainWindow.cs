@@ -85,21 +85,11 @@ namespace ChatTranslated.Windows
 
         private void DrawInputField(float scale)
         {
-            // Language selector
-            int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
-            string[] localizedLangs = languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l).ToArray();
-            if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
-            {
-                Service.configuration.SelectedMainWindowTargetLanguage = languages[langIndex];
-                TranslationHandler.ClearTranslationCache();
-                Service.configuration.Save();
-            }
-
-            // Input field
-            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (140 * scale));
+            // Row 1: Input field + Translate button
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (75 * scale));
             ImGui.InputText("##input", ref inputText, 500);
             ImGui.SameLine();
-            if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
+            if (ImGui.Button(Resources.Translate, new Vector2(70 * scale, 0)))
             {
                 if (!string.IsNullOrWhiteSpace(inputText))
                 {
@@ -108,8 +98,19 @@ namespace ChatTranslated.Windows
                     inputText = "";
                 }
             }
+
+            // Row 2: Language selector + Copy + Help
+            int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
+            string[] localizedLangs = languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l).ToArray();
+            ImGui.SetNextItemWidth(100 * scale);
+            if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
+            {
+                Service.configuration.SelectedMainWindowTargetLanguage = languages[langIndex];
+                TranslationHandler.ClearTranslationCache();
+                Service.configuration.Save();
+            }
             ImGui.SameLine();
-            if (ImGui.Button(Resources.Copy, new Vector2(35 * scale, 0)))
+            if (ImGui.Button(Resources.Copy, new Vector2(40 * scale, 0)))
             {
                 if (!string.IsNullOrEmpty(lastTranslatedContent))
                     ImGui.SetClipboardText(lastTranslatedContent);

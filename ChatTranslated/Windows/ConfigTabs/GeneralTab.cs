@@ -14,18 +14,25 @@ public class GeneralTab
 
     public void Draw(Configuration configuration)
     {
-        DrawGenericSettings(configuration);
+        DrawPluginToggles(configuration);
+        ImGui.Separator();
+        DrawChatIntegrationSettings(configuration);
         ImGui.Separator();
         DrawPluginLangSelection(configuration);
+
+#if DEBUG
+        ImGui.Separator();
+        if (ImGui.Button("Magic button"))
+        {
+            var str = Service.chatHandler?.GetChatMessageContext();
+            Service.pluginLog.Warning(str!);
+        }
+#endif
     }
 
-    private static void DrawGenericSettings(Configuration configuration)
+    private static void DrawPluginToggles(Configuration configuration)
     {
         bool _Enabled = configuration.Enabled;
-        bool _ChatIntegration = configuration.ChatIntegration;
-        bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
-        bool _ChatIntegration_ShowColoredText = configuration.ChatIntegration_ShowColoredText;
-        bool _ChatIntegration_UseEchoChannel = configuration.ChatIntegration_UseEchoChannel;
         bool _EnabledInDuty = configuration.EnabledInDuty;
 
         if (ImGui.Checkbox(Resources.EnablePlugin, ref _Enabled))
@@ -33,6 +40,20 @@ public class GeneralTab
             configuration.Enabled = _Enabled;
             configuration.Save();
         }
+
+        if (ImGui.Checkbox(Resources.EnableInDuties, ref _EnabledInDuty))
+        {
+            configuration.EnabledInDuty = _EnabledInDuty;
+            configuration.Save();
+        }
+    }
+
+    private static void DrawChatIntegrationSettings(Configuration configuration)
+    {
+        bool _ChatIntegration = configuration.ChatIntegration;
+        bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
+        bool _ChatIntegration_ShowColoredText = configuration.ChatIntegration_ShowColoredText;
+        bool _ChatIntegration_UseEchoChannel = configuration.ChatIntegration_UseEchoChannel;
 
         if (ImGui.Checkbox(Resources.ChatIntegration, ref _ChatIntegration))
         {
@@ -64,39 +85,17 @@ public class GeneralTab
 
             ImGui.Unindent(20);
         }
-
-        if (ImGui.Checkbox(Resources.EnableInDuties, ref _EnabledInDuty))
-        {
-            configuration.EnabledInDuty = _EnabledInDuty;
-            configuration.Save();
-        }
-
-#if DEBUG
-        ImGui.Separator();
-        if (ImGui.Button("Magic button"))
-        {
-            var str = Service.chatHandler?.GetChatMessageContext();
-            Service.pluginLog.Warning(str!);
-        }
-#endif
     }
 
     private void DrawPluginLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted(Resources.PluginUILanguage);
-        ImGui.SameLine();
 
         string currentSelection = configuration.SelectedPluginLanguage;
 
         int currentIndex = Array.IndexOf(supportedDisplayLanguages, currentSelection);
         if (currentIndex == -1) currentIndex = 0;
-
-        ImGui.SameLine();
-        if (ImGui.Button("Help with localization!"))
-        {
-            Dalamud.Utility.Util.OpenLink("https://hosted.weblate.org/projects/chattranslated/");
-        }
 
         string[] localizedSupportedDisplayLanguages = [.. supportedDisplayLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang)];
         if (ImGui.Combo("##pluginLanguage", ref currentIndex, localizedSupportedDisplayLanguages, supportedDisplayLanguages.Length))
@@ -104,6 +103,11 @@ public class GeneralTab
             configuration.SelectedPluginLanguage = supportedDisplayLanguages[currentIndex];
             configuration.Save();
             SetLanguageCulture(configuration.SelectedPluginLanguage);
+        }
+
+        if (ImGui.Button("Help with localization!"))
+        {
+            Dalamud.Utility.Util.OpenLink("https://hosted.weblate.org/projects/chattranslated/");
         }
     }
 
