@@ -32,7 +32,7 @@ internal static partial class OpenAITranslate
             else
             {
                 Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
-                return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
+                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
             }
         }
 
@@ -41,7 +41,7 @@ internal static partial class OpenAITranslate
             : BuildPrompt(targetLanguage, message.Context);
 
         int promptLength = prompt.Length;
-        var userMsg = $"Translate to: {targetLanguage}\n#### Original Text\n{message.OriginalContent.TextValue}";
+        var userMsg = $"Translate to: {targetLanguage}\n#### Original Text\n{message.OriginalText}";
         var requestData = new
         {
             model,
@@ -72,10 +72,10 @@ internal static partial class OpenAITranslate
                 throw new Exception("Translation not found in the expected structure.");
             }
 
-            if (translated == message.OriginalContent.TextValue)
+            if (translated == message.OriginalText)
             {
                 Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
-                return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
+                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
             }
 
             var translationMatch = TranslationSectionRegex().Match(translated);
@@ -86,7 +86,7 @@ internal static partial class OpenAITranslate
         catch (Exception ex)
         {
             Service.pluginLog.Warning($"OpenAI Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
-            return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
+            return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
         }
     }
 

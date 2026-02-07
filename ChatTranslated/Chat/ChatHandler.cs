@@ -175,7 +175,7 @@ internal partial class ChatHandler
 
     internal static void OutputMessage(Message chatMessage, XivChatType type = XivChatType.Say)
     {
-        if (chatMessage.OriginalContent.TextValue == chatMessage.TranslatedContent
+        if (chatMessage.OriginalText == chatMessage.TranslatedContent
             && chatMessage.Source != MessageSource.MainWindow) // no need to output if translation is the same
         {
             Service.pluginLog.Info("Translation is the same as original. Skipping output.");
@@ -184,7 +184,7 @@ internal partial class ChatHandler
 
         string outputStr = Service.configuration.ChatIntegration_HideOriginal
             ? chatMessage.TranslatedContent!
-            : $"{chatMessage.OriginalContent.TextValue} || {chatMessage.TranslatedContent}";
+            : $"{chatMessage.OriginalText} || {chatMessage.TranslatedContent}";
 
         Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {outputStr}");
 

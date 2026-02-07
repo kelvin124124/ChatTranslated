@@ -34,7 +34,7 @@ internal static class LLMProxyTranslate
         if (string.IsNullOrEmpty(Cfv5))
         {
             Service.pluginLog.Warning("LLMProxy API key not found. Falling back to machine translate.");
-            return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
+            return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
         }
 #endif
 
@@ -43,7 +43,7 @@ internal static class LLMProxyTranslate
             message.Context = "null";
         }
 
-        var requestData = new { targetLanguage, message = message.OriginalContent.TextValue, context = message.Context };
+        var requestData = new { targetLanguage, message = message.OriginalText, context = message.Context };
         var request = new HttpRequestMessage(HttpMethod.Post, Service.configuration.Proxy_Url)
         {
             Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, DefaultContentType)
@@ -65,10 +65,10 @@ internal static class LLMProxyTranslate
                 throw new Exception("Translation not found in the expected structure.");
             }
 
-            if (translated == message.OriginalContent.TextValue)
+            if (translated == message.OriginalText)
             {
                 Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
-                return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
+                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
             }
 
             Service.pluginLog.Info($"Request processed in: {responseTime}");
@@ -78,7 +78,7 @@ internal static class LLMProxyTranslate
         catch (Exception ex)
         {
             Service.pluginLog.Warning($"LLMProxy Translate failed to translate. Falling back to machine translate.\n{ex.Message}");
-            return await MachineTranslate.Translate(message.OriginalContent.TextValue, targetLanguage);
+            return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
         }
     }
 }
