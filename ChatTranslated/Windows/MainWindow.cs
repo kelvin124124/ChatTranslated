@@ -46,7 +46,7 @@ namespace ChatTranslated.Windows
 
         private void DrawOutputField(float scale)
         {
-            ImGui.BeginChild("outputField", new Vector2(-1, -58 * scale), false);
+            ImGui.BeginChild("outputField", new Vector2(-1, -68 * scale), false);
 
             float outputFieldWidth = ImGui.GetContentRegionAvail().X;
 
@@ -86,7 +86,6 @@ namespace ChatTranslated.Windows
 
         private void DrawInputField(float scale)
         {
-            // Row 1: Language + Input + Translate + Copy
             int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
             string[] localizedLangs = languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l).ToArray();
             ImGui.SetNextItemWidth(80 * scale);
@@ -97,7 +96,7 @@ namespace ChatTranslated.Windows
                 Service.configuration.Save();
             }
             ImGui.SameLine();
-            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (115 * scale));
+            ImGui.SetNextItemWidth(ImGui.GetContentRegionAvail().X - (120 * scale));
             ImGui.InputText("##input", ref inputText, 500);
             ImGui.SameLine();
             if (ImGui.Button(Resources.Translate, new Vector2(60 * scale, 0)))
@@ -116,13 +115,11 @@ namespace ChatTranslated.Windows
                     ImGui.SetClipboardText(translatedText);
             }
 
-            // Row 2: Translation output
             ImGui.TextDisabled("TL:");
-            if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.TranslateButtonTooltip);
+            if (ImGui.IsItemHovered()) ImGui.SetTooltip("Translated text");
             ImGui.SameLine();
             ImGui.TextUnformatted(translatedText);
 
-            // Row 3: Reverse translation
             ImGui.TextDisabled("RT:");
             if (ImGui.IsItemHovered()) ImGui.SetTooltip("Reverse translation");
             ImGui.SameLine();
