@@ -1,71 +1,71 @@
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
-using System;
 using System.Text;
-using static ChatTranslated.Configuration;
 
-namespace ChatTranslated.Chat
+namespace ChatTranslated.Chat;
+
+public class Message(string sender, MessageSource source, SeString originalContent, XivChatType type)
 {
-    public class Message(string sender, MessageSource source, SeString originalContent, XivChatType type)
+    // Immutable identity
+    public string Sender { get; } = sender;
+    public MessageSource Source { get; } = source;
+    public SeString OriginalContent { get; } = originalContent;
+    public XivChatType Type { get; } = type;
+
+    // Derived text accessors
+    public string OriginalText => OriginalContent.TextValue;
+
+    private string? cleanedContent;
+    public string CleanedContent => cleanedContent ??= Sanitize(ExtractText(OriginalContent));
+
+    // Mutable translation state
+    public string? TranslatedContent { get; set; }
+    public Configuration.TranslationMode? TranslationMode { get; set; }
+    public string? Context { get; set; }
+
+    public Message(string sender, MessageSource source, string input)
+        : this(sender, source, new SeString(new TextPayload(input)), XivChatType.Say) { }
+
+    private static string ExtractText(SeString seString)
     {
-        public string Sender { get; set; } = sender;
-        public MessageSource Source { get; set; } = source;
-        public SeString OriginalContent { get; set; } = originalContent;
-
-        private string? cleanedContent;
-        public string CleanedContent => cleanedContent ??= RemoveNonTextPayloads(OriginalContent);
-
-        public string? TranslatedContent { get; set; }
-        public TranslationMode? translationMode { get; set; }
-        public XivChatType Type { get; set; } = type;
-        public string? Timestamp { get; set; } = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-        public string? Context { get; set; }
-
-        public Message(string sender, MessageSource source, string input)
-            : this(sender, source, new SeString(new TextPayload(input)), XivChatType.Say) { }
-
-        public static string RemoveNonTextPayloads(SeString inputMsg)
+        var sb = new StringBuilder();
+        for (int i = 0; i < seString.Payloads.Count; i++)
         {
-            var sb = new StringBuilder();
-            for (int i = 0; i < inputMsg.Payloads.Count; i++)
+            switch (seString.Payloads[i])
             {
-                var payload = inputMsg.Payloads[i];
-                switch (payload)
-                {
-                    case TextPayload textPayload:
-                        sb.Append(textPayload.Text);
-                        break;
-                    case PlayerPayload:
-                        i += 2;
-                        break;
-                    case ItemPayload:
-                    case QuestPayload:
-                    case MapLinkPayload:
-                        i += 7;
-                        break;
-                    case StatusPayload:
-                        i += 10;
-                        break;
-                    case PartyFinderPayload:
-                        i += 6;
-                        break;
-                    case AutoTranslatePayload:
-                        i += 2;
-                        break;
-                }
+                case TextPayload textPayload:
+                    sb.Append(textPayload.Text);
+                    break;
+                case PlayerPayload:
+                    i += 2;
+                    break;
+                case ItemPayload:
+                case QuestPayload:
+                case MapLinkPayload:
+                    i += 7;
+                    break;
+                case StatusPayload:
+                    i += 10;
+                    break;
+                case PartyFinderPayload:
+                    i += 6;
+                    break;
+                case AutoTranslatePayload:
+                    i += 2;
+                    break;
             }
-            return Sanitize(sb.ToString());
         }
-
-        public static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, "\uFFFD"); // mark as unknown character
+        return sb.ToString();
     }
 
-    public enum MessageSource
-    {
-        Chat,
-        PartyFinder,
-        MainWindow,
-        Ipc
-    }
+    private static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, "\uFFFD");
+}
+
+public enum MessageSource
+{
+    Chat,
+    PartyFinder,
+    MainWindow,
+    Ipc
 }
