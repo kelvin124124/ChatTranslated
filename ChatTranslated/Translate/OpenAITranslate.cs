@@ -92,7 +92,7 @@ internal static partial class OpenAITranslate
 
     public static string BuildPrompt(string targetLanguage, string? context)
     {
-        var prompt = $"""
+        var prompt = """
             You are a precise translator for FFXIV game content into {targetLanguage}.
 
             TRANSLATION RULES:
@@ -122,7 +122,6 @@ internal static partial class OpenAITranslate
         {
             prompt += $"""
 
-
                 CONTEXT:
                 Use the following context information if relevant (provided in XML tags):
                 <context>
@@ -141,7 +140,6 @@ internal static partial class OpenAITranslate
         if (Service.configuration.UseContext && context != null)
         {
             prompt += $"""
-
 
                 CONTEXT:
                 Use the following context information if relevant (provided in XML tags):

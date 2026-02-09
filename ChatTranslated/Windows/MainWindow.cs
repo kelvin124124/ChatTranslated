@@ -87,7 +87,7 @@ public partial class MainWindow : Window
     private void DrawInputField(float scale)
     {
         int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
-        string[] localizedLangs = languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l).ToArray();
+        string[] localizedLangs = [.. languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l)];
         ImGui.SetNextItemWidth(80 * scale);
         if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
         {

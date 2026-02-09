@@ -12,7 +12,6 @@ using Dalamud.Memory;
 using Dalamud.Plugin;
 using Dalamud.Plugin.Services;
 using FFXIVClientStructs.FFXIV.Client.UI;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -69,7 +68,7 @@ public sealed class Plugin : IDalamudPlugin
         Windows.ConfigTabs.GeneralTab.SetLanguageCulture(Service.configuration.SelectedPluginLanguage);
 
         // initialize chat channels
-        Service.configuration.SelectedChatTypes ??= new List<XivChatType>(Windows.ConfigTabs.ChatChannelsTab.genericChatTypes);
+        Service.configuration.SelectedChatTypes ??= [.. Windows.ConfigTabs.ChatChannelsTab.genericChatTypes];
 
         // settings migration
         if (Service.configuration.Version < 5)
@@ -119,9 +118,8 @@ public sealed class Plugin : IDalamudPlugin
             .Replace("\u0002\u0012\u0002\u0037\u0003", " \uE040 ")
             .Replace("\u0002\u0012\u0002\u0038\u0003", " \uE041 ");
 
-        // extract recruiter name
-        byte* leaderText = PfAddonPtr->PartyLeaderTextNode->GetText();
-        string recruiterName = MemoryHelper.ReadSeStringNullTerminated((nint)leaderText).TextValue;
+        byte* partyLeaderText = PfAddonPtr->PartyLeaderTextNode->GetText();
+        string recruiterName = MemoryHelper.ReadSeStringNullTerminated((nint)partyLeaderText).TextValue;
         if (string.IsNullOrWhiteSpace(recruiterName))
             recruiterName = "PF";
 

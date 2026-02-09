@@ -7,19 +7,18 @@ namespace ChatTranslated.Chat;
 
 public class Message(string sender, MessageSource source, SeString originalContent, XivChatType type)
 {
-    // Immutable identity
     public string Sender { get; } = sender;
     public MessageSource Source { get; } = source;
     public SeString OriginalContent { get; } = originalContent;
     public XivChatType Type { get; } = type;
 
-    // Derived text accessors
+    // text accessors
     public string OriginalText => OriginalContent.TextValue;
 
     private string? cleanedContent;
     public string CleanedContent => cleanedContent ??= Sanitize(ExtractText(OriginalContent));
 
-    // Mutable translation state
+    // translation state
     public string? TranslatedContent { get; set; }
     public Configuration.TranslationMode? TranslationMode { get; set; }
     public string? Context { get; set; }
