@@ -49,6 +49,7 @@ public class LanguagesTab
                 ImGui.TextUnformatted(Resources.DefaultFilteringExplaination);
                 break;
             case LanguageSelectionMode.CustomLanguages:
+                DrawDetectionMethodSelection(configuration);
                 if (ImGui.CollapsingHeader(Resources.SourceLangSelection, ImGuiTreeNodeFlags.None))
                 {
                     foreach (string language in supportedLanguages)
@@ -66,6 +67,7 @@ public class LanguagesTab
                                 configuration.SelectedSourceLanguages.RemoveAll(lang => lang == language);
                             }
                             configuration.Save();
+                            _ = LinguaDetector.RebuildDetectorAsync();
                         }
                     }
                 }
@@ -73,6 +75,23 @@ public class LanguagesTab
             case LanguageSelectionMode.AllLanguages:
                 ImGui.TextUnformatted(Resources.TranslateAllExplaination);
                 break;
+        }
+    }
+
+    private static void DrawDetectionMethodSelection(Configuration configuration)
+    {
+        ImGui.AlignTextToFramePadding();
+        ImGui.TextUnformatted("Detection method");
+        ImGui.SameLine();
+
+        string[] methodNames = ["Lingua (offline)", "Legacy (online)"];
+        int selectedMethod = (int)configuration.SelectedLanguageDetectionMethod;
+        if (ImGui.Combo("##DetectionMethodCombo", ref selectedMethod, methodNames, methodNames.Length))
+        {
+            configuration.SelectedLanguageDetectionMethod = (LanguageDetectionMethod)selectedMethod;
+            configuration.Save();
+            if (configuration.SelectedLanguageDetectionMethod == LanguageDetectionMethod.Lingua)
+                _ = LinguaDetector.RebuildDetectorAsync();
         }
     }
 
@@ -93,6 +112,7 @@ public class LanguagesTab
             configuration.SelectedTargetLanguage = supportedLanguages[currentIndex];
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
+            _ = LinguaDetector.RebuildDetectorAsync();
         }
         if (configuration.UseCustomLanguage) ImGui.EndDisabled();
 

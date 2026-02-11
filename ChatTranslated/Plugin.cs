@@ -100,6 +100,9 @@ public sealed class Plugin : IDalamudPlugin
             Service.configuration.Proxy_Url = "https://cfv5.kelpcc.com";
             Service.configuration.Save();
         }
+
+        if (Service.configuration.SelectedLanguageDetectionMethod == Configuration.LanguageDetectionMethod.Lingua)
+            _ = Translate.LinguaDetector.RebuildDetectorAsync();
     }
 
     private void OnContextMenuOpened(IMenuOpenedArgs args)
@@ -178,6 +181,7 @@ public sealed class Plugin : IDalamudPlugin
     public void Dispose()
     {
         IpcManager.Unregister();
+        Translate.LinguaDetector.Dispose();
 
         WindowSystem?.RemoveAllWindows();
 

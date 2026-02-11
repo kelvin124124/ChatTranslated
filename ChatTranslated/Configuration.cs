@@ -33,6 +33,13 @@ public class Configuration : IPluginConfiguration
     }
     public LanguageSelectionMode SelectedLanguageSelectionMode { get; set; } = LanguageSelectionMode.Default;
 
+    public enum LanguageDetectionMethod
+    {
+        Lingua,
+        Legacy
+    }
+    public LanguageDetectionMethod SelectedLanguageDetectionMethod { get; set; } = LanguageDetectionMethod.Lingua;
+
     public List<string> SelectedSourceLanguages { get; set; } = [];
 
     public string SelectedTargetLanguage { get; set; } = "English";
