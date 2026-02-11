@@ -101,7 +101,7 @@ public sealed class Plugin : IDalamudPlugin
             Service.configuration.Save();
         }
 
-        if (Service.configuration.SelectedLanguageDetectionMethod == Configuration.LanguageDetectionMethod.Lingua)
+        if (!Service.configuration.UseLegacyLanguageDetection)
             _ = Translate.LinguaDetector.RebuildDetectorAsync();
     }
 

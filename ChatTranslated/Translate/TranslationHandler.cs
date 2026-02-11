@@ -76,7 +76,7 @@ internal static class TranslationHandler
 
     public static async Task<string> DetermineLanguage(string messageText)
     {
-        if (Service.configuration.SelectedLanguageDetectionMethod == Configuration.LanguageDetectionMethod.Lingua)
+        if (!Service.configuration.UseLegacyLanguageDetection)
         {
             try
             {

@@ -80,17 +80,12 @@ public class LanguagesTab
 
     private static void DrawDetectionMethodSelection(Configuration configuration)
     {
-        ImGui.AlignTextToFramePadding();
-        ImGui.TextUnformatted("Detection method");
-        ImGui.SameLine();
-
-        string[] methodNames = ["Lingua (offline)", "Legacy (online)"];
-        int selectedMethod = (int)configuration.SelectedLanguageDetectionMethod;
-        if (ImGui.Combo("##DetectionMethodCombo", ref selectedMethod, methodNames, methodNames.Length))
+        bool useLegacy = configuration.UseLegacyLanguageDetection;
+        if (ImGui.Checkbox("Use legacy language detection (online)", ref useLegacy))
         {
-            configuration.SelectedLanguageDetectionMethod = (LanguageDetectionMethod)selectedMethod;
+            configuration.UseLegacyLanguageDetection = useLegacy;
             configuration.Save();
-            if (configuration.SelectedLanguageDetectionMethod == LanguageDetectionMethod.Lingua)
+            if (!useLegacy)
                 _ = LinguaDetector.RebuildDetectorAsync();
         }
     }
