@@ -150,7 +150,7 @@ internal static class LinguaDetector
                     var old = _detector;
                     _detector = LanguageDetectorBuilder
                         .FromLanguages([.. languageSet])
-                        .WithMinimumRelativeDistance(0.25)
+                        .WithMinimumRelativeDistance(0.1)
                         .WithLanguageModelsDirectory(languageModelsDir)
                         .WithPreloadedLanguageModels()
                         .Build();
