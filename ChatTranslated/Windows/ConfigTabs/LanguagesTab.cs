@@ -49,7 +49,6 @@ public class LanguagesTab
                 ImGui.TextUnformatted(Resources.DefaultFilteringExplaination);
                 break;
             case LanguageSelectionMode.CustomLanguages:
-                DrawDetectionMethodSelection(configuration);
                 if (ImGui.CollapsingHeader(Resources.SourceLangSelection, ImGuiTreeNodeFlags.None))
                 {
                     foreach (string language in supportedLanguages)
@@ -71,6 +70,7 @@ public class LanguagesTab
                         }
                     }
                 }
+                DrawDetectionMethodSelection(configuration);
                 break;
             case LanguageSelectionMode.AllLanguages:
                 ImGui.TextUnformatted(Resources.TranslateAllExplaination);
