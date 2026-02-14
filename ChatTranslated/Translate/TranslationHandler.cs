@@ -76,23 +76,10 @@ internal static class TranslationHandler
 
     public static async Task<string> DetermineLanguage(string messageText)
     {
-        if (!Service.configuration.UseLegacyLanguageDetection)
-        {
-            try
-            {
-                var language = await Task.Run(() => LinguaDetector.DetectLanguage(messageText)).ConfigureAwait(false);
-                if (language != "unknown")
-                    return language;
+        if (Service.configuration.UseLegacyLanguageDetection)
+            return await DetermineLanguageLegacy(messageText);
 
-                Service.pluginLog.Warning("Lingua detection returned unknown, falling back to legacy detection.");
-            }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Warning($"Lingua detection failed, falling back to legacy detection: {ex.Message}");
-            }
-        }
-
-        return await DetermineLanguageLegacy(messageText);
+        return await Task.Run(() => LinguaDetector.DetectLanguage(messageText)).ConfigureAwait(false);
     }
 
     public static async Task<string> DetermineLanguageLegacy(string messageText)
