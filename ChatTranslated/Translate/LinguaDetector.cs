@@ -2,6 +2,7 @@ using ChatTranslated.Utils;
 using Lingua;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -141,12 +142,16 @@ internal static class LinguaDetector
                         languageSet.Add(lang);
                 }
 
+                var languageModelsDir = Path.Combine(
+                    Service.pluginInterface.AssemblyLocation.DirectoryName!, "Lingua", "LanguageModels");
+
                 lock (_buildLock)
                 {
                     var old = _detector;
                     _detector = LanguageDetectorBuilder
                         .FromLanguages([.. languageSet])
                         .WithMinimumRelativeDistance(0.25)
+                        .WithLanguageModelsDirectory(languageModelsDir)
                         .WithPreloadedLanguageModels()
                         .Build();
                     old?.UnloadLanguageModels();
