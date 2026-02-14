@@ -76,6 +76,14 @@ internal static class TranslationHandler
 
     public static async Task<string> DetermineLanguage(string messageText)
     {
+        if (Service.configuration.UseLegacyLanguageDetection)
+            return await DetermineLanguageLegacy(messageText);
+
+        return await Task.Run(() => LinguaDetector.DetectLanguage(messageText)).ConfigureAwait(false);
+    }
+
+    public static async Task<string> DetermineLanguageLegacy(string messageText)
+    {
         Func<Task<string>>[] translators =
         [
             async () => (await YTranslator.DetectLanguageAsync(messageText)).Name,
@@ -92,12 +100,12 @@ internal static class TranslationHandler
                 {
                     throw new Exception($"Language detection failed.");
                 }
-                Service.pluginLog.Debug($"{messageText}\n -> language: {language}");
+                Service.pluginLog.Debug($"{messageText}\n -> language (legacy): {language}");
                 return language;
             }
             catch (Exception ex)
             {
-                Service.pluginLog.Warning($"Failed to detect language: {ex.Message}");
+                Service.pluginLog.Warning($"Failed to detect language (legacy): {ex.Message}");
             }
         }
 
