@@ -3,6 +3,7 @@ using Lingua;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -134,10 +135,10 @@ internal static class LinguaDetector
                 if (NameToLingua.TryGetValue(config.SelectedTargetLanguage, out var targetLang))
                     languageSet.Add(targetLang);
 
-                // Lingua requires at least 2 languages
+                // add languages so RelativeDistance filtering works
                 if (languageSet.Count < 2)
                 {
-                    foreach (var lang in NameToLingua.Values)
+                    foreach (var lang in NameToLingua.Values.Take(8))
                         languageSet.Add(lang);
                 }
 
