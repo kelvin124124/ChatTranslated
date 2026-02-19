@@ -44,4 +44,57 @@
             <EmbeddedResource Include="$(SecretPath)" LogicalName="ChatTranslated.Resources.cfv5.secret" />
         </ItemGroup>
     </Target>
+
+    <!--
+        Strip unused Lingua language models from the build output.
+        Runs on CI (or locally with -p:StripLingua=true) after Lingua's CopyFiles target
+        deposits all 79 language dirs into $(TargetDir)Lingua/LanguageModels/.
+        Only the 30 languages exposed in LinguaDetector.cs are kept; the rest are deleted,
+        reducing the packaged output by ~40 MB without touching the NuGet cache.
+    -->
+    <UsingTask TaskName="StripLinguaModels"
+               TaskFactory="RoslynCodeTaskFactory"
+               AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+        <ParameterGroup>
+            <ModelsDir ParameterType="System.String" Required="true" />
+            <Keep ParameterType="System.String" Required="true" />
+            <RemovedCount ParameterType="System.Int32" Output="true" />
+            <TotalCount ParameterType="System.Int32" Output="true" />
+        </ParameterGroup>
+        <Task>
+            <Using Namespace="System.IO" />
+            <Code Type="Fragment" Language="cs"><![CDATA[
+                var keepSet = new HashSet<string>(Keep.Split(';'), StringComparer.OrdinalIgnoreCase);
+                var allDirs = Directory.GetDirectories(ModelsDir);
+                TotalCount = allDirs.Length;
+                RemovedCount = 0;
+                foreach (var dir in allDirs)
+                {
+                    var name = Path.GetFileName(dir);
+                    if (!keepSet.Contains(name))
+                    {
+                        Log.LogMessage(MessageImportance.Normal, $"Lingua: removing '{name}'");
+                        Directory.Delete(dir, recursive: true);
+                        RemovedCount++;
+                    }
+                }
+            ]]></Code>
+        </Task>
+    </UsingTask>
+
+    <Target Name="StripLinguaLanguageModels"
+            AfterTargets="CopyFiles"
+            Condition="'$(CI)' == 'true' OR '$(StripLingua)' == 'true'">
+        <StripLinguaModels
+            ModelsDir="$(TargetDir)Lingua\LanguageModels"
+            Keep="ar;bg;cs;da;de;el;en;es;et;fi;fr;hu;id;it;ja;ko;lt;lv;nb;nl;pl;pt;ro;ru;sk;sl;sv;tr;uk;zh">
+            <Output TaskParameter="RemovedCount" PropertyName="_LinguaRemovedCount" />
+            <Output TaskParameter="TotalCount" PropertyName="_LinguaTotalCount" />
+        </StripLinguaModels>
+
+        <Error Condition="'$(_LinguaRemovedCount)' == '0'"
+               Text="StripLinguaLanguageModels: no directories removed — whitelist may cover all languages or the Lingua output path has changed." />
+
+        <Message Text="Lingua: stripped $(_LinguaRemovedCount)/$(_LinguaTotalCount) language model directories." Importance="high" />
+    </Target>
 </Project>
