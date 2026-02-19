@@ -95,14 +95,21 @@ public sealed class Plugin : IDalamudPlugin
             Service.configuration.Save();
         }
 
+        // v7: migrate to KnownLanguages
+        if (Service.configuration.Version < 7)
+        {
+            Service.configuration.KnownLanguages = [Service.configuration.SelectedTargetLanguage];
+            Service.configuration.Version = 7;
+            Service.configuration.Save();
+        }
+
         if (Service.configuration.Proxy_Url != "https://cfv5.kelpcc.com")
         {
             Service.configuration.Proxy_Url = "https://cfv5.kelpcc.com";
             Service.configuration.Save();
         }
 
-        if (!Service.configuration.UseLegacyLanguageDetection)
-            _ = Translate.LinguaDetector.RebuildDetectorAsync();
+        _ = Translate.LinguaDetector.RebuildDetectorAsync();
     }
 
     private void OnContextMenuOpened(IMenuOpenedArgs args)

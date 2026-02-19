@@ -62,13 +62,7 @@ internal partial class ChatHandler
             if (IsJPFilteredMessage(chatMessage))
                 return;
 
-            bool needsTranslation = Service.configuration.SelectedLanguageSelectionMode switch
-            {
-                Configuration.LanguageSelectionMode.Default => ChatRegex.NonEnglishRegex().IsMatch(chatMessage.CleanedContent),
-                Configuration.LanguageSelectionMode.CustomLanguages => await IsCustomSourceLanguage(chatMessage),
-                Configuration.LanguageSelectionMode.AllLanguages => true,
-                _ => false
-            };
+            bool needsTranslation = !await TranslationHandler.IsKnownLanguage(chatMessage.CleanedContent);
 
             if (needsTranslation)
             {
@@ -165,12 +159,6 @@ internal partial class ChatHandler
     {
         var addon = (AddonChatLog*)Service.gameGui.GetAddonByName("ChatLog").Address;
         return addon == null ? 0 : addon->TabIndex;
-    }
-
-    private static async Task<bool> IsCustomSourceLanguage(Message chatMessage)
-    {
-        var language = await TranslationHandler.DetermineLanguage(chatMessage.CleanedContent);
-        return Service.configuration.SelectedSourceLanguages.Contains(language);
     }
 
     internal static void OutputMessage(Message chatMessage, XivChatType type = XivChatType.Say)

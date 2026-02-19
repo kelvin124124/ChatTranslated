@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +15,16 @@ internal static class LinguaDetector
     private static volatile LanguageDetector? _detector;
     private static readonly Lock _buildLock = new();
 
-    private static readonly Dictionary<string, Language> NameToLingua = new()
+    private static readonly string[] NgramFiles =
+        ["unigrams.json.br", "bigrams.json.br", "trigrams.json.br", "quadrigrams.json.br", "fivegrams.json.br"];
+
+    private const string ModelBaseUrl =
+        "https://raw.githubusercontent.com/searchpioneer/lingua-dotnet/1.0.5/src/Lingua/LanguageModels";
+
+    // Core languages shipped with the plugin (models bundled at build time).
+    private static readonly HashSet<string> ShippedIsoCodes = ["en", "ja", "de", "fr", "zh", "ko", "es"];
+
+    internal static readonly Dictionary<string, Language> NameToLingua = new()
     {
         ["English"] = Language.English,
         ["Japanese"] = Language.Japanese,
@@ -55,7 +65,7 @@ internal static class LinguaDetector
         [Language.Japanese] = "Japanese",
         [Language.German] = "German",
         [Language.French] = "French",
-        [Language.Chinese] = "Chinese (Simplified)",
+        [Language.Chinese] = "Chinese",
         [Language.Korean] = "Korean",
         [Language.Spanish] = "Spanish",
         [Language.Arabic] = "Arabic",
@@ -83,87 +93,174 @@ internal static class LinguaDetector
         [Language.Ukrainian] = "Ukrainian",
     };
 
-    public static string DetectLanguage(string text)
+    private static readonly Dictionary<string, string> NameToIsoCode = new()
+    {
+        ["English"] = "en",
+        ["Japanese"] = "ja",
+        ["German"] = "de",
+        ["French"] = "fr",
+        ["Chinese (Simplified)"] = "zh",
+        ["Chinese (Traditional)"] = "zh",
+        ["Korean"] = "ko",
+        ["Spanish"] = "es",
+        ["Arabic"] = "ar",
+        ["Bulgarian"] = "bg",
+        ["Czech"] = "cs",
+        ["Danish"] = "da",
+        ["Dutch"] = "nl",
+        ["Estonian"] = "et",
+        ["Finnish"] = "fi",
+        ["Greek"] = "el",
+        ["Hungarian"] = "hu",
+        ["Indonesian"] = "id",
+        ["Italian"] = "it",
+        ["Latvian"] = "lv",
+        ["Lithuanian"] = "lt",
+        ["Norwegian Bokmal"] = "nb",
+        ["Polish"] = "pl",
+        ["Portuguese"] = "pt",
+        ["Romanian"] = "ro",
+        ["Russian"] = "ru",
+        ["Slovak"] = "sk",
+        ["Slovenian"] = "sl",
+        ["Swedish"] = "sv",
+        ["Turkish"] = "tr",
+        ["Ukrainian"] = "uk",
+    };
+
+    /// <summary>
+    /// Returns true if the text is detected as one of the user's known languages.
+    /// Returns true for unknown/undetectable text (emoji, numbers) to avoid unnecessary translations.
+    /// </summary>
+    public static bool IsKnownLanguage(string text)
     {
         var detector = _detector;
         if (detector == null)
         {
             Service.pluginLog.Warning("Lingua detector not initialized.");
-            return "unknown";
+            return true;
         }
 
         var detected = detector.DetectLanguageOf(text);
         if (detected == Language.Unknown)
         {
-            Service.pluginLog.Debug($"Lingua: unable to confidently detect language for: {text}");
-            return "unknown";
+            Service.pluginLog.Debug($"Lingua: undetectable → skip: {text}");
+            return true;
         }
 
-        if (detected == Language.Chinese)
+        if (!LinguaToName.TryGetValue(detected, out var detectedName))
         {
-            var selectedSources = Service.configuration.SelectedSourceLanguages;
-            if (selectedSources.Contains("Chinese (Traditional)") && !selectedSources.Contains("Chinese (Simplified)"))
-                return "Chinese (Traditional)";
-            return "Chinese (Simplified)";
+            Service.pluginLog.Debug($"Lingua detected {detected} but no mapping found.");
+            return false;
         }
 
-        if (LinguaToName.TryGetValue(detected, out var name))
-        {
-            Service.pluginLog.Debug($"{text}\n -> language (Lingua): {name}");
-            return name;
-        }
+        var knownLanguages = Service.configuration.KnownLanguages;
+        bool isKnown = detected == Language.Chinese
+            ? knownLanguages.Contains("Chinese (Simplified)") || knownLanguages.Contains("Chinese (Traditional)")
+            : knownLanguages.Contains(detectedName);
 
-        Service.pluginLog.Debug($"Lingua detected {detected} but no mapping found.");
-        return detected.ToString();
+        Service.pluginLog.Debug($"{text}\n → Lingua: {detectedName}, known: {isKnown}");
+        return isKnown;
     }
 
-    public static Task RebuildDetectorAsync()
+    public static async Task RebuildDetectorAsync()
     {
-        return Task.Run(() =>
+        try
         {
+            var config = Service.configuration;
+            var languageSet = new HashSet<Language>();
+
+            // Add user's known languages
+            foreach (var langName in config.KnownLanguages)
+            {
+                if (NameToLingua.TryGetValue(langName, out var linguaLang))
+                    languageSet.Add(linguaLang);
+            }
+
+            // Always include core shipped languages for meaningful relative distance
+            foreach (var lang in ShippedIsoCodes)
+            {
+                var coreLang = NameToIsoCode.First(kv => kv.Value == lang).Key;
+                if (NameToLingua.TryGetValue(coreLang, out var linguaLang))
+                    languageSet.Add(linguaLang);
+            }
+
+            // Ensure models are available for all known languages (download non-shipped ones)
+            await EnsureModelsAvailableAsync(config.KnownLanguages);
+
+            var languageModelsDir = GetModelsDirectory();
+
+            lock (_buildLock)
+            {
+                var old = _detector;
+                _detector = LanguageDetectorBuilder
+                    .FromLanguages([.. languageSet])
+                    .WithMinimumRelativeDistance(0.1)
+                    .WithLanguageModelsDirectory(languageModelsDir)
+                    .WithPreloadedLanguageModels()
+                    .Build();
+                old?.UnloadLanguageModels();
+            }
+
+            Service.pluginLog.Info($"Lingua detector rebuilt with {languageSet.Count} languages.");
+        }
+        catch (Exception ex)
+        {
+            Service.pluginLog.Error(ex, "Failed to build Lingua detector.");
+        }
+    }
+
+    private static string GetModelsDirectory()
+    {
+        return Path.Combine(
+            Service.pluginInterface.AssemblyLocation.DirectoryName!, "Lingua", "LanguageModels");
+    }
+
+    private static async Task EnsureModelsAvailableAsync(List<string> knownLanguages)
+    {
+        var modelsDir = GetModelsDirectory();
+        foreach (var langName in knownLanguages)
+        {
+            if (!NameToIsoCode.TryGetValue(langName, out var isoCode))
+                continue;
+
+            if (ShippedIsoCodes.Contains(isoCode))
+                continue;
+
+            var langDir = Path.Combine(modelsDir, isoCode);
+            if (Directory.Exists(langDir) && Directory.EnumerateFiles(langDir).Any())
+                continue;
+
+            await DownloadLanguageModelAsync(isoCode, langDir);
+        }
+    }
+
+    private static async Task DownloadLanguageModelAsync(string isoCode, string langDir)
+    {
+        Service.pluginLog.Info($"Downloading language model for '{isoCode}'...");
+        Directory.CreateDirectory(langDir);
+
+        foreach (var ngramFile in NgramFiles)
+        {
+            var url = $"{ModelBaseUrl}/{isoCode}/{ngramFile}";
+            var filePath = Path.Combine(langDir, ngramFile);
+
             try
             {
-                var config = Service.configuration;
-                var languageSet = new HashSet<Language>();
+                using var response = await TranslationHandler.HttpClient.GetAsync(url);
+                if (!response.IsSuccessStatusCode)
+                    continue;
 
-                foreach (var langName in config.SelectedSourceLanguages)
-                {
-                    if (NameToLingua.TryGetValue(langName, out var linguaLang))
-                        languageSet.Add(linguaLang);
-                }
-
-                if (NameToLingua.TryGetValue(config.SelectedTargetLanguage, out var targetLang))
-                    languageSet.Add(targetLang);
-
-                // add languages so RelativeDistance filtering works
-                if (languageSet.Count < 2)
-                {
-                    foreach (var lang in NameToLingua.Values.Take(8))
-                        languageSet.Add(lang);
-                }
-
-                var languageModelsDir = Path.Combine(
-                    Service.pluginInterface.AssemblyLocation.DirectoryName!, "Lingua", "LanguageModels");
-
-                lock (_buildLock)
-                {
-                    var old = _detector;
-                    _detector = LanguageDetectorBuilder
-                        .FromLanguages([.. languageSet])
-                        .WithMinimumRelativeDistance(0.1)
-                        .WithLanguageModelsDirectory(languageModelsDir)
-                        .WithPreloadedLanguageModels()
-                        .Build();
-                    old?.UnloadLanguageModels();
-                }
-
-                Service.pluginLog.Info($"Lingua detector rebuilt with {languageSet.Count} languages.");
+                var bytes = await response.Content.ReadAsByteArrayAsync();
+                await File.WriteAllBytesAsync(filePath, bytes);
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
             {
-                Service.pluginLog.Error(ex, "Failed to build Lingua detector.");
+                Service.pluginLog.Warning($"Failed to download {url}: {ex.Message}");
             }
-        });
+        }
+
+        Service.pluginLog.Info($"Language model for '{isoCode}' downloaded.");
     }
 
     public static void Dispose()

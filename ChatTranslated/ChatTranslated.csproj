@@ -72,7 +72,7 @@
             AfterTargets="CopyFiles">
         <StripLinguaModels
             ModelsDir="$(TargetDir)Lingua\LanguageModels"
-            Keep="ar;bg;cs;da;de;el;en;es;et;fi;fr;hu;id;it;ja;ko;lt;lv;nb;nl;pl;pt;ro;ru;sk;sl;sv;tr;uk;zh">
+            Keep="de;en;es;fr;ja;ko;zh">
             <Output TaskParameter="RemovedCount" PropertyName="_LinguaRemovedCount" />
         </StripLinguaModels>
 

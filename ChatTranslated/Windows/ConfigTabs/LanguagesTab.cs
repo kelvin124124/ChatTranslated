@@ -4,7 +4,6 @@ using Dalamud.Bindings.ImGui;
 using GTranslate;
 using System;
 using System.Linq;
-using static ChatTranslated.Configuration;
 
 namespace ChatTranslated.Windows.ConfigTabs;
 
@@ -22,71 +21,38 @@ public class LanguagesTab
 
     public void Draw(Configuration configuration)
     {
-        DrawSourceLangSelection(configuration);
+        DrawKnownLanguagesSelection(configuration);
         ImGui.Separator();
         DrawTargetLangSelection(configuration);
     }
 
-    private void DrawSourceLangSelection(Configuration configuration)
+    private void DrawKnownLanguagesSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
-        ImGui.TextUnformatted(Resources.SourceLang);
-        ImGui.SameLine();
+        ImGui.TextUnformatted("My Languages");
 
-        int selectedMode = (int)configuration.SelectedLanguageSelectionMode;
-        string[] modeNames = Enum.GetNames<LanguageSelectionMode>();
-        string[] localizedModes = [.. modeNames.Select(mode => Resources.ResourceManager.GetString(mode, Resources.Culture) ?? mode)];
+        ImGui.TextDisabled("Messages in these languages will not be translated.");
 
-        if (ImGui.Combo("##LanguageSelectionModeCombo", ref selectedMode, localizedModes, modeNames.Length))
+        if (ImGui.CollapsingHeader("##KnownLanguagesSelection", ImGuiTreeNodeFlags.DefaultOpen))
         {
-            configuration.SelectedLanguageSelectionMode = (LanguageSelectionMode)selectedMode;
-            configuration.Save();
-        }
-
-        switch (configuration.SelectedLanguageSelectionMode)
-        {
-            case LanguageSelectionMode.Default:
-                ImGui.TextUnformatted(Resources.DefaultFilteringExplaination);
-                break;
-            case LanguageSelectionMode.CustomLanguages:
-                if (ImGui.CollapsingHeader(Resources.SourceLangSelection, ImGuiTreeNodeFlags.None))
+            foreach (string language in supportedLanguages)
+            {
+                bool isSelected = configuration.KnownLanguages.Contains(language);
+                if (ImGui.Checkbox(language + "##known", ref isSelected))
                 {
-                    foreach (string language in supportedLanguages)
+                    if (isSelected)
                     {
-                        bool isSelected = configuration.SelectedSourceLanguages.Contains(language);
-                        if (ImGui.Checkbox(Resources.ResourceManager.GetString(language, Resources.Culture) ?? language, ref isSelected))
-                        {
-                            if (isSelected)
-                            {
-                                if (!configuration.SelectedSourceLanguages.Contains(language))
-                                    configuration.SelectedSourceLanguages.Add(language);
-                            }
-                            else
-                            {
-                                configuration.SelectedSourceLanguages.RemoveAll(lang => lang == language);
-                            }
-                            configuration.Save();
-                            _ = LinguaDetector.RebuildDetectorAsync();
-                        }
+                        if (!configuration.KnownLanguages.Contains(language))
+                            configuration.KnownLanguages.Add(language);
                     }
+                    else
+                    {
+                        configuration.KnownLanguages.RemoveAll(lang => lang == language);
+                    }
+                    configuration.Save();
+                    _ = LinguaDetector.RebuildDetectorAsync();
                 }
-                DrawDetectionMethodSelection(configuration);
-                break;
-            case LanguageSelectionMode.AllLanguages:
-                ImGui.TextUnformatted(Resources.TranslateAllExplaination);
-                break;
-        }
-    }
-
-    private static void DrawDetectionMethodSelection(Configuration configuration)
-    {
-        bool useLegacy = configuration.UseLegacyLanguageDetection;
-        if (ImGui.Checkbox("Use legacy language detection (online)", ref useLegacy))
-        {
-            configuration.UseLegacyLanguageDetection = useLegacy;
-            configuration.Save();
-            if (!useLegacy)
-                _ = LinguaDetector.RebuildDetectorAsync();
+            }
         }
     }
 
@@ -107,7 +73,6 @@ public class LanguagesTab
             configuration.SelectedTargetLanguage = supportedLanguages[currentIndex];
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
-            _ = LinguaDetector.RebuildDetectorAsync();
         }
         if (configuration.UseCustomLanguage) ImGui.EndDisabled();
 
