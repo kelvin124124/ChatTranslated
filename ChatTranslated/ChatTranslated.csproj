@@ -45,7 +45,7 @@
         </ItemGroup>
     </Target>
 
-    <!-- Remove unused Lingua models, in CI or with -p:StripLingua=true locally -->
+    <!-- Remove unused Lingua models -->
     <UsingTask TaskName="StripLinguaModels"
                TaskFactory="RoslynCodeTaskFactory"
                AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
@@ -69,8 +69,7 @@
     </UsingTask>
 
     <Target Name="StripLinguaLanguageModels"
-            AfterTargets="CopyFiles"
-            Condition="'$(CI)' == 'true' OR '$(StripLingua)' == 'true'">
+            AfterTargets="CopyFiles">
         <StripLinguaModels
             ModelsDir="$(TargetDir)Lingua\LanguageModels"
             Keep="ar;bg;cs;da;de;el;en;es;et;fi;fr;hu;id;it;ja;ko;lt;lv;nb;nl;pl;pt;ro;ru;sk;sl;sv;tr;uk;zh">
