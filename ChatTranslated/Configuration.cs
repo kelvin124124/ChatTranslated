@@ -56,6 +56,8 @@ public class Configuration : IPluginConfiguration
     public bool UseCustomPrompt { get; set; } = false;
     public string LLM_CustomPrompt { get; set; } = "";
 
+    public string MagicString { get; set; } = "";
+
     public void Save()
     {
         Service.pluginInterface?.SavePluginConfig(this);

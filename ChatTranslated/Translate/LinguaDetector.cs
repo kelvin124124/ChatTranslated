@@ -21,7 +21,7 @@ internal static class LinguaDetector
     private const string ModelBaseUrl =
         "https://raw.githubusercontent.com/searchpioneer/lingua-dotnet/1.0.5/src/Lingua/LanguageModels";
 
-    // Core languages shipped with the plugin (models bundled at build time).
+    // Core languages shipped with the plugin
     private static readonly HashSet<string> ShippedIsoCodes = ["en", "ja", "de", "fr", "zh", "ko", "es"];
 
     internal static readonly Dictionary<string, Language> NameToLingua = new()
@@ -128,10 +128,8 @@ internal static class LinguaDetector
         ["Ukrainian"] = "uk",
     };
 
-    /// <summary>
-    /// Returns true if the text is detected as one of the user's known languages.
-    /// Returns true for unknown/undetectable text (emoji, numbers) to avoid unnecessary translations.
-    /// </summary>
+    // Returns true if the text is detected as one of the user's known languages.
+    // Returns true for undetectable text (emoji, numbers).
     public static bool IsKnownLanguage(string text)
     {
         var detector = _detector;
@@ -141,7 +139,19 @@ internal static class LinguaDetector
             return true;
         }
 
-        var detected = detector.DetectLanguageOf(text);
+        var confidenceValues = detector.ComputeLanguageConfidenceValues(text);
+        var top = confidenceValues.FirstOrDefault();
+        var detected = top.Key;
+        var confidence = top.Value;
+
+        Service.pluginLog.Debug($"Lingua raw detection for '{text}': {detected} ({confidence:P0})");
+
+        if (confidence < 0.4)
+        {
+            Service.pluginLog.Debug($"Lingua: low confidence ({confidence:P0}) → skip: {text}");
+            return true;
+        }
+
         if (detected == Language.Unknown)
         {
             Service.pluginLog.Debug($"Lingua: undetectable → skip: {text}");
@@ -179,14 +189,14 @@ internal static class LinguaDetector
 
             // Always include core shipped languages for meaningful relative distance
             foreach (var lang in ShippedIsoCodes)
-            {
+            { 
                 var coreLang = NameToIsoCode.First(kv => kv.Value == lang).Key;
                 if (NameToLingua.TryGetValue(coreLang, out var linguaLang))
                     languageSet.Add(linguaLang);
             }
 
-            // Ensure models are available for all known languages (download non-shipped ones)
-            await EnsureModelsAvailableAsync(config.KnownLanguages);
+            // Check any missing models and download them
+            await EnsureModelsAvailableAsync(config.KnownLanguages).ConfigureAwait(false);
 
             var languageModelsDir = GetModelsDirectory();
 
@@ -195,7 +205,7 @@ internal static class LinguaDetector
                 var old = _detector;
                 _detector = LanguageDetectorBuilder
                     .FromLanguages([.. languageSet])
-                    .WithMinimumRelativeDistance(0.1)
+                    .WithMinimumRelativeDistance(0.2)
                     .WithLanguageModelsDirectory(languageModelsDir)
                     .WithPreloadedLanguageModels()
                     .Build();

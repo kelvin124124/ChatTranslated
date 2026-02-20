@@ -4,13 +4,17 @@
     <PropertyGroup>
         <Authors>kelvin124124</Authors>
         <Company></Company>
-        <Version>3.5.0.1</Version>
+        <Version>3.5.1.0</Version>
         <Description>In-game chat translator.</Description>
         <Copyright></Copyright>
         <PackageProjectUrl>https://github.com/kelvin124124/ChatTranslated</PackageProjectUrl>
         <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="translate\Todo.md" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="GTranslate" Version="2.3.0" />
@@ -46,9 +50,7 @@
     </Target>
 
     <!-- Remove unused Lingua models -->
-    <UsingTask TaskName="StripLinguaModels"
-               TaskFactory="RoslynCodeTaskFactory"
-               AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <UsingTask TaskName="StripLinguaModels" TaskFactory="RoslynCodeTaskFactory" AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
         <ParameterGroup>
             <ModelsDir ParameterType="System.String" Required="true" />
             <Keep ParameterType="System.String" Required="true" />
@@ -68,16 +70,12 @@
         </Task>
     </UsingTask>
 
-    <Target Name="StripLinguaLanguageModels"
-            AfterTargets="CopyFiles">
-        <StripLinguaModels
-            ModelsDir="$(TargetDir)Lingua\LanguageModels"
-            Keep="de;en;es;fr;ja;ko;zh">
+    <Target Name="StripLinguaLanguageModels" AfterTargets="CopyFiles">
+        <StripLinguaModels ModelsDir="$(TargetDir)Lingua\LanguageModels" Keep="de;en;es;fr;ja;ko;zh">
             <Output TaskParameter="RemovedCount" PropertyName="_LinguaRemovedCount" />
         </StripLinguaModels>
 
-        <Error Condition="'$(_LinguaRemovedCount)' == '0'"
-               Text="StripLinguaLanguageModels: nothing removed — check Lingua output path." />
+        <Error Condition="'$(_LinguaRemovedCount)' == '0'" Text="StripLinguaLanguageModels: nothing removed — check Lingua output path." />
         <Message Text="Lingua: stripped $(_LinguaRemovedCount) language model directories." Importance="high" />
     </Target>
 </Project>
