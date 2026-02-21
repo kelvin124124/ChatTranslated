@@ -35,7 +35,7 @@ public class GeneralTab
         // send for language detection
         if (ImGui.Button("Magic button"))
         {
-            Service.pluginLog.Info($"IsKnownLanguage returned: {LinguaDetector.IsKnownLanguage(TestString)} for input: {TestString}");
+            Service.pluginLog.Info($"IsKnownLanguage returned: {LinguaDetector.IsKnownLanguageOrMeaningless(TestString)} for input: {TestString}");
         }
 #endif
     }

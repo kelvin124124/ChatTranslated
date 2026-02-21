@@ -69,9 +69,8 @@ internal static class LinguaDetector
     internal static readonly Dictionary<string, string> NameToIsoCode =
         LanguageTable.ToDictionary(e => e.Name, e => e.Iso);
 
-    // Returns the raw Lingua confidence score with no hard cutoff.
-    // Returns 0 for undetectable text (emoji, numbers, Language.Unknown).
-    internal static double GetScore(string text)
+    // Returns the raw Lingua confidence score.
+    internal static double GetLinguaScore(string text)
     {
         var detector = _detector;
         if (detector == null) return 0.0;
@@ -89,9 +88,10 @@ internal static class LinguaDetector
         return LanguageTable.Any(e => e.Iso == isoCode && known.Contains(e.Name));
     }
 
+    // TODO: needs update since we implemented tiered confidence system, no need confidence in this method? or combine with GetLinguaScore?
     // Returns true if the text is detected as one of the user's known languages.
     // Returns true for undetectable text (emoji, numbers).
-    public static bool IsKnownLanguage(string text)
+    public static bool IsKnownLanguageOrMeaningless(string text)
     {
         var detector = _detector;
         if (detector == null)
@@ -148,7 +148,7 @@ internal static class LinguaDetector
                     languageSet.Add(linguaLang);
             }
 
-            // Always include core shipped languages for meaningful relative distance
+            // Always include core shipped languages
             foreach (var lang in ShippedIsoCodes)
             { 
                 var coreLang = NameToIsoCode.First(kv => kv.Value == lang).Key;
