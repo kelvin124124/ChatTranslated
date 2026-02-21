@@ -24,109 +24,70 @@ internal static class LinguaDetector
     // Core languages shipped with the plugin
     private static readonly HashSet<string> ShippedIsoCodes = ["en", "ja", "de", "fr", "zh", "ko", "es"];
 
-    internal static readonly Dictionary<string, Language> NameToLingua = new()
-    {
-        ["English"] = Language.English,
-        ["Japanese"] = Language.Japanese,
-        ["German"] = Language.German,
-        ["French"] = Language.French,
-        ["Chinese (Simplified)"] = Language.Chinese,
-        ["Chinese (Traditional)"] = Language.Chinese,
-        ["Korean"] = Language.Korean,
-        ["Spanish"] = Language.Spanish,
-        ["Arabic"] = Language.Arabic,
-        ["Bulgarian"] = Language.Bulgarian,
-        ["Czech"] = Language.Czech,
-        ["Danish"] = Language.Danish,
-        ["Dutch"] = Language.Dutch,
-        ["Estonian"] = Language.Estonian,
-        ["Finnish"] = Language.Finnish,
-        ["Greek"] = Language.Greek,
-        ["Hungarian"] = Language.Hungarian,
-        ["Indonesian"] = Language.Indonesian,
-        ["Italian"] = Language.Italian,
-        ["Latvian"] = Language.Latvian,
-        ["Lithuanian"] = Language.Lithuanian,
-        ["Norwegian Bokmal"] = Language.Bokmal,
-        ["Polish"] = Language.Polish,
-        ["Portuguese"] = Language.Portuguese,
-        ["Romanian"] = Language.Romanian,
-        ["Russian"] = Language.Russian,
-        ["Slovak"] = Language.Slovak,
-        ["Slovenian"] = Language.Slovene,
-        ["Swedish"] = Language.Swedish,
-        ["Turkish"] = Language.Turkish,
-        ["Ukrainian"] = Language.Ukrainian,
-    };
+    // Single source of truth: (display name, Lingua enum, ISO 639-1 code)
+    private static readonly (string Name, Language Lang, string Iso)[] LanguageTable =
+    [
+        ("English",               Language.English,    "en"),
+        ("Japanese",              Language.Japanese,   "ja"),
+        ("German",                Language.German,     "de"),
+        ("French",                Language.French,     "fr"),
+        ("Chinese (Simplified)",  Language.Chinese,    "zh"),
+        ("Chinese (Traditional)", Language.Chinese,    "zh"),
+        ("Korean",                Language.Korean,     "ko"),
+        ("Spanish",               Language.Spanish,    "es"),
+        ("Arabic",                Language.Arabic,     "ar"),
+        ("Bulgarian",             Language.Bulgarian,  "bg"),
+        ("Czech",                 Language.Czech,      "cs"),
+        ("Danish",                Language.Danish,     "da"),
+        ("Dutch",                 Language.Dutch,      "nl"),
+        ("Estonian",              Language.Estonian,   "et"),
+        ("Finnish",               Language.Finnish,    "fi"),
+        ("Greek",                 Language.Greek,      "el"),
+        ("Hungarian",             Language.Hungarian,  "hu"),
+        ("Indonesian",            Language.Indonesian, "id"),
+        ("Italian",               Language.Italian,    "it"),
+        ("Latvian",               Language.Latvian,    "lv"),
+        ("Lithuanian",            Language.Lithuanian, "lt"),
+        ("Norwegian Bokmal",      Language.Bokmal,     "nb"),
+        ("Polish",                Language.Polish,     "pl"),
+        ("Portuguese",            Language.Portuguese, "pt"),
+        ("Romanian",              Language.Romanian,   "ro"),
+        ("Russian",               Language.Russian,    "ru"),
+        ("Slovak",                Language.Slovak,     "sk"),
+        ("Slovenian",             Language.Slovene,    "sl"),
+        ("Swedish",               Language.Swedish,    "sv"),
+        ("Turkish",               Language.Turkish,    "tr"),
+        ("Ukrainian",             Language.Ukrainian,  "uk"),
+    ];
 
-    private static readonly Dictionary<Language, string> LinguaToName = new()
-    {
-        [Language.English] = "English",
-        [Language.Japanese] = "Japanese",
-        [Language.German] = "German",
-        [Language.French] = "French",
-        [Language.Chinese] = "Chinese",
-        [Language.Korean] = "Korean",
-        [Language.Spanish] = "Spanish",
-        [Language.Arabic] = "Arabic",
-        [Language.Bulgarian] = "Bulgarian",
-        [Language.Czech] = "Czech",
-        [Language.Danish] = "Danish",
-        [Language.Dutch] = "Dutch",
-        [Language.Estonian] = "Estonian",
-        [Language.Finnish] = "Finnish",
-        [Language.Greek] = "Greek",
-        [Language.Hungarian] = "Hungarian",
-        [Language.Indonesian] = "Indonesian",
-        [Language.Italian] = "Italian",
-        [Language.Latvian] = "Latvian",
-        [Language.Lithuanian] = "Lithuanian",
-        [Language.Bokmal] = "Norwegian Bokmal",
-        [Language.Polish] = "Polish",
-        [Language.Portuguese] = "Portuguese",
-        [Language.Romanian] = "Romanian",
-        [Language.Russian] = "Russian",
-        [Language.Slovak] = "Slovak",
-        [Language.Slovene] = "Slovenian",
-        [Language.Swedish] = "Swedish",
-        [Language.Turkish] = "Turkish",
-        [Language.Ukrainian] = "Ukrainian",
-    };
+    internal static readonly Dictionary<string, Language> NameToLingua =
+        LanguageTable.ToDictionary(e => e.Name, e => e.Lang);
 
-    private static readonly Dictionary<string, string> NameToIsoCode = new()
+    private static readonly Dictionary<Language, string> LinguaToName =
+        LanguageTable.GroupBy(e => e.Lang).ToDictionary(g => g.Key, g => g.First().Name);
+
+    internal static readonly Dictionary<string, string> NameToIsoCode =
+        LanguageTable.ToDictionary(e => e.Name, e => e.Iso);
+
+    // Returns the raw Lingua confidence score with no hard cutoff.
+    // Returns 0 for undetectable text (emoji, numbers, Language.Unknown).
+    internal static double GetScore(string text)
     {
-        ["English"] = "en",
-        ["Japanese"] = "ja",
-        ["German"] = "de",
-        ["French"] = "fr",
-        ["Chinese (Simplified)"] = "zh",
-        ["Chinese (Traditional)"] = "zh",
-        ["Korean"] = "ko",
-        ["Spanish"] = "es",
-        ["Arabic"] = "ar",
-        ["Bulgarian"] = "bg",
-        ["Czech"] = "cs",
-        ["Danish"] = "da",
-        ["Dutch"] = "nl",
-        ["Estonian"] = "et",
-        ["Finnish"] = "fi",
-        ["Greek"] = "el",
-        ["Hungarian"] = "hu",
-        ["Indonesian"] = "id",
-        ["Italian"] = "it",
-        ["Latvian"] = "lv",
-        ["Lithuanian"] = "lt",
-        ["Norwegian Bokmal"] = "nb",
-        ["Polish"] = "pl",
-        ["Portuguese"] = "pt",
-        ["Romanian"] = "ro",
-        ["Russian"] = "ru",
-        ["Slovak"] = "sk",
-        ["Slovenian"] = "sl",
-        ["Swedish"] = "sv",
-        ["Turkish"] = "tr",
-        ["Ukrainian"] = "uk",
-    };
+        var detector = _detector;
+        if (detector == null) return 0.0;
+
+        var top = detector.ComputeLanguageConfidenceValues(text).FirstOrDefault();
+        if (top.Key == Language.Unknown) return 0.0;
+        return top.Value;
+    }
+
+    // Returns true if the ISO 639-1 code corresponds to one of the user's known languages.
+    internal static bool IsKnownIsoCode(string? isoCode)
+    {
+        if (isoCode == null) return false;
+        var known = Service.configuration.KnownLanguages;
+        return LanguageTable.Any(e => e.Iso == isoCode && known.Contains(e.Name));
+    }
 
     // Returns true if the text is detected as one of the user's known languages.
     // Returns true for undetectable text (emoji, numbers).
@@ -195,8 +156,8 @@ internal static class LinguaDetector
                     languageSet.Add(linguaLang);
             }
 
-            // Check any missing models and download them
-            await EnsureModelsAvailableAsync(config.KnownLanguages).ConfigureAwait(false);
+            // Download any missing models
+            await DownloadMissingModelsAsync(config.KnownLanguages).ConfigureAwait(false);
 
             var languageModelsDir = GetModelsDirectory();
 
@@ -226,7 +187,7 @@ internal static class LinguaDetector
             Service.pluginInterface.AssemblyLocation.DirectoryName!, "Lingua", "LanguageModels");
     }
 
-    private static async Task EnsureModelsAvailableAsync(List<string> knownLanguages)
+    private static async Task DownloadMissingModelsAsync(List<string> knownLanguages)
     {
         var modelsDir = GetModelsDirectory();
         foreach (var langName in knownLanguages)

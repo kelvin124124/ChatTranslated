@@ -69,9 +69,18 @@ internal static class TranslationHandler
         return message;
     }
 
-    public static Task<bool> IsKnownLanguage(string messageText)
+    public static async Task<string?> DetectIsoAsync(string text)
     {
-        return Task.Run(() => LinguaDetector.IsKnownLanguage(messageText));
+        try
+        {
+            var lang = await MachineTranslate.GTranslator.DetectLanguageAsync(text).ConfigureAwait(false);
+            return lang.ISO6391;
+        }
+        catch (Exception ex)
+        {
+            Service.pluginLog.Warning($"Google language detection failed: {ex.Message}");
+            return null;
+        }
     }
 
     public static void ClearTranslationCache() => TranslationCache.Clear();

@@ -28,13 +28,10 @@ public class LanguagesTab
 
     private void DrawKnownLanguagesSelection(Configuration configuration)
     {
-        ImGui.AlignTextToFramePadding();
-        ImGui.TextUnformatted("My Languages");
-
-        ImGui.TextDisabled("Messages in these languages will not be translated.");
-
-        if (ImGui.CollapsingHeader("##KnownLanguagesSelection", ImGuiTreeNodeFlags.DefaultOpen))
+        if (ImGui.CollapsingHeader("My Languages##KnownLanguagesSelection", ImGuiTreeNodeFlags.DefaultOpen))
         {
+            ImGui.TextDisabled("Messages in these languages will not be translated.");
+
             foreach (string language in supportedLanguages)
             {
                 bool isSelected = configuration.KnownLanguages.Contains(language);

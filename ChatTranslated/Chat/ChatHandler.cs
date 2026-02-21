@@ -17,6 +17,7 @@ namespace ChatTranslated.Chat;
 internal partial class ChatHandler
 {
     private readonly Dictionary<string, int> lastMessageTime = [];
+    private readonly Dictionary<XivChatType, DateTime> _lastKnownTime = [];
 
     public ChatHandler()
     {
@@ -62,17 +63,56 @@ internal partial class ChatHandler
             if (IsJPFilteredMessage(chatMessage))
                 return;
 
-            bool needsTranslation = !await TranslationHandler.IsKnownLanguage(chatMessage.CleanedContent);
+            double linguaScore   = await Task.Run(() => LinguaDetector.GetScore(chatMessage.CleanedContent));
+            double lengthFactor  = Math.Clamp(chatMessage.CleanedContent.Length / 20.0, 0.0, 1.0);
+            double channelBoost  = GetChannelBoost(type);
+            double confidence    = Math.Min(1.0, linguaScore * (0.5 + 0.5 * lengthFactor) + channelBoost * 0.5);
 
-            if (needsTranslation)
+            Service.pluginLog.Debug($"Confidence for '{chatMessage.CleanedContent}': {confidence:F2} (lingua={linguaScore:F2}, length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
+
+            if (confidence >= 0.65)
             {
-                chatMessage.Context = GetChatMessageContext();
-                await TranslationHandler.TranslateMessage(chatMessage);
-                OutputMessage(chatMessage, type);
+                // High: Lingua is reliable, act directly
+                if (LinguaDetector.IsKnownLanguage(chatMessage.CleanedContent))
+                    Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
+                else
+                {
+                    chatMessage.Context = GetChatMessageContext();
+                    await TranslationHandler.TranslateMessage(chatMessage);
+                    OutputMessage(chatMessage, type);
+                }
+            }
+            else if (confidence >= 0.35)
+            {
+                // Medium: Google detect only; translate only if needed
+                string? iso = await TranslationHandler.DetectIsoAsync(chatMessage.CleanedContent);
+                if (LinguaDetector.IsKnownIsoCode(iso))
+                {
+                    _lastKnownTime[type] = DateTime.UtcNow;
+                    Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
+                }
+                else
+                {
+                    chatMessage.Context = GetChatMessageContext();
+                    await TranslationHandler.TranslateMessage(chatMessage);
+                    OutputMessage(chatMessage, type);
+                }
             }
             else
             {
-                Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
+                // Low: translate and detect in parallel; discard if Google says known
+                chatMessage.Context = GetChatMessageContext();
+                var translateTask = TranslationHandler.TranslateMessage(chatMessage);
+                var detectTask    = TranslationHandler.DetectIsoAsync(chatMessage.CleanedContent);
+                await Task.WhenAll(translateTask, detectTask);
+
+                if (LinguaDetector.IsKnownIsoCode(detectTask.Result))
+                {
+                    _lastKnownTime[type] = DateTime.UtcNow;
+                    Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
+                }
+                else
+                    OutputMessage(chatMessage, type);
             }
         }
         catch (Exception ex)
@@ -244,6 +284,14 @@ internal partial class ChatHandler
         }
 
         return false;
+    }
+
+    private double GetChannelBoost(XivChatType channel)
+    {
+        if (!_lastKnownTime.TryGetValue(channel, out var time)) return 0.0;
+        double elapsed = (DateTime.UtcNow - time).TotalMinutes;
+        if (elapsed >= 5) { _lastKnownTime.Remove(channel); return 0.0; }
+        return Math.Exp(-elapsed * Math.Log(2) / 2.5);
     }
 
     public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
