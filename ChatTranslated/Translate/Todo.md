@@ -4,11 +4,11 @@ Lingua detector confidently classify English acronums like "uwu", "I gtg" or sim
 Proposed solution:
 Create a system centered on calculated confidence level for the message.
 - Criteria for confidence level includes
-    - Score calculated based on cached validated language from chat channel, lower when validation time is old, capped at ? minutes
+    - Score calculated based on cached validated language from chat channel, lower when validation time is old, capped at 5 minutes, decay exponentially
 [Logic: usually in conversations, people tend to use the same language, so if a language was recently validated in the channel, it's more likely that new messages are in the same language]
     - Length of message [Lingua works better with longer texts]
-    - Lingua confidence score for the message, higher is better
-    - Relationship: Confidence = ???
+    - Lingua confidence score for the message, higher is better [note that detected language could be different than cached verified language]
+    - Relationship: Confidence = [Task: find a sensible relationship to calculate the confidence]
 
 Based on the calcculated confidence level, 3 different actions will be taken:
 - High confidence: message is likely in the same language as previous messages in the channel, react accordingly, no further action needed (if classified as known -> skip, unknown -> translate)
