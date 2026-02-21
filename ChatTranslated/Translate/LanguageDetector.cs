@@ -104,19 +104,18 @@ internal static class LanguageDetector
             Service.pluginLog.Warning("Lingua detector not initialized.");
             return true;
         }
+        var top = detector.DetectLanguageOf(text);
+        Service.pluginLog.Debug($"Lingua raw detection for '{text}': {top}");
 
-        var top = detector.ComputeLanguageConfidenceValues(text).FirstOrDefault();
-        Service.pluginLog.Debug($"Lingua raw detection for '{text}': {top.Key} ({top.Value:P0})");
-
-        if (top.Value < 0.4 || top.Key == Language.Unknown)
+        if (top == Language.Unknown)
         {
             Service.pluginLog.Debug($"Lingua: low confidence or undetectable → skip: {text}");
             return true;
         }
 
-        LinguaToIso.TryGetValue(top.Key, out var iso);
+        LinguaToIso.TryGetValue(top, out var iso);
         bool isKnown = IsKnownIsoCode(iso);
-        Service.pluginLog.Debug($"{text}\n → Lingua: {top.Key}, known: {isKnown}");
+        Service.pluginLog.Debug($"{text}\n → Lingua: {top}, known: {isKnown}");
         return isKnown;
     }
 
