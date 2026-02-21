@@ -1,4 +1,5 @@
 using ChatTranslated.Utils;
+using Dalamud.Game.Text;
 using Lingua;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using LinguaLD = Lingua.LanguageDetector;
 
 namespace ChatTranslated.Translate;
 
-internal static class LinguaDetector
+internal static class LanguageDetector
 {
-    private static volatile LanguageDetector? _detector;
+    private static volatile LinguaLD? _detector;
     private static readonly Lock _buildLock = new();
 
     private static readonly string[] NgramFiles =
@@ -69,6 +71,11 @@ internal static class LinguaDetector
     private static readonly Dictionary<Language, string> LinguaToIso =
         LanguageTable.GroupBy(e => e.Lang).ToDictionary(g => g.Key, g => g.First().Iso);
 
+    // Per-channel cache of the last Google-detected ISO code with timestamp
+    private static readonly Dictionary<XivChatType, (long Tick, string? Iso)> _lastChannelDetection = [];
+
+    // --- Lingua detection ---
+
     // Returns Lingua's top detected language as (confidence score, ISO 639-1 code).
     // Returns (0.0, null) for undetectable text (emoji, numbers, Language.Unknown).
     internal static (double Score, string? Iso) GetLinguaResult(string text)
@@ -116,6 +123,56 @@ internal static class LinguaDetector
         Service.pluginLog.Debug($"{text}\n → Lingua: {top.Key}, known: {isKnown}");
         return isKnown;
     }
+
+    // --- Confidence scoring ---
+
+    // Computes the overall detection confidence for a message, combining Lingua's score,
+    // message length, and the channel's recent detection history.
+    internal static async Task<(double Confidence, string? Iso)> ComputeConfidenceAsync(string text, XivChatType channel)
+    {
+        var (linguaScore, linguaIso) = await Task.Run(() => GetLinguaResult(text));
+        double lengthFactor = Math.Clamp(text.Length / 20.0, 0.0, 1.0);
+        double channelBoost = GetChannelBoost(channel, linguaIso);
+        double confidence = Math.Min(1.0, linguaScore * (0.5 + 0.5 * lengthFactor) + channelBoost * 0.5);
+        Service.pluginLog.Debug($"Confidence for '{text}': {confidence:F2} (lingua={linguaScore:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
+        return (confidence, linguaIso);
+    }
+
+    // Returns a decayed boost in [-1, +1]: positive if Google's cached detection agrees with Lingua, negative if it disagrees.
+    private static double GetChannelBoost(XivChatType channel, string? linguaIso)
+    {
+        if (linguaIso == null) return 0.0;
+        if (!_lastChannelDetection.TryGetValue(channel, out var cache) || cache.Iso == null) return 0.0;
+
+        double elapsedMin = (Environment.TickCount64 - cache.Tick) / 60_000.0;
+        if (elapsedMin >= 5) { _lastChannelDetection.Remove(channel); return 0.0; }
+
+        double decay = Math.Exp(-elapsedMin * Math.Log(2) / 2.5);
+        return cache.Iso == linguaIso ? decay : -decay;
+    }
+
+    // Updates the per-channel cache with the latest Google-detected ISO code.
+    internal static void UpdateChannelCache(XivChatType channel, string? iso)
+        => _lastChannelDetection[channel] = (Environment.TickCount64, iso);
+
+    // --- Google detection ---
+
+    // Detects the ISO 639-1 language code using Google Translate.
+    internal static async Task<string?> DetectIsoAsync(string text)
+    {
+        try
+        {
+            var lang = await MachineTranslate.GTranslator.DetectLanguageAsync(text).ConfigureAwait(false);
+            return lang.ISO6391;
+        }
+        catch (Exception ex)
+        {
+            Service.pluginLog.Warning($"Google language detection failed: {ex.Message}");
+            return null;
+        }
+    }
+
+    // --- Lingua model management ---
 
     public static async Task RebuildDetectorAsync()
     {

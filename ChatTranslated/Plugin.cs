@@ -109,7 +109,7 @@ public sealed class Plugin : IDalamudPlugin
             Service.configuration.Save();
         }
 
-        _ = Translate.LinguaDetector.RebuildDetectorAsync();
+        _ = Translate.LanguageDetector.RebuildDetectorAsync();
     }
 
     private void OnContextMenuOpened(IMenuOpenedArgs args)
@@ -188,7 +188,7 @@ public sealed class Plugin : IDalamudPlugin
     public void Dispose()
     {
         IpcManager.Unregister();
-        Translate.LinguaDetector.Dispose();
+        Translate.LanguageDetector.Dispose();
 
         WindowSystem?.RemoveAllWindows();
 

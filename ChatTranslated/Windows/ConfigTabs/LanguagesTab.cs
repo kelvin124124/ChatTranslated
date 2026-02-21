@@ -47,7 +47,7 @@ public class LanguagesTab
                         configuration.KnownLanguages.RemoveAll(lang => lang == language);
                     }
                     configuration.Save();
-                    _ = LinguaDetector.RebuildDetectorAsync();
+                    _ = LanguageDetector.RebuildDetectorAsync();
                 }
             }
         }
