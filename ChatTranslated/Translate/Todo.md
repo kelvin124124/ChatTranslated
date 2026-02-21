@@ -11,11 +11,12 @@ Create a system centered on calculated confidence level for the message.
     - Relationship: Confidence = ???
 
 Based on the calcculated confidence level, 3 different actions will be taken:
-- High confidence: message is likely in the same language as previous messages in the channel, react accordingly, no further action needed
-- Medium confidence: message is somewhat likely in the same language, but not certain, consolt Google translate for opinion, delay translation until proven necessary
+- High confidence: message is likely in the same language as previous messages in the channel, react accordingly, no further action needed (if classified as known -> skip, unknown -> translate)
+- Medium confidence: message is somewhat likely in the same language, but not certain, consolt Google translate for opinion, delay translation until proven necessary (Google translate language detection ->> if classified as known -> skip, unknown -> translate)
 - Low confidence: message is likely in a different language, translate and consult Google translate, wait for both results to come back
-   , if turns out translation not required, discard translation, otherwise output translation
+   , if turns out translation not required, discard translation, otherwise output translation (Google translate language detection + translation ->> if classified as known -> abort, unknown -> output translation)
 
 Other problems:
 Simplify large chunks of Dictionary in LinguaDetector
 Language tab DrawKnownLanguagesSelection too uglt: empty label with text above
+Give a better name to EnsureModelsAvailableAsync
