@@ -26,7 +26,7 @@ internal static class LanguageDetector
     // Core languages shipped with the plugin
     private static readonly HashSet<string> ShippedIsoCodes = ["en", "ja", "de", "fr", "zh", "ko", "es"];
 
-    // Single source of truth: (display name, Lingua enum, ISO 639-1 code)
+    // display name, Lingua enum, ISO 639-1 code
     private static readonly (string Name, Language Lang, string Iso)[] LanguageTable =
     [
         ("English",               Language.English,    "en"),
@@ -120,14 +120,15 @@ internal static class LanguageDetector
         return isKnown;
     }
 
-    internal static async Task<(double Confidence, string? Iso)> ComputeConfidenceAsync(string text, XivChatType channel)
+    internal static async Task<(double Reliability, string? Iso)> ComputeReliabilityAsync(string text, XivChatType channel)
     {
-        var (linguaScore, linguaIso) = await Task.Run(() => GetLinguaResult(text));
-        double lengthFactor = Math.Clamp(text.Length / 20.0, 0.0, 1.0);
+        var (confidence, linguaIso) = await Task.Run(() => GetLinguaResult(text));
+        double lengthFactor = Math.Clamp(text.Length / 15.0, 0.0, 1.0);  // length of incoming text, hiagher is better
         double channelBoost = GetChannelBoost(channel, linguaIso); // +decay if Google agrees with Lingua, -decay if disagrees
-        double confidence = Math.Min(1.0, linguaScore * (0.5 + 0.5 * lengthFactor) + channelBoost * 0.5);
-        Service.pluginLog.Debug($"Confidence for '{text}': {confidence:F2} (lingua={linguaScore:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
-        return (confidence, linguaIso);
+        double reliability = Math.Clamp((confidence * lengthFactor) + (channelBoost * (1.0 - lengthFactor) * 0.5), 0.0, 1.0);
+
+        Service.pluginLog.Debug($"Confidence for '{text}': {reliability:F2} (lingua={confidence:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
+        return (reliability, linguaIso);
     }
 
     private static double GetChannelBoost(XivChatType channel, string? linguaIso)
@@ -150,6 +151,7 @@ internal static class LanguageDetector
         try
         {
             var lang = await MachineTranslate.GTranslator.DetectLanguageAsync(text).ConfigureAwait(false);
+            UpdateChannelCache(XivChatType.None, lang.ISO6391);
             return lang.ISO6391;
         }
         catch (Exception ex)

@@ -62,52 +62,36 @@ internal partial class ChatHandler
             if (IsJPFilteredMessage(chatMessage))
                 return;
 
-            var (confidence, linguaIso) = await LanguageDetector.ComputeConfidenceAsync(chatMessage.CleanedContent, type);
+            var (reliability, linguaIso) = await LanguageDetector.ComputeReliabilityAsync(chatMessage.CleanedContent, type);
 
-            if (confidence >= 0.65)
+            string? iso = linguaIso;
+
+            if (reliability < 0.35)
             {
-                // High: Lingua probably correct; skip Google detection; act on result
-                if (!LanguageDetector.IsKnownIsoCode(linguaIso))
-                    Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
-                else
-                {
-                    chatMessage.Context = GetChatMessageContext();
-                    await TranslationHandler.TranslateMessage(chatMessage);
-                    OutputMessage(chatMessage, type);
-                }
-            }
-            else if (confidence >= 0.35)
-            {
-                // Medium: Google detect -> translate only if needed, update channel cache
-                string? iso = await LanguageDetector.DetectIsoAsync(chatMessage.CleanedContent);
-                LanguageDetector.UpdateChannelCache(type, iso);
-                if (LanguageDetector.IsKnownIsoCode(iso))
-                {
-                    Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
-                }
-                else
-                {
-                    chatMessage.Context = GetChatMessageContext();
-                    await TranslationHandler.TranslateMessage(chatMessage);
-                    OutputMessage(chatMessage, type);
-                }
-            }
-            else
-            {
-                // Low: translate and detect in parallel; discard if Google says known
                 chatMessage.Context = GetChatMessageContext();
-                var translateTask = TranslationHandler.TranslateMessage(chatMessage);
-                var detectTask    = LanguageDetector.DetectIsoAsync(chatMessage.CleanedContent);
-                await Task.WhenAll(translateTask, detectTask);
-
-                LanguageDetector.UpdateChannelCache(type, detectTask.Result);
-                if (LanguageDetector.IsKnownIsoCode(detectTask.Result))
-                {
-                    Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
-                }
-                else
-                    OutputMessage(chatMessage, type);
+                var t = TranslationHandler.TranslateMessage(chatMessage);
+                var d = LanguageDetector.DetectIsoAsync(chatMessage.CleanedContent);
+                await Task.WhenAll(t, d);
+                iso = d.Result;
             }
+            else if (reliability < 0.65)
+            {
+                iso = await LanguageDetector.DetectIsoAsync(chatMessage.CleanedContent);
+            }
+
+            if (LanguageDetector.IsKnownIsoCode(iso))
+            {
+                Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
+                return;
+            }
+
+            if (chatMessage.TranslatedContent == null)
+            {
+                chatMessage.Context = GetChatMessageContext();
+                await TranslationHandler.TranslateMessage(chatMessage);
+            }
+
+            OutputMessage(chatMessage, type);
         }
         catch (Exception ex)
         {
