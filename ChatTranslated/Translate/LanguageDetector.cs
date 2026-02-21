@@ -106,7 +106,6 @@ internal static class LanguageDetector
         }
 
         var top = detector.ComputeLanguageConfidenceValues(text).FirstOrDefault();
-
         Service.pluginLog.Debug($"Lingua raw detection for '{text}': {top.Key} ({top.Value:P0})");
 
         if (top.Value < 0.4 || top.Key == Language.Unknown)
@@ -210,10 +209,7 @@ internal static class LanguageDetector
         var modelsDir = GetModelsDirectory();
         foreach (var langName in knownLanguages)
         {
-            if (!NameToIsoCode.TryGetValue(langName, out var isoCode))
-                continue;
-
-            if (ShippedIsoCodes.Contains(isoCode))
+            if (!NameToIsoCode.TryGetValue(langName, out var isoCode) || ShippedIsoCodes.Contains(isoCode))
                 continue;
 
             var langDir = Path.Combine(modelsDir, isoCode);

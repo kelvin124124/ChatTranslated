@@ -23,17 +23,11 @@ internal static partial class OpenAITranslate
     public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
         , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-5-mini", string? apiKey = null)
     {
-        if (apiKey == null)
+        apiKey ??= Service.configuration.OpenAI_API_Key;
+        if (apiKey.IsNullOrWhitespace())
         {
-            if (!Service.configuration.OpenAI_API_Key.IsNullOrWhitespace())
-            {
-                apiKey = Service.configuration.OpenAI_API_Key;
-            }
-            else
-            {
-                Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
-                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
-            }
+            Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
+            return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
         }
 
         var prompt = Service.configuration.UseCustomPrompt
@@ -154,11 +148,9 @@ internal static partial class OpenAITranslate
 
 internal static class OpenAICompatible
 {
-    public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage)
-    {
-        return await OpenAITranslate.Translate(message, targetLanguage,
+    public static Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage) =>
+        OpenAITranslate.Translate(message, targetLanguage,
             Service.configuration.LLM_API_endpoint, Service.configuration.LLM_Model, Service.configuration.LLM_API_Key);
-    }
 }
 
 internal static class LLMProxyTranslate
@@ -185,10 +177,7 @@ internal static class LLMProxyTranslate
         }
 #endif
 
-        if (!Service.configuration.UseContext)
-        {
-            message.Context = "null";
-        }
+        if (!Service.configuration.UseContext) message.Context = "null";
 
         var requestData = new { targetLanguage, message = message.OriginalText, context = message.Context };
         var request = new HttpRequestMessage(HttpMethod.Post, Service.configuration.Proxy_Url)

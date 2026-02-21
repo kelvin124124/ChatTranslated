@@ -20,36 +20,33 @@ internal static class DeepLTranslate
 
     public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
     {
-        if (TryGetLanguageCode(targetLanguage, out var languageCode))
+        if (!TryGetLanguageCode(targetLanguage, out var languageCode))
+            return ("Target language not supported by DeepL.", null);
+
+        var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
+        var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
         {
-            var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
-            var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
-            {
-                Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, DefaultContentType),
-                Headers = { { HttpRequestHeader.Authorization.ToString(), $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}" } }
-            };
+            Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, DefaultContentType),
+            Headers = { { HttpRequestHeader.Authorization.ToString(), $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}" } }
+        };
 
-            try
-            {
-                var response = await TranslationHandler.HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
-                response.EnsureSuccessStatusCode();
-                var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
+        try
+        {
+            var response = await TranslationHandler.HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+            var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
 
-                if (translated.IsNullOrWhitespace())
-                {
-                    throw new Exception("Translation not found in the expected JSON structure.");
-                }
+            if (translated.IsNullOrWhitespace())
+                throw new Exception("Translation not found in the expected JSON structure.");
 
-                return (translated, TranslationMode.DeepL);
-            }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Warning($"DeepL Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
-                return await MachineTranslate.Translate(text, targetLanguage);
-            }
+            return (translated, TranslationMode.DeepL);
         }
-        return ("Target language not supported by DeepL.", null);
+        catch (Exception ex)
+        {
+            Service.pluginLog.Warning($"DeepL Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
+            return await MachineTranslate.Translate(text, targetLanguage);
+        }
     }
 
     internal static bool TryGetLanguageCode(string language, out string? languageCode)
