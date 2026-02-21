@@ -71,10 +71,7 @@ internal static class LanguageDetector
     private static readonly Dictionary<Language, string> LinguaToIso =
         LanguageTable.GroupBy(e => e.Lang).ToDictionary(g => g.Key, g => g.First().Iso);
 
-    // Per-channel cache of the last Google-detected ISO code with timestamp
     private static readonly Dictionary<XivChatType, (long Tick, string? Iso)> _lastChannelDetection = [];
-
-    // --- Lingua detection ---
 
     // Returns Lingua's top detected language as (confidence score, ISO 639-1 code).
     // Returns (0.0, null) for undetectable text (emoji, numbers, Language.Unknown).
@@ -124,21 +121,16 @@ internal static class LanguageDetector
         return isKnown;
     }
 
-    // --- Confidence scoring ---
-
-    // Computes the overall detection confidence for a message, combining Lingua's score,
-    // message length, and the channel's recent detection history.
     internal static async Task<(double Confidence, string? Iso)> ComputeConfidenceAsync(string text, XivChatType channel)
     {
         var (linguaScore, linguaIso) = await Task.Run(() => GetLinguaResult(text));
         double lengthFactor = Math.Clamp(text.Length / 20.0, 0.0, 1.0);
-        double channelBoost = GetChannelBoost(channel, linguaIso);
+        double channelBoost = GetChannelBoost(channel, linguaIso); // +decay if Google agrees with Lingua, -decay if disagrees
         double confidence = Math.Min(1.0, linguaScore * (0.5 + 0.5 * lengthFactor) + channelBoost * 0.5);
         Service.pluginLog.Debug($"Confidence for '{text}': {confidence:F2} (lingua={linguaScore:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
         return (confidence, linguaIso);
     }
 
-    // Returns a decayed boost in [-1, +1]: positive if Google's cached detection agrees with Lingua, negative if it disagrees.
     private static double GetChannelBoost(XivChatType channel, string? linguaIso)
     {
         if (linguaIso == null) return 0.0;
@@ -151,13 +143,9 @@ internal static class LanguageDetector
         return cache.Iso == linguaIso ? decay : -decay;
     }
 
-    // Updates the per-channel cache with the latest Google-detected ISO code.
     internal static void UpdateChannelCache(XivChatType channel, string? iso)
         => _lastChannelDetection[channel] = (Environment.TickCount64, iso);
 
-    // --- Google detection ---
-
-    // Detects the ISO 639-1 language code using Google Translate.
     internal static async Task<string?> DetectIsoAsync(string text)
     {
         try
@@ -171,8 +159,6 @@ internal static class LanguageDetector
             return null;
         }
     }
-
-    // --- Lingua model management ---
 
     public static async Task RebuildDetectorAsync()
     {
@@ -196,15 +182,13 @@ internal static class LanguageDetector
             // Download any missing models
             await DownloadMissingModelsAsync(config.KnownLanguages).ConfigureAwait(false);
 
-            var languageModelsDir = GetModelsDirectory();
-
             lock (_buildLock)
             {
                 var old = _detector;
                 _detector = LanguageDetectorBuilder
                     .FromLanguages([.. languageSet])
                     .WithMinimumRelativeDistance(0.2)
-                    .WithLanguageModelsDirectory(languageModelsDir)
+                    .WithLanguageModelsDirectory(GetModelsDirectory())
                     .WithPreloadedLanguageModels()
                     .Build();
                 old?.UnloadLanguageModels();
@@ -218,11 +202,8 @@ internal static class LanguageDetector
         }
     }
 
-    private static string GetModelsDirectory()
-    {
-        return Path.Combine(
-            Service.pluginInterface.AssemblyLocation.DirectoryName!, "Lingua", "LanguageModels");
-    }
+    private static string GetModelsDirectory() =>
+        Path.Combine(Service.pluginInterface.AssemblyLocation.DirectoryName!, "Lingua", "LanguageModels");
 
     private static async Task DownloadMissingModelsAsync(List<string> knownLanguages)
     {
