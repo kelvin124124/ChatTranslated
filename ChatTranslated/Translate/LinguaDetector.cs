@@ -69,15 +69,20 @@ internal static class LinguaDetector
     internal static readonly Dictionary<string, string> NameToIsoCode =
         LanguageTable.ToDictionary(e => e.Name, e => e.Iso);
 
-    // Returns the raw Lingua confidence score.
-    internal static double GetLinguaScore(string text)
+    private static readonly Dictionary<Language, string> LinguaToIso =
+        LanguageTable.GroupBy(e => e.Lang).ToDictionary(g => g.Key, g => g.First().Iso);
+
+    // Returns Lingua's top detected language as (confidence score, ISO 639-1 code).
+    // Returns (0.0, null) for undetectable text (emoji, numbers, Language.Unknown).
+    internal static (double Score, string? Iso) GetLinguaResult(string text)
     {
         var detector = _detector;
-        if (detector == null) return 0.0;
+        if (detector == null) return (0.0, null);
 
         var top = detector.ComputeLanguageConfidenceValues(text).FirstOrDefault();
-        if (top.Key == Language.Unknown) return 0.0;
-        return top.Value;
+        if (top.Key == Language.Unknown) return (0.0, null);
+        LinguaToIso.TryGetValue(top.Key, out var iso);
+        return (top.Value, iso);
     }
 
     // Returns true if the ISO 639-1 code corresponds to one of the user's known languages.
@@ -88,7 +93,6 @@ internal static class LinguaDetector
         return LanguageTable.Any(e => e.Iso == isoCode && known.Contains(e.Name));
     }
 
-    // TODO: needs update since we implemented tiered confidence system, no need confidence in this method? or combine with GetLinguaScore?
     // Returns true if the text is detected as one of the user's known languages.
     // Returns true for undetectable text (emoji, numbers).
     public static bool IsKnownLanguageOrMeaningless(string text)

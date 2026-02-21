@@ -17,7 +17,7 @@ namespace ChatTranslated.Chat;
 internal partial class ChatHandler
 {
     private readonly Dictionary<string, int> lastMessageTime = [];
-    private readonly Dictionary<XivChatType, DateTime> _lastKnownTime = []; // TODO: use environmental ticks, should cache detected language too
+    private readonly Dictionary<XivChatType, (long Tick, string? Iso)> _lastChannelDetection = [];
 
     public ChatHandler()
     {
@@ -63,18 +63,18 @@ internal partial class ChatHandler
             if (IsJPFilteredMessage(chatMessage))
                 return;
 
-            // computate confidence score for Lingua's reliability on this message
-            double linguaScore   = await Task.Run(() => LinguaDetector.GetLinguaScore(chatMessage.CleanedContent)); // Confidence score from Lingua (0.0 to 1.0)
-            double lengthFactor  = Math.Clamp(chatMessage.CleanedContent.Length / 20.0, 0.0, 1.0); // Length of message, higher is better
-            double channelBoost  = GetChannelBoost(type); // Boost based on recent known messages by Google Translate (Gold standard) in this channel, decays over 5 minutes
+            // compute confidence score for Lingua's reliability on this message
+            var    (linguaScore, linguaIso) = await Task.Run(() => LinguaDetector.GetLinguaResult(chatMessage.CleanedContent));
+            double lengthFactor  = Math.Clamp(chatMessage.CleanedContent.Length / 20.0, 0.0, 1.0);
+            double channelBoost  = GetChannelBoost(type, linguaIso); // +decay if Google agrees with Lingua, -decay if it disagrees
             double confidence    = Math.Min(1.0, linguaScore * (0.5 + 0.5 * lengthFactor) + channelBoost * 0.5);
 
-            Service.pluginLog.Debug($"Confidence for '{chatMessage.CleanedContent}': {confidence:F2} (lingua={linguaScore:F2}, length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
+            Service.pluginLog.Debug($"Confidence for '{chatMessage.CleanedContent}': {confidence:F2} (lingua={linguaScore:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
 
             if (confidence >= 0.65)
             {
                 // High: Lingua probably correct; skip Google detection; act on result
-                if (LinguaDetector.IsKnownLanguageOrMeaningless(chatMessage.CleanedContent))
+                if (!LinguaDetector.IsKnownIsoCode(linguaIso))
                     Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
                 else
                 {
@@ -87,9 +87,9 @@ internal partial class ChatHandler
             {
                 // Medium: Google detect -> translate only if needed, update channel cache
                 string? iso = await TranslationHandler.DetectIsoAsync(chatMessage.CleanedContent);
-                if (LinguaDetector.IsKnownIsoCode(iso)) // TODO: cache Google detected language regardless of known
+                _lastChannelDetection[type] = (Environment.TickCount64, iso);
+                if (LinguaDetector.IsKnownIsoCode(iso))
                 {
-                    _lastKnownTime[type] = DateTime.UtcNow; // USe Environmental ticks
                     Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
                 }
                 else
@@ -107,9 +107,9 @@ internal partial class ChatHandler
                 var detectTask    = TranslationHandler.DetectIsoAsync(chatMessage.CleanedContent);
                 await Task.WhenAll(translateTask, detectTask);
 
-                if (LinguaDetector.IsKnownIsoCode(detectTask.Result)) // same problem with caching
+                _lastChannelDetection[type] = (Environment.TickCount64, detectTask.Result);
+                if (LinguaDetector.IsKnownIsoCode(detectTask.Result))
                 {
-                    _lastKnownTime[type] = DateTime.UtcNow;
                     Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
                 }
                 else
@@ -287,12 +287,17 @@ internal partial class ChatHandler
         return false;
     }
 
-    private double GetChannelBoost(XivChatType channel)
+    // Returns a decayed boost in [-1, +1]: positive if Google's cached detection agrees with Lingua, negative if it disagrees.
+    private double GetChannelBoost(XivChatType channel, string? linguaIso)
     {
-        if (!_lastKnownTime.TryGetValue(channel, out var time)) return 0.0;
-        double elapsed = (DateTime.UtcNow - time).TotalMinutes;
-        if (elapsed >= 5) { _lastKnownTime.Remove(channel); return 0.0; }
-        return Math.Exp(-elapsed * Math.Log(2) / 2.5);
+        if (linguaIso == null) return 0.0;
+        if (!_lastChannelDetection.TryGetValue(channel, out var cache) || cache.Iso == null) return 0.0;
+
+        double elapsedMin = (Environment.TickCount64 - cache.Tick) / 60_000.0;
+        if (elapsedMin >= 5) { _lastChannelDetection.Remove(channel); return 0.0; }
+
+        double decay = Math.Exp(-elapsedMin * Math.Log(2) / 2.5);
+        return cache.Iso == linguaIso ? decay : -decay;
     }
 
     public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
