@@ -157,12 +157,12 @@ internal static class DeeplsTranslate
             id
         };
 
-        var postDataJson = JsonSerializer.Serialize(requestBody);
-        postDataJson = postDataJson.Replace("\"method\":\"", (id + 5) % 29 == 0 || (id + 3) % 13 == 0 ? "\"method\" : \"" : "\"method\": \"");
+        var requestJson = JsonSerializer.Serialize(requestBody);
+        requestJson = requestJson.Replace("\"method\":\"", (id + 5) % 29 == 0 || (id + 3) % 13 == 0 ? "\"method\" : \"" : "\"method\": \"");
 
         using var request = new HttpRequestMessage(HttpMethod.Post, BaseUrl)
         {
-            Content = new StringContent(postDataJson, Encoding.UTF8, "application/json")
+            Content = new StringContent(requestJson, Encoding.UTF8, "application/json")
         };
 
         SetHeaders(request);
@@ -174,17 +174,18 @@ internal static class DeeplsTranslate
 
             var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
             var contentEncoding = response.Content.Headers.ContentEncoding;
+            string responseJson;
             if (contentEncoding.Contains("gzip", StringComparer.OrdinalIgnoreCase))
             {
                 using var gzipStream = new System.IO.Compression.GZipStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
                 using var streamReader = new System.IO.StreamReader(gzipStream, Encoding.UTF8);
-                postDataJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                responseJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
             }
             else if (contentEncoding.Contains("deflate", StringComparer.OrdinalIgnoreCase))
             {
                 using var deflateStream = new System.IO.Compression.DeflateStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
                 using var streamReader = new System.IO.StreamReader(deflateStream, Encoding.UTF8);
-                postDataJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
+                responseJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
             }
             else if (contentEncoding.Contains("br", StringComparer.OrdinalIgnoreCase))
             {
@@ -192,11 +193,10 @@ internal static class DeeplsTranslate
             }
             else
             {
-                postDataJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                responseJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
             }
 
-
-            using var jsonDoc = JsonDocument.Parse(postDataJson);
+            using var jsonDoc = JsonDocument.Parse(responseJson);
             var translated = jsonDoc.RootElement
                 .GetProperty("result")
                 .GetProperty("translations")[0]

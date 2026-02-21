@@ -63,9 +63,6 @@ internal static class LinguaDetector
     internal static readonly Dictionary<string, Language> NameToLingua =
         LanguageTable.ToDictionary(e => e.Name, e => e.Lang);
 
-    private static readonly Dictionary<Language, string> LinguaToName =
-        LanguageTable.GroupBy(e => e.Lang).ToDictionary(g => g.Key, g => g.First().Name);
-
     internal static readonly Dictionary<string, string> NameToIsoCode =
         LanguageTable.ToDictionary(e => e.Name, e => e.Iso);
 
@@ -104,37 +101,19 @@ internal static class LinguaDetector
             return true;
         }
 
-        var confidenceValues = detector.ComputeLanguageConfidenceValues(text);
-        var top = confidenceValues.FirstOrDefault();
-        var detected = top.Key;
-        var confidence = top.Value;
+        var top = detector.ComputeLanguageConfidenceValues(text).FirstOrDefault();
 
-        Service.pluginLog.Debug($"Lingua raw detection for '{text}': {detected} ({confidence:P0})");
+        Service.pluginLog.Debug($"Lingua raw detection for '{text}': {top.Key} ({top.Value:P0})");
 
-        if (confidence < 0.4)
+        if (top.Value < 0.4 || top.Key == Language.Unknown)
         {
-            Service.pluginLog.Debug($"Lingua: low confidence ({confidence:P0}) → skip: {text}");
+            Service.pluginLog.Debug($"Lingua: low confidence or undetectable → skip: {text}");
             return true;
         }
 
-        if (detected == Language.Unknown)
-        {
-            Service.pluginLog.Debug($"Lingua: undetectable → skip: {text}");
-            return true;
-        }
-
-        if (!LinguaToName.TryGetValue(detected, out var detectedName))
-        {
-            Service.pluginLog.Debug($"Lingua detected {detected} but no mapping found.");
-            return false;
-        }
-
-        var knownLanguages = Service.configuration.KnownLanguages;
-        bool isKnown = detected == Language.Chinese
-            ? knownLanguages.Contains("Chinese (Simplified)") || knownLanguages.Contains("Chinese (Traditional)")
-            : knownLanguages.Contains(detectedName);
-
-        Service.pluginLog.Debug($"{text}\n → Lingua: {detectedName}, known: {isKnown}");
+        LinguaToIso.TryGetValue(top.Key, out var iso);
+        bool isKnown = IsKnownIsoCode(iso);
+        Service.pluginLog.Debug($"{text}\n → Lingua: {top.Key}, known: {isKnown}");
         return isKnown;
     }
 
@@ -153,12 +132,9 @@ internal static class LinguaDetector
             }
 
             // Always include core shipped languages
-            foreach (var lang in ShippedIsoCodes)
-            { 
-                var coreLang = NameToIsoCode.First(kv => kv.Value == lang).Key;
-                if (NameToLingua.TryGetValue(coreLang, out var linguaLang))
-                    languageSet.Add(linguaLang);
-            }
+            foreach (var entry in LanguageTable)
+                if (ShippedIsoCodes.Contains(entry.Iso))
+                    languageSet.Add(entry.Lang);
 
             // Download any missing models
             await DownloadMissingModelsAsync(config.KnownLanguages).ConfigureAwait(false);
