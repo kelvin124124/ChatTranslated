@@ -13,10 +13,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <None Include="translate\Todo.md" />
-    </ItemGroup>
-
-    <ItemGroup>
         <PackageReference Include="GTranslate" Version="2.3.0" />
         <PackageReference Include="SearchPioneer.Lingua" Version="1.0.5" />
     </ItemGroup>
