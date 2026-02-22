@@ -69,20 +69,24 @@ internal partial class ChatHandler
 
             string? iso = linguaIso;
 
-            if (reliability < 0.35)
+            if (reliability < 0.2)
             {
                 chatMessage.Context = GetChatMessageContext();
                 var t = TranslationHandler.TranslateMessage(chatMessage);
-                var d = LanguageDetector.DetectIsoAsync(chatMessage.CleanedContent);
+                var d = LanguageDetector.DetectIsoAsync(chatMessage);
                 await Task.WhenAll(t, d);
                 iso = d.Result;
             }
-            else if (reliability < 0.65)
+            else if (reliability < 0.5)
             {
-                iso = await LanguageDetector.DetectIsoAsync(chatMessage.CleanedContent);
+                iso = await LanguageDetector.DetectIsoAsync(chatMessage);
             }
 
-            if (LanguageDetector.IsKnownIsoCode(iso))
+            // emoticons usually classified to rare languages in Google translate
+            // if iso not in supported languages, drop the message to avoid mistranslations
+            bool isSupportedIso = LanguageDetector.LanguageTable.Any(entry => entry.Iso == iso);
+
+            if (!isSupportedIso || LanguageDetector.IsKnownIsoCode(iso))
             {
                 Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
                 return;

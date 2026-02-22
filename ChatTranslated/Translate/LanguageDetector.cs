@@ -1,3 +1,4 @@
+using ChatTranslated.Chat;
 using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Lingua;
@@ -27,7 +28,7 @@ internal static class LanguageDetector
     private static readonly HashSet<string> ShippedIsoCodes = ["en", "ja", "de", "fr", "zh", "ko", "es"];
 
     // display name, Lingua enum, ISO 639-1 code
-    private static readonly (string Name, Language Lang, string Iso)[] LanguageTable =
+    public static readonly (string Name, Language Lang, string Iso)[] LanguageTable =
     [
         ("English",               Language.English,    "en"),
         ("Japanese",              Language.Japanese,   "ja"),
@@ -109,7 +110,7 @@ internal static class LanguageDetector
 
         if (top == Language.Unknown)
         {
-            Service.pluginLog.Debug($"Lingua: low confidence or undetectable → skip: {text}");
+            Service.pluginLog.Debug($"Lingua: undetectable: {text}");
             return true;
         }
 
@@ -122,7 +123,7 @@ internal static class LanguageDetector
     internal static async Task<(double Reliability, string? Iso)> ComputeReliabilityAsync(string text, XivChatType channel)
     {
         var (confidence, linguaIso) = await Task.Run(() => GetLinguaResult(text));
-        double lengthFactor = Math.Clamp(text.Length / 15.0, 0.0, 1.0);  // length of incoming text, hiagher is better
+        double lengthFactor = Math.Clamp((text.Length + text.Count(c => c >= '\u3040') * 2) / 15.0, 0.0, 1.0);  // length of incoming text, higher is better, 3x for CJK chars
         double channelBoost = GetChannelBoost(channel, linguaIso, lengthFactor); // +decay if Google agrees with Lingua, -decay if disagrees
         double reliability = Math.Clamp((confidence * lengthFactor) + (channelBoost * (1.0 - lengthFactor) * 0.5), 0.0, 1.0);
 
@@ -147,12 +148,12 @@ internal static class LanguageDetector
     internal static void UpdateChannelCache(XivChatType channel, string? iso)
         => _lastChannelDetection[channel] = (Environment.TickCount64, iso);
 
-    internal static async Task<string?> DetectIsoAsync(string text)
+    internal static async Task<string?> DetectIsoAsync(Message message)
     {
         try
         {
-            var lang = await MachineTranslate.GTranslator.DetectLanguageAsync(text).ConfigureAwait(false);
-            UpdateChannelCache(XivChatType.None, lang.ISO6391);
+            var lang = await MachineTranslate.GTranslator.DetectLanguageAsync(message.CleanedContent).ConfigureAwait(false);
+            UpdateChannelCache(message.Type, lang.ISO6391);
             return lang.ISO6391;
         }
         catch (Exception ex)
