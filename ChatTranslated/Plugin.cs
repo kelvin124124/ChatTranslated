@@ -189,7 +189,7 @@ public sealed class Plugin : IDalamudPlugin
         IpcManager.Unregister();
         Translate.LanguageDetector.Dispose();
 
-        WindowSystem?.RemoveAllWindows();
+        WindowSystem.RemoveAllWindows();
 
         Service.chatHandler?.Dispose();
         Service.commandManager?.RemoveHandler(CommandName);
