@@ -62,6 +62,9 @@ internal partial class ChatHandler
             if (IsJPFilteredMessage(chatMessage))
                 return;
 
+            // low reliability: translate and detect in parallel, drops when detected as known language
+            // mid reliability: consult google, then act accordingly
+            // high reliability: act accordingly
             var (reliability, linguaIso) = await LanguageDetector.ComputeReliabilityAsync(chatMessage.CleanedContent, type);
 
             string? iso = linguaIso;

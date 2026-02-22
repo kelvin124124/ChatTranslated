@@ -123,14 +123,14 @@ internal static class LanguageDetector
     {
         var (confidence, linguaIso) = await Task.Run(() => GetLinguaResult(text));
         double lengthFactor = Math.Clamp(text.Length / 15.0, 0.0, 1.0);  // length of incoming text, hiagher is better
-        double channelBoost = GetChannelBoost(channel, linguaIso); // +decay if Google agrees with Lingua, -decay if disagrees
+        double channelBoost = GetChannelBoost(channel, linguaIso, lengthFactor); // +decay if Google agrees with Lingua, -decay if disagrees
         double reliability = Math.Clamp((confidence * lengthFactor) + (channelBoost * (1.0 - lengthFactor) * 0.5), 0.0, 1.0);
 
         Service.pluginLog.Debug($"Confidence for '{text}': {reliability:F2} (lingua={confidence:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
         return (reliability, linguaIso);
     }
 
-    private static double GetChannelBoost(XivChatType channel, string? linguaIso)
+    private static double GetChannelBoost(XivChatType channel, string? linguaIso, double lengthFactor)
     {
         if (linguaIso == null) return 0.0;
         if (!_lastChannelDetection.TryGetValue(channel, out var cache) || cache.Iso == null) return 0.0;
@@ -139,7 +139,9 @@ internal static class LanguageDetector
         if (elapsedMin >= 5) { _lastChannelDetection.Remove(channel); return 0.0; }
 
         double decay = Math.Exp(-elapsedMin * Math.Log(2) / 2.5);
-        return cache.Iso == linguaIso ? decay : -decay;
+        return cache.Iso == linguaIso
+            ? +decay * Math.Max(1.0 - lengthFactor, 0.15) * 0.7  // agrees
+            : -decay * (1.0 - lengthFactor) * 0.15;  // disagrees
     }
 
     internal static void UpdateChannelCache(XivChatType channel, string? iso)
