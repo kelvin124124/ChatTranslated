@@ -9,7 +9,7 @@ namespace ChatTranslated;
 [Serializable]
 public class Configuration : IPluginConfiguration
 {
-    public int Version { get; set; } = 6;
+    public int Version { get; set; } = 7;
     public enum TranslationEngine
     {
         DeepL,
@@ -25,17 +25,7 @@ public class Configuration : IPluginConfiguration
     }
     public TranslationEngine SelectedTranslationEngine { get; set; } = TranslationEngine.DeepL;
 
-    public enum LanguageSelectionMode
-    {
-        Default,
-        CustomLanguages,
-        AllLanguages
-    }
-    public LanguageSelectionMode SelectedLanguageSelectionMode { get; set; } = LanguageSelectionMode.Default;
-
-    public bool UseLegacyLanguageDetection { get; set; } = false;
-
-    public List<string> SelectedSourceLanguages { get; set; } = [];
+    public List<string> KnownLanguages { get; set; } = ["English"];
 
     public string SelectedTargetLanguage { get; set; } = "English";
     public string SelectedMainWindowTargetLanguage { get; set; } = "Japanese";
@@ -65,6 +55,8 @@ public class Configuration : IPluginConfiguration
     public bool UseContext { get; set; } = true;
     public bool UseCustomPrompt { get; set; } = false;
     public string LLM_CustomPrompt { get; set; } = "";
+
+    public string MagicString { get; set; } = "";
 
     public void Save()
     {

@@ -2,7 +2,6 @@ using ChatTranslated.Chat;
 using ChatTranslated.Utils;
 using Dalamud.Networking.Http;
 using Dalamud.Utility;
-using GTranslate.Translators;
 using System;
 using System.Collections.Concurrent;
 using System.Net;
@@ -23,10 +22,6 @@ internal static class TranslationHandler
         DefaultVersionPolicy = HttpVersionPolicy.RequestVersionOrLower,
         Timeout = TimeSpan.FromSeconds(20)
     };
-
-    public static readonly GoogleTranslator GTranslator = new(HttpClient);
-    public static readonly BingTranslator BingTranslator = new(HttpClient);
-    public static readonly YandexTranslator YTranslator = new(HttpClient);
 
     private const int MAX_CACHE_SIZE = 120;
     public static readonly ConcurrentDictionary<string, string> TranslationCache = [];
@@ -72,45 +67,6 @@ internal static class TranslationHandler
         }
 
         return message;
-    }
-
-    public static async Task<string> DetermineLanguage(string messageText)
-    {
-        if (Service.configuration.UseLegacyLanguageDetection)
-            return await DetermineLanguageLegacy(messageText);
-
-        return await Task.Run(() => LinguaDetector.DetectLanguage(messageText)).ConfigureAwait(false);
-    }
-
-    public static async Task<string> DetermineLanguageLegacy(string messageText)
-    {
-        Func<Task<string>>[] translators =
-        [
-            async () => (await YTranslator.DetectLanguageAsync(messageText)).Name,
-            async () => (await GTranslator.DetectLanguageAsync(messageText)).Name,
-            async () => (await BingTranslator.DetectLanguageAsync(messageText)).Name
-        ];
-
-        foreach (var translator in translators)
-        {
-            try
-            {
-                var language = await translator();
-                if (language.IsNullOrEmpty())
-                {
-                    throw new Exception($"Language detection failed.");
-                }
-                Service.pluginLog.Debug($"{messageText}\n -> language (legacy): {language}");
-                return language;
-            }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Warning($"Failed to detect language (legacy): {ex.Message}");
-            }
-        }
-
-        Service.pluginLog.Error("All language detection attempts failed.");
-        return "unknown";
     }
 
     public static void ClearTranslationCache() => TranslationCache.Clear();

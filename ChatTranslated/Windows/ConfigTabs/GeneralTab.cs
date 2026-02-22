@@ -1,4 +1,5 @@
 using ChatTranslated.Localization;
+using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
 using System;
@@ -22,10 +23,19 @@ public class GeneralTab
 
 #if DEBUG
         ImGui.Separator();
+
+        // input field for test text
+        string TestString = configuration.MagicString;
+        if (ImGui.InputText("##TestInput", ref TestString))
+        {
+            configuration.MagicString = TestString;
+            configuration.Save();
+        }
+
+        // send for language detection
         if (ImGui.Button("Magic button"))
         {
-            var str = Service.chatHandler?.GetChatMessageContext();
-            Service.pluginLog.Warning(str!);
+            Service.pluginLog.Info($"IsKnownLanguage returned: {LanguageDetector.IsKnownLanguageOrMeaningless(TestString)} for input: {TestString}");
         }
 #endif
     }

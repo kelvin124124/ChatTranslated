@@ -62,24 +62,43 @@ internal partial class ChatHandler
             if (IsJPFilteredMessage(chatMessage))
                 return;
 
-            bool needsTranslation = Service.configuration.SelectedLanguageSelectionMode switch
-            {
-                Configuration.LanguageSelectionMode.Default => ChatRegex.NonEnglishRegex().IsMatch(chatMessage.CleanedContent),
-                Configuration.LanguageSelectionMode.CustomLanguages => await IsCustomSourceLanguage(chatMessage),
-                Configuration.LanguageSelectionMode.AllLanguages => true,
-                _ => false
-            };
+            // low reliability: translate and detect in parallel, drops when detected as known language
+            // mid reliability: consult google, then act accordingly
+            // high reliability: act accordingly
+            var (reliability, linguaIso) = await LanguageDetector.ComputeReliabilityAsync(chatMessage.CleanedContent, type);
 
-            if (needsTranslation)
+            string? iso = linguaIso;
+
+            if (reliability < 0.2)
+            {
+                chatMessage.Context = GetChatMessageContext();
+                var t = TranslationHandler.TranslateMessage(chatMessage);
+                var d = LanguageDetector.DetectIsoAsync(chatMessage);
+                await Task.WhenAll(t, d);
+                iso = d.Result;
+            }
+            else if (reliability < 0.5)
+            {
+                iso = await LanguageDetector.DetectIsoAsync(chatMessage);
+            }
+
+            // emoticons usually classified to rare languages in Google translate
+            // if iso not in supported languages, drop the message to avoid mistranslations
+            bool isSupportedIso = LanguageDetector.LanguageTable.Any(entry => entry.Iso == iso);
+
+            if (!isSupportedIso || LanguageDetector.IsKnownIsoCode(iso))
+            {
+                Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
+                return;
+            }
+
+            if (chatMessage.TranslatedContent == null)
             {
                 chatMessage.Context = GetChatMessageContext();
                 await TranslationHandler.TranslateMessage(chatMessage);
-                OutputMessage(chatMessage, type);
             }
-            else
-            {
-                Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
-            }
+
+            OutputMessage(chatMessage, type);
         }
         catch (Exception ex)
         {
@@ -165,12 +184,6 @@ internal partial class ChatHandler
     {
         var addon = (AddonChatLog*)Service.gameGui.GetAddonByName("ChatLog").Address;
         return addon == null ? 0 : addon->TabIndex;
-    }
-
-    private static async Task<bool> IsCustomSourceLanguage(Message chatMessage)
-    {
-        var language = await TranslationHandler.DetermineLanguage(chatMessage.CleanedContent);
-        return Service.configuration.SelectedSourceLanguages.Contains(language);
     }
 
     internal static void OutputMessage(Message chatMessage, XivChatType type = XivChatType.Say)

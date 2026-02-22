@@ -10,9 +10,6 @@ internal static partial class ChatRegex
     [GeneratedRegex(@"[\uE000-\uF8FF]+")]
     public static partial Regex SpecialCharacterRegex();
 
-    [GeneratedRegex(@"(?<![\u0020-\u007E\u2000-\u21FF\u3000-\u303F\uFF10-\uFF5A])[^(\u0020-\u007E\u2000-\u21FF\u2501\u3000-\u303F\uFF10-\uFF5A)]{2,}(?![\u0020-\u007E\u2000-\u21FF\u3000-\u303F\uFF10-\uFF5A])")]
-    public static partial Regex NonEnglishRegex();
-
     [GeneratedRegex(@"^よろしくお(願|ねが)いします[\u3002\uFF01!]*")]
     public static partial Regex JPWelcomeRegex();
 
