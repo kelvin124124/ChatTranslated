@@ -95,7 +95,6 @@ public sealed class Plugin : IDalamudPlugin
             Service.configuration.Save();
         }
 
-        // v7: migrate to KnownLanguages
         if (Service.configuration.Version < 7)
         {
             Service.configuration.KnownLanguages = [Service.configuration.SelectedTargetLanguage];

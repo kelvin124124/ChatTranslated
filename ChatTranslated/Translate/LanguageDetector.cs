@@ -72,7 +72,7 @@ internal static class LanguageDetector
     private static readonly Dictionary<Language, string> LinguaToIso =
         LanguageTable.GroupBy(e => e.Lang).ToDictionary(g => g.Key, g => g.First().Iso);
 
-    private static readonly Dictionary<XivChatType, (long Tick, string? Iso)> _lastChannelDetection = [];
+    private static readonly Dictionary<XivChatType, (int Tick, string? Iso)> _lastChannelDetection = [];
 
     // Returns Lingua's top detected language as (confidence score, ISO 639-1 code).
     // Returns (0.0, null) for undetectable text (emoji, numbers, Language.Unknown).
@@ -124,7 +124,7 @@ internal static class LanguageDetector
     {
         var (confidence, linguaIso) = await Task.Run(() => GetLinguaResult(text));
         double lengthFactor = Math.Clamp((text.Length + text.Count(c => c >= '\u3040') * 2) / 15.0, 0.0, 1.0);  // length of incoming text, higher is better, 3x for CJK chars
-        double channelBoost = GetChannelBoost(channel, linguaIso, lengthFactor); // +decay if Google agrees with Lingua, -decay if disagrees
+        double channelBoost = GetChannelBoost(channel, linguaIso, lengthFactor); // +boost if Lingua result consistent with recent detection, -boost if inconsistent
         double reliability = Math.Clamp((confidence * lengthFactor) + (channelBoost * (1.0 - lengthFactor) * 0.5), 0.0, 1.0);
 
         Service.pluginLog.Debug($"Confidence for '{text}': {reliability:F2} (lingua={confidence:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
@@ -133,20 +133,21 @@ internal static class LanguageDetector
 
     private static double GetChannelBoost(XivChatType channel, string? linguaIso, double lengthFactor)
     {
-        if (linguaIso == null) return 0.0;
-        if (!_lastChannelDetection.TryGetValue(channel, out var cache) || cache.Iso == null) return 0.0;
+        if (linguaIso == null || !_lastChannelDetection.TryGetValue(channel, out var cache) || cache.Iso == null)
+            return 0.0;
 
-        double elapsedMin = (Environment.TickCount64 - cache.Tick) / 60_000.0;
-        if (elapsedMin >= 5) { _lastChannelDetection.Remove(channel); return 0.0; }
+        var elapsed = Environment.TickCount - cache.Tick;
+        if (elapsed >= 300_000)  // 5 mins
+            return 0.0;
 
-        double decay = Math.Exp(-elapsedMin * Math.Log(2) / 2.5);
+        double decay = Math.Exp(-elapsed * Math.Log(2) / 150_000);
         return cache.Iso == linguaIso
             ? +decay * Math.Max(1.0 - lengthFactor, 0.15) * 0.7  // agrees
             : -decay * (1.0 - lengthFactor) * 0.15;  // disagrees
     }
 
     internal static void UpdateChannelCache(XivChatType channel, string? iso)
-        => _lastChannelDetection[channel] = (Environment.TickCount64, iso);
+        => _lastChannelDetection[channel] = (Environment.TickCount, iso);
 
     internal static async Task<string?> DetectIsoAsync(Message message)
     {
