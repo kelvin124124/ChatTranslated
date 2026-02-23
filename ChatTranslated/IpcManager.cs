@@ -28,7 +28,7 @@ public static class IpcManager
         };
 
         var translatedMessage = await TranslationHandler.TranslateMessage(IpcMessage, toLang);
-        return translatedMessage.TranslatedContent ?? null!;
+        return translatedMessage.TranslatedContent!;
     }
 
     public static void Unregister()

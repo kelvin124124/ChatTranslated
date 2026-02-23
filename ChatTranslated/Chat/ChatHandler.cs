@@ -41,7 +41,7 @@ internal partial class ChatHandler
 
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
             string playerName = playerPayload?.PlayerName ?? sender.ToString();
-            string localPlayerName = Service.playerState.CharacterName.ToString() ?? string.Empty;
+            string localPlayerName = Service.playerState.CharacterName.ToString();
             if (type == XivChatType.TellOutgoing)
                 playerName = localPlayerName;
 

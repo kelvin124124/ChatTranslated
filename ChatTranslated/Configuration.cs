@@ -60,6 +60,6 @@ public class Configuration : IPluginConfiguration
 
     public void Save()
     {
-        Service.pluginInterface?.SavePluginConfig(this);
+        Service.pluginInterface.SavePluginConfig(this);
     }
 }
