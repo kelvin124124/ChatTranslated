@@ -101,7 +101,7 @@ public sealed class Plugin : IDalamudPlugin
             Service.configuration.Save();
         }
 
-        _ = Translate.LanguageDetector.RebuildDetectorAsync();
+        _ = LanguageDetector.RebuildDetectorAsync();
     }
 
     private void OnContextMenuOpened(IMenuOpenedArgs args)

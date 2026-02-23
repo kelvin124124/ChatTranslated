@@ -27,7 +27,7 @@ internal static class MachineTranslate
                 var result = await translator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
                 string resultText = result.Translation;
 
-                if (string.IsNullOrWhiteSpace(resultText))
+                if (string.IsNullOrWhiteSpace(resultText) || resultText == text)
                     throw new Exception($"{translator.Name} Translate returned an invalid translation.");
 
                 return (resultText, TranslationMode.MachineTranslate);
