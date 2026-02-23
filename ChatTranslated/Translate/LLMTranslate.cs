@@ -24,11 +24,6 @@ internal static partial class OpenAITranslate
         , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-5-mini", string? apiKey = null)
     {
         apiKey ??= Service.configuration.OpenAI_API_Key;
-        if (apiKey.IsNullOrWhitespace())
-        {
-            Service.pluginLog.Warning("OpenAI API Key is invalid. Please check your configuration. Falling back to machine translation.");
-            return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
-        }
 
         var prompt = Service.configuration.UseCustomPrompt
             ? BuildCustomPrompt(targetLanguage, message.Context)
@@ -63,12 +58,6 @@ internal static partial class OpenAITranslate
             if (translated.IsNullOrWhitespace())
             {
                 throw new Exception("Translation not found in the expected structure.");
-            }
-
-            if (translated == message.OriginalText)
-            {
-                Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
-                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
             }
 
             var translationMatch = TranslationSectionRegex().Match(translated);
@@ -198,12 +187,6 @@ internal static class LLMProxyTranslate
             if (translated.IsNullOrWhitespace())
             {
                 throw new Exception("Translation not found in the expected structure.");
-            }
-
-            if (translated == message.OriginalText)
-            {
-                Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
-                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
             }
 
             Service.pluginLog.Info($"Request processed in: {jsonResponse["responseTime"]}");

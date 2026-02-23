@@ -129,25 +129,14 @@ public sealed class Plugin : IDalamudPlugin
 
         byte* partyLeaderText = PfAddonPtr->PartyLeaderTextNode->GetText();
         string recruiterName = MemoryHelper.ReadSeStringNullTerminated((nint)partyLeaderText).TextValue;
-        if (string.IsNullOrWhiteSpace(recruiterName))
-            recruiterName = "PF";
 
         Message PFmessage = new(recruiterName, MessageSource.PartyFinder, description);
 
-        string category = PfAddonPtr->CategoriesString.ToString();
-        category = string.Join(" ", Regex.Matches(category, @"\[[^\]]+\]")
+        string category = string.Join(" ", Regex.Matches(PfAddonPtr->CategoriesString.ToString(), @"\[[^\]]+\]")
                                          .Select(m => m.Value));
-        if (string.IsNullOrWhiteSpace(category))
-        {
-            category = "null";
-        }
 
         byte* dutyText = PfAddonPtr->DutyNameTextNode->GetText();
         string duty = MemoryHelper.ReadSeStringNullTerminated((nint)dutyText).TextValue;
-        if (string.IsNullOrWhiteSpace(duty))
-        {
-            duty = "null";
-        }
 
         string context = $"Tags: {category}, Duty: {duty}";
         PFmessage.Context = context;
@@ -192,7 +181,7 @@ public sealed class Plugin : IDalamudPlugin
         WindowSystem.RemoveAllWindows();
 
         Service.chatHandler?.Dispose();
-        Service.commandManager?.RemoveHandler(CommandName);
+        Service.commandManager.RemoveHandler(CommandName);
     }
 
     private void OnCommand(string command, string args)

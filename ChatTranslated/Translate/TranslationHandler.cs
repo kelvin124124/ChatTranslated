@@ -30,8 +30,6 @@ internal static class TranslationHandler
     {
         targetLanguage ??= Service.configuration.SelectedTargetLanguage;
 
-        if (string.IsNullOrWhiteSpace(message.CleanedContent)) return message;
-
         if (TranslationCache.TryGetValue(message.OriginalText, out var cachedTranslation))
         {
             message.TranslatedContent = cachedTranslation;
@@ -54,8 +52,7 @@ internal static class TranslationHandler
         message.TranslatedContent = translatedText;
         message.TranslationMode = mode;
 
-        if (!translatedText.IsNullOrWhitespace()
-            && message.Source != MessageSource.MainWindow
+        if (message.Source != MessageSource.MainWindow
             && message.TranslationMode != Configuration.TranslationMode.MachineTranslate)
         {
             if (TranslationCache.Count >= MAX_CACHE_SIZE)
