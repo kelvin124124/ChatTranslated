@@ -90,7 +90,6 @@ internal static class LanguageDetector
     // Returns true if the ISO 639-1 code corresponds to one of the user's known languages.
     internal static bool IsKnownIsoCode(string? isoCode)
     {
-        if (isoCode == null) return false;
         var known = Service.configuration.KnownLanguages;
         return LanguageTable.Any(e => e.Iso == isoCode && known.Contains(e.Name));
     }

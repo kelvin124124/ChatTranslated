@@ -76,21 +76,14 @@ public sealed class Plugin : IDalamudPlugin
             // migrate channel settings
             var _ChatTypes = Service.configuration.SelectedChatTypes;
             Service.configuration.SelectedChatTypes = [];
-            _ChatTypes.ForEach(type =>
-            {
-                if (!Service.configuration.SelectedChatTypes.Contains(type))
-                    Service.configuration.SelectedChatTypes.Add(type);
-            });
+            _ChatTypes.ForEach(type => Service.configuration.SelectedChatTypes.Add(type));
             Service.configuration.Version = 5;
             Service.configuration.Save();
         }
 
         if (Service.configuration.Version < 6)
         {
-            if (!Service.configuration.SelectedChatTypes.Contains(XivChatType.CustomEmote))
-            {
-                Service.configuration.SelectedChatTypes.Add(XivChatType.CustomEmote);
-            }
+            Service.configuration.SelectedChatTypes.Add(XivChatType.CustomEmote);
             Service.configuration.Version = 6;
             Service.configuration.Save();
         }
