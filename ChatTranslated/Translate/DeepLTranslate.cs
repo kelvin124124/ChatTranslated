@@ -206,6 +206,11 @@ internal static class DeeplsTranslate
                 throw new Exception("Translation not found in the expected JSON structure.");
             }
 
+            if (translated == message)
+            {
+                throw new Exception("Translation is the same as the original text.");
+            }
+
             return (translated, TranslationMode.DeepL);
         }
         catch (Exception ex)

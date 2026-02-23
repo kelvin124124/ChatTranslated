@@ -60,6 +60,12 @@ internal static partial class OpenAITranslate
                 throw new Exception("Translation not found in the expected structure.");
             }
 
+            if (translated == message.OriginalText)
+            {
+                Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
+                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
+            }
+
             var translationMatch = TranslationSectionRegex().Match(translated);
             translated = translationMatch.Success ? translationMatch.Groups[1].Value.Trim() : translated;
 
@@ -187,6 +193,12 @@ internal static class LLMProxyTranslate
             if (translated.IsNullOrWhitespace())
             {
                 throw new Exception("Translation not found in the expected structure.");
+            }
+
+            if (translated == message.OriginalText)
+            {
+                Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
+                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
             }
 
             Service.pluginLog.Info($"Request processed in: {jsonResponse["responseTime"]}");
