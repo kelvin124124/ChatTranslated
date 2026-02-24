@@ -122,13 +122,16 @@ internal static class LanguageDetector
     internal static async Task<(double Reliability, string? Iso)> ComputeReliabilityAsync(string text, XivChatType channel)
     {
         var (confidence, linguaIso) = await Task.Run(() => GetLinguaResult(text));
-        double lengthFactor = Math.Clamp((text.Length + text.Count(c => c >= '\u3040') * 2) / 15.0, 0.0, 1.0);  // length of incoming text, higher is better, 3x for CJK chars
+        double lengthFactor = Math.Clamp((text.Length + text.Count(IsCJK) * 2) / 15.0, 0.0, 1.0);  // length of incoming text, higher is better, 3x for CJK chars
         double channelBoost = GetChannelBoost(channel, linguaIso, lengthFactor); // +boost if Lingua result consistent with recent detection, -boost if inconsistent
         double reliability = Math.Clamp((confidence * lengthFactor) + (channelBoost * (1.0 - lengthFactor) * 0.5), 0.0, 1.0);
 
         Service.pluginLog.Debug($"Confidence for '{text}': {reliability:F2} (lingua={confidence:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
         return (reliability, linguaIso);
     }
+
+    private static bool IsCJK(char c) =>
+        c >= '\u2E80' && c <= '\u9FFF' || c >= '\uAC00' && c <= '\uD7AF' || c >= '\uFF65' && c <= '\uFF9F';
 
     private static double GetChannelBoost(XivChatType channel, string? linguaIso, double lengthFactor)
     {
