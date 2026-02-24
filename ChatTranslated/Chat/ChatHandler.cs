@@ -75,11 +75,11 @@ internal partial class ChatHandler
                 var t = TranslationHandler.TranslateMessage(chatMessage);
                 var d = LanguageDetector.DetectIsoAsync(chatMessage);
                 await Task.WhenAll(t, d);
-                iso = d.Result;
+                iso = d.Result ?? linguaIso;
             }
             else if (reliability < 0.5)
             {
-                iso = await LanguageDetector.DetectIsoAsync(chatMessage);
+                iso = await LanguageDetector.DetectIsoAsync(chatMessage) ?? linguaIso;
             }
 
             // emoticons usually classified to rare languages in Google translate
