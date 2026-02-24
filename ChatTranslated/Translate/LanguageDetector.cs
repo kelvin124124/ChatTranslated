@@ -154,8 +154,9 @@ internal static class LanguageDetector
         try
         {
             var lang = await MachineTranslate.GTranslator.DetectLanguageAsync(message.CleanedContent).ConfigureAwait(false);
-            UpdateChannelCache(message.Type, lang.ISO6391);
-            return lang.ISO6391;
+            var iso = lang.ISO6391.Split('-')[0];
+            UpdateChannelCache(message.Type, iso);
+            return iso;
         }
         catch (Exception ex)
         {
