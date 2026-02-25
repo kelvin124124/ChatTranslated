@@ -110,11 +110,11 @@ public static class OpenAICompatibleSettings
             response.EnsureSuccessStatusCode();
 
             LLMApiKeyValid = true;
-            Service.pluginLog.Information($"API Key validation successful.");
+            Service.pluginLog.Information("API Key validation successful.");
         }
         catch
         {
-            Service.pluginLog.Warning($"API Key validation failed.");
+            Service.pluginLog.Warning("API Key validation failed.");
         }
     }
 }

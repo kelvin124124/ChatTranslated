@@ -14,6 +14,7 @@ public static class OpenAISettings
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
     private static bool? OpenAIApiKeyValid = null;
 
+    // needs update
     private static readonly string[] OpenAIModels =
     [
         "gpt-5-mini", "gpt-5",

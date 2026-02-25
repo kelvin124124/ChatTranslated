@@ -116,12 +116,12 @@ public partial class MainWindow : Window
         }
 
         ImGui.TextDisabled("TL:");
-        if (ImGui.IsItemHovered()) ImGui.SetTooltip("Translated text");
+        if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.Main_Window_Translated_text);
         ImGui.SameLine();
         ImGui.TextUnformatted(translatedText);
 
         ImGui.TextDisabled("RT:");
-        if (ImGui.IsItemHovered()) ImGui.SetTooltip("Reverse translation");
+        if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.Main_Window_Reverse_translation);
         ImGui.SameLine();
         ImGui.TextUnformatted(reverseTranslatedText);
     }
@@ -132,7 +132,7 @@ public partial class MainWindow : Window
 
         if (translatedMessage.TranslatedContent == null)
         {
-            translatedText = "Failed to translate.";
+            translatedText = Resources.Main_Window_Translation_Failed;
             reverseTranslatedText = "";
             return;
         }

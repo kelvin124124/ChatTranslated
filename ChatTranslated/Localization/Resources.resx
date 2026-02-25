@@ -421,4 +421,19 @@ Context (if enabled) will be appended automatically.
 
 This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
   </data>
+  <data name="My_Languages" xml:space="preserve">
+    <value>My Languages</value>
+  </data>
+  <data name="My_Languages_Explanation" xml:space="preserve">
+    <value>Messages in these languages will not be translated.</value>
+  </data>
+  <data name="Main_Window_Reverse_translation" xml:space="preserve">
+    <value>Reverse translation</value>
+  </data>
+  <data name="Main_Window_Translated_text" xml:space="preserve">
+    <value>Translated text</value>
+  </data>
+  <data name="Main_Window_Translation_Failed" xml:space="preserve">
+    <value>Failed to translate.</value>
+  </data>
 </root>

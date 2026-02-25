@@ -19,7 +19,7 @@ namespace ChatTranslated.Localization {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -159,22 +159,13 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("ChatIntegration_ShowColoredText", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to Output translated message to Echo channel.
         /// </summary>
         internal static string ChatIntegration_UseEchoChannel {
             get {
                 return ResourceManager.GetString("ChatIntegration_UseEchoChannel", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to Copy.
-        /// </summary>
-        internal static string Copy {
-            get {
-                return ResourceManager.GetString("Copy", resourceCulture);
             }
         }
         
@@ -193,6 +184,15 @@ namespace ChatTranslated.Localization {
         internal static string Chinese__Traditional_ {
             get {
                 return ResourceManager.GetString("Chinese (Traditional)", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        internal static string Copy {
+            get {
+                return ResourceManager.GetString("Copy", resourceCulture);
             }
         }
         
@@ -274,6 +274,15 @@ namespace ChatTranslated.Localization {
         internal static string CrossParty {
             get {
                 return ResourceManager.GetString("CrossParty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Custom Emote.
+        /// </summary>
+        internal static string CustomEmote {
+            get {
+                return ResourceManager.GetString("CustomEmote", resourceCulture);
             }
         }
         
@@ -639,6 +648,51 @@ namespace ChatTranslated.Localization {
         internal static string Ls8 {
             get {
                 return ResourceManager.GetString("Ls8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reverse translation.
+        /// </summary>
+        internal static string Main_Window_Reverse_translation {
+            get {
+                return ResourceManager.GetString("Main_Window_Reverse_translation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Translated text.
+        /// </summary>
+        internal static string Main_Window_Translated_text {
+            get {
+                return ResourceManager.GetString("Main_Window_Translated_text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to translate..
+        /// </summary>
+        internal static string Main_Window_Translation_Failed {
+            get {
+                return ResourceManager.GetString("Main_Window_Translation_Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My Languages.
+        /// </summary>
+        internal static string My_Languages {
+            get {
+                return ResourceManager.GetString("My_Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Messages in these languages will not be translated..
+        /// </summary>
+        internal static string My_Languages_Explanation {
+            get {
+                return ResourceManager.GetString("My_Languages_Explanation", resourceCulture);
             }
         }
         

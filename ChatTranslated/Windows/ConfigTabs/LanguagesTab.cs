@@ -28,7 +28,7 @@ public class LanguagesTab
 
     private void DrawKnownLanguagesSelection(Configuration configuration)
     {
-        if (ImGui.CollapsingHeader("My Languages##KnownLanguagesSelection", ImGuiTreeNodeFlags.DefaultOpen))
+        if (ImGui.CollapsingHeader(Resources.My_Languages + "##KnownLanguagesSelection", ImGuiTreeNodeFlags.DefaultOpen))
         {
             foreach (string language in supportedLanguages)
             {
@@ -50,6 +50,7 @@ public class LanguagesTab
             }
         }
 
+        ImGui.TextDisabled(Resources.My_Languages_Explanation);
         ImGui.TextDisabled("Messages in these languages will not be translated.");
     }
 
