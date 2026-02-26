@@ -25,7 +25,7 @@ public class Configuration : IPluginConfiguration
     }
     public TranslationEngine SelectedTranslationEngine { get; set; } = TranslationEngine.DeepL;
 
-    public List<string> KnownLanguages { get; set; } = ["English"];
+    public List<string> KnownLanguages { get; set; } = [];
 
     public string SelectedTargetLanguage { get; set; } = "English";
     public string SelectedMainWindowTargetLanguage { get; set; } = "Japanese";
