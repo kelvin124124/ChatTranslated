@@ -80,7 +80,7 @@ internal static partial class OpenAITranslate
 
     public static string BuildPrompt(string targetLanguage, string? context)
     {
-        var prompt = """
+        var prompt = $"""
             You are a precise translator for FFXIV game content into {targetLanguage}.
 
             TRANSLATION RULES:
@@ -97,13 +97,14 @@ internal static partial class OpenAITranslate
             3. Write only the translated text after this header.
             4. Do not include the original text.
             5. Do not add any explanations or notes after the translation.
+            6. If the original text is already in {targetLanguage}, return it WITHOUT modification.
 
             Example response format:
             #### Reasoning
-            {{Your analysis and translation process}}
+            [Your analysis and translation process]
 
             #### Translation
-            {{Only the translated text goes here}}
+            [Only the translated text goes here]
             """;
 
         if (Service.configuration.UseContext && context != null)

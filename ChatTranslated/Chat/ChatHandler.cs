@@ -244,6 +244,7 @@ internal partial class ChatHandler
         return false;
     }
 
+    // needs update, output str should depend on selected target language, not plugin ui language
     private static bool IsJPFilteredMessage(Message chatMessage)
     {
         if (ChatRegex.JPWelcomeRegex().IsMatch(chatMessage.CleanedContent))
@@ -270,6 +271,8 @@ internal partial class ChatHandler
 
         return false;
     }
+
+    // needs IsEnFilteredMessage
 
     public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
 }
