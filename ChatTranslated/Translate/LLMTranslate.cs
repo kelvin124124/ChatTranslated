@@ -80,7 +80,7 @@ internal static partial class OpenAITranslate
 
     public static string BuildPrompt(string targetLanguage, string? context)
     {
-        var prompt = $"""
+        var prompt = """
             You are a precise translator for FFXIV game content.
 
             TRANSLATION RULES:
