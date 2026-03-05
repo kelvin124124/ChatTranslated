@@ -181,7 +181,7 @@
     <value>大丈夫です！</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>戦闘コンテンツ内で有効にする</value>
+    <value>コンテンツ中に有効にする</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
     <value>プラグインを有効にする</value>

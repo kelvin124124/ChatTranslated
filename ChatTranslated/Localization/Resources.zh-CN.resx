@@ -334,7 +334,7 @@ Google 和 Bing 翻译将被用作备用。
     <value>不支持没有系统角色的模型。</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
-    <value>Api 密钥</value>
+    <value>API 密钥</value>
   </data>
   <data name="LLMModel" xml:space="preserve">
     <value>模型</value>

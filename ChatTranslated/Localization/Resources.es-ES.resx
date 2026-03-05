@@ -295,7 +295,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>¡Hagámoslo!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Gritar</value>
+    <value>Vociferar</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Sí</value>

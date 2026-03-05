@@ -121,7 +121,7 @@
     <value>연합 파티</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>경고: API가 플러그인 구성에 일반 텍스트로 저장돼요. 악성 소프트웨어나 다른 플러그인이 키에 접근할 수도 있어요.</value>
+    <value>경고: API 키가 플러그인 구성에 일반 텍스트로 저장됩니다. 악성 소프트웨어나 다른 플러그인이 키에 접근할 수도 있습니다.</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>적용</value>
@@ -380,7 +380,7 @@ https://api.deepseek.com/chat/completions</value>
     <value>이러한 언어의 메시지는 번역되지 않습니다.</value>
   </data>
   <data name="Main_Window_Reverse_translation" xml:space="preserve">
-    <value>역 번역</value>
+    <value>역번역</value>
   </data>
   <data name="Main_Window_Translated_text" xml:space="preserve">
     <value>번역된 텍스트</value>

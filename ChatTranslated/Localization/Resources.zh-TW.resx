@@ -265,7 +265,7 @@ Google 和 Bing 翻譯將被用作備用。
     <value>戰隊</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>説話</value>
+    <value>說話</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
     <value>查看語言列表</value>
@@ -289,7 +289,7 @@ Google 和 Bing 翻譯將被用作備用。
     <value>翻譯引擎</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
-    <value>使用自定義語言</value>
+    <value>使用自訂語言</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
     <value>請多指教！</value>
@@ -334,7 +334,7 @@ Google 和 Bing 翻譯將被用作備用。
     <value>不支援沒有系統角色的模型。</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
-    <value>Api 密鑰</value>
+    <value>API 密鑰</value>
   </data>
   <data name="LLMModel" xml:space="preserve">
     <value>模型</value>
