@@ -59,7 +59,7 @@ internal partial class ChatHandler
                 return;
             }
 
-            if (IsJPFilteredMessage(chatMessage))
+            if (PhraseFilter.TryFilter(chatMessage)) // known common phrase
                 return;
 
             // low reliability: translate and detect in parallel, drops when detected as known language
