@@ -330,7 +330,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>OpenAI와 호환되는 API를 가진 모든 사용자 정의 제공자.</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>시스템 역할이 없는 모델은 지원되지 않습니다.</value>
+    <value>Models without system role are not supported.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
     <value>API 키</value>

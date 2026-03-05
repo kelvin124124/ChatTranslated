@@ -331,7 +331,7 @@
     <value>OpenAI互換APIを持つカスタムプロバイダー。</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>システムロールがないモデルはサポートされていません。</value>
+    <value>Models without system role are not supported.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
     <value>APIキー</value>

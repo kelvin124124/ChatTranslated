@@ -331,7 +331,7 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>Jeder benutzerdefinierte Anbieter mit OpenAI-kompatibler API.</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>Modelle ohne Systemrolle werden nicht unterstützt.</value>
+    <value>Models without system role are not supported.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
     <value>API-Schlüssel</value>

@@ -331,7 +331,7 @@ Google 和 Bing 翻译将被用作备用。
     <value>任何具有OpenAI兼容API的自定义提供商。</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>不支持没有系统角色的模型。</value>
+    <value>Models without system role are not supported.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
     <value>API 密钥</value>

@@ -331,7 +331,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Cualquier proveedor personalizado con API compatible con OpenAI.</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>Modelos sin rol de sistema no son soportados.</value>
+    <value>Models without system role are not supported.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
     <value>Clave API</value>
