@@ -120,21 +120,12 @@
   <data name="gp" xml:space="preserve">
     <value>Allianz</value>
   </data>
-  <data name="AllLanguages" xml:space="preserve">
-    <value>Alle Sprachen</value>
-  </data>
   <data name="APIKeyWarn" xml:space="preserve">
     <value>Warnung: API-Schlüssel wird als Klartext in der Plugin-Konfiguration gespeichert,
 jede Malware oder Drittanbieter-Plugins können auf den Schlüssel zugreifen.</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Anwenden</value>
-  </data>
-  <data name="AskProceed" xml:space="preserve">
-    <value>Fortfahren?</value>
-  </data>
-  <data name="ChannelSelection" xml:space="preserve">
-    <value>Chat-Kanäle Auswahl</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
     <value>Chat Integration</value>
@@ -172,17 +163,11 @@ jede Malware oder Drittanbieter-Plugins können auf den Schlüssel zugreifen.</v
   <data name="CrossParty" xml:space="preserve">
     <value>Gruppenübergreifend</value>
   </data>
-  <data name="CustomLanguages" xml:space="preserve">
-    <value>Benutzerdefinierte Sprachen</value>
-  </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
     <value>Sie müssen Google Translate verwenden, wenn Sie benutzerdefinierte Sprachen verwenden.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Benutzerdefinierte Zielsprache</value>
-  </data>
-  <data name="DeepL" xml:space="preserve">
-    <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API-Schlüssel (Optional)</value>
@@ -191,13 +176,6 @@ jede Malware oder Drittanbieter-Plugins können auf den Schlüssel zugreifen.</v
     <value>DeepL wird verwendet, um Chatnachrichten zu übersetzen. 
 Google und Bing Translate werden als Backup verwendet.
 Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als Backup verwendet.</value>
-  </data>
-  <data name="Default" xml:space="preserve">
-    <value>Standard</value>
-  </data>
-  <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>Empfohlen. Übersetzen Sie nicht-lateinische Sprachen.
-(Japanisch, Koreanisch, Chinesisch usw.)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
     <value>Kein Problem!</value>
@@ -286,9 +264,6 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
   <data name="PvPTeam" xml:space="preserve">
     <value>PvpGruppe</value>
   </data>
-  <data name="Region" xml:space="preserve">
-    <value>Region</value>
-  </data>
   <data name="Say" xml:space="preserve">
     <value>Sagen</value>
   </data>
@@ -298,12 +273,6 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
   <data name="Shout" xml:space="preserve">
     <value>Rufen</value>
   </data>
-  <data name="SourceLang" xml:space="preserve">
-    <value>Was zu übersetzen</value>
-  </data>
-  <data name="SourceLangSelection" xml:space="preserve">
-    <value>Quellsprachauswahl</value>
-  </data>
   <data name="Spanish" xml:space="preserve">
     <value>Spanisch</value>
   </data>
@@ -311,20 +280,10 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>Übersetzen nach</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>TellIncoming</value>
+    <value>Eingehende Flüsternachricht</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>Übersetzen</value>
-  </data>
-  <data name="TranslateAllExplaination" xml:space="preserve">
-    <value>Übersetze alle eingehenden Nachrichten.
-
-Keine Sprache in der Sprachauswahl gefunden?
-Feedback vom Plugin-Installer senden!</value>
-  </data>
-  <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>Die Übersetzungsschaltfläche druckt nur den übersetzten Text im Hauptfenster.
-Sie sendet die übersetzte Nachricht nicht im Chat und macht sie für andere Spieler nicht sichtbar.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
     <value>Übersetzungsmaschine</value>
@@ -336,7 +295,7 @@ Sie sendet die übersetzte Nachricht nicht im Chat und macht sie für andere Spi
     <value>Lass es uns tun!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Rufen</value>
+    <value>Schreien</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
@@ -347,14 +306,8 @@ Sie sendet die übersetzte Nachricht nicht im Chat und macht sie für andere Spi
   <data name="General" xml:space="preserve">
     <value>Allgemein</value>
   </data>
-  <data name="Translation Engine" xml:space="preserve">
-    <value>Übersetzungs-Engine</value>
-  </data>
   <data name="Languages" xml:space="preserve">
     <value>Sprachen</value>
-  </data>
-  <data name="Chat" xml:space="preserve">
-    <value>Chat</value>
   </data>
   <data name="ChatChannels" xml:space="preserve">
     <value>Chat-Kanäle</value>
@@ -417,7 +370,9 @@ https://api.deepseek.com/chat/completions</value>
 
 Der nachstehende Text zeigt den aktuellen Prompt.
 Verwenden Sie {targetLanguage} als Platzhalter für die Zielsprache.
-Der Kontext (falls aktiviert) wird automatisch angehängt.</value>
+Der Kontext (falls aktiviert) wird automatisch angehängt.
+
+Dieser Prompt wird zwischen OpenAI und OpenAI-kompatiblen APIs geteilt.</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
     <value>Meine Sprachen</value>
@@ -429,7 +384,7 @@ Der Kontext (falls aktiviert) wird automatisch angehängt.</value>
     <value>Rückwärtsübersetzung</value>
   </data>
   <data name="Main_Window_Translated_text" xml:space="preserve">
-    <value>Übersetzer Text</value>
+    <value>Übersetzter Text</value>
   </data>
   <data name="Main_Window_Translation_Failed" xml:space="preserve">
     <value>Übersetzung fehlgeschlagen.</value>
