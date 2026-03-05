@@ -334,7 +334,7 @@ DeepL API 키가 아래에 제공되면, 보조 수단으로 대신 사용돼요
     <value>잘 부탁합니다!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>외치기</value>
+    <value>고함치기</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>네</value>
@@ -415,7 +415,9 @@ https://api.deepseek.com/chat/completions</value>
 
 아래 텍스트는 현재 프롬프트를 표시합니다.
 {targetLanguage}를 대상 언어의 자리 표시자로 사용하세요.
-컨텍스트(활성화된 경우)는 자동으로 추가됩니다.</value>
+컨텍스트(활성화된 경우)는 자동으로 추가됩니다.
+
+이 프롬프트는 OpenAI와 OpenAI 호환 API 간에 공유됩니다.</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
     <value>내 언어</value>

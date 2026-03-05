@@ -146,37 +146,37 @@ tout logiciel malveillant ou plugin tiers peut avoir accès à la clé.</value>
     <value>Chinois (Traditionnel)</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>CrossLinkShell1</value>
+    <value>CWLS1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>CrossLinkShell2</value>
+    <value>CWLS2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>CrossLinkShell3</value>
+    <value>CWLS3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>CrossLinkShell4</value>
+    <value>CWLS4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>CrossLinkShell5</value>
+    <value>CWLS5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>CrossLinkShell6</value>
+    <value>CWLS6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>CrossLinkShell7</value>
+    <value>CWLS7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>CrossLinkShell8</value>
+    <value>CWLS8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>CrossParty</value>
+    <value>Groupe inter-mondes</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
     <value>Langues personnalisées</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>Vous serez obligé(e)d'utiliser Google Traduction si vous utilisez des langues personnalisées.</value>
+    <value>Vous serez obligé(e) d'utiliser Google Traduction si vous utilisez des langues personnalisées.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Langue cible personnalisée</value>
@@ -212,7 +212,7 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Anglais</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>FreeCompany</value>
+    <value>Compagnie libre</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>Français</value>
@@ -263,10 +263,10 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>LS8</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>Non</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>NoviceNetwork</value>
+    <value>Réseau des novices</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>Clé API OpenAI</value>
@@ -284,19 +284,19 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Émotion</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvPTeam</value>
+    <value>Équipe PvP</value>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>Région</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>Say</value>
+    <value>Dire</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
     <value>Voir la liste des langues</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>Shout</value>
+    <value>Crier</value>
   </data>
   <data name="SourceLang" xml:space="preserve">
     <value>Quoi traduire</value>
@@ -417,7 +417,9 @@ https://api.deepseek.com/chat/completions</value>
 
 Le texte ci-dessous affiche le prompt actuel.
 Utilisez {targetLanguage} comme espace réservé pour la langue cible.
-Le contexte (si activé) sera ajouté automatiquement.</value>
+Le contexte (si activé) sera ajouté automatiquement.
+
+Ce prompt est partagé entre l'API OpenAI et les API compatibles OpenAI.</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
     <value>Mes langues</value>

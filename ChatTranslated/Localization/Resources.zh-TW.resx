@@ -137,7 +137,7 @@
     <value>頻道選項</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>聊天集成</value>
+    <value>聊天整合</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
     <value>簡體中文</value>
@@ -179,7 +179,7 @@
     <value>如果您使用自訂語言，將强制使用Google翻譯。</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
-    <value>自定義目標語言</value>
+    <value>自訂目標語言</value>
   </data>
   <data name="DeepL" xml:space="preserve">
     <value>DeepL</value>
@@ -318,9 +318,9 @@ Google 和 Bing 翻譯將被用作備用。
   </data>
   <data name="TranslateAllExplaination" xml:space="preserve">
     <value>翻譯所有收到的訊息。
-在語言選擇中沒有找到您的語言？
 
-在插件安裝界面發送反饋！</value>
+在語言選擇中沒有找到您的語言？
+在插件安裝界面發送回饋！</value>
   </data>
   <data name="TranslateButtonTooltip" xml:space="preserve">
     <value>翻譯按鈕僅在主視窗中列印翻譯後的文字。
@@ -375,10 +375,10 @@ Google 和 Bing 翻譯將被用作備用。
     <value>如果你居住在不支持的地區，可能會受到限制。</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
-    <value>任何具有OpenAI兼容API的自定義提供商。</value>
+    <value>任何具有OpenAI相容API的自訂提供商。</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>不支持沒有系統角色的模型。</value>
+    <value>不支援沒有系統角色的模型。</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
     <value>Api 密鑰</value>
@@ -392,13 +392,13 @@ Google 和 Bing 翻譯將被用作備用。
   <data name="LLM_Explanation" xml:space="preserve">
     <value>注意：
 DeepL 在單語言翻譯中的準確性更高。
-僅當消息較長或包含多種語言時，LLM 才會有更好表現。</value>
+僅當訊息較長或包含多種語言時，LLM 才會有更好表現。</value>
   </data>
   <data name="UseContext" xml:space="preserve">
     <value>使用上下文</value>
   </data>
   <data name="ChatContextExplanation" xml:space="preserve">
-    <value>在LLM指令中加入目前聊天標籤頁中的消息。</value>
+    <value>在LLM指令中加入目前聊天標籤頁中的訊息。</value>
   </data>
   <data name="LLMApiEndpointExample" xml:space="preserve">
     <value>範例:
@@ -417,7 +417,9 @@ https://api.deepseek.com/chat/completions</value>
 
 下方文字顯示目前提示詞。
 使用 {targetLanguage} 作為目標語言的佔位符。
-上下文（如果啟用）將自動附加。</value>
+上下文（如果啟用）將自動附加。
+
+此提示詞在OpenAI和OpenAI相容API之間共享。</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
     <value>我的語言</value>

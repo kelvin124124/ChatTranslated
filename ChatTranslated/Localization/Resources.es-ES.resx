@@ -121,7 +121,7 @@
     <value>Alianza</value>
   </data>
   <data name="AllLanguages" xml:space="preserve">
-    <value>TodosLosIdiomas</value>
+    <value>Todos los idiomas</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
     <value>Advertencia: La clave API se almacenará como texto sin formato en la configuración del plugin,
@@ -146,34 +146,34 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
     <value>Chino (Tradicional)</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>CrossLinkShell1</value>
+    <value>CWLS1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>CrossLinkShell2</value>
+    <value>CWLS2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>CrossLinkShell3</value>
+    <value>CWLS3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>CrossLinkShell4</value>
+    <value>CWLS4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>CrossLinkShell5</value>
+    <value>CWLS5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>CrossLinkShell6</value>
+    <value>CWLS6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>CrossLinkShell7</value>
+    <value>CWLS7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>CrossLinkShell8</value>
+    <value>CWLS8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>CrossParty</value>
+    <value>Grupo inter-mundos</value>
   </data>
   <data name="CustomLanguages" xml:space="preserve">
-    <value>IdiomasPersonalizados</value>
+    <value>Idiomas personalizados</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
     <value>Se te obligará a usar Google Translate si usas idiomas personalizados.</value>
@@ -212,7 +212,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Inglés</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>FreeCompany</value>
+    <value>Compañía libre</value>
   </data>
   <data name="French" xml:space="preserve">
     <value>Francés</value>
@@ -239,34 +239,34 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Proxy Gemini autohospedado</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>Ls1</value>
+    <value>LS1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>Ls2</value>
+    <value>LS2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>Ls3</value>
+    <value>LS3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>Ls4</value>
+    <value>LS4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>Ls5</value>
+    <value>LS5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>Ls6</value>
+    <value>LS6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>Ls7</value>
+    <value>LS7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>Ls8</value>
+    <value>LS8</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>RedDeNovatos</value>
+    <value>Red de novatos</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>Clave API de OpenAI</value>
@@ -284,7 +284,7 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
     <value>Emote</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>EquipoPvP</value>
+    <value>Equipo PvP</value>
   </data>
   <data name="Region" xml:space="preserve">
     <value>Región</value>
@@ -417,7 +417,9 @@ https://api.deepseek.com/chat/completions</value>
 
 El texto a continuación muestra el prompt actual.
 Use {targetLanguage} como marcador de posición para el idioma de destino.
-El contexto (si está habilitado) se agregará automáticamente.</value>
+El contexto (si está habilitado) se agregará automáticamente.
+
+Este prompt se comparte entre la API de OpenAI y las API compatibles con OpenAI.</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
     <value>Mis idiomas</value>

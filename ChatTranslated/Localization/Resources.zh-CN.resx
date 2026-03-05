@@ -134,7 +134,7 @@
     <value>要继续吗？</value>
   </data>
   <data name="ChannelSelection" xml:space="preserve">
-    <value>频道选项</value>
+    <value>频道选择</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
     <value>聊天集成</value>
@@ -302,7 +302,7 @@ Google 和 Bing 翻译将被用作备用。
     <value>翻译对象</value>
   </data>
   <data name="SourceLangSelection" xml:space="preserve">
-    <value>源语言选项</value>
+    <value>源语言选择</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>西班牙语</value>
@@ -417,7 +417,9 @@ https://api.deepseek.com/chat/completions</value>
 
 下方文本显示当前提示词。
 使用 {targetLanguage} 作为目标语言的占位符。
-上下文（如果启用）将自动附加。</value>
+上下文（如果启用）将自动附加。
+
+此提示词在OpenAI和OpenAI兼容API之间共享。</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
     <value>我的语言</value>

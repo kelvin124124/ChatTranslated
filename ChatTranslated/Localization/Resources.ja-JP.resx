@@ -417,7 +417,9 @@ https://api.deepseek.com/chat/completions</value>
 
 以下のテキストは現在のプロンプトを示しています。
 {targetLanguage}をターゲット言語のプレースホルダーとして使用してください。
-コンテキスト（有効になっている場合）は自動的に追加されます。</value>
+コンテキスト（有効になっている場合）は自動的に追加されます。
+
+このプロンプトはOpenAIとOpenAI互換APIで共有されます。</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
     <value>私の言語</value>

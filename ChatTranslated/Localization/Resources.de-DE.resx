@@ -311,7 +311,7 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>Übersetzen nach</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>TellIncoming</value>
+    <value>Eingehende Flüsternachricht</value>
   </data>
   <data name="Translate" xml:space="preserve">
     <value>Übersetzen</value>
@@ -336,7 +336,7 @@ Sie sendet die übersetzte Nachricht nicht im Chat und macht sie für andere Spi
     <value>Lass es uns tun!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Rufen</value>
+    <value>Schreien</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Ja</value>
@@ -417,7 +417,9 @@ https://api.deepseek.com/chat/completions</value>
 
 Der nachstehende Text zeigt den aktuellen Prompt.
 Verwenden Sie {targetLanguage} als Platzhalter für die Zielsprache.
-Der Kontext (falls aktiviert) wird automatisch angehängt.</value>
+Der Kontext (falls aktiviert) wird automatisch angehängt.
+
+Dieser Prompt wird zwischen OpenAI und OpenAI-kompatiblen APIs geteilt.</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
     <value>Meine Sprachen</value>
@@ -429,7 +431,7 @@ Der Kontext (falls aktiviert) wird automatisch angehängt.</value>
     <value>Rückwärtsübersetzung</value>
   </data>
   <data name="Main_Window_Translated_text" xml:space="preserve">
-    <value>Übersetzer Text</value>
+    <value>Übersetzter Text</value>
   </data>
   <data name="Main_Window_Translation_Failed" xml:space="preserve">
     <value>Übersetzung fehlgeschlagen.</value>
