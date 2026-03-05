@@ -61,15 +61,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AllLanguages.
-        /// </summary>
-        internal static string AllLanguages {
-            get {
-                return ResourceManager.GetString("AllLanguages", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Warning: API key will be stored as plain text in plugin configuration,
         ///any malware or third party plugins may have access to the key..
         /// </summary>
@@ -85,33 +76,6 @@ namespace ChatTranslated.Localization {
         internal static string Apply {
             get {
                 return ResourceManager.GetString("Apply", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Proceed?.
-        /// </summary>
-        internal static string AskProceed {
-            get {
-                return ResourceManager.GetString("AskProceed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Channel Selection.
-        /// </summary>
-        internal static string ChannelSelection {
-            get {
-                return ResourceManager.GetString("ChannelSelection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Chat.
-        /// </summary>
-        internal static string Chat {
-            get {
-                return ResourceManager.GetString("Chat", resourceCulture);
             }
         }
         
@@ -287,15 +251,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CustomLanguages.
-        /// </summary>
-        internal static string CustomLanguages {
-            get {
-                return ResourceManager.GetString("CustomLanguages", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Customize the system prompt for translation.
         ///
         ///The text below shows the current prompt.
@@ -338,15 +293,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DeepL.
-        /// </summary>
-        internal static string DeepL {
-            get {
-                return ResourceManager.GetString("DeepL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to DeepL API Key (Optional).
         /// </summary>
         internal static string DeepLAPIKey {
@@ -363,25 +309,6 @@ namespace ChatTranslated.Localization {
         internal static string DeepLExplanation {
             get {
                 return ResourceManager.GetString("DeepLExplanation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Default.
-        /// </summary>
-        internal static string Default {
-            get {
-                return ResourceManager.GetString("Default", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Recommended. Translate non-Latin based languages.
-        ///(Japanese, Korean, Chinese, etc.).
-        /// </summary>
-        internal static string DefaultFilteringExplaination {
-            get {
-                return ResourceManager.GetString("DefaultFilteringExplaination", resourceCulture);
             }
         }
         
@@ -787,15 +714,6 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Region.
-        /// </summary>
-        internal static string Region {
-            get {
-                return ResourceManager.GetString("Region", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Say.
         /// </summary>
         internal static string Say {
@@ -819,24 +737,6 @@ namespace ChatTranslated.Localization {
         internal static string Shout {
             get {
                 return ResourceManager.GetString("Shout", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to What to translate.
-        /// </summary>
-        internal static string SourceLang {
-            get {
-                return ResourceManager.GetString("SourceLang", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Source Language Selection.
-        /// </summary>
-        internal static string SourceLangSelection {
-            get {
-                return ResourceManager.GetString("SourceLangSelection", resourceCulture);
             }
         }
         
@@ -873,37 +773,6 @@ namespace ChatTranslated.Localization {
         internal static string Translate {
             get {
                 return ResourceManager.GetString("Translate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Translate all incoming messages.
-        ///
-        ///Didn&apos;t find your language in language selection?
-        ///Send feedback from plugin installer!.
-        /// </summary>
-        internal static string TranslateAllExplaination {
-            get {
-                return ResourceManager.GetString("TranslateAllExplaination", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Translate button only print translated text in the main window.
-        ///It does not send translated text in chat or make it visible to other players..
-        /// </summary>
-        internal static string TranslateButtonTooltip {
-            get {
-                return ResourceManager.GetString("TranslateButtonTooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Translation Engine.
-        /// </summary>
-        internal static string Translation_Engine {
-            get {
-                return ResourceManager.GetString("Translation Engine", resourceCulture);
             }
         }
         

@@ -120,21 +120,12 @@
   <data name="gp" xml:space="preserve">
     <value>团队</value>
   </data>
-  <data name="AllLanguages" xml:space="preserve">
-    <value>所有语言</value>
-  </data>
   <data name="APIKeyWarn" xml:space="preserve">
     <value>警告：API 密钥将以纯文本形式存储在插件配置中，
 任何恶意软件或第三方插件都可以访问该密钥。</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>应用</value>
-  </data>
-  <data name="AskProceed" xml:space="preserve">
-    <value>要继续吗？</value>
-  </data>
-  <data name="ChannelSelection" xml:space="preserve">
-    <value>频道选择</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
     <value>聊天集成</value>
@@ -172,17 +163,11 @@
   <data name="CrossParty" xml:space="preserve">
     <value>跨服小队</value>
   </data>
-  <data name="CustomLanguages" xml:space="preserve">
-    <value>自定义语言</value>
-  </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
     <value>如果您使用自定义语言，将强制使用Google翻译。</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>自定义目标语言</value>
-  </data>
-  <data name="DeepL" xml:space="preserve">
-    <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL API密钥（非必要）</value>
@@ -191,13 +176,6 @@
     <value>DeepL 将用于翻译聊天讯息。
 Google 和 Bing 翻译将被用作备用。
 如果提供了下面的 DeepL API 密钥，将用作备用。</value>
-  </data>
-  <data name="Default" xml:space="preserve">
-    <value>默认</value>
-  </data>
-  <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>推荐。翻译非拉丁语系语言。
-（日语、韩语、中文等）</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
     <value>别在意。</value>
@@ -286,9 +264,6 @@ Google 和 Bing 翻译将被用作备用。
   <data name="PvPTeam" xml:space="preserve">
     <value>战队</value>
   </data>
-  <data name="Region" xml:space="preserve">
-    <value>地区</value>
-  </data>
   <data name="Say" xml:space="preserve">
     <value>说话</value>
   </data>
@@ -297,12 +272,6 @@ Google 和 Bing 翻译将被用作备用。
   </data>
   <data name="Shout" xml:space="preserve">
     <value>喊话</value>
-  </data>
-  <data name="SourceLang" xml:space="preserve">
-    <value>翻译对象</value>
-  </data>
-  <data name="SourceLangSelection" xml:space="preserve">
-    <value>源语言选择</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>西班牙语</value>
@@ -315,16 +284,6 @@ Google 和 Bing 翻译将被用作备用。
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻译</value>
-  </data>
-  <data name="TranslateAllExplaination" xml:space="preserve">
-    <value>翻译所有收到的讯息。
-
-没有在语言选项中找到您的语言？
-在插件安装界面中发送反馈！</value>
-  </data>
-  <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>翻译按钮仅在主窗口中打印翻译的文本。
-它不会在聊天中发送翻译的文本或使其对其他玩家可见。</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
     <value>翻译引擎</value>
@@ -347,14 +306,8 @@ Google 和 Bing 翻译将被用作备用。
   <data name="General" xml:space="preserve">
     <value>通用</value>
   </data>
-  <data name="Translation Engine" xml:space="preserve">
-    <value>翻译引擎</value>
-  </data>
   <data name="Languages" xml:space="preserve">
     <value>语言</value>
-  </data>
-  <data name="Chat" xml:space="preserve">
-    <value>聊天</value>
   </data>
   <data name="ChatChannels" xml:space="preserve">
     <value>聊天频道</value>

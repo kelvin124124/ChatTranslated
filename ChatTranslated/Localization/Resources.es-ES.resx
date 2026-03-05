@@ -120,21 +120,12 @@
   <data name="gp" xml:space="preserve">
     <value>Alianza</value>
   </data>
-  <data name="AllLanguages" xml:space="preserve">
-    <value>Todos los idiomas</value>
-  </data>
   <data name="APIKeyWarn" xml:space="preserve">
     <value>Advertencia: La clave API se almacenará como texto sin formato en la configuración del plugin,
 cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>Aplicar</value>
-  </data>
-  <data name="AskProceed" xml:space="preserve">
-    <value>¿Proceder?</value>
-  </data>
-  <data name="ChannelSelection" xml:space="preserve">
-    <value>Selección de Canal</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
     <value>Integración de Chat</value>
@@ -172,17 +163,11 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
   <data name="CrossParty" xml:space="preserve">
     <value>Grupo inter-mundos</value>
   </data>
-  <data name="CustomLanguages" xml:space="preserve">
-    <value>Idiomas personalizados</value>
-  </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
     <value>Se te obligará a usar Google Translate si usas idiomas personalizados.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>Idioma objetivo personalizado</value>
-  </data>
-  <data name="DeepL" xml:space="preserve">
-    <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>Clave API de DeepL (opcional)</value>
@@ -191,13 +176,6 @@ cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
     <value>DeepL será utilizado para traducir mensajes de chat.
 Google y Bing Translate serán utilizados como respaldo.
 Si se proporciona la clave API de DeepL a continuación, se utilizará como respaldo en su lugar.</value>
-  </data>
-  <data name="Default" xml:space="preserve">
-    <value>Predeterminado</value>
-  </data>
-  <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>Recomendado. Traducir idiomas no basados en el alfabeto latino.
-(Japonés, Coreano, Chino, etc.)</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
     <value>¡Está bien!</value>
@@ -286,9 +264,6 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
   <data name="PvPTeam" xml:space="preserve">
     <value>Equipo PvP</value>
   </data>
-  <data name="Region" xml:space="preserve">
-    <value>Región</value>
-  </data>
   <data name="Say" xml:space="preserve">
     <value>Hablar</value>
   </data>
@@ -297,12 +272,6 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
   </data>
   <data name="Shout" xml:space="preserve">
     <value>Gritar</value>
-  </data>
-  <data name="SourceLang" xml:space="preserve">
-    <value>Qué traducir</value>
-  </data>
-  <data name="SourceLangSelection" xml:space="preserve">
-    <value>Selección del idioma de origen</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>Español</value>
@@ -315,16 +284,6 @@ Si se proporciona la clave API de DeepL a continuación, se utilizará como resp
   </data>
   <data name="Translate" xml:space="preserve">
     <value>Traducir</value>
-  </data>
-  <data name="TranslateAllExplaination" xml:space="preserve">
-    <value>Traducir todos los mensajes entrantes.
-
-¿No encontraste tu idioma en la selección de idiomas?
-¡Envía tus comentarios desde la instalación del complemento!</value>
-  </data>
-  <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>El botón de traducir solo imprime el texto traducido en la ventana principal.
-No envía texto traducido en el chat ni lo hace visible para otros jugadores.</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
     <value>Motor de traducción</value>
@@ -347,14 +306,8 @@ No envía texto traducido en el chat ni lo hace visible para otros jugadores.</v
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
-  <data name="Translation Engine" xml:space="preserve">
-    <value>Motor de traducción</value>
-  </data>
   <data name="Languages" xml:space="preserve">
     <value>Idiomas</value>
-  </data>
-  <data name="Chat" xml:space="preserve">
-    <value>Chat</value>
   </data>
   <data name="ChatChannels" xml:space="preserve">
     <value>Canales de chat</value>

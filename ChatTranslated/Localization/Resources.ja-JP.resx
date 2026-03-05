@@ -120,21 +120,12 @@
   <data name="gp" xml:space="preserve">
     <value>アライアンス</value>
   </data>
-  <data name="AllLanguages" xml:space="preserve">
-    <value>全ての言語</value>
-  </data>
   <data name="APIKeyWarn" xml:space="preserve">
     <value>警告：API キーがプラグインの設定にプレーンテキストとして保存されます。
 マルウェアやサードパーティ製プラグインがキーにアクセスできる可能性があります。</value>
   </data>
   <data name="Apply" xml:space="preserve">
     <value>適用</value>
-  </data>
-  <data name="AskProceed" xml:space="preserve">
-    <value>続行しますか？</value>
-  </data>
-  <data name="ChannelSelection" xml:space="preserve">
-    <value>チャンネル選択</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
     <value>チャット統合</value>
@@ -172,17 +163,11 @@
   <data name="CrossParty" xml:space="preserve">
     <value>クロスパーティー</value>
   </data>
-  <data name="CustomLanguages" xml:space="preserve">
-    <value>カスタム言語</value>
-  </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
     <value>カスタム言語を使用する場合、Google翻訳を強制使用します。</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
     <value>カスタムターゲット言語</value>
-  </data>
-  <data name="DeepL" xml:space="preserve">
-    <value>DeepL</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
     <value>DeepL APIキー（任意）</value>
@@ -191,13 +176,6 @@
     <value>チャットメッセージの翻訳には DeepL が使用されます。
 バックアップとして Google と Bing 翻訳が使用されます。
 下記に DeepL API キーが提供された場合は、代わりにバックアップとして使用されます。</value>
-  </data>
-  <data name="Default" xml:space="preserve">
-    <value>デフォルト</value>
-  </data>
-  <data name="DefaultFilteringExplaination" xml:space="preserve">
-    <value>推奨されます。非ラテンベースの言語を翻訳します。
-（日本語、韓国語、中国語など）</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
     <value>大丈夫です！</value>
@@ -286,9 +264,6 @@
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPチーム</value>
   </data>
-  <data name="Region" xml:space="preserve">
-    <value>地域</value>
-  </data>
   <data name="Say" xml:space="preserve">
     <value>Say</value>
   </data>
@@ -297,12 +272,6 @@
   </data>
   <data name="Shout" xml:space="preserve">
     <value>Shout</value>
-  </data>
-  <data name="SourceLang" xml:space="preserve">
-    <value>翻訳する言語</value>
-  </data>
-  <data name="SourceLangSelection" xml:space="preserve">
-    <value>ソース言語の選択</value>
   </data>
   <data name="Spanish" xml:space="preserve">
     <value>スペイン語</value>
@@ -315,16 +284,6 @@
   </data>
   <data name="Translate" xml:space="preserve">
     <value>翻訳</value>
-  </data>
-  <data name="TranslateAllExplaination" xml:space="preserve">
-    <value>すべての受信メッセージを翻訳します。
-
-言語選択にご希望の言語が見つかりませんか？
-プラグインインストーラーからフィードバックをお送りください！</value>
-  </data>
-  <data name="TranslateButtonTooltip" xml:space="preserve">
-    <value>翻訳ボタンはメインウィンドウに翻訳文を表示するだけです。
-チャットに翻訳文を送信したり、他のプレイヤーに見えるようにすることはありません。</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
     <value>翻訳エンジン</value>
@@ -347,14 +306,8 @@
   <data name="General" xml:space="preserve">
     <value>一般</value>
   </data>
-  <data name="Translation Engine" xml:space="preserve">
-    <value>翻訳エンジン</value>
-  </data>
   <data name="Languages" xml:space="preserve">
     <value>言語</value>
-  </data>
-  <data name="Chat" xml:space="preserve">
-    <value>チャット</value>
   </data>
   <data name="ChatChannels" xml:space="preserve">
     <value>チャットチャンネル</value>
