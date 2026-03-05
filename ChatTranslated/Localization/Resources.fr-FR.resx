@@ -59,7 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -281,7 +281,7 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Langue du greffon</value>
   </data>
   <data name="CustomEmote" xml:space="preserve">
-    <value>Custom Emote</value>
+    <value>Émotion</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>PvPTeam</value>
@@ -366,13 +366,13 @@ Il n'envoie pas le texte traduit dans le chat ni ne le rend visible pour les aut
     <value>Afficher du texte coloré lors de la sortie du message traduit</value>
   </data>
   <data name="ChatIntegration_UseEchoChannel" xml:space="preserve">
-    <value>Output translated message to Echo channel</value>
+    <value>Envoyer le message traduit au canal Echo</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>Copier</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>May be restricted if you live in unsupported region.</value>
+    <value>Peut être restreint si vous vivez dans une région non prise en charge.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
     <value>Tout fournisseur personnalisé avec API compatible OpenAI.</value>
@@ -418,5 +418,20 @@ https://api.deepseek.com/chat/completions</value>
 Le texte ci-dessous affiche le prompt actuel.
 Utilisez {targetLanguage} comme espace réservé pour la langue cible.
 Le contexte (si activé) sera ajouté automatiquement.</value>
+  </data>
+  <data name="My_Languages" xml:space="preserve">
+    <value>Mes langues</value>
+  </data>
+  <data name="My_Languages_Explanation" xml:space="preserve">
+    <value>Les messages dans ces langues ne seront pas traduits.</value>
+  </data>
+  <data name="Main_Window_Reverse_translation" xml:space="preserve">
+    <value>Traduction inversée</value>
+  </data>
+  <data name="Main_Window_Translated_text" xml:space="preserve">
+    <value>Texte traduit</value>
+  </data>
+  <data name="Main_Window_Translation_Failed" xml:space="preserve">
+    <value>Échec de la traduction.</value>
   </data>
 </root>
