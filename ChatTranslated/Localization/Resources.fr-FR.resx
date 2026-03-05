@@ -256,10 +256,10 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Groupe</value>
   </data>
   <data name="PluginUILanguage" xml:space="preserve">
-    <value>Langue du greffon</value>
+    <value>Langue du plugin</value>
   </data>
   <data name="CustomEmote" xml:space="preserve">
-    <value>Émotion</value>
+    <value>Émote</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
     <value>Équipe PvP</value>
@@ -295,7 +295,7 @@ Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sa
     <value>Allons-y!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Crier</value>
+    <value>Hurler</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Oui</value>

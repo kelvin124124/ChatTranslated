@@ -181,7 +181,7 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>Kein Problem!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>In Aufgaben aktivieren</value>
+    <value>In Inhalten aktivieren</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
     <value>Plugin aktivieren</value>
@@ -247,7 +247,7 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>Neulingsnetzwerk</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
-    <value>OpenAI API Key</value>
+    <value>OpenAI API-Schlüssel</value>
   </data>
   <data name="OpenAIPriceEstimation" xml:space="preserve">
     <value>Preisschätzung: 2,0 USD /Monat</value>
@@ -262,7 +262,7 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>Emote</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvpGruppe</value>
+    <value>PvP-Team</value>
   </data>
   <data name="Say" xml:space="preserve">
     <value>Sagen</value>
@@ -316,7 +316,7 @@ Wenn unten ein DeepL API-Schlüssel angegeben wird, wird dieser stattdessen als 
     <value>Übersetzungsmodus</value>
   </data>
   <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
-    <value>Zeigen Sie farbigen Text an, wenn die übersetzte Nachricht ausgegeben wird</value>
+    <value>Farbigen Text bei Ausgabe der übersetzten Nachricht anzeigen</value>
   </data>
   <data name="ChatIntegration_UseEchoChannel" xml:space="preserve">
     <value>Übersetzte Nachricht an Echo-Kanal ausgeben</value>

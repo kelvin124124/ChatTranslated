@@ -331,7 +331,7 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
     <value>Any custom providers with OpenAI-compatible API.</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>Models without system role is not supported.</value>
+    <value>Models without system role are not supported.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
     <value>Api key</value>
