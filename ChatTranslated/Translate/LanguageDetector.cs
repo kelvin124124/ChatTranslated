@@ -72,6 +72,8 @@ internal static class LanguageDetector
     private static readonly Dictionary<Language, string> LinguaToIso =
         LanguageTable.GroupBy(e => e.Lang).ToDictionary(g => g.Key, g => g.First().Iso);
 
+    internal static readonly HashSet<string> ValidIsoCodes = new(LanguageTable.Select(e => e.Iso));
+
     private static readonly Dictionary<XivChatType, (int Tick, string? Iso)> _lastChannelDetection = [];
 
     // Returns Lingua's top detected language as (confidence score, ISO 639-1 code).
@@ -87,11 +89,19 @@ internal static class LanguageDetector
         return (top.Value, iso);
     }
 
+    private static readonly Dictionary<string, List<string>> IsoToNames =
+        LanguageTable.GroupBy(e => e.Iso).ToDictionary(g => g.Key, g => g.Select(e => e.Name).ToList());
+
     // Returns true if the ISO 639-1 code corresponds to one of the user's known languages.
     internal static bool IsKnownIsoCode(string? isoCode)
     {
+        if (isoCode == null || !IsoToNames.TryGetValue(isoCode, out var names))
+            return false;
         var known = Service.configuration.KnownLanguages;
-        return LanguageTable.Any(e => e.Iso == isoCode && known.Contains(e.Name));
+        foreach (var name in names)
+            if (known.Contains(name))
+                return true;
+        return false;
     }
 
     // Returns true if the text is detected as one of the user's known languages.

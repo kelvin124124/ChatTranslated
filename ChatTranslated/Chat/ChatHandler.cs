@@ -88,9 +88,7 @@ internal partial class ChatHandler
 
             // emoticons usually classified to rare languages in Google translate
             // if iso not in supported languages, drop the message to avoid mistranslations
-            bool isSupportedIso = LanguageDetector.LanguageTable.Any(entry => entry.Iso == iso);
-
-            if (!isSupportedIso || LanguageDetector.IsKnownIsoCode(iso))
+            if (iso == null || !LanguageDetector.ValidIsoCodes.Contains(iso) || LanguageDetector.IsKnownIsoCode(iso))
             {
                 Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
                 return;
@@ -164,18 +162,21 @@ internal partial class ChatHandler
                 }
             }
 
-            var lines = sb.ToString()
-                .Split('\r')
-                .TakeLast(15)
-                .Select(line => line.Trim())
-                .ToList();
+            var lines = sb.ToString().Split('\r');
+            sb.Clear();
+
+            for (int j = Math.Max(0, lines.Length - 15); j < lines.Length; j++)
+            {
+                if (sb.Length > 0) sb.Append('\n');
+                sb.Append(lines[j].Trim());
+            }
 
             if (Service.condition[ConditionFlag.BoundByDuty])
-                lines.Add("In instanced area: true");
+                sb.Append("\nIn instanced area: true");
             if (Service.condition[ConditionFlag.InCombat])
-                lines.Add("In combat: true");
+                sb.Append("\nIn combat: true");
 
-            return string.Join('\n', lines);
+            return sb.ToString();
         }
         catch (Exception ex)
         {
@@ -214,11 +215,14 @@ internal partial class ChatHandler
 
     private bool IsFilteredMessage(string sender, string message)
     {
-        if (message.Trim().Length < 2 || IsMacroMessage(sender))
+        if (message.Trim().Length < 2)
         {
-            Service.pluginLog.Debug("Message filtered: " + (message.Trim().Length < 2
-                ? "Single character or empty message."
-                : "Macro messages."));
+            Service.pluginLog.Debug("Message filtered: Single character or empty message.");
+            return true;
+        }
+        if (IsMacroMessage(sender))
+        {
+            Service.pluginLog.Debug("Message filtered: Macro messages.");
             return true;
         }
         return false;

@@ -3,6 +3,7 @@ using ChatTranslated.Utils;
 using Dalamud.Networking.Http;
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -56,7 +57,8 @@ internal static class TranslationHandler
         {
             if (TranslationCache.Count >= MAX_CACHE_SIZE)
             {
-                TranslationCache.Clear();
+                foreach (var key in TranslationCache.Keys.Take(MAX_CACHE_SIZE / 2))
+                    TranslationCache.TryRemove(key, out _);
             }
 
             TranslationCache.TryAdd(message.OriginalText, translatedText);
