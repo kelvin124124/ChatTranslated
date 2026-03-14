@@ -57,8 +57,7 @@ internal static class TranslationHandler
         {
             if (TranslationCache.Count >= MAX_CACHE_SIZE)
             {
-                var keysToRemove = TranslationCache.Keys.Take(MAX_CACHE_SIZE / 2).ToList();
-                foreach (var key in keysToRemove)
+                foreach (var key in TranslationCache.Keys.Take(MAX_CACHE_SIZE / 2))
                     TranslationCache.TryRemove(key, out _);
             }
 

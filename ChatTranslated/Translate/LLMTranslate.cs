@@ -52,8 +52,7 @@ internal static partial class OpenAITranslate
         {
             var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            using var doc = JsonDocument.Parse(jsonResponse);
+            using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
             var translated = doc.RootElement
                 .GetProperty("choices")[0]
                 .GetProperty("message")
@@ -183,8 +182,7 @@ internal static class LLMProxyTranslate
         {
             var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            using var jsonDoc = JsonDocument.Parse(responseBody);
+            using var jsonDoc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
             var translated = jsonDoc.RootElement.GetProperty("translated").GetString()?.Trim();
 

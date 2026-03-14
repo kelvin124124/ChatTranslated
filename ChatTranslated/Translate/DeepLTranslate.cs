@@ -34,8 +34,7 @@ internal static class DeepLTranslate
         {
             var response = await TranslationHandler.HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            using var doc = JsonDocument.Parse(jsonResponse);
+            using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
             var translated = doc.RootElement
                 .GetProperty("translations")[0]
                 .GetProperty("text")
@@ -173,9 +172,7 @@ internal static class DeeplsTranslate
             var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            using var jsonDoc = JsonDocument.Parse(responseBody);
+            using var jsonDoc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
             var translated = jsonDoc.RootElement
                 .GetProperty("result")
                 .GetProperty("translations")[0]
