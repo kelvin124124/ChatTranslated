@@ -1,7 +1,6 @@
 using ChatTranslated.Chat;
 using ChatTranslated.Utils;
 using Dalamud.Networking.Http;
-using Dalamud.Utility;
 using System;
 using System.Collections.Concurrent;
 using System.Net;

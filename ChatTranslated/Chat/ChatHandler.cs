@@ -1,4 +1,3 @@
-using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Game.ClientState.Conditions;
