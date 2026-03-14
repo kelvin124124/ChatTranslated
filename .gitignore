@@ -1,4 +1,10 @@
 .vs/
+.claude/
+
 obj/
 bin/
+
+debug/
+
 *.user
+CLAUDE.md
