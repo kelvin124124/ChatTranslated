@@ -1,7 +1,7 @@
 using ChatTranslated.Chat;
 using ChatTranslated.Utils;
 using Dalamud.Utility;
-using Newtonsoft.Json.Linq;
+
 using System;
 using System.IO;
 using System.Net;
@@ -52,8 +52,12 @@ internal static partial class OpenAITranslate
         {
             var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
-            var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var translated = JObject.Parse(jsonResponse)["choices"]?[0]?["message"]?["content"]?.ToString().Trim();
+            using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+            var translated = doc.RootElement
+                .GetProperty("choices")[0]
+                .GetProperty("message")
+                .GetProperty("content")
+                .GetString()?.Trim();
 
             if (translated.IsNullOrWhitespace())
             {
@@ -178,10 +182,9 @@ internal static class LLMProxyTranslate
         {
             var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
-            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var jsonResponse = JObject.Parse(responseBody);
+            using var jsonDoc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
 
-            var translated = jsonResponse["translated"]?.ToString().Trim();
+            var translated = jsonDoc.RootElement.GetProperty("translated").GetString()?.Trim();
 
             if (translated.IsNullOrWhitespace())
             {
@@ -194,7 +197,8 @@ internal static class LLMProxyTranslate
                 return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
             }
 
-            Service.pluginLog.Info($"Request processed in: {jsonResponse["responseTime"]}");
+            if (jsonDoc.RootElement.TryGetProperty("responseTime", out var responseTime))
+                Service.pluginLog.Info($"Request processed in: {responseTime}");
 
             return (translated.Replace("\n", string.Empty), TranslationMode.LLMProxy);
         }

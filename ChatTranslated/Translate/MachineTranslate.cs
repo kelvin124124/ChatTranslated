@@ -16,26 +16,28 @@ internal static class MachineTranslate
     public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
     {
         // Try Bing first, then Google as fallback
-        foreach (var translator in new dynamic[]
+        try
         {
-            BingTranslator,
-            GTranslator
-        })
+            var result = await BingTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
+            if (!string.IsNullOrWhiteSpace(result.Translation) && result.Translation != text)
+                return (result.Translation, TranslationMode.MachineTranslate);
+            Service.pluginLog.Warning("Bing Translate returned an invalid translation.");
+        }
+        catch (Exception ex)
         {
-            try
-            {
-                var result = await translator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
-                string resultText = result.Translation;
+            Service.pluginLog.Warning($"Bing failed.\n{ex.Message}");
+        }
 
-                if (string.IsNullOrWhiteSpace(resultText) || resultText == text)
-                    throw new Exception($"{translator.Name} Translate returned an invalid translation.");
-
-                return (resultText, TranslationMode.MachineTranslate);
-            }
-            catch (Exception ex)
-            {
-                Service.pluginLog.Warning($"{translator.Name} failed.\n{ex.Message}");
-            }
+        try
+        {
+            var result = await GTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
+            if (!string.IsNullOrWhiteSpace(result.Translation) && result.Translation != text)
+                return (result.Translation, TranslationMode.MachineTranslate);
+            Service.pluginLog.Warning("Google Translate returned an invalid translation.");
+        }
+        catch (Exception ex)
+        {
+            Service.pluginLog.Warning($"Google failed.\n{ex.Message}");
         }
 
         return (text, null);

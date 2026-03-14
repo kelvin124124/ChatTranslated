@@ -13,7 +13,8 @@ public class Message(string sender, MessageSource source, SeString originalConte
     public XivChatType Type { get; } = type;
 
     // text accessors
-    public string OriginalText => OriginalContent.TextValue;
+    private string? originalText;
+    public string OriginalText => originalText ??= OriginalContent.TextValue;
 
     private string? cleanedContent;
     public string CleanedContent => cleanedContent ??= Sanitize(ExtractText(OriginalContent));
