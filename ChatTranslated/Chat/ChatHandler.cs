@@ -164,23 +164,21 @@ internal partial class ChatHandler
                 }
             }
 
-            var raw = sb.ToString();
-            var split = raw.Split('\r');
-            var startIndex = Math.Max(0, split.Length - 15);
-            var result = new StringBuilder();
+            var lines = sb.ToString().Split('\r');
+            sb.Clear();
 
-            for (int j = startIndex; j < split.Length; j++)
+            for (int j = Math.Max(0, lines.Length - 15); j < lines.Length; j++)
             {
-                if (result.Length > 0) result.Append('\n');
-                result.Append(split[j].Trim());
+                if (sb.Length > 0) sb.Append('\n');
+                sb.Append(lines[j].Trim());
             }
 
             if (Service.condition[ConditionFlag.BoundByDuty])
-                result.Append("\nIn instanced area: true");
+                sb.Append("\nIn instanced area: true");
             if (Service.condition[ConditionFlag.InCombat])
-                result.Append("\nIn combat: true");
+                sb.Append("\nIn combat: true");
 
-            return result.ToString();
+            return sb.ToString();
         }
         catch (Exception ex)
         {
@@ -219,12 +217,14 @@ internal partial class ChatHandler
 
     private bool IsFilteredMessage(string sender, string message)
     {
-        var trimmed = message.Trim();
-        if (trimmed.Length < 2 || IsMacroMessage(sender))
+        if (message.Trim().Length < 2)
         {
-            Service.pluginLog.Debug("Message filtered: " + (trimmed.Length < 2
-                ? "Single character or empty message."
-                : "Macro messages."));
+            Service.pluginLog.Debug("Message filtered: Single character or empty message.");
+            return true;
+        }
+        if (IsMacroMessage(sender))
+        {
+            Service.pluginLog.Debug("Message filtered: Macro messages.");
             return true;
         }
         return false;
