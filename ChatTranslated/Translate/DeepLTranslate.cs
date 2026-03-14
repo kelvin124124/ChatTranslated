@@ -1,6 +1,6 @@
 using ChatTranslated.Utils;
 using Dalamud.Utility;
-using Newtonsoft.Json.Linq;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +35,11 @@ internal static class DeepLTranslate
             var response = await TranslationHandler.HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            var translated = JObject.Parse(jsonResponse)["translations"]?[0]?["text"]?.ToString().Trim();
+            using var doc = JsonDocument.Parse(jsonResponse);
+            var translated = doc.RootElement
+                .GetProperty("translations")[0]
+                .GetProperty("text")
+                .GetString()?.Trim();
 
             if (translated.IsNullOrWhitespace())
                 throw new Exception("Translation not found in the expected JSON structure.");
@@ -169,30 +173,10 @@ internal static class DeeplsTranslate
             var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-            var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-            var contentEncoding = response.Content.Headers.ContentEncoding;
-            if (contentEncoding.Contains("gzip", StringComparer.OrdinalIgnoreCase))
-            {
-                using var gzipStream = new System.IO.Compression.GZipStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
-                using var streamReader = new System.IO.StreamReader(gzipStream, Encoding.UTF8);
-                postDataJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-            }
-            else if (contentEncoding.Contains("deflate", StringComparer.OrdinalIgnoreCase))
-            {
-                using var deflateStream = new System.IO.Compression.DeflateStream(responseStream, System.IO.Compression.CompressionMode.Decompress);
-                using var streamReader = new System.IO.StreamReader(deflateStream, Encoding.UTF8);
-                postDataJson = await streamReader.ReadToEndAsync().ConfigureAwait(false);
-            }
-            else if (contentEncoding.Contains("br", StringComparer.OrdinalIgnoreCase))
-            {
-                throw new NotSupportedException("Brotli encoding is not supported.");
-            }
-            else
-            {
-                postDataJson = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-            }
+            // AutomaticDecompression on the shared HttpClient handles gzip/deflate/brotli
+            var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-            using var jsonDoc = JsonDocument.Parse(postDataJson);
+            using var jsonDoc = JsonDocument.Parse(responseBody);
             var translated = jsonDoc.RootElement
                 .GetProperty("result")
                 .GetProperty("translations")[0]
@@ -223,25 +207,25 @@ internal static class DeeplsTranslate
         }
     }
 
+    private static readonly KeyValuePair<string, string>[] StaticHeaders =
+    [
+        new("Accept-Language", "en-US,en;q=0.9"),
+        new("Accept-Encoding", "gzip, deflate"),
+        new("Origin", "https://www.deepl.com"),
+        new("Referer", "https://www.deepl.com/"),
+        new("Sec-Fetch-Dest", "empty"),
+        new("Sec-Fetch-Mode", "cors"),
+        new("Sec-Fetch-Site", "same-site"),
+        new("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"),
+        new("Content-Type", "application/json"),
+    ];
+
     private static void SetHeaders(HttpRequestMessage request)
     {
         request.Headers.Accept.Clear();
         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
-        var headers = new Dictionary<string, string>
-        {
-            { "Accept-Language", "en-US,en;q=0.9" },
-            { "Accept-Encoding", "gzip, deflate" }, // removed br and zstd for simplicity
-            { "Origin", "https://www.deepl.com" },
-            { "Referer", "https://www.deepl.com/" },
-            { "Sec-Fetch-Dest", "empty" },
-            { "Sec-Fetch-Mode", "cors" },
-            { "Sec-Fetch-Site", "same-site" },
-            { "User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0" },
-            { "Content-Type", "application/json" }
-        };
-
-        foreach (var header in headers)
+        foreach (var header in StaticHeaders)
         {
             request.Headers.TryAddWithoutValidation(header.Key, header.Value);
         }

@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 namespace ChatTranslated.Chat;
 
-internal static class PhraseFilter
+internal static partial class PhraseFilter
 {
     private record Entry(string language, Dictionary<string, string>? Translations = null);
 
@@ -22,16 +22,27 @@ internal static class PhraseFilter
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
     }
 
+    [GeneratedRegex(@"^[\s!！?？.。～~ーｰ\-_,、…]+|[\s!！?？.。～~ーｰ\-_,、…]+$")]
+    private static partial Regex PunctuationTrimRegex();
+    [GeneratedRegex(@"(.)\1{2,}")]
+    private static partial Regex RepeatedCharRegex();
+    [GeneratedRegex(@"(ha){3,}")]
+    private static partial Regex RepeatedHaRegex();
+    [GeneratedRegex(@"(lo){2,}l")]
+    private static partial Regex RepeatedLolRegex();
+    [GeneratedRegex(@"\bxd+\b")]
+    private static partial Regex XdRegex();
+
     // Normalizes a message before lookup.
     public static string Normalize(string text)
     {
         text = text.Normalize(NormalizationForm.FormKC);        // ｄ２ → d2
         text = text.ToLowerInvariant();
-        text = Regex.Replace(text, @"^[\s!！?？.。～~ーｰ\-_,、…]+|[\s!！?？.。～~ーｰ\-_,、…]+$", "").Trim();
-        text = Regex.Replace(text, @"(.)\1{2,}", "$1$1");       // ohhh → ohh
-        text = Regex.Replace(text, @"(ha){3,}", "haha");
-        text = Regex.Replace(text, @"(lo){2,}l", "lol");
-        text = Regex.Replace(text, @"\bxd+\b", "xd");
+        text = PunctuationTrimRegex().Replace(text, "").Trim();
+        text = RepeatedCharRegex().Replace(text, "$1$1");       // ohhh → ohh
+        text = RepeatedHaRegex().Replace(text, "haha");
+        text = RepeatedLolRegex().Replace(text, "lol");
+        text = XdRegex().Replace(text, "xd");
 
         var noSpace = text.Replace(" ", "");
         if (noSpace.Length <= 8 && text.Contains(' ')) text = noSpace; // "gg ty" → "ggty"

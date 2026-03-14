@@ -88,7 +88,7 @@ internal partial class ChatHandler
 
             // emoticons usually classified to rare languages in Google translate
             // if iso not in supported languages, drop the message to avoid mistranslations
-            bool isSupportedIso = LanguageDetector.LanguageTable.Any(entry => entry.Iso == iso);
+            bool isSupportedIso = iso != null && LanguageDetector.ValidIsoCodes.Contains(iso);
 
             if (!isSupportedIso || LanguageDetector.IsKnownIsoCode(iso))
             {
