@@ -1416,6 +1416,63 @@
       "Ukrainian": "Іду"
     }
   },
+  "oh": {
+    "language": "English"
+  },
+  "ohh": {
+    "language": "English"
+  },
+  "ah": {
+    "language": "English"
+  },
+  "ahh": {
+    "language": "English"
+  },
+  "huh": {
+    "language": "English"
+  },
+  "hmm": {
+    "language": "English"
+  },
+  "hm": {
+    "language": "English"
+  },
+  "uh": {
+    "language": "English"
+  },
+  "uhh": {
+    "language": "English"
+  },
+  "eh": {
+    "language": "English"
+  },
+  "ooh": {
+    "language": "English"
+  },
+  "hoo": {
+    "language": "English"
+  },
+  "grr": {
+    "language": "English"
+  },
+  "wah": {
+    "language": "English"
+  },
+  "pff": {
+    "language": "English"
+  },
+  "waa": {
+    "language": "English"
+  },
+  "mm": {
+    "language": "English"
+  },
+  "aa": {
+    "language": "English"
+  },
+  "oo": {
+    "language": "English"
+  },
   "omg": {
     "language": "English"
   },
@@ -1512,51 +1569,6 @@
   "nw": {
     "language": "English"
   },
-  "oh": {
-    "language": "English"
-  },
-  "ohh": {
-    "language": "English"
-  },
-  "ah": {
-    "language": "English"
-  },
-  "ahh": {
-    "language": "English"
-  },
-  "huh": {
-    "language": "English"
-  },
-  "hmm": {
-    "language": "English"
-  },
-  "hm": {
-    "language": "English"
-  },
-  "uh": {
-    "language": "English"
-  },
-  "uhh": {
-    "language": "English"
-  },
-  "eh": {
-    "language": "English"
-  },
-  "ooh": {
-    "language": "English"
-  },
-  "hoo": {
-    "language": "English"
-  },
-  "grr": {
-    "language": "English"
-  },
-  "wah": {
-    "language": "English"
-  },
-  "pff": {
-    "language": "English"
-  },
   "oop": {
     "language": "English"
   },
@@ -1638,9 +1650,6 @@
   "what": {
     "language": "English"
   },
-  "waa": {
-    "language": "English"
-  },
   "aww": {
     "language": "English"
   },
@@ -1654,15 +1663,6 @@
     "language": "English"
   },
   "isee": {
-    "language": "English"
-  },
-  "mm": {
-    "language": "English"
-  },
-  "aa": {
-    "language": "English"
-  },
-  "oo": {
     "language": "English"
   },
   "お疲れさまでした": {
