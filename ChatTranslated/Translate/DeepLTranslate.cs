@@ -173,7 +173,6 @@ internal static class DeeplsTranslate
             var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
 
-            // AutomaticDecompression on the shared HttpClient handles gzip/deflate/brotli
             var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
 
             using var jsonDoc = JsonDocument.Parse(responseBody);

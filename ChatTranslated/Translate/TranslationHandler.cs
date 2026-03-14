@@ -57,7 +57,6 @@ internal static class TranslationHandler
         {
             if (TranslationCache.Count >= MAX_CACHE_SIZE)
             {
-                // Evict ~half the cache instead of clearing everything
                 var keysToRemove = TranslationCache.Keys.Take(MAX_CACHE_SIZE / 2).ToList();
                 foreach (var key in keysToRemove)
                     TranslationCache.TryRemove(key, out _);
