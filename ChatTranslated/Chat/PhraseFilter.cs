@@ -54,6 +54,8 @@ internal static class PhraseFilter
         if (!Filter.TryGetValue(key, out var entry))
             return false;
 
+        Service.pluginLog.Information($"Filter matched for '{message.OriginalText}' (normalized: '{key}').");
+
         // resolve language identity
         if (!string.IsNullOrEmpty(entry.language) &&
             LanguageDetector.NameToIsoCode.TryGetValue(entry.language, out var iso))
