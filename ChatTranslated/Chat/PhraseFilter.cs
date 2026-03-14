@@ -47,33 +47,37 @@ internal static class PhraseFilter
         return text;
     }
 
-    // Returns true if the phrase was matched and should be routed from the normal pipeline.
-    public static bool TryFilter(Message message)
+    public static bool TryFilter(Message message, out string? detectedIso)
     {
+        detectedIso = null;
         var key = Normalize(message.CleanedContent);
         if (!Filter.TryGetValue(key, out var entry))
-            return false; // unknown phrase
-                
-        // if no lingual meaning
-        if (entry.Translations == null) return true;
+            return false;
 
-        // feed channel boost: phrase filter has high-confidence language identity
-        if (LanguageDetector.NameToIsoCode.TryGetValue(entry.language, out var iso))
+        // resolve language identity
+        if (!string.IsNullOrEmpty(entry.language) &&
+            LanguageDetector.NameToIsoCode.TryGetValue(entry.language, out var iso))
+        {
             LanguageDetector.UpdateChannelCache(message.Type, iso);
+            detectedIso = iso;
+        }
 
-        // known language
-        if (Service.configuration.KnownLanguages.Contains(entry.language)) 
+        // no translations: swallow non-linguistic (emoticons), pass through identified languages
+        if (entry.Translations is null)
+            return detectedIso is null;
+
+        // known language → show original
+        if (Service.configuration.KnownLanguages.Contains(entry.language))
         {
             Service.mainWindow.PrintToOutput($"{message.Sender}: {message.OriginalText}");
             return true;
         }
 
-        // unknown language
-        if (entry.Translations.TryGetValue(Service.configuration.SelectedTargetLanguage, out var translation)) 
+        // use static translation if available for target language
+        if (entry.Translations.TryGetValue(Service.configuration.SelectedTargetLanguage, out var translation))
         {
             message.TranslatedContent = translation;
             Service.pluginLog.Information($"Translated '{message.OriginalText}' to '{translation}' using phrase filter.");
-
             ChatHandler.OutputMessage(message, message.Type);
             return true;
         }

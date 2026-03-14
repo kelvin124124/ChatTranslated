@@ -59,27 +59,32 @@ internal partial class ChatHandler
                 return;
             }
 
-            if (PhraseFilter.TryFilter(chatMessage)) // known common phrase
+            if (PhraseFilter.TryFilter(chatMessage, out var detectedIso))
                 return;
 
-            // low reliability: translate and detect in parallel, drops when detected as known language
-            // mid reliability: consult google, then act accordingly
-            // high reliability: act accordingly
-            var (reliability, linguaIso) = await LanguageDetector.ComputeReliabilityAsync(chatMessage.CleanedContent, type);
+            string? iso = detectedIso;
 
-            string? iso = linguaIso;
+            // skip detection when phrase filter already identified the language
+            if (iso == null)
+            {
+                // low reliability: translate and detect in parallel, drops when detected as known language
+                // mid reliability: consult google, then act accordingly
+                // high reliability: act accordingly
+                var (reliability, linguaIso) = await LanguageDetector.ComputeReliabilityAsync(chatMessage.CleanedContent, type);
+                iso = linguaIso;
 
-            if (reliability < 0.2)
-            {
-                chatMessage.Context = GetChatMessageContext();
-                var t = TranslationHandler.TranslateMessage(chatMessage);
-                var d = LanguageDetector.DetectIsoAsync(chatMessage);
-                await Task.WhenAll(t, d);
-                iso = d.Result ?? linguaIso;
-            }
-            else if (reliability < 0.5)
-            {
-                iso = await LanguageDetector.DetectIsoAsync(chatMessage) ?? linguaIso;
+                if (reliability < 0.2)
+                {
+                    chatMessage.Context = GetChatMessageContext();
+                    var t = TranslationHandler.TranslateMessage(chatMessage);
+                    var d = LanguageDetector.DetectIsoAsync(chatMessage);
+                    await Task.WhenAll(t, d);
+                    iso = d.Result ?? linguaIso;
+                }
+                else if (reliability < 0.5)
+                {
+                    iso = await LanguageDetector.DetectIsoAsync(chatMessage) ?? linguaIso;
+                }
             }
 
             // emoticons usually classified to rare languages in Google translate
@@ -243,36 +248,6 @@ internal partial class ChatHandler
         lastMessageTime[playerName] = now;
         return false;
     }
-
-    // needs update, output str should depend on selected target language, not plugin ui language
-    private static bool IsJPFilteredMessage(Message chatMessage)
-    {
-        if (ChatRegex.JPWelcomeRegex().IsMatch(chatMessage.CleanedContent))
-        {
-            chatMessage.TranslatedContent = Resources.WelcomeStr;
-
-            OutputMessage(chatMessage, chatMessage.Type);
-            return true;
-        }
-        if (ChatRegex.JPByeRegex().IsMatch(chatMessage.CleanedContent))
-        {
-            chatMessage.TranslatedContent = Resources.GGstr;
-
-            OutputMessage(chatMessage, chatMessage.Type);
-            return true;
-        }
-        if (ChatRegex.JPDomaRegex().IsMatch(chatMessage.CleanedContent))
-        {
-            chatMessage.TranslatedContent = Resources.DomaStr;
-
-            OutputMessage(chatMessage, chatMessage.Type);
-            return true;
-        }
-
-        return false;
-    }
-
-    // needs IsEnFilteredMessage
 
     public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
 }
