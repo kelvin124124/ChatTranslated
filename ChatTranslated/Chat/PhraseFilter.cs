@@ -36,26 +36,24 @@ internal static partial class PhraseFilter
     // Normalizes a message before lookup.
     public static string Normalize(string text)
     {
-        text = text.Normalize(NormalizationForm.FormKC);        // ｄ２ → d2
+        text = text.Normalize(NormalizationForm.FormKC);
         text = text.ToLowerInvariant();
         text = PunctuationTrimRegex().Replace(text, "").Trim();
-        text = RepeatedCharRegex().Replace(text, "$1$1");       // ohhh → ohh
+        text = RepeatedCharRegex().Replace(text, "$1$1");
         text = RepeatedHaRegex().Replace(text, "haha");
         text = RepeatedLolRegex().Replace(text, "lol");
         text = XdRegex().Replace(text, "xd");
 
         var noSpace = text.Replace(" ", "");
-        if (noSpace.Length <= 8 && text.Contains(' ')) text = noSpace; // "gg ty" → "ggty"
+        if (noSpace.Length <= 8 && text.Contains(' ')) text = noSpace;
 
-        text = text switch
+        return text switch
         {
             "おつかれさまでした" => "お疲れさまでした",
             "おつかれさま" => "お疲れさま",
             "すいません" => "すみません",
             _ => text
         };
-
-        return text;
     }
 
     public static bool TryFilter(Message message, out string? detectedIso)

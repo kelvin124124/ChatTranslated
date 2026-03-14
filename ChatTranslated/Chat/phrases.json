@@ -3172,5 +3172,455 @@
       "Turkish": "İyi yolculuklar",
       "Ukrainian": "Щасливої дороги"
     }
+  },
+  "": {
+    "language": ""
+  },
+  "t_t": {
+    "language": ""
+  },
+  ":v": {
+    "language": ""
+  },
+  ">.<": {
+    "language": ""
+  },
+  ";w;": {
+    "language": ""
+  },
+  ";;": {
+    "language": ""
+  },
+  ";-;": {
+    "language": ""
+  },
+  "o-o": {
+    "language": ""
+  },
+  ":0": {
+    "language": ""
+  },
+  "c:": {
+    "language": ""
+  },
+  "x)": {
+    "language": ""
+  },
+  ">:(": {
+    "language": ""
+  },
+  ">.>": {
+    "language": ""
+  },
+  "thanks": {
+    "language": "English",
+    "translations": {
+      "Japanese": "ありがとう",
+      "German": "Danke",
+      "French": "Merci",
+      "Spanish": "Gracias",
+      "Korean": "감사합니다",
+      "Chinese (Simplified)": "谢谢",
+      "Chinese (Traditional)": "謝謝",
+      "Arabic": "شكراً",
+      "Bulgarian": "Благодаря",
+      "Czech": "Díky",
+      "Danish": "Tak",
+      "Dutch": "Bedankt",
+      "Estonian": "Aitäh",
+      "Finnish": "Kiitos",
+      "Greek": "Ευχαριστώ",
+      "Hungarian": "Köszi",
+      "Indonesian": "Terima kasih",
+      "Italian": "Grazie",
+      "Latvian": "Paldies",
+      "Lithuanian": "Ačiū",
+      "Norwegian Bokmal": "Takk",
+      "Polish": "Dzięki",
+      "Portuguese": "Obrigado",
+      "Romanian": "Mulțumesc",
+      "Russian": "Спасибо",
+      "Slovak": "Vďaka",
+      "Slovenian": "Hvala",
+      "Swedish": "Tack",
+      "Turkish": "Teşekkürler",
+      "Ukrainian": "Дякую"
+    }
+  },
+  "gn": {
+    "language": "English",
+    "translations": {
+      "Japanese": "おやすみ",
+      "German": "Gute Nacht",
+      "French": "Bonne nuit",
+      "Spanish": "Buenas noches",
+      "Korean": "잘 자",
+      "Chinese (Simplified)": "晚安",
+      "Chinese (Traditional)": "晚安",
+      "Arabic": "تصبح على خير",
+      "Bulgarian": "Лека нощ",
+      "Czech": "Dobrou noc",
+      "Danish": "Godnat",
+      "Dutch": "Welterusten",
+      "Estonian": "Head ööd",
+      "Finnish": "Hyvää yötä",
+      "Greek": "Καληνύχτα",
+      "Hungarian": "Jó éjt",
+      "Indonesian": "Selamat tidur",
+      "Italian": "Buonanotte",
+      "Latvian": "Ar labu nakti",
+      "Lithuanian": "Labanakt",
+      "Norwegian Bokmal": "God natt",
+      "Polish": "Dobranoc",
+      "Portuguese": "Boa noite",
+      "Romanian": "Noapte bună",
+      "Russian": "Спокойной ночи",
+      "Slovak": "Dobrú noc",
+      "Slovenian": "Lahko noč",
+      "Swedish": "God natt",
+      "Turkish": "İyi geceler",
+      "Ukrainian": "На добраніч"
+    }
+  },
+  "ez": {
+    "language": "English",
+    "translations": {
+      "Japanese": "簡単",
+      "German": "Einfach",
+      "French": "Facile",
+      "Spanish": "Fácil",
+      "Korean": "쉬움",
+      "Chinese (Simplified)": "简单",
+      "Chinese (Traditional)": "簡單",
+      "Arabic": "سهل",
+      "Bulgarian": "Лесно",
+      "Czech": "Snadné",
+      "Danish": "Nemt",
+      "Dutch": "Makkelijk",
+      "Estonian": "Lihtne",
+      "Finnish": "Helppoa",
+      "Greek": "Εύκολο",
+      "Hungarian": "Könnyű",
+      "Indonesian": "Mudah",
+      "Italian": "Facile",
+      "Latvian": "Viegli",
+      "Lithuanian": "Lengva",
+      "Norwegian Bokmal": "Lett",
+      "Polish": "Łatwo",
+      "Portuguese": "Fácil",
+      "Romanian": "Ușor",
+      "Russian": "Легко",
+      "Slovak": "Ľahké",
+      "Slovenian": "Enostavno",
+      "Swedish": "Lätt",
+      "Turkish": "Kolay",
+      "Ukrainian": "Легко"
+    }
+  },
+  "おねがいします": {
+    "language": "Japanese",
+    "translations": {
+      "English": "Please",
+      "German": "Bitte",
+      "French": "S'il vous plaît",
+      "Spanish": "Por favor",
+      "Korean": "부탁합니다",
+      "Chinese (Simplified)": "拜托了",
+      "Chinese (Traditional)": "拜託了",
+      "Arabic": "من فضلك",
+      "Bulgarian": "Моля",
+      "Czech": "Prosím",
+      "Danish": "Tak",
+      "Dutch": "Alsjeblieft",
+      "Estonian": "Palun",
+      "Finnish": "Ole hyvä",
+      "Greek": "Παρακαλώ",
+      "Hungarian": "Kérem",
+      "Indonesian": "Mohon",
+      "Italian": "Per favore",
+      "Latvian": "Lūdzu",
+      "Lithuanian": "Prašau",
+      "Norwegian Bokmal": "Vær så snill",
+      "Polish": "Proszę",
+      "Portuguese": "Por favor",
+      "Romanian": "Vă rog",
+      "Russian": "Пожалуйста",
+      "Slovak": "Prosím",
+      "Slovenian": "Prosim",
+      "Swedish": "Snälla",
+      "Turkish": "Lütfen",
+      "Ukrainian": "Будь ласка"
+    }
+  },
+  "どんまーい": {
+    "language": "Japanese",
+    "translations": {
+      "English": "Don't worry about it",
+      "German": "Kein Problem",
+      "French": "T'inquiète pas",
+      "Spanish": "No te preocupes",
+      "Korean": "괜찮아",
+      "Chinese (Simplified)": "没关系",
+      "Chinese (Traditional)": "沒關係",
+      "Arabic": "لا تقلق",
+      "Bulgarian": "Няма нищо",
+      "Czech": "Nevadí",
+      "Danish": "Bare rolig",
+      "Dutch": "Geen zorgen",
+      "Estonian": "Pole hullu",
+      "Finnish": "Ei hätää",
+      "Greek": "Μην ανησυχείς",
+      "Hungarian": "Semmi baj",
+      "Indonesian": "Jangan khawatir",
+      "Italian": "Non preoccuparti",
+      "Latvian": "Neuztraucies",
+      "Lithuanian": "Nesijaudink",
+      "Norwegian Bokmal": "Ikke noe problem",
+      "Polish": "Nie przejmuj się",
+      "Portuguese": "Não se preocupe",
+      "Romanian": "Nu-ți face griji",
+      "Russian": "Не переживай",
+      "Slovak": "Nič sa nedeje",
+      "Slovenian": "Ni problema",
+      "Swedish": "Inga problem",
+      "Turkish": "Sorun değil",
+      "Ukrainian": "Не хвилюйся"
+    }
+  },
+  "よろしくお願いしまーす": {
+    "language": "Japanese",
+    "translations": {
+      "English": "Nice to meet you",
+      "German": "Freut mich",
+      "French": "Enchanté",
+      "Spanish": "Mucho gusto",
+      "Korean": "잘 부탁드립니다",
+      "Chinese (Simplified)": "请多关照",
+      "Chinese (Traditional)": "請多關照",
+      "Arabic": "تشرفت بمعرفتك",
+      "Bulgarian": "Приятно ми е",
+      "Czech": "Těší mě",
+      "Danish": "Hyggeligt at møde dig",
+      "Dutch": "Aangenaam",
+      "Estonian": "Meeldiv tutvuda",
+      "Finnish": "Hauska tutustua",
+      "Greek": "Χαίρω πολύ",
+      "Hungarian": "Örvendek",
+      "Indonesian": "Senang bertemu",
+      "Italian": "Piacere",
+      "Latvian": "Prieks iepazīties",
+      "Lithuanian": "Malonu susipažinti",
+      "Norwegian Bokmal": "Hyggelig å møte deg",
+      "Polish": "Miło poznać",
+      "Portuguese": "Prazer",
+      "Romanian": "Încântat",
+      "Russian": "Приятно познакомиться",
+      "Slovak": "Teší ma",
+      "Slovenian": "Me veseli",
+      "Swedish": "Trevligt att träffas",
+      "Turkish": "Memnun oldum",
+      "Ukrainian": "Приємно познайомитися"
+    }
+  },
+  "こんばんわ": {
+    "language": "Japanese",
+    "translations": {
+      "English": "Good evening",
+      "German": "Guten Abend",
+      "French": "Bonsoir",
+      "Spanish": "Buenas noches",
+      "Korean": "안녕하세요",
+      "Chinese (Simplified)": "晚上好",
+      "Chinese (Traditional)": "晚上好",
+      "Arabic": "مساء الخير",
+      "Bulgarian": "Добър вечер",
+      "Czech": "Dobrý večer",
+      "Danish": "God aften",
+      "Dutch": "Goedenavond",
+      "Estonian": "Tere õhtust",
+      "Finnish": "Hyvää iltaa",
+      "Greek": "Καλησπέρα",
+      "Hungarian": "Jó estét",
+      "Indonesian": "Selamat malam",
+      "Italian": "Buonasera",
+      "Latvian": "Labvakar",
+      "Lithuanian": "Labas vakaras",
+      "Norwegian Bokmal": "God kveld",
+      "Polish": "Dobry wieczór",
+      "Portuguese": "Boa noite",
+      "Romanian": "Bună seara",
+      "Russian": "Добрый вечер",
+      "Slovak": "Dobrý večer",
+      "Slovenian": "Dober večer",
+      "Swedish": "God kväll",
+      "Turkish": "İyi akşamlar",
+      "Ukrainian": "Добрий вечір"
+    }
+  },
+  "こんにちは": {
+    "language": "Japanese",
+    "translations": {
+      "English": "Hello",
+      "German": "Hallo",
+      "French": "Bonjour",
+      "Spanish": "Hola",
+      "Korean": "안녕하세요",
+      "Chinese (Simplified)": "你好",
+      "Chinese (Traditional)": "你好",
+      "Arabic": "مرحباً",
+      "Bulgarian": "Здравейте",
+      "Czech": "Dobrý den",
+      "Danish": "Hej",
+      "Dutch": "Hallo",
+      "Estonian": "Tere",
+      "Finnish": "Hei",
+      "Greek": "Γεια σας",
+      "Hungarian": "Sziasztok",
+      "Indonesian": "Halo",
+      "Italian": "Ciao",
+      "Latvian": "Sveiki",
+      "Lithuanian": "Sveiki",
+      "Norwegian Bokmal": "Hei",
+      "Polish": "Cześć",
+      "Portuguese": "Olá",
+      "Romanian": "Bună ziua",
+      "Russian": "Здравствуйте",
+      "Slovak": "Dobrý deň",
+      "Slovenian": "Pozdravljeni",
+      "Swedish": "Hej",
+      "Turkish": "Merhaba",
+      "Ukrainian": "Привіт"
+    }
+  },
+  "ただいま": {
+    "language": "Japanese",
+    "translations": {
+      "English": "I'm back",
+      "German": "Bin zurück",
+      "French": "Je suis de retour",
+      "Spanish": "Ya volví",
+      "Korean": "다녀왔습니다",
+      "Chinese (Simplified)": "我回来了",
+      "Chinese (Traditional)": "我回來了",
+      "Arabic": "عدت",
+      "Bulgarian": "Върнах се",
+      "Czech": "Jsem zpátky",
+      "Danish": "Jeg er tilbage",
+      "Dutch": "Ik ben terug",
+      "Estonian": "Olen tagasi",
+      "Finnish": "Olen takaisin",
+      "Greek": "Γύρισα",
+      "Hungarian": "Visszajöttem",
+      "Indonesian": "Aku kembali",
+      "Italian": "Sono tornato",
+      "Latvian": "Esmu atpakaļ",
+      "Lithuanian": "Grįžau",
+      "Norwegian Bokmal": "Jeg er tilbake",
+      "Polish": "Wróciłem",
+      "Portuguese": "Voltei",
+      "Romanian": "M-am întors",
+      "Russian": "Я вернулся",
+      "Slovak": "Som späť",
+      "Slovenian": "Sem nazaj",
+      "Swedish": "Jag är tillbaka",
+      "Turkish": "Döndüm",
+      "Ukrainian": "Я повернувся"
+    }
+  },
+  "==": {
+    "language": ""
+  },
+  "><": {
+    "language": ""
+  },
+  "x.x": {
+    "language": ""
+  },
+  ">:3": {
+    "language": ""
+  },
+  ":<": {
+    "language": ""
+  },
+  ":3c": {
+    "language": ""
+  },
+  "*-*": {
+    "language": ""
+  },
+  "<.<": {
+    "language": ""
+  },
+  ":'d": {
+    "language": ""
+  },
+  ":')": {
+    "language": ""
+  },
+  ">:c": {
+    "language": ""
+  },
+  ";3": {
+    "language": ""
+  },
+  ";_;": {
+    "language": ""
+  },
+  "<33": {
+    "language": ""
+  },
+  ":>": {
+    "language": ""
+  },
+  ">_>": {
+    "language": ""
+  },
+  "x_x": {
+    "language": ""
+  },
+  ";)": {
+    "language": ""
+  },
+  "</3": {
+    "language": ""
+  },
+  "=w=": {
+    "language": ""
+  },
+  ">:d": {
+    "language": ""
+  },
+  "o:": {
+    "language": ""
+  },
+  "t.t": {
+    "language": ""
+  },
+  ";p": {
+    "language": ""
+  },
+  ":))": {
+    "language": ""
+  },
+  ":((": {
+    "language": ""
+  },
+  ":dd": {
+    "language": ""
+  },
+  "^.^": {
+    "language": ""
+  },
+  ":^)": {
+    "language": ""
+  },
+  ":s": {
+    "language": ""
+  },
+  "0/": {
+    "language": ""
+  },
+  ":/": {
+    "language": ""
   }
 }
