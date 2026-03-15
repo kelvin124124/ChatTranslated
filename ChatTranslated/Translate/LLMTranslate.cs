@@ -73,6 +73,14 @@ internal static partial class OpenAITranslate
             var translationMatch = TranslationSectionRegex().Match(translated);
             translated = translationMatch.Success ? translationMatch.Groups[1].Value.Trim() : translated;
 
+            // LLM likely generated slop
+            if (translated.Split('\n').Length >= 4)
+            {
+                var trimmed = translated.Split("\n\n", 2)[0].Trim();  // take the first part and call it a day
+                if (!trimmed.IsNullOrWhitespace())
+                    translated = trimmed;
+            }
+
             return (translated, TranslationMode.OpenAI);
         }
         catch (Exception ex)
