@@ -20,8 +20,7 @@ internal static partial class OpenAITranslate
     [GeneratedRegex(@"#### Translation\s*\n(.+)$", RegexOptions.Singleline)]
     private static partial Regex TranslationSectionRegex();
 
-    [GeneratedRegex(@"\s*CONTEXT\s*\(Use if relevant\)\s*:.*$", RegexOptions.Singleline)]
-    private static partial Regex EchoedContextRegex();
+    private const int MaxTranslationLines = 4;
 
     public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
         , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-5-mini", string? apiKey = null)
@@ -76,8 +75,14 @@ internal static partial class OpenAITranslate
             var translationMatch = TranslationSectionRegex().Match(translated);
             translated = translationMatch.Success ? translationMatch.Groups[1].Value.Trim() : translated;
 
-            // Strip any echoed CONTEXT block that the LLM may have repeated from the prompt
-            translated = EchoedContextRegex().Replace(translated, string.Empty).Trim();
+            // If the response has too many lines, the LLM likely echoed prompt content;
+            // take only the text before the first blank line as the actual translation.
+            if (translated.Split('\n').Length >= MaxTranslationLines)
+            {
+                var trimmed = translated.Split("\n\n", 2)[0].Trim();
+                if (!trimmed.IsNullOrWhitespace())
+                    translated = trimmed;
+            }
 
             return (translated, TranslationMode.OpenAI);
         }
