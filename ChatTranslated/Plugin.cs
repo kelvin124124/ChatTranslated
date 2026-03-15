@@ -181,6 +181,7 @@ public sealed class Plugin : IDalamudPlugin
     {
         IpcManager.Unregister();
         Translate.LanguageDetector.Dispose();
+        Translate.TranslationHandler.HttpClient.Dispose();
 
         WindowSystem.RemoveAllWindows();
 

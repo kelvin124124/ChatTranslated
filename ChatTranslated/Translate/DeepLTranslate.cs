@@ -24,7 +24,7 @@ internal static class DeepLTranslate
             return ("Target language not supported by DeepL.", null);
 
         var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
-        var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
+        using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
         {
             Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, DefaultContentType),
             Headers = { { HttpRequestHeader.Authorization.ToString(), $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}" } }

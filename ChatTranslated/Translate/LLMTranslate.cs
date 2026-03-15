@@ -42,7 +42,7 @@ internal static partial class OpenAITranslate
             }
         };
 
-        var request = new HttpRequestMessage(HttpMethod.Post, baseUrl)
+        using var request = new HttpRequestMessage(HttpMethod.Post, baseUrl)
         {
             Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json"),
             Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {apiKey}" } }
@@ -172,7 +172,7 @@ internal static class LLMProxyTranslate
         if (!Service.configuration.UseContext) message.Context = "null";
 
         var requestData = new { targetLanguage, message = message.OriginalText, context = message.Context };
-        var request = new HttpRequestMessage(HttpMethod.Post, Service.configuration.Proxy_Url)
+        using var request = new HttpRequestMessage(HttpMethod.Post, Service.configuration.Proxy_Url)
         {
             Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json")
         };
