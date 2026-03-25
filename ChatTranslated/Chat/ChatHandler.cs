@@ -15,6 +15,9 @@ namespace ChatTranslated.Chat;
 
 internal partial class ChatHandler
 {
+    [System.Text.RegularExpressions.GeneratedRegex(@"^<se\.\d+>$")]
+    private static partial System.Text.RegularExpressions.Regex SoundMacroRegex();
+
     private readonly Dictionary<string, int> lastMessageTime = [];
 
     public ChatHandler()
@@ -218,6 +221,11 @@ internal partial class ChatHandler
         if (message.Trim().Length < 2)
         {
             Service.pluginLog.Debug("Message filtered: Single character or empty message.");
+            return true;
+        }
+        if (SoundMacroRegex().IsMatch(message.Trim()))
+        {
+            Service.pluginLog.Debug("Message filtered: Sound macro.");
             return true;
         }
         if (IsMacroMessage(sender))
