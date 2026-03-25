@@ -3622,5 +3622,438 @@
   },
   ":/": {
     "language": ""
+  },
+  "pld": {
+    "language": "English",
+    "translations": {
+      "Japanese": "ナイト",
+      "German": "Paladin",
+      "French": "Paladin",
+      "Korean": "나이트",
+      "Chinese (Simplified)": "骑士",
+      "Chinese (Traditional)": "騎士"
+    }
+  },
+  "war": {
+    "language": "English",
+    "translations": {
+      "Japanese": "戦士",
+      "German": "Krieger",
+      "French": "Guerrier",
+      "Korean": "전사",
+      "Chinese (Simplified)": "战士",
+      "Chinese (Traditional)": "戰士"
+    }
+  },
+  "drk": {
+    "language": "English",
+    "translations": {
+      "Japanese": "暗黒騎士",
+      "German": "Dunkelritter",
+      "French": "Chevalier noir",
+      "Korean": "암흑기사",
+      "Chinese (Simplified)": "暗黑骑士",
+      "Chinese (Traditional)": "暗黑騎士"
+    }
+  },
+  "gnb": {
+    "language": "English",
+    "translations": {
+      "Japanese": "ガンブレイカー",
+      "German": "Revolverklinge",
+      "French": "Pistosabreur",
+      "Korean": "건브레이커",
+      "Chinese (Simplified)": "绝枪战士",
+      "Chinese (Traditional)": "絕槍戰士"
+    }
+  },
+  "whm": {
+    "language": "English",
+    "translations": {
+      "Japanese": "白魔道士",
+      "German": "Weißmagier",
+      "French": "Mage blanc",
+      "Korean": "백마도사",
+      "Chinese (Simplified)": "白魔法师",
+      "Chinese (Traditional)": "白魔法師"
+    }
+  },
+  "sch": {
+    "language": "English",
+    "translations": {
+      "Japanese": "学者",
+      "German": "Gelehrter",
+      "French": "Érudit",
+      "Korean": "학자",
+      "Chinese (Simplified)": "学者",
+      "Chinese (Traditional)": "學者"
+    }
+  },
+  "ast": {
+    "language": "English",
+    "translations": {
+      "Japanese": "占星術師",
+      "German": "Astrologe",
+      "French": "Astromancien",
+      "Korean": "점성술사",
+      "Chinese (Simplified)": "占星术士",
+      "Chinese (Traditional)": "占星術士"
+    }
+  },
+  "sge": {
+    "language": "English",
+    "translations": {
+      "Japanese": "賢者",
+      "German": "Weiser",
+      "French": "Sage",
+      "Korean": "현자",
+      "Chinese (Simplified)": "贤者",
+      "Chinese (Traditional)": "賢者"
+    }
+  },
+  "mnk": {
+    "language": "English",
+    "translations": {
+      "Japanese": "モンク",
+      "German": "Mönch",
+      "French": "Moine",
+      "Korean": "몽크",
+      "Chinese (Simplified)": "武僧",
+      "Chinese (Traditional)": "武僧"
+    }
+  },
+  "drg": {
+    "language": "English",
+    "translations": {
+      "Japanese": "竜騎士",
+      "German": "Dragoon",
+      "French": "Chevalier dragon",
+      "Korean": "용기사",
+      "Chinese (Simplified)": "龙骑士",
+      "Chinese (Traditional)": "龍騎士"
+    }
+  },
+  "nin": {
+    "language": "English",
+    "translations": {
+      "Japanese": "忍者",
+      "German": "Ninja",
+      "French": "Ninja",
+      "Korean": "닌자",
+      "Chinese (Simplified)": "忍者",
+      "Chinese (Traditional)": "忍者"
+    }
+  },
+  "sam": {
+    "language": "English",
+    "translations": {
+      "Japanese": "侍",
+      "German": "Samurai",
+      "French": "Samouraï",
+      "Korean": "사무라이",
+      "Chinese (Simplified)": "武士",
+      "Chinese (Traditional)": "武士"
+    }
+  },
+  "rpr": {
+    "language": "English",
+    "translations": {
+      "Japanese": "リーパー",
+      "German": "Schnitter",
+      "French": "Faucheur",
+      "Korean": "리퍼",
+      "Chinese (Simplified)": "钐镰客",
+      "Chinese (Traditional)": "鐮刀客"
+    }
+  },
+  "vpr": {
+    "language": "English",
+    "translations": {
+      "Japanese": "ヴァイパー",
+      "German": "Viper",
+      "French": "Vipère",
+      "Korean": "바이퍼",
+      "Chinese (Simplified)": "蝰蛇剑士",
+      "Chinese (Traditional)": "蝰蛇劍士"
+    }
+  },
+  "brd": {
+    "language": "English",
+    "translations": {
+      "Japanese": "吟遊詩人",
+      "German": "Barde",
+      "French": "Barde",
+      "Korean": "음유시인",
+      "Chinese (Simplified)": "吟游诗人",
+      "Chinese (Traditional)": "吟遊詩人"
+    }
+  },
+  "mch": {
+    "language": "English",
+    "translations": {
+      "Japanese": "機工士",
+      "German": "Maschinist",
+      "French": "Machiniste",
+      "Korean": "기공사",
+      "Chinese (Simplified)": "机工士",
+      "Chinese (Traditional)": "機工士"
+    }
+  },
+  "dnc": {
+    "language": "English",
+    "translations": {
+      "Japanese": "踊り子",
+      "German": "Tänzer",
+      "French": "Danseur",
+      "Korean": "무도가",
+      "Chinese (Simplified)": "舞者",
+      "Chinese (Traditional)": "舞者"
+    }
+  },
+  "blm": {
+    "language": "English",
+    "translations": {
+      "Japanese": "黒魔道士",
+      "German": "Schwarzmagier",
+      "French": "Mage noir",
+      "Korean": "흑마도사",
+      "Chinese (Simplified)": "黑魔法师",
+      "Chinese (Traditional)": "黑魔法師"
+    }
+  },
+  "smn": {
+    "language": "English",
+    "translations": {
+      "Japanese": "召喚士",
+      "German": "Beschwörer",
+      "French": "Invocateur",
+      "Korean": "소환사",
+      "Chinese (Simplified)": "召唤师",
+      "Chinese (Traditional)": "召喚師"
+    }
+  },
+  "rdm": {
+    "language": "English",
+    "translations": {
+      "Japanese": "赤魔道士",
+      "German": "Rotmagier",
+      "French": "Mage rouge",
+      "Korean": "적마도사",
+      "Chinese (Simplified)": "赤魔法师",
+      "Chinese (Traditional)": "赤魔法師"
+    }
+  },
+  "pct": {
+    "language": "English",
+    "translations": {
+      "Japanese": "ピクトマンサー",
+      "German": "Piktomant",
+      "French": "Pictomancien",
+      "Korean": "픽토맨서",
+      "Chinese (Simplified)": "绘灵法师",
+      "Chinese (Traditional)": "繪靈法師"
+    }
+  },
+  "どんまい": {
+    "language": "Japanese",
+    "translations": {
+      "English": "Don't worry about it",
+      "German": "Mach dir nichts draus",
+      "French": "T'inquiète pas",
+      "Spanish": "No te preocupes",
+      "Korean": "괜찮아",
+      "Chinese (Simplified)": "没关系",
+      "Chinese (Traditional)": "沒關係",
+      "Arabic": "لا تقلق",
+      "Bulgarian": "Няма нищо",
+      "Czech": "To je v pohodě",
+      "Danish": "Det gør ikke noget",
+      "Dutch": "Geen zorgen",
+      "Estonian": "Ära muretse",
+      "Finnish": "Ei se mitään",
+      "Greek": "Μην ανησυχείς",
+      "Hungarian": "Semmi gond",
+      "Indonesian": "Tidak apa-apa",
+      "Italian": "Non preoccuparti",
+      "Latvian": "Neuztraucies",
+      "Lithuanian": "Nesijaudink",
+      "Norwegian Bokmal": "Ikke tenk på det",
+      "Polish": "Nie przejmuj się",
+      "Portuguese": "Não se preocupe",
+      "Romanian": "Nu-ți face griji",
+      "Russian": "Не переживай",
+      "Slovak": "To je v pohode",
+      "Slovenian": "Brez skrbi",
+      "Swedish": "Oroa dig inte",
+      "Turkish": "Dert etme",
+      "Ukrainian": "Не хвилюйся"
+    }
+  },
+  "どんまいです": {
+    "language": "Japanese",
+    "translations": {
+      "English": "Don't worry about it",
+      "German": "Mach dir nichts draus",
+      "French": "T'inquiète pas",
+      "Spanish": "No te preocupes",
+      "Korean": "괜찮아요",
+      "Chinese (Simplified)": "没关系",
+      "Chinese (Traditional)": "沒關係",
+      "Arabic": "لا تقلق",
+      "Bulgarian": "Няма нищо",
+      "Czech": "To je v pohodě",
+      "Danish": "Det gør ikke noget",
+      "Dutch": "Geen zorgen",
+      "Estonian": "Ära muretse",
+      "Finnish": "Ei se mitään",
+      "Greek": "Μην ανησυχείς",
+      "Hungarian": "Semmi gond",
+      "Indonesian": "Tidak apa-apa",
+      "Italian": "Non preoccuparti",
+      "Latvian": "Neuztraucies",
+      "Lithuanian": "Nesijaudink",
+      "Norwegian Bokmal": "Ikke tenk på det",
+      "Polish": "Nie przejmuj się",
+      "Portuguese": "Não se preocupe",
+      "Romanian": "Nu-ți face griji",
+      "Russian": "Не переживай",
+      "Slovak": "To je v pohode",
+      "Slovenian": "Brez skrbi",
+      "Swedish": "Oroa dig inte",
+      "Turkish": "Dert etme",
+      "Ukrainian": "Не хвилюйся"
+    }
+  },
+  "おつです": {
+    "language": "Japanese",
+    "translations": {
+      "English": "Good work",
+      "German": "Gute Arbeit",
+      "French": "Bon travail",
+      "Spanish": "Buen trabajo",
+      "Korean": "수고했어요",
+      "Chinese (Simplified)": "辛苦了",
+      "Chinese (Traditional)": "辛苦了",
+      "Arabic": "عمل جيد",
+      "Bulgarian": "Добра работа",
+      "Czech": "Dobrá práce",
+      "Danish": "Godt arbejde",
+      "Dutch": "Goed werk",
+      "Estonian": "Hea töö",
+      "Finnish": "Hyvää työtä",
+      "Greek": "Καλή δουλειά",
+      "Hungarian": "Szép munka",
+      "Indonesian": "Kerja bagus",
+      "Italian": "Buon lavoro",
+      "Latvian": "Labs darbs",
+      "Lithuanian": "Geras darbas",
+      "Norwegian Bokmal": "Godt jobbet",
+      "Polish": "Dobra robota",
+      "Portuguese": "Bom trabalho",
+      "Romanian": "Bună treabă",
+      "Russian": "Хорошая работа",
+      "Slovak": "Dobrá práca",
+      "Slovenian": "Dobro delo",
+      "Swedish": "Bra jobbat",
+      "Turkish": "İyi iş",
+      "Ukrainian": "Гарна робота"
+    }
+  },
+  "またね": {
+    "language": "Japanese",
+    "translations": {
+      "English": "See you",
+      "German": "Bis dann",
+      "French": "À plus",
+      "Spanish": "Hasta luego",
+      "Korean": "또 봐",
+      "Chinese (Simplified)": "再见",
+      "Chinese (Traditional)": "再見",
+      "Arabic": "إلى اللقاء",
+      "Bulgarian": "До скоро",
+      "Czech": "Uvidíme se",
+      "Danish": "Vi ses",
+      "Dutch": "Tot ziens",
+      "Estonian": "Nägemist",
+      "Finnish": "Nähdään",
+      "Greek": "Τα λέμε",
+      "Hungarian": "Viszlát",
+      "Indonesian": "Sampai jumpa",
+      "Italian": "A dopo",
+      "Latvian": "Uz redzēšanos",
+      "Lithuanian": "Iki",
+      "Norwegian Bokmal": "Vi ses",
+      "Polish": "Do zobaczenia",
+      "Portuguese": "Até mais",
+      "Romanian": "Pe curând",
+      "Russian": "Увидимся",
+      "Slovak": "Dovidenia",
+      "Slovenian": "Se vidimo",
+      "Swedish": "Vi ses",
+      "Turkish": "Görüşürüz",
+      "Ukrainian": "Побачимось"
+    }
+  },
+  "sadge": {
+    "language": "English"
+  },
+  "gotcha": {
+    "language": "English"
+  },
+  "ggwp": {
+    "language": "English"
+  },
+  "congrats": {
+    "language": "English"
+  },
+  "cya": {
+    "language": "English"
+  },
+  "okok": {
+    "language": "English"
+  },
+  "cool": {
+    "language": "English"
+  },
+  "merci": {
+    "language": "French",
+    "translations": {
+      "English": "Thanks",
+      "German": "Danke",
+      "Japanese": "ありがとう",
+      "Spanish": "Gracias",
+      "Korean": "고마워",
+      "Chinese (Simplified)": "谢谢",
+      "Chinese (Traditional)": "謝謝",
+      "Arabic": "شكراً",
+      "Bulgarian": "Благодаря",
+      "Czech": "Díky",
+      "Danish": "Tak",
+      "Dutch": "Bedankt",
+      "Estonian": "Aitäh",
+      "Finnish": "Kiitos",
+      "Greek": "Ευχαριστώ",
+      "Hungarian": "Köszi",
+      "Indonesian": "Terima kasih",
+      "Italian": "Grazie",
+      "Latvian": "Paldies",
+      "Lithuanian": "Ačiū",
+      "Norwegian Bokmal": "Takk",
+      "Polish": "Dzięki",
+      "Portuguese": "Obrigado",
+      "Romanian": "Mulțumesc",
+      "Russian": "Спасибо",
+      "Slovak": "Vďaka",
+      "Slovenian": "Hvala",
+      "Swedish": "Tack",
+      "Turkish": "Teşekkürler",
+      "Ukrainian": "Дякую"
+    }
+  },
+  "o//": {
+    "language": ""
+  },
+  "orz": {
+    "language": ""
   }
 }
