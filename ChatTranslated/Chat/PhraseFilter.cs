@@ -22,7 +22,7 @@ internal static partial class PhraseFilter
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
     }
 
-    [GeneratedRegex(@"^[\s!！?？.。～~ーｰ\-_,、…]+|[\s!！?？.。～~ーｰ\-_,、…]+$")]
+    [GeneratedRegex(@"^[\s!！?？.。～~ーｰ\-_,、…\^]+|[\s!！?？.。～~ーｰ\-_,、…\^]+$")]
     private static partial Regex PunctuationTrimRegex();
     [GeneratedRegex(@"(.)\1{2,}")]
     private static partial Regex RepeatedCharRegex();
@@ -52,6 +52,8 @@ internal static partial class PhraseFilter
             "おつかれさまでした" => "お疲れさまでした",
             "おつかれさま" => "お疲れさま",
             "すいません" => "すみません",
+            "よろしくおねがいします" => "よろしくお願いします",
+            "お疲れ様でした" => "お疲れさまでした",
             _ => text
         };
     }
