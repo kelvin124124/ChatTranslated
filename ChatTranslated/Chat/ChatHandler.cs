@@ -168,7 +168,7 @@ internal partial class ChatHandler
             var lines = sb.ToString().Split('\r');
             sb.Clear();
 
-            for (int j = Math.Max(0, lines.Length - 15); j < lines.Length; j++)
+            for (int j = Math.Max(0, lines.Length - 10); j < lines.Length; j++)  // Max ctx lines: 10
             {
                 if (sb.Length > 0) sb.Append('\n');
                 sb.Append(lines[j].Trim());
