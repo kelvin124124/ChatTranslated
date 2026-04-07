@@ -45,7 +45,7 @@ internal static partial class PhraseFilter
         text = XdRegex().Replace(text, "xd");
 
         var noSpace = text.Replace(" ", "");
-        if (noSpace.Length <= 8 && text.Contains(' ')) text = noSpace;
+        if (noSpace.Length <= 8 && text.Contains(' ') && !Filter.ContainsKey(text)) text = noSpace;
 
         return text switch
         {
