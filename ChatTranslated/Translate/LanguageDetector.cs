@@ -129,14 +129,19 @@ internal static class LanguageDetector
         return isKnown;
     }
 
-    internal static async Task<(double Reliability, string? Iso)> ComputeReliabilityAsync(string text, XivChatType channel)
+    internal static async Task<(double Reliability, string? Iso)> ComputeReliabilityAsync(string text, XivChatType channel, bool hasEnTokens = false)
     {
         var (confidence, linguaIso) = await Task.Run(() => GetLinguaResult(text));
-        double lengthFactor = Math.Clamp((text.Length + text.Count(IsCJK) * 2) / 15.0, 0.0, 1.0);  // length of incoming text, higher is better, 3x for CJK chars
+
+        // Boost EN confidence when known EN tokens are present and Lingua agrees it's English
+        if (hasEnTokens && linguaIso == "en")
+            confidence = Math.Min(confidence + 0.10, 1.0);
+
+        double lengthFactor = Math.Clamp((text.Length + text.Count(IsCJK) * 2) / 20.0, 0.0, 1.0);  // length of incoming text, higher is better, 3x for CJK chars
         double channelBoost = GetChannelBoost(channel, linguaIso, lengthFactor); // +boost if Lingua result consistent with recent detection, -boost if inconsistent
         double reliability = Math.Clamp((confidence * lengthFactor) + (channelBoost * (1.0 - lengthFactor) * 0.5), 0.0, 1.0);
 
-        Service.pluginLog.Debug($"Confidence for '{text}': {reliability:F2} (lingua={confidence:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2})");
+        Service.pluginLog.Debug($"Confidence for '{text}': {reliability:F2} (lingua={confidence:F2} [{linguaIso ?? "?"}], length={lengthFactor:F2}, channelBoost={channelBoost:F2}, enTok={hasEnTokens})");
         return (reliability, linguaIso);
     }
 

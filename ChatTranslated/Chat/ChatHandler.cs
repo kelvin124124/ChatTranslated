@@ -72,10 +72,11 @@ internal partial class ChatHandler
                 // low reliability: translate and detect in parallel, drops when detected as known language
                 // mid reliability: consult google, then act accordingly
                 // high reliability: act accordingly
-                var (reliability, linguaIso) = await LanguageDetector.ComputeReliabilityAsync(chatMessage.CleanedContent, type);
+                bool hasEnTokens = PhraseFilter.HasEnToken(chatMessage.CleanedContent);
+                var (reliability, linguaIso) = await LanguageDetector.ComputeReliabilityAsync(chatMessage.CleanedContent, type, hasEnTokens);
                 iso = linguaIso;
 
-                if (reliability < 0.2)
+                if (reliability < 0.25)
                 {
                     chatMessage.Context = GetChatMessageContext();
                     var t = TranslationHandler.TranslateMessage(chatMessage);
@@ -83,7 +84,7 @@ internal partial class ChatHandler
                     await Task.WhenAll(t, d);
                     iso = d.Result ?? linguaIso;
                 }
-                else if (reliability < 0.5)
+                else if (reliability < 0.40)
                 {
                     iso = await LanguageDetector.DetectIsoAsync(chatMessage) ?? linguaIso;
                 }

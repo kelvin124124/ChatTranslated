@@ -1,6 +1,8 @@
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
@@ -22,6 +24,10 @@ internal static partial class PhraseFilter
             new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? [];
     }
 
+    private static readonly HashSet<string> EnTokens = new(
+        Filter.Where(kv => kv.Value.language == "English").Select(kv => kv.Key),
+        StringComparer.OrdinalIgnoreCase);
+
     [GeneratedRegex(@"^[\s!！?？.。～~ーｰ\-_,、…\^]+|[\s!！?？.。～~ーｰ\-_,、…\^]+$")]
     private static partial Regex PunctuationTrimRegex();
     [GeneratedRegex(@"(.)\1{2,}")]
@@ -32,12 +38,15 @@ internal static partial class PhraseFilter
     private static partial Regex RepeatedLolRegex();
     [GeneratedRegex(@"\bxd+\b")]
     private static partial Regex XdRegex();
+    [GeneratedRegex(@"[\s,!?.;:""'()\[\]{}]+")]
+    private static partial Regex TokenSplitRegex();
 
     // Normalizes a message before lookup.
     public static string Normalize(string text)
     {
         text = text.Normalize(NormalizationForm.FormKC);
         text = text.ToLowerInvariant();
+        if (Filter.ContainsKey(text)) return text;
         text = PunctuationTrimRegex().Replace(text, "").Trim();
         text = RepeatedCharRegex().Replace(text, "$1$1");
         text = RepeatedHaRegex().Replace(text, "haha");
@@ -56,6 +65,25 @@ internal static partial class PhraseFilter
             "お疲れ様でした" => "お疲れさまでした",
             _ => text
         };
+    }
+
+    private static bool IsCJK(char c) =>
+        c >= '\u2E80' && c <= '\u9FFF' || c >= '\uAC00' && c <= '\uD7AF' || c >= '\uFF65' && c <= '\uFF9F';
+
+    // Returns true when the text contains at least one known English token
+    internal static bool HasEnToken(string text)
+    {
+        foreach (var c in text)
+            if (IsCJK(c)) return false;
+
+        foreach (var word in TokenSplitRegex().Split(text.ToLowerInvariant()))
+        {
+            if (word.Length == 0) continue;
+            if (EnTokens.Contains(word)) return true;
+            var collapsed = RepeatedCharRegex().Replace(word, "$1$1");
+            if (collapsed != word && EnTokens.Contains(collapsed)) return true;
+        }
+        return false;
     }
 
     public static bool TryFilter(Message message, out string? detectedIso)
