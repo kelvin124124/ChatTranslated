@@ -35,15 +35,10 @@ public class LanguagesTab
                 bool isSelected = configuration.KnownLanguages.Contains(language);
                 if (ImGui.Checkbox(language + "##known", ref isSelected))
                 {
-                    if (isSelected)
-                    {
-                        if (!configuration.KnownLanguages.Contains(language))
-                            configuration.KnownLanguages.Add(language);
-                    }
-                    else
-                    {
+                    if (isSelected && !configuration.KnownLanguages.Contains(language))
+                        configuration.KnownLanguages.Add(language);
+                    else if (!isSelected)
                         configuration.KnownLanguages.RemoveAll(lang => lang == language);
-                    }
                     configuration.Save();
                     _ = LanguageDetector.RebuildDetectorAsync();
                 }
@@ -51,7 +46,6 @@ public class LanguagesTab
         }
 
         ImGui.TextDisabled(Resources.My_Languages_Explanation);
-        ImGui.TextDisabled("Messages in these languages will not be translated.");
     }
 
     private void DrawTargetLangSelection(Configuration configuration)

@@ -91,13 +91,9 @@ public class ChatChannelsTab
         if (ImGui.Checkbox(Resources.ResourceManager.GetString(type.ToString(), Resources.Culture) ?? type.ToString(), ref typeEnabled))
         {
             if (typeEnabled && !configuration.SelectedChatTypes.Contains(type))
-            {
                 configuration.SelectedChatTypes.Add(type);
-            }
             else if (!typeEnabled)
-            {
                 configuration.SelectedChatTypes.RemoveAll(t => t == type);
-            }
             configuration.Save();
         }
     }

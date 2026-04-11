@@ -61,12 +61,8 @@ public static class CustomPromptEditor
         }
     }
 
-    private static string GetCustomPromptInput()
-    {
-        if (string.IsNullOrWhiteSpace(Service.configuration.LLM_CustomPrompt))
-        {
-            return OpenAITranslate.BuildPrompt("{targetLanguage}", null);
-        }
-        return Service.configuration.LLM_CustomPrompt;
-    }
+    private static string GetCustomPromptInput() =>
+        string.IsNullOrWhiteSpace(Service.configuration.LLM_CustomPrompt)
+            ? OpenAITranslate.BuildPrompt("{targetLanguage}", null)
+            : Service.configuration.LLM_CustomPrompt;
 }

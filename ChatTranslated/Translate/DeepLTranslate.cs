@@ -4,7 +4,6 @@ using Dalamud.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -16,8 +15,6 @@ namespace ChatTranslated.Translate;
 
 internal static class DeepLTranslate
 {
-    private const string DefaultContentType = "application/json";
-
     public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
     {
         if (!TryGetLanguageCode(targetLanguage, out var languageCode))
@@ -26,8 +23,8 @@ internal static class DeepLTranslate
         var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
         using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
         {
-            Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, DefaultContentType),
-            Headers = { { HttpRequestHeader.Authorization.ToString(), $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}" } }
+            Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json"),
+            Headers = { { "Authorization", $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}" } }
         };
 
         try
@@ -54,42 +51,13 @@ internal static class DeepLTranslate
 
     internal static bool TryGetLanguageCode(string language, out string? languageCode)
     {
-        languageCode = language switch
+        if (LanguageDetector.NameToIsoCode.TryGetValue(language, out var iso))
         {
-            "English" => "EN",
-            "Japanese" => "JA",
-            "German" => "DE",
-            "French" => "FR",
-            "Chinese (Simplified)" => "ZH",
-            "Chinese (Traditional)" => "ZH",
-            "Korean" => "KO",
-            "Spanish" => "ES",
-            "Arabic" => "AR",
-            "Bulgarian" => "BG",
-            "Czech" => "CS",
-            "Danish" => "DA",
-            "Dutch" => "NL",
-            "Estonian" => "ET",
-            "Finnish" => "FI",
-            "Greek" => "EL",
-            "Hungarian" => "HU",
-            "Indonesian" => "ID",
-            "Italian" => "IT",
-            "Latvian" => "LV",
-            "Lithuanian" => "LT",
-            "Norwegian Bokmal" => "NB",
-            "Polish" => "PL",
-            "Portuguese" => "PT",
-            "Romanian" => "RO",
-            "Russian" => "RU",
-            "Slovak" => "SK",
-            "Slovenian" => "SL",
-            "Swedish" => "SV",
-            "Turkish" => "TR",
-            "Ukrainian" => "UK",
-            _ => null
-        };
-        return !string.IsNullOrEmpty(languageCode);
+            languageCode = iso.ToUpperInvariant();
+            return true;
+        }
+        languageCode = null;
+        return false;
     }
 }
 
@@ -182,14 +150,10 @@ internal static class DeeplsTranslate
                 .GetString();
 
             if (translated.IsNullOrWhitespace())
-            {
                 throw new Exception("Translation not found in the expected JSON structure.");
-            }
 
             if (translated == message)
-            {
                 throw new Exception("Translation is the same as the original text.");
-            }
 
             return (translated, TranslationMode.DeepL);
         }
@@ -222,8 +186,6 @@ internal static class DeeplsTranslate
         request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
         foreach (var header in StaticHeaders)
-        {
             request.Headers.TryAddWithoutValidation(header.Key, header.Value);
-        }
     }
 }

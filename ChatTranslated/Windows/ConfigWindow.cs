@@ -54,18 +54,10 @@ public class ConfigWindow : Window
         {
             switch (CurrentTab)
             {
-                case 0:
-                    generalTab.Draw(configuration);
-                    break;
-                case 1:
-                    languagesTab.Draw(configuration);
-                    break;
-                case 2:
-                    chatChannelsTab.Draw(configuration);
-                    break;
-                case 3:
-                    translationModeTab.Draw(configuration);
-                    break;
+                case 0: generalTab.Draw(configuration); break;
+                case 1: languagesTab.Draw(configuration); break;
+                case 2: chatChannelsTab.Draw(configuration); break;
+                case 3: translationModeTab.Draw(configuration); break;
             }
         }
         ImGui.EndChild();

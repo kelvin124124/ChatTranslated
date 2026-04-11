@@ -5,6 +5,7 @@ obj/
 bin/
 
 debug/
+ChatTranslated.Tests/
 
 *.user
 CLAUDE.md

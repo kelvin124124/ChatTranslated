@@ -4,7 +4,6 @@ using Dalamud.Utility;
 
 using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
@@ -45,7 +44,7 @@ internal static partial class OpenAITranslate
         using var request = new HttpRequestMessage(HttpMethod.Post, baseUrl)
         {
             Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json"),
-            Headers = { { HttpRequestHeader.Authorization.ToString(), $"Bearer {apiKey}" } }
+            Headers = { { "Authorization", $"Bearer {apiKey}" } }
         };
 
         try
@@ -60,9 +59,7 @@ internal static partial class OpenAITranslate
                 .GetString()?.Trim();
 
             if (translated.IsNullOrWhitespace())
-            {
                 throw new Exception("Translation not found in the expected structure.");
-            }
 
             if (translated == message.OriginalText)
             {
@@ -113,36 +110,25 @@ internal static partial class OpenAITranslate
             [Only the translated text goes here]
             """;
 
-        if (Service.configuration.UseContext && context != null)
-        {
-            prompt += $"""
-
-                CONTEXT (Use if relevant):
-                <context>
-                {context}
-                </context>
-                """;
-        }
-
-        return prompt;
+        return AppendContext(prompt, context);
     }
 
     public static string BuildCustomPrompt(string targetLanguage, string? context)
     {
         string prompt = Service.configuration.LLM_CustomPrompt.Replace("{targetLanguage}", targetLanguage);
+        return AppendContext(prompt, context);
+    }
 
-        if (Service.configuration.UseContext && context != null)
-        {
-            prompt += $"""
+    private static string AppendContext(string prompt, string? context)
+    {
+        if (!Service.configuration.UseContext || context == null) return prompt;
+        return prompt + $"""
 
-                CONTEXT (Use if relevant):
-                <context>
-                {context}
-                </context>
-                """;
-        }
-
-        return prompt;
+            CONTEXT (Use if relevant):
+            <context>
+            {context}
+            </context>
+            """;
     }
 }
 
@@ -195,9 +181,7 @@ internal static class LLMProxyTranslate
             var translated = jsonDoc.RootElement.GetProperty("translated").GetString()?.Trim();
 
             if (translated.IsNullOrWhitespace())
-            {
                 throw new Exception("Translation not found in the expected structure.");
-            }
 
             if (translated == message.OriginalText)
             {

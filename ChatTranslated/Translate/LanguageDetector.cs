@@ -93,16 +93,10 @@ internal static class LanguageDetector
         LanguageTable.GroupBy(e => e.Iso).ToDictionary(g => g.Key, g => g.Select(e => e.Name).ToList());
 
     // Returns true if the ISO 639-1 code corresponds to one of the user's known languages.
-    internal static bool IsKnownIsoCode(string? isoCode)
-    {
-        if (isoCode == null || !IsoToNames.TryGetValue(isoCode, out var names))
-            return false;
-        var known = Service.configuration.KnownLanguages;
-        foreach (var name in names)
-            if (known.Contains(name))
-                return true;
-        return false;
-    }
+    internal static bool IsKnownIsoCode(string? isoCode) =>
+        isoCode != null
+        && IsoToNames.TryGetValue(isoCode, out var names)
+        && names.Exists(Service.configuration.KnownLanguages.Contains);
 
     // Returns true if the text is detected as one of the user's known languages.
     // Returns true for undetectable text (emoji, numbers).
@@ -191,10 +185,8 @@ internal static class LanguageDetector
 
             // Add user's known languages
             foreach (var langName in config.KnownLanguages)
-            {
                 if (NameToLingua.TryGetValue(langName, out var linguaLang))
                     languageSet.Add(linguaLang);
-            }
 
             // Always include core shipped languages
             foreach (var entry in LanguageTable)

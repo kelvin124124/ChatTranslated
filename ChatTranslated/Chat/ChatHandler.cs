@@ -9,21 +9,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ChatTranslated.Chat;
 
 internal partial class ChatHandler
 {
-    [System.Text.RegularExpressions.GeneratedRegex(@"^<se\.\d+>$")]
-    private static partial System.Text.RegularExpressions.Regex SoundMacroRegex();
-
-    private readonly Dictionary<string, int> lastMessageTime = [];
 
     public ChatHandler()
     {
         Service.chatGui.ChatMessage += OnChatMessage;
     }
+
+    public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
 
     private void OnChatMessage(XivChatType type, int _, ref SeString sender, ref SeString message, ref bool isHandled)
     {
@@ -112,6 +111,85 @@ internal partial class ChatHandler
         }
     }
 
+    [GeneratedRegex(@"^<se\.\d+>$")]
+    private static partial Regex SoundMacroRegex();
+
+    [GeneratedRegex(@"[\u3400-\u4DBF\u4E00-\u9FFF]|\p{L}{2,}")]
+    private static partial Regex HasTranslatableContentRegex();
+
+    private readonly Dictionary<string, int> lastMessageTime = [];
+
+    private bool IsFilteredMessage(string sender, string message)
+    {
+        var trimmed = message.Trim();
+        bool isMacro = IsMacroMessage(sender);
+
+        if (trimmed.Length < 2)
+        {
+            Service.pluginLog.Debug("Filtered: short/empty.");
+            return true;
+        }
+        if (!HasTranslatableContentRegex().IsMatch(trimmed))
+        {
+            Service.pluginLog.Debug("Filtered: no translatable content.");
+            return true;
+        }
+        if (SoundMacroRegex().IsMatch(trimmed))
+        {
+            Service.pluginLog.Debug("Filtered: sound macro.");
+            return true;
+        }
+        if (isMacro)
+        {
+            Service.pluginLog.Debug("Filtered: macro spam.");
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool IsMacroMessage(string playerName)
+    {
+        int now = Environment.TickCount;
+
+        if (lastMessageTime.Count > 20)
+        {
+            var keysToRemove = lastMessageTime
+                .Where(kv => now - kv.Value > 10000) // 10s
+                .Select(kv => kv.Key)
+                .ToList();
+
+            foreach (var key in keysToRemove)
+                lastMessageTime.Remove(key);
+        }
+
+        bool isMacro = lastMessageTime.TryGetValue(playerName, out int lastMsgTime) && now - lastMsgTime < 650;
+        lastMessageTime[playerName] = now;
+        return isMacro;
+    }
+
+    internal static void OutputMessage(Message chatMessage, XivChatType type = XivChatType.Say)
+    {
+        if (PhraseFilter.Normalize(chatMessage.OriginalText) == PhraseFilter.Normalize(chatMessage.TranslatedContent!)
+            && chatMessage.Source != MessageSource.MainWindow) // no need to output if translation is the same
+        {
+            Service.pluginLog.Info("Translation is the same as original. Skipping output.");
+            return;
+        }
+
+        string outputStr = Service.configuration.ChatIntegration_HideOriginal
+            ? chatMessage.TranslatedContent!
+            : $"{chatMessage.OriginalText} || {chatMessage.TranslatedContent}";
+
+        Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {outputStr}");
+
+        if (Service.configuration.ChatIntegration)
+        {
+            var outputType = Service.configuration.ChatIntegration_UseEchoChannel ? XivChatType.Echo : type;
+            Plugin.OutputChatLine(outputType, chatMessage.Sender, outputStr);
+        }
+    }
+
     public unsafe string GetChatMessageContext()
     {
         var x = GetActiveChatLogPanel();
@@ -194,72 +272,4 @@ internal partial class ChatHandler
         var addon = (AddonChatLog*)Service.gameGui.GetAddonByName("ChatLog").Address;
         return addon == null ? 0 : addon->TabIndex;
     }
-
-    internal static void OutputMessage(Message chatMessage, XivChatType type = XivChatType.Say)
-    {
-        if (PhraseFilter.Normalize(chatMessage.OriginalText) == PhraseFilter.Normalize(chatMessage.TranslatedContent!)
-            && chatMessage.Source != MessageSource.MainWindow) // no need to output if translation is the same
-        {
-            Service.pluginLog.Info("Translation is the same as original. Skipping output.");
-            return;
-        }
-
-        string outputStr = Service.configuration.ChatIntegration_HideOriginal
-            ? chatMessage.TranslatedContent!
-            : $"{chatMessage.OriginalText} || {chatMessage.TranslatedContent}";
-
-        Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {outputStr}");
-
-        if (Service.configuration.ChatIntegration)
-        {
-            var outputType = Service.configuration.ChatIntegration_UseEchoChannel ? XivChatType.Echo : type;
-            Plugin.OutputChatLine(outputType, chatMessage.Sender, outputStr);
-        }
-    }
-
-    private bool IsFilteredMessage(string sender, string message)
-    {
-        if (message.Trim().Length < 2)
-        {
-            Service.pluginLog.Debug("Message filtered: Single character or empty message.");
-            return true;
-        }
-        if (SoundMacroRegex().IsMatch(message.Trim()))
-        {
-            Service.pluginLog.Debug("Message filtered: Sound macro.");
-            return true;
-        }
-        if (IsMacroMessage(sender))
-        {
-            Service.pluginLog.Debug("Message filtered: Macro messages.");
-            return true;
-        }
-        return false;
-    }
-
-    private bool IsMacroMessage(string playerName)
-    {
-        int now = Environment.TickCount;
-
-        if (lastMessageTime.Count > 20)
-        {
-            var keysToRemove = lastMessageTime
-                .Where(kv => now - kv.Value > 10000) // 10s
-                .Select(kv => kv.Key)
-                .ToList();
-
-            foreach (var key in keysToRemove)
-                lastMessageTime.Remove(key);
-        }
-
-        if (lastMessageTime.TryGetValue(playerName, out int lastMsgTime) && now - lastMsgTime < 650) // 0.65s
-        {
-            lastMessageTime[playerName] = now;
-            return true;
-        }
-        lastMessageTime[playerName] = now;
-        return false;
-    }
-
-    public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
 }

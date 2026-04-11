@@ -127,20 +127,13 @@ public sealed class Plugin : IDalamudPlugin
 
         Message PFmessage = new(recruiterName, MessageSource.PartyFinder, description);
 
-        string category = PfAddonPtr->CategoriesString.ToString();
-        category = string.Join(" ", Regex.Matches(category, @"\[[^\]]+\]")
-                                         .Select(m => m.Value));
-        if (string.IsNullOrWhiteSpace(category))
-        {
-            category = "null";
-        }
+        string category = string.Join(" ", Regex.Matches(PfAddonPtr->CategoriesString.ToString(), @"\[[^\]]+\]")
+                                                 .Select(m => m.Value));
+        if (string.IsNullOrWhiteSpace(category)) category = "null";
 
         byte* dutyText = PfAddonPtr->DutyNameTextNode->GetText();
         string duty = MemoryHelper.ReadSeStringNullTerminated((nint)dutyText).TextValue;
-        if (string.IsNullOrWhiteSpace(duty))
-        {
-            duty = "null";
-        }
+        if (string.IsNullOrWhiteSpace(duty)) duty = "null";
 
         string context = $"Tags: {category}, Duty: {duty}";
         PFmessage.Context = context;
@@ -216,10 +209,7 @@ public sealed class Plugin : IDalamudPlugin
         Service.mainWindow.IsOpen = true;
     }
 
-    private void DrawUI()
-    {
-        WindowSystem.Draw();
-    }
+    private void DrawUI() => WindowSystem.Draw();
 
     public static void DrawConfigUI()
     {
