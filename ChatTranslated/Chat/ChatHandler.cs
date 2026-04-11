@@ -114,6 +114,9 @@ internal partial class ChatHandler
     [GeneratedRegex(@"^<se\.\d+>$")]
     private static partial Regex SoundMacroRegex();
 
+    [GeneratedRegex(@"^\s*https?://\S+(\s+https?://\S+)*\s*$")]
+    private static partial Regex PureLinkRegex();
+
     [GeneratedRegex(@"[\u3400-\u4DBF\u4E00-\u9FFF]|\p{L}{2,}")]
     private static partial Regex HasTranslatableContentRegex();
 
@@ -132,6 +135,11 @@ internal partial class ChatHandler
         if (!HasTranslatableContentRegex().IsMatch(trimmed))
         {
             Service.pluginLog.Debug("Filtered: no translatable content.");
+            return true;
+        }
+        if (PureLinkRegex().IsMatch(trimmed))
+        {
+            Service.pluginLog.Debug("Filtered: pure link.");
             return true;
         }
         if (SoundMacroRegex().IsMatch(trimmed))
