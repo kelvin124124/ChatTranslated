@@ -91,7 +91,8 @@ internal partial class ChatHandler
 
             // emoticons usually classified to rare languages in Google translate
             // if iso not in supported languages, drop the message to avoid mistranslations
-            if (iso == null || !LanguageDetector.ValidIsoCodes.Contains(iso) || LanguageDetector.IsKnownIsoCode(iso))
+            // also drop if the message is already in the target language
+            if (iso == null || !LanguageDetector.ValidIsoCodes.Contains(iso) || LanguageDetector.IsKnownIsoCode(iso) || LanguageDetector.IsTargetIsoCode(iso))
             {
                 Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
                 return;

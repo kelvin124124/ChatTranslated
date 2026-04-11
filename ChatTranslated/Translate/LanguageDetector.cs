@@ -98,6 +98,12 @@ internal static class LanguageDetector
         && IsoToNames.TryGetValue(isoCode, out var names)
         && names.Exists(Service.configuration.KnownLanguages.Contains);
 
+    // Returns true if the ISO 639-1 code matches the current target language.
+    internal static bool IsTargetIsoCode(string? isoCode) =>
+        isoCode != null
+        && NameToIsoCode.TryGetValue(Service.configuration.SelectedTargetLanguage, out var targetIso)
+        && targetIso == isoCode;
+
     // Returns true if the text is detected as one of the user's known languages.
     // Returns true for undetectable text (emoji, numbers).
     public static bool IsKnownLanguageOrMeaningless(string text)
