@@ -163,7 +163,7 @@ internal partial class ChatHandler
         if (lastMessageTime.Count > 20)
         {
             var keysToRemove = lastMessageTime
-                .Where(kv => now - kv.Value > 10000) // 10s
+                .Where(kv => now - kv.Value > 3000) // 3s
                 .Select(kv => kv.Key)
                 .ToList();
 
