@@ -1,5 +1,6 @@
 .vs/
 .claude/
+.wrangler/
 
 obj/
 bin/
@@ -9,3 +10,4 @@ ChatTranslated.Tests/
 
 *.user
 CLAUDE.md
+AGENTS.md
