@@ -41,6 +41,11 @@ public class Configuration : IPluginConfiguration
     public string CustomTargetLanguage = "";
     public bool UseCustomLanguage = false;
 
+    public string EffectiveTargetLanguage =>
+        UseCustomLanguage && !string.IsNullOrWhiteSpace(CustomTargetLanguage)
+            ? CustomTargetLanguage
+            : SelectedTargetLanguage;
+
     public List<XivChatType> SelectedChatTypes { get; set; } = null!;
 
     public short LLM_Provider { get; set; } = 0;

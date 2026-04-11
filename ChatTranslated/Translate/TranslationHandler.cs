@@ -28,7 +28,7 @@ internal static class TranslationHandler
 
     public static async Task<Message> TranslateMessage(Message message, string targetLanguage = null!)
     {
-        targetLanguage ??= Service.configuration.SelectedTargetLanguage;
+        targetLanguage ??= Service.configuration.EffectiveTargetLanguage;
 
         if (TranslationCache.TryGetValue(message.OriginalText, out var cachedTranslation))
         {
@@ -36,18 +36,20 @@ internal static class TranslationHandler
             return message;
         }
 
-        var (translatedText, mode) = Service.configuration.SelectedTranslationEngine switch
-        {
-            Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(message.OriginalText, targetLanguage),
-            Configuration.TranslationEngine.LLM => Service.configuration.LLM_Provider switch
+        var (translatedText, mode) = Service.configuration.UseCustomLanguage
+            ? await MachineTranslate.Translate(message.OriginalText, targetLanguage)
+            : Service.configuration.SelectedTranslationEngine switch
             {
-                0 => await LLMProxyTranslate.Translate(message, targetLanguage),
-                1 => await OpenAITranslate.Translate(message, targetLanguage, model: Service.configuration.OpenAI_Model),
-                2 => await OpenAICompatible.Translate(message, targetLanguage),
+                Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(message.OriginalText, targetLanguage),
+                Configuration.TranslationEngine.LLM => Service.configuration.LLM_Provider switch
+                {
+                    0 => await LLMProxyTranslate.Translate(message, targetLanguage),
+                    1 => await OpenAITranslate.Translate(message, targetLanguage, model: Service.configuration.OpenAI_Model),
+                    2 => await OpenAICompatible.Translate(message, targetLanguage),
+                    _ => (message.OriginalText, null)
+                },
                 _ => (message.OriginalText, null)
-            },
-            _ => (message.OriginalText, null)
-        };
+            };
 
         message.TranslatedContent = translatedText;
         message.TranslationMode = mode;

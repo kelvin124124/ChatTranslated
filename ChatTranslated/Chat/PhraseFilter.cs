@@ -115,7 +115,7 @@ internal static partial class PhraseFilter
         }
 
         // use static translation if available for target language
-        if (entry.Translations.TryGetValue(Service.configuration.SelectedTargetLanguage, out var translation))
+        if (entry.Translations.TryGetValue(Service.configuration.EffectiveTargetLanguage, out var translation))
         {
             message.TranslatedContent = translation;
             Service.pluginLog.Information($"Translated '{message.OriginalText}' to '{translation}' using phrase filter.");
