@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="gp" xml:space="preserve">
+    <value>Alliance</value>
+  </data>
+  <data name="APIKeyWarn" xml:space="preserve">
+    <value>Warning: API key will be stored as plain text in plugin configuration,
+any malware or third party plugins may have access to the key.</value>
+  </data>
+  <data name="Apply" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="ChatIntegration" xml:space="preserve">
+    <value>Chat Integration</value>
+  </data>
+  <data name="Chinese (Simplified)" xml:space="preserve">
+    <value>Chinese (Simplified)</value>
+  </data>
+  <data name="Chinese (Traditional)" xml:space="preserve">
+    <value>Chinese (Traditional)</value>
+  </data>
+  <data name="CrossLinkShell1" xml:space="preserve">
+    <value>CrossLinkShell1</value>
+  </data>
+  <data name="CrossLinkShell2" xml:space="preserve">
+    <value>CrossLinkShell2</value>
+  </data>
+  <data name="CrossLinkShell3" xml:space="preserve">
+    <value>CrossLinkShell3</value>
+  </data>
+  <data name="CrossLinkShell4" xml:space="preserve">
+    <value>CrossLinkShell4</value>
+  </data>
+  <data name="CrossLinkShell5" xml:space="preserve">
+    <value>CrossLinkShell5</value>
+  </data>
+  <data name="CrossLinkShell6" xml:space="preserve">
+    <value>CrossLinkShell6</value>
+  </data>
+  <data name="CrossLinkShell7" xml:space="preserve">
+    <value>CrossLinkShell7</value>
+  </data>
+  <data name="CrossLinkShell8" xml:space="preserve">
+    <value>CrossLinkShell8</value>
+  </data>
+  <data name="CrossParty" xml:space="preserve">
+    <value>CrossParty</value>
+  </data>
+  <data name="CustomTargetLanguageExplanation" xml:space="preserve">
+    <value>You will be forced to use Google translate if you use custom languages.</value>
+  </data>
+  <data name="CustomTargetLanguageHeader" xml:space="preserve">
+    <value>Custom target language</value>
+  </data>
+  <data name="DeepLAPIKey" xml:space="preserve">
+    <value>DeepL API Key (Optional)</value>
+  </data>
+  <data name="DeepLExplanation" xml:space="preserve">
+    <value>DeepL will be used to translate chat messages. 
+Google and Bing translate will be used as backup.
+If DeepL API key is provided below, it will be used as backup instead.</value>
+  </data>
+  <data name="DomaStr" xml:space="preserve">
+    <value>It's okay!</value>
+  </data>
+  <data name="EnableInDuties" xml:space="preserve">
+    <value>Enable in duties</value>
+  </data>
+  <data name="EnablePlugin" xml:space="preserve">
+    <value>Enable plugin</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="FreeCompany" xml:space="preserve">
+    <value>FreeCompany</value>
+  </data>
+  <data name="French" xml:space="preserve">
+    <value>French</value>
+  </data>
+  <data name="GenericChannels" xml:space="preserve">
+    <value>Generic</value>
+  </data>
+  <data name="German" xml:space="preserve">
+    <value>German</value>
+  </data>
+  <data name="GGstr" xml:space="preserve">
+    <value>Good game!</value>
+  </data>
+  <data name="Japanese" xml:space="preserve">
+    <value>Japanese</value>
+  </data>
+  <data name="Korean" xml:space="preserve">
+    <value>Korean</value>
+  </data>
+  <data name="LLMProvider" xml:space="preserve">
+    <value>LLMProvider</value>
+  </data>
+  <data name="LLM_Proxy_Explanation" xml:space="preserve">
+    <value>Self-hosted Gemini proxy</value>
+  </data>
+  <data name="Ls1" xml:space="preserve">
+    <value>Ls1</value>
+  </data>
+  <data name="Ls2" xml:space="preserve">
+    <value>Ls2</value>
+  </data>
+  <data name="Ls3" xml:space="preserve">
+    <value>Ls3</value>
+  </data>
+  <data name="Ls4" xml:space="preserve">
+    <value>Ls4</value>
+  </data>
+  <data name="Ls5" xml:space="preserve">
+    <value>Ls5</value>
+  </data>
+  <data name="Ls6" xml:space="preserve">
+    <value>Ls6</value>
+  </data>
+  <data name="Ls7" xml:space="preserve">
+    <value>Ls7</value>
+  </data>
+  <data name="Ls8" xml:space="preserve">
+    <value>Ls8</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NoviceNetwork" xml:space="preserve">
+    <value>NoviceNetwork</value>
+  </data>
+  <data name="OpenAIAPIKey" xml:space="preserve">
+    <value>OpenAI API Key</value>
+  </data>
+  <data name="OpenAIPriceEstimation" xml:space="preserve">
+    <value>Price estimation: $2.0 /month</value>
+  </data>
+  <data name="Party" xml:space="preserve">
+    <value>Party</value>
+  </data>
+  <data name="PluginUILanguage" xml:space="preserve">
+    <value>Plugin UI Language</value>
+  </data>
+  <data name="CustomEmote" xml:space="preserve">
+    <value>Custom Emote</value>
+  </data>
+  <data name="PvPTeam" xml:space="preserve">
+    <value>PvPTeam</value>
+  </data>
+  <data name="Say" xml:space="preserve">
+    <value>Say</value>
+  </data>
+  <data name="SeeLanguageList" xml:space="preserve">
+    <value>See language list</value>
+  </data>
+  <data name="Shout" xml:space="preserve">
+    <value>Shout</value>
+  </data>
+  <data name="Spanish" xml:space="preserve">
+    <value>Spanish</value>
+  </data>
+  <data name="TargetLang" xml:space="preserve">
+    <value>Translate to</value>
+  </data>
+  <data name="TellIncoming" xml:space="preserve">
+    <value>TellIncoming</value>
+  </data>
+  <data name="Translate" xml:space="preserve">
+    <value>Translate</value>
+  </data>
+  <data name="TranslationEngine" xml:space="preserve">
+    <value>Translation Engine</value>
+  </data>
+  <data name="UseCustomTargetLanguage" xml:space="preserve">
+    <value>Use Custom Language</value>
+  </data>
+  <data name="WelcomeStr" xml:space="preserve">
+    <value>Let's do it!</value>
+  </data>
+  <data name="Yell" xml:space="preserve">
+    <value>Yell</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="ChatIntegration_HideOriginal" xml:space="preserve">
+    <value>Hide original message when outputting translated message</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
+  </data>
+  <data name="ChatChannels" xml:space="preserve">
+    <value>Chat Channels</value>
+  </data>
+  <data name="Translation Mode" xml:space="preserve">
+    <value>Translation Mode</value>
+  </data>
+  <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
+    <value>Show colored text when outputting translated message</value>
+  </data>
+  <data name="ChatIntegration_UseEchoChannel" xml:space="preserve">
+    <value>Output translated message to Echo channel</value>
+  </data>
+  <data name="Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="OpenAIAPIExplanation" xml:space="preserve">
+    <value>May be restricted if you live in unsupported region.</value>
+  </data>
+  <data name="OpenAICompatibleExplanation" xml:space="preserve">
+    <value>Any custom providers with OpenAI-compatible API.</value>
+  </data>
+  <data name="OpenAICompatibleInfo" xml:space="preserve">
+    <value>Models without system role are not supported.</value>
+  </data>
+  <data name="LLMAPIKey" xml:space="preserve">
+    <value>Api key</value>
+  </data>
+  <data name="LLMModel" xml:space="preserve">
+    <value>Model</value>
+  </data>
+  <data name="LLMApiEndpoint" xml:space="preserve">
+    <value>Endpoint URL</value>
+  </data>
+  <data name="LLM_Explanation" xml:space="preserve">
+    <value>Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
+  </data>
+  <data name="UseContext" xml:space="preserve">
+    <value>Use context</value>
+  </data>
+  <data name="ChatContextExplanation" xml:space="preserve">
+    <value>Include messages in current chat tab in LLM prompt.</value>
+  </data>
+  <data name="LLMApiEndpointExample" xml:space="preserve">
+    <value>Example:
+https://api.openai.com/v1/chat/completions
+https://openrouter.ai/api/v1/chat/completions
+https://api.deepseek.com/chat/completions</value>
+  </data>
+  <data name="UseCustomPrompt" xml:space="preserve">
+    <value>Use custom prompt</value>
+  </data>
+  <data name="CustomSystemPrompt" xml:space="preserve">
+    <value>Custom system prompt</value>
+  </data>
+  <data name="CustomPromptTooltip" xml:space="preserve">
+    <value>Customize the system prompt for translation.
+
+The text below shows the current prompt.
+Use {targetLanguage} as a placeholder for the target language.
+Context (if enabled) will be appended automatically.
+
+This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
+  </data>
+  <data name="My_Languages" xml:space="preserve">
+    <value>My Languages</value>
+  </data>
+  <data name="My_Languages_Explanation" xml:space="preserve">
+    <value>Messages in these languages will not be translated.</value>
+  </data>
+  <data name="Main_Window_Reverse_translation" xml:space="preserve">
+    <value>Reverse translation</value>
+  </data>
+  <data name="Main_Window_Translated_text" xml:space="preserve">
+    <value>Translated text</value>
+  </data>
+  <data name="Main_Window_Translation_Failed" xml:space="preserve">
+    <value>Failed to translate.</value>
+  </data>
+</root>
