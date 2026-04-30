@@ -52,7 +52,7 @@ public class Configuration : IPluginConfiguration
     public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
     public string OpenAI_Model { get; set; } = "gpt-5-mini";
     public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
-    public string Proxy_Url { get; set; } = "https://cfv5.kelpcc.com";
+    public string Proxy_Url { get; set; } = "https://cfv6.kelpcc.com";
     public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";
     public string LLM_API_Key { get; set; } = "YOUR-API-KEY";
     public string LLM_API_endpoint { get; set; } = "https://openrouter.ai/api/v1/chat/completions";
