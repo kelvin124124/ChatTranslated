@@ -141,7 +141,7 @@ internal static class OpenAICompatible
 
 internal static class LLMProxyTranslate
 {
-    private static readonly string? Cfv6 = ReadSecret("ChatTranslated.Resources.cfv6.secret").Replace("\n", string.Empty);
+    private static readonly string? Cfv5 = ReadSecret("ChatTranslated.Resources.cfv5.secret").Replace("\n", string.Empty);
 
     private static string ReadSecret(string resourceName)
     {
@@ -154,9 +154,9 @@ internal static class LLMProxyTranslate
     public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage)
     {
 #if DEBUG
-        string Cfv6 = Service.configuration.Proxy_API_Key;
+        string Cfv5 = Service.configuration.Proxy_API_Key;
 #else
-        if (string.IsNullOrEmpty(Cfv6))
+        if (string.IsNullOrEmpty(Cfv5))
         {
             Service.pluginLog.Warning("LLMProxy API key not found. Falling back to machine translate.");
             return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
@@ -170,7 +170,7 @@ internal static class LLMProxyTranslate
         {
             Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json")
         };
-        request.Headers.Add("x-api-key", Cfv6);
+        request.Headers.Add("x-api-key", Cfv5);
 
         try
         {
