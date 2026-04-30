@@ -6,7 +6,7 @@
 dotnet build ChatTranslated.sln
 ```
 
-This is a Dalamud plugin (FFXIV modding framework) using `Dalamud.NET.Sdk/14.0.2`. The build requires the Dalamud dev environment — `DalamudLibPath` must resolve (typically set by the Dalamud SDK or via environment variable). There are no tests or linters configured. The solution contains a single project (`ChatTranslated/ChatTranslated.csproj`) targeting x64 only.
+This is a Dalamud plugin (FFXIV modding framework) using `Dalamud.NET.Sdk/15.0.0`. The build requires the Dalamud dev environment — `DalamudLibPath` must resolve (typically set by the Dalamud SDK or via environment variable). No linters are configured. The solution contains the main project (`ChatTranslated/ChatTranslated.csproj`) and a test project (`ChatTranslated.Tests/ChatTranslated.Tests.csproj`), both targeting x64 only.
 
 Key NuGet dependencies:
 - `GTranslate` (2.3.0) — Google/Bing translator wrappers
@@ -95,15 +95,16 @@ There are four distinct entry points into the translation pipeline, each creatin
 ### Chat layer (`Chat/`)
 
 **ChatHandler** (`ChatHandler.cs`):
-- Constructor subscribes to `Service.chatGui.ChatMessage`; `Dispose()` unsubscribes.
+- Constructor subscribes to `Service.chatGui.ChatMessage`; `Dispose()` unsubscribes. (`CheckMessageHandled` was tried but didn't fire reliably in practice — likely suppressed by other plugins or fires too late in the pipeline.)
+- Event delegate is `OnHandleableChatMessageDelegate(IHandleableChatMessage)`. Skips when `message.IsHandled` is already true. Forwards `LogKind`, `SourceKind`, `Sender`, `Message` to `HandleChatMessage`.
 - `HandleChatMessage` is `async void` (only acceptable for Dalamud event handlers). All work is wrapped in try/catch logging to `Service.pluginLog.Error`.
-- Extracts `PlayerPayload` from sender `SeString` for the player name. Handles `TellOutgoing` by substituting the local player's name.
-- Own messages (sender ends with local player name) are printed raw to MainWindow and skipped.
+- Extracts `PlayerPayload` from sender `SeString` for the player name.
+- Own messages are detected via `SourceKind == XivChatRelationKind.LocalPlayer` (covers both inbound self-targeted messages and `TellOutgoing`); they are printed raw to MainWindow and skipped.
 - Pre-translation filters in `IsFilteredMessage()`:
   - `HasTranslatableContentRegex`: requires at least one CJK character or 2+ letter word.
   - `PureLinkRegex`: rejects messages that are only URLs.
   - `SoundMacroRegex`: rejects `<se.N>` sound macros.
-  - `IsMacroMessage`: detects rapid messages from the same sender (<650ms apart). Tracks last message time per sender in a `Dictionary<string, int>` using `Environment.TickCount`. Evicts entries older than 3 seconds when the dictionary exceeds 20 entries.
+  - `IsMacroMessage`: detects rapid messages from the same sender (<650ms apart). Tracks last message time per sender in a `Dictionary<string, int>` using `Environment.TickCount` (the game-supplied `IChatMessage.Timestamp` is only second-resolution, too coarse for this filter). Evicts entries older than 3 seconds when the dictionary exceeds 20 entries.
 - Context extraction (`GetChatMessageContext`): reads the active chat log panel via unsafe pointer access to `AddonChatLogPanel`. Walks the last 300 SeString payloads, extracts text (replacing complex payloads with tags like `[Item]`, `[Quest]`, `[Map]`, `[Status]`). Takes the last 10 lines. Appends game state flags (in-duty, in-combat).
 - `GetActiveChatLogPanel`: reads `AddonChatLog->TabIndex` to determine which chat panel is active.
 
@@ -113,12 +114,7 @@ There are four distinct entry points into the translation pipeline, each creatin
 - Lazy-initialized properties:
   - `OriginalText`: `OriginalContent.TextValue` (computed once on first access).
   - `CleanedContent`: `Sanitize(ExtractText(OriginalContent))` — walks SeString payloads extracting only `TextPayload` text, skipping complex payload sequences.
-- Payload skip counts during `ExtractText`:
-  - `PlayerPayload`: skip next 2 payloads
-  - `ItemPayload`, `QuestPayload`, `MapLinkPayload`: skip next 7
-  - `StatusPayload`: skip next 10
-  - `PartyFinderPayload`: skip next 6
-  - `AutoTranslatePayload`: skip next 2
+- Link-payload handling in `ExtractText`: an `inLink` flag is set when entering an interactive payload (`Player`, `Item`, `Quest`, `MapLink`, `Status`, `PartyFinder`) and cleared when the closing `RawPayload` link-terminator is seen. While `inLink` is true, inner `TextPayload`s (the link's display name) are dropped, preventing duplication. `AutoTranslatePayload` is self-contained (no link terminator) and is skipped via `i += 2`.
 - `Sanitize()` replaces FFXIV private-use area characters (`\uE000-\uF8FF`) with the Unicode replacement character `\uFFFD` using `ChatRegex.SpecialCharacterRegex()`.
 - Mutable translation state: `TranslatedContent`, `TranslationMode`, `Context`.
 
@@ -242,7 +238,6 @@ Static class acting as the global service container. Two categories of members:
 - `contextMenu` (IContextMenu)
 - `condition` (ICondition)
 - `pluginLog` (IPluginLog)
-- `playerState` (IPlayerState)
 - `commandManager` (ICommandManager)
 
 **Plugin-owned** (set manually during `Plugin` constructor):
@@ -398,12 +393,7 @@ All regex patterns use C# source-generated `[GeneratedRegex]` on `partial` metho
 
 ### SeString payloads
 
-When processing `SeString` payloads, advance the loop index `i` to skip internal payload sequences:
-- `PlayerPayload`: `i += 2`
-- `ItemPayload`, `QuestPayload`, `MapLinkPayload`: `i += 7` (in Message.ExtractText); `i += 5` for Item, `i += 7` for Quest/MapLink (in ChatHandler.GetChatMessageContext)
-- `StatusPayload`: `i += 10`
-- `PartyFinderPayload`: `i += 6`
-- `AutoTranslatePayload`: `i += 2`
+When walking `SeString.Payloads`, interactive link payloads (`Player`, `Item`, `Quest`, `MapLink`, `Status`, `PartyFinder`) are followed by formatting payloads, an inner `TextPayload` (the link's visible name), and a closing `RawPayload` link-terminator (`0x27 0x03`). To extract clean text without duplicating the inner name, use an `inLink` flag set on the link-start payload and cleared on the closing `RawPayload`; suppress `TextPayload` emission while the flag is set. `AutoTranslatePayload` is the only exception — it has no link-terminator, so handle it via `i += 2`.
 
 Use `SeStringBuilder` for constructing chat output. `PlayerPayload("[CT] " + sender, 0)` fakes a player payload for chat bubble display.
 

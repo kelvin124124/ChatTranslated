@@ -1,5 +1,6 @@
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
+using Dalamud.Game.Chat;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
@@ -24,13 +25,13 @@ internal partial class ChatHandler
 
     public void Dispose() => Service.chatGui.ChatMessage -= OnChatMessage;
 
-    private void OnChatMessage(XivChatType type, int _, ref SeString sender, ref SeString message, ref bool isHandled)
+    private void OnChatMessage(IHandleableChatMessage message)
     {
-        if (isHandled) return;
-        HandleChatMessage(type, sender, message);
+        if (message.IsHandled) return;
+        HandleChatMessage(message.LogKind, message.SourceKind, message.Sender, message.Message);
     }
 
-    private async void HandleChatMessage(XivChatType type, SeString sender, SeString message)
+    private async void HandleChatMessage(XivChatType type, XivChatRelationKind sourceKind, SeString sender, SeString message)
     {
         try
         {
@@ -42,11 +43,9 @@ internal partial class ChatHandler
 
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
             string playerName = playerPayload?.PlayerName ?? sender.ToString();
-            string localPlayerName = Service.playerState.CharacterName.ToString();
-            if (type == XivChatType.TellOutgoing)
-                playerName = localPlayerName;
 
-            if (!string.IsNullOrEmpty(localPlayerName) && playerName.EndsWith(localPlayerName))
+            // comment for debugging
+            if (sourceKind == XivChatRelationKind.LocalPlayer)
             {
                 Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 return;
@@ -209,46 +208,51 @@ internal partial class ChatHandler
 
             var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)chatLogPanelPtr.Address)->ChatText->GetText()).Payloads;
             var sb = new StringBuilder();
+            bool inLink = false;
 
             for (int i = Math.Max(0, payloads.Count - 300); i < payloads.Count; i++)
             {
                 switch (payloads[i])
                 {
-                    case TextPayload textPayload:
+                    case TextPayload textPayload when !inLink:
                         sb.Append(textPayload.Text);
                         break;
 
                     case PlayerPayload playerPayload:
                         sb.Append($"[{playerPayload.PlayerName}]");
-                        i += 2;
+                        inLink = true;
                         break;
 
-                    case ItemPayload:
-                        sb.Append("[Item] ");
-                        i += 5;
+                    case ItemPayload itemPayload:
+                        sb.Append($"[Item] {itemPayload.DisplayName}");
+                        inLink = true;
                         break;
 
-                    case QuestPayload:
-                        sb.Append("[Quest] ");
-                        i += 7;
+                    case QuestPayload questPayload:
+                        sb.Append($"[Quest] {questPayload.Quest.ToString()}");
+                        inLink = true;
                         break;
 
-                    case MapLinkPayload:
-                        sb.Append("[Map] ");
-                        i += 7;
+                    case MapLinkPayload mapLinkPayload:
+                        sb.Append($"[Map] {mapLinkPayload.ToString()}");
+                        inLink = true;
                         break;
 
-                    case StatusPayload:
-                        sb.Append("[Status] ");
-                        i += 10;
+                    case StatusPayload statusPayload:
+                        sb.Append($"[Status] {statusPayload.ToString()}");
+                        inLink = true;
                         break;
 
                     case PartyFinderPayload: // does not need to be tagged
-                        i += 6;
+                        inLink = true;
+                        break;
+
+                    case RawPayload when inLink: // link terminator (0x27 0x03)
+                        inLink = false;
                         break;
 
                     case AutoTranslatePayload:
-                        i += 2;
+                        i += 2; // self-contained, no link terminator
                         break;
                 }
             }

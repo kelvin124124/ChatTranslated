@@ -30,29 +30,27 @@ public class Message(string sender, MessageSource source, SeString originalConte
     private static string ExtractText(SeString seString)
     {
         var sb = new StringBuilder();
+        bool inLink = false;
         for (int i = 0; i < seString.Payloads.Count; i++)
         {
             switch (seString.Payloads[i])
             {
-                case TextPayload textPayload:
+                case TextPayload textPayload when !inLink:
                     sb.Append(textPayload.Text);
                     break;
                 case PlayerPayload:
-                    i += 2;
-                    break;
                 case ItemPayload:
                 case QuestPayload:
                 case MapLinkPayload:
-                    i += 7;
-                    break;
                 case StatusPayload:
-                    i += 10;
-                    break;
                 case PartyFinderPayload:
-                    i += 6;
+                    inLink = true;
+                    break;
+                case RawPayload when inLink: // link terminator (0x27 0x03)
+                    inLink = false;
                     break;
                 case AutoTranslatePayload:
-                    i += 2;
+                    i += 2; // self-contained, no link terminator
                     break;
             }
         }
