@@ -19,6 +19,7 @@ internal class Service
     [PluginService] public static IGameGui gameGui { get; private set; } = null!;
     [PluginService] public static IContextMenu contextMenu { get; private set; } = null!;
     [PluginService] public static ICondition condition { get; private set; } = null!;
+    [PluginService] public static IPlayerState playerState { get; private set; } = null!;
     [PluginService] public static IPluginLog pluginLog { get; private set; } = null!;
     [PluginService] public static ICommandManager commandManager { get; set; } = null!;
 }

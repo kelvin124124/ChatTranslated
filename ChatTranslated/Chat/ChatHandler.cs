@@ -8,6 +8,7 @@ using Dalamud.Game.Text.SeStringHandling.Payloads;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -28,10 +29,10 @@ internal partial class ChatHandler
     private void OnChatMessage(IHandleableChatMessage message)
     {
         if (message.IsHandled) return;
-        HandleChatMessage(message.LogKind, message.SourceKind, message.Sender, message.Message);
+        HandleChatMessage(message.LogKind, message.Sender, message.Message);
     }
 
-    private async void HandleChatMessage(XivChatType type, XivChatRelationKind sourceKind, SeString sender, SeString message)
+    private async void HandleChatMessage(XivChatType type, SeString sender, SeString message)
     {
         try
         {
@@ -43,9 +44,12 @@ internal partial class ChatHandler
 
             var playerPayload = sender.Payloads.OfType<PlayerPayload>().FirstOrDefault();
             string playerName = playerPayload?.PlayerName ?? sender.ToString();
+            string localPlayerName = Service.playerState.CharacterName.ToString();
+            if (type == XivChatType.TellOutgoing)
+                playerName = localPlayerName;
 
             // comment for debugging
-            if (sourceKind == XivChatRelationKind.LocalPlayer)
+            if (!string.IsNullOrEmpty(localPlayerName) && playerName.EndsWith(localPlayerName))
             {
                 Service.mainWindow.PrintToOutput($"{playerName}: {message.TextValue}");
                 return;
