@@ -1,64 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -118,273 +59,273 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="gp" xml:space="preserve">
-    <value>Alianza</value>
+    <value>Alliance</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>Advertencia: La clave API se almacenará como texto sin formato en la configuración del plugin,
-cualquier malware o plugins de terceros pueden tener acceso a la clave.</value>
+    <value>Warning: API key will be stored as plain text in plugin configuration,
+any malware or third party plugins may have access to the key.</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Aplicar</value>
+    <value>Apply</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>Integración de Chat</value>
+    <value>Chat Integration</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>Chino (Simplificado)</value>
+    <value>Chinese (Simplified)</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>Chino (Tradicional)</value>
+    <value>Chinese (Traditional)</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>CWLS1</value>
+    <value>CrossLinkShell1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>CWLS2</value>
+    <value>CrossLinkShell2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>CWLS3</value>
+    <value>CrossLinkShell3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>CWLS4</value>
+    <value>CrossLinkShell4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>CWLS5</value>
+    <value>CrossLinkShell5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>CWLS6</value>
+    <value>CrossLinkShell6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>CWLS7</value>
+    <value>CrossLinkShell7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>CWLS8</value>
+    <value>CrossLinkShell8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>Grupo inter-mundos</value>
+    <value>CrossParty</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>Se te obligará a usar Google Translate si usas idiomas personalizados.</value>
+    <value>You will be forced to use Google translate if you use custom languages.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
-    <value>Idioma objetivo personalizado</value>
+    <value>Custom target language</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>Clave API de DeepL (opcional)</value>
+    <value>DeepL API Key (Optional)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL será utilizado para traducir mensajes de chat.
-Google y Bing Translate serán utilizados como respaldo.
-Si se proporciona la clave API de DeepL a continuación, se utilizará como respaldo en su lugar.</value>
+    <value>DeepL will be used to translate chat messages. 
+Google and Bing translate will be used as backup.
+If DeepL API key is provided below, it will be used as backup instead.</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>¡Está bien!</value>
+    <value>It's okay!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>Habilitar en instancias</value>
+    <value>Enable in duties</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
-    <value>Habilitar plugin</value>
+    <value>Enable plugin</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>Inglés</value>
+    <value>English</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>Compañía libre</value>
+    <value>FreeCompany</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>Francés</value>
+    <value>French</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>Genérico</value>
+    <value>Generic</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>Alemán</value>
+    <value>German</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>¡Buena partida!</value>
+    <value>Good game!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>Japonés</value>
+    <value>Japanese</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>Coreano</value>
+    <value>Korean</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>Proveedor LLM</value>
+    <value>LLMProvider</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Proxy Gemini autohospedado</value>
+    <value>Self-hosted Gemini proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>LS1</value>
+    <value>Ls1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>LS2</value>
+    <value>Ls2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>LS3</value>
+    <value>Ls3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>LS4</value>
+    <value>Ls4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>LS5</value>
+    <value>Ls5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>LS6</value>
+    <value>Ls6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>LS7</value>
+    <value>Ls7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>LS8</value>
+    <value>Ls8</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>Red de novatos</value>
+    <value>NoviceNetwork</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
-    <value>Clave API de OpenAI</value>
+    <value>OpenAI API Key</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>Grupo</value>
+    <value>Party</value>
   </data>
   <data name="PluginUILanguage" xml:space="preserve">
-    <value>Idioma del Plugin</value>
+    <value>Plugin UI Language</value>
   </data>
   <data name="CustomEmote" xml:space="preserve">
-    <value>Emote</value>
+    <value>Custom Emote</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>Equipo PvP</value>
+    <value>PvPTeam</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>Hablar</value>
+    <value>Say</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
-    <value>Ver la lista de idiomas</value>
+    <value>See language list</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>Gritar</value>
+    <value>Shout</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>Español</value>
+    <value>Spanish</value>
   </data>
   <data name="TargetLang" xml:space="preserve">
-    <value>Traducir a</value>
+    <value>Translate to</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>Mensaje entrante</value>
+    <value>TellIncoming</value>
   </data>
   <data name="Translate" xml:space="preserve">
-    <value>Traducir</value>
+    <value>Translate</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Motor de traducción</value>
+    <value>Translation Engine</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
-    <value>Usar idioma personalizado</value>
+    <value>Use Custom Language</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
-    <value>¡Hagámoslo!</value>
+    <value>Let's do it!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Vociferar</value>
+    <value>Yell</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Sí</value>
+    <value>Yes</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Ocultar mensaje original al mostrar mensaje traducido</value>
+    <value>Hide original message when outputting translated message</value>
   </data>
   <data name="General" xml:space="preserve">
     <value>General</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>Idiomas</value>
+    <value>Languages</value>
   </data>
   <data name="ChatChannels" xml:space="preserve">
-    <value>Canales de chat</value>
+    <value>Chat Channels</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
-    <value>Modo de traducción</value>
+    <value>Translation Mode</value>
   </data>
   <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
-    <value>Mostrar texto en color al mostrar el mensaje traducido</value>
+    <value>Show colored text when outputting translated message</value>
   </data>
   <data name="ChatIntegration_UseEchoChannel" xml:space="preserve">
-    <value>Enviar mensaje traducido al canal Echo</value>
+    <value>Output translated message to Echo channel</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copiar</value>
+    <value>Copy</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>Puede estar restringido si vives en una región no soportada.</value>
+    <value>May be restricted if you live in unsupported region.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
-    <value>Cualquier proveedor personalizado con API compatible con OpenAI.</value>
+    <value>Any custom providers with OpenAI-compatible API.</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>Modelos sin rol de sistema no son soportados.</value>
+    <value>Models without system role are not supported.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
-    <value>Clave API</value>
+    <value>Api key</value>
   </data>
   <data name="LLMModel" xml:space="preserve">
-    <value>Modelo</value>
+    <value>Model</value>
   </data>
   <data name="LLMApiEndpoint" xml:space="preserve">
-    <value>URL del punto de conexión</value>
+    <value>Endpoint URL</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Nota:
-DeepL tiene mejor precisión en traducción de un solo idioma.
-LLM es mejor solo si el mensaje es largo o contiene múltiples idiomas.</value>
+    <value>Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
   <data name="UseContext" xml:space="preserve">
-    <value>Usar contexto</value>
+    <value>Use context</value>
   </data>
   <data name="ChatContextExplanation" xml:space="preserve">
-    <value>Incluir mensajes en la pestaña de chat actual en la solicitud de LLM.</value>
+    <value>Include messages in current chat tab in LLM prompt.</value>
   </data>
   <data name="LLMApiEndpointExample" xml:space="preserve">
-    <value>Ejemplo:
+    <value>Example:
 https://api.openai.com/v1/chat/completions
 https://openrouter.ai/api/v1/chat/completions
 https://api.deepseek.com/chat/completions</value>
   </data>
   <data name="UseCustomPrompt" xml:space="preserve">
-    <value>Usar prompt personalizado</value>
+    <value>Use custom prompt</value>
   </data>
   <data name="CustomSystemPrompt" xml:space="preserve">
-    <value>Prompt de sistema personalizado</value>
+    <value>Custom system prompt</value>
   </data>
   <data name="CustomPromptTooltip" xml:space="preserve">
-    <value>Personalice el prompt del sistema para la traducción.
+    <value>Customize the system prompt for translation.
 
-El texto a continuación muestra el prompt actual.
-Use {targetLanguage} como marcador de posición para el idioma de destino.
-El contexto (si está habilitado) se agregará automáticamente.
+The text below shows the current prompt.
+Use {targetLanguage} as a placeholder for the target language.
+Context (if enabled) will be appended automatically.
 
-Este prompt se comparte entre la API de OpenAI y las API compatibles con OpenAI.</value>
+This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
-    <value>Mis idiomas</value>
+    <value>My Languages</value>
   </data>
   <data name="My_Languages_Explanation" xml:space="preserve">
-    <value>Los mensajes en estos idiomas no serán traducidos.</value>
+    <value>Messages in these languages will not be translated.</value>
   </data>
   <data name="Main_Window_Reverse_translation" xml:space="preserve">
-    <value>Traducción inversa</value>
+    <value>Reverse translation</value>
   </data>
   <data name="Main_Window_Translated_text" xml:space="preserve">
-    <value>Texto traducido</value>
+    <value>Translated text</value>
   </data>
   <data name="Main_Window_Translation_Failed" xml:space="preserve">
-    <value>Falló la traducción.</value>
+    <value>Failed to translate.</value>
   </data>
   <data name="DetectionSource_Label" xml:space="preserve">
     <value>Detection endpoint</value>
