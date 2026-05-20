@@ -15,8 +15,9 @@ public class SetupWizard : Window
 {
     private const int TotalSteps = 6;
 
-    private int step;
+private int step;
     private bool knownLanguagesChanged;
+    private bool showSkipConfirm;
 
     public SetupWizard(Plugin plugin) : base(
         Resources.Wizard_Title + "##ChatTranslatedSetupWizard",
@@ -26,10 +27,11 @@ public class SetupWizard : Window
         SizeCondition = ImGuiCond.FirstUseEver;
     }
 
-    public override void OnOpen()
+public override void OnOpen()
     {
         step = 1;
         knownLanguagesChanged = false;
+        showSkipConfirm = false;
     }
 
     public override void Draw()
@@ -217,9 +219,28 @@ public class SetupWizard : Window
         {
             if (ImGui.Button(Resources.Wizard_Skip + "##wizardSkip", new Vector2(80, 0)))
             {
-                Complete(configuration);
-                return;
+                showSkipConfirm = true;
+                ImGui.OpenPopup("##wizardSkipConfirm");
             }
+            ImGui.SameLine();
+        }
+
+        var popupFlags = ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoMove;
+        if (ImGui.BeginPopupModal("##wizardSkipConfirm", ref showSkipConfirm, popupFlags))
+        {
+            ImGui.TextUnformatted(Resources.Wizard_Skip_Confirm);
+            ImGui.Spacing();
+            ImGui.Separator();
+            ImGui.Spacing();
+            if (ImGui.Button(Resources.Wizard_Back + "##confirmBack", new Vector2(120, 0)))
+                ImGui.CloseCurrentPopup();
+            ImGui.SameLine();
+            if (ImGui.Button("OK##confirmOk", new Vector2(120, 0)))
+            {
+                ImGui.CloseCurrentPopup();
+                Complete(configuration);
+            }
+            ImGui.EndPopup();
         }
 
         string rightLabel = step < TotalSteps ? Resources.Wizard_Next : Resources.Wizard_Finish;

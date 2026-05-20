@@ -484,6 +484,11 @@ Only use this when inclusive mode doesn't work.</value>
   <data name="Wizard_Skip" xml:space="preserve">
     <value>I don't care.</value>
   </data>
+  <data name="Wizard_Skip_Confirm" xml:space="preserve">
+    <value>The plugin may not work as expected if you leave now.
+
+If you want to open this window again, you can use '/pchat wizard'.</value>
+  </data>
   <data name="Wizard_Finish" xml:space="preserve">
     <value>Finish</value>
   </data>

@@ -1091,6 +1091,17 @@ namespace ChatTranslated.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The plugin may not work as expected if you leave now.
+        ///
+        ///If you want to open this window again, you can use &apos;/pchat wizard&apos;..
+        /// </summary>
+        internal static string Wizard_Skip_Confirm {
+            get {
+                return ResourceManager.GetString("Wizard_Skip_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Step {0} of {1}.
         /// </summary>
         internal static string Wizard_Step_Format {
