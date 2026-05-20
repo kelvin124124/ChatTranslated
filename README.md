@@ -8,6 +8,7 @@ A Dalamud plugin for the game FFXIV that allows users to translate in-game chat 
 - LLM Proxy (Gemini model on openrouter)
 
 ## Commands
+```/pchat wizard``` to open setup wizard
 ```/pchat``` to open main UI  
 ```/pchat config``` to open config UI  
 ```/pchat on``` and ```/pchat off``` to turn on/off plugin  
