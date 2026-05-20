@@ -14,13 +14,14 @@ public static class OpenAISettings
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
     private static bool? OpenAIApiKeyValid = null;
 
-    // needs update
     private static readonly string[] OpenAIModels =
     [
-        "gpt-5-mini", "gpt-5",
-        "gpt-4.1-mini", "gpt-4.1",
-        "gpt-4o-mini", "gpt-4o"
-    ];
+        "gpt-5.5", "gpt-5.5-mini", "gpt-5.5-nano",
+        "gpt-5.4", "gpt-5.4-mini", "gpt-5.4-nano",
+        "gpt-5", "gpt-5-mini", "gpt-5-nano",
+        "gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano",
+        "gpt-4o", "gpt-4o-mini"
+    ];  // why so many???
 
     public static void Draw(Configuration configuration)
     {
