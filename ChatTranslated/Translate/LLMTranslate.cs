@@ -100,7 +100,7 @@ internal static partial class OpenAITranslate
             1. First, in a "#### Reasoning" section, BRIEFLY identify FFXIV-specific terms and their meanings
             2. Your response must then include "#### Translation"
             3. Write only the translated text after this header
-            4. If the original text is already in target language, return it WITHOUT modification. Do not expand abbreviations or slang.
+            4. If the original text is already in target language, return it WITHOUT modification. Do not expand abbreviations or slang. Ignore typos.
 
             Example response format:
             #### Reasoning
