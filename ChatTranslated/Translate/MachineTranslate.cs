@@ -17,19 +17,7 @@ internal static class MachineTranslate
 
     public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
     {
-        // Try Bing first, then Google as fallback
-        try
-        {
-            var result = await BingTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
-            if (!string.IsNullOrWhiteSpace(result.Translation) && result.Translation != text)
-                return (result.Translation, TranslationMode.MachineTranslate);
-            Service.pluginLog.Warning("Bing Translate returned an invalid translation.");
-        }
-        catch (Exception ex)
-        {
-            Service.pluginLog.Warning($"Bing failed.\n{ex.Message}");
-        }
-
+        // Try Google first, then Bing as fallback
         try
         {
             var result = await GTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
@@ -40,6 +28,18 @@ internal static class MachineTranslate
         catch (Exception ex)
         {
             Service.pluginLog.Warning($"Google failed.\n{ex.Message}");
+        }
+
+        try
+        {
+            var result = await BingTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
+            if (!string.IsNullOrWhiteSpace(result.Translation) && result.Translation != text)
+                return (result.Translation, TranslationMode.MachineTranslate);
+            Service.pluginLog.Warning("Bing Translate returned an invalid translation.");
+        }
+        catch (Exception ex)
+        {
+            Service.pluginLog.Warning($"Bing failed.\n{ex.Message}");
         }
 
         return (text, null);
