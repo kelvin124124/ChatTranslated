@@ -42,9 +42,11 @@ public sealed class Plugin : IDalamudPlugin
 
         Service.configWindow = new ConfigWindow(this);
         Service.mainWindow = new MainWindow(this);
+        Service.setupWizard = new SetupWizard(this);
 
         WindowSystem.AddWindow(Service.configWindow);
         WindowSystem.AddWindow(Service.mainWindow);
+        WindowSystem.AddWindow(Service.setupWizard);
 
         pluginInterface.UiBuilder.Draw += DrawUI;
         pluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
@@ -95,6 +97,12 @@ public sealed class Plugin : IDalamudPlugin
             Service.configuration.Save();
         }
 
+        if (Service.configuration.Version < 8)
+        {
+            Service.configuration.Version = 8;
+            Service.configuration.Save();
+        }
+
         if (Service.configuration.Proxy_Url != "https://cfv5.kelpcc.com")
         {
             Service.configuration.Proxy_Url = "https://cfv5.kelpcc.com";
@@ -103,6 +111,9 @@ public sealed class Plugin : IDalamudPlugin
 
         _ = LanguageDetector.RebuildDetectorAsync();
         TranslationHandler.LoadCache();
+
+        if (!Service.configuration.ShowedWizard)
+            Service.setupWizard.IsOpen = true;
     }
 
     private void OnContextMenuOpened(IMenuOpenedArgs args)
@@ -205,6 +216,9 @@ public sealed class Plugin : IDalamudPlugin
                 Service.configuration.ChatIntegration = !Service.configuration.ChatIntegration;
                 Service.configuration.Save();
                 OutputChatLine($"Chat integration {(Service.configuration.ChatIntegration ? "enabled" : "disabled")}.");
+                return;
+            case "wizard":
+                Service.setupWizard.IsOpen = true;
                 return;
         }
 

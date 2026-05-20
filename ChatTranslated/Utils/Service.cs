@@ -12,6 +12,7 @@ internal class Service
     internal static ConfigWindow configWindow { get; set; } = null!;
     internal static Configuration configuration { get; set; } = null!;
     internal static MainWindow mainWindow { get; set; } = null!;
+    internal static SetupWizard setupWizard { get; set; } = null!;
     internal static ChatHandler chatHandler { get; set; } = null!;
 
     [PluginService] public static IDalamudPluginInterface pluginInterface { get; set; } = null!;

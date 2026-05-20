@@ -9,12 +9,14 @@ namespace ChatTranslated;
 [Serializable]
 public class Configuration : IPluginConfiguration
 {
-    public int Version { get; set; } = 7;
+    public int Version { get; set; } = 8;
+
     public enum TranslationEngine
     {
         DeepL,
         LLM
     }
+
     public enum TranslationMode
     {
         MachineTranslate,
@@ -23,9 +25,27 @@ public class Configuration : IPluginConfiguration
         LLMProxy,
         LLM
     }
+
+    public enum DetectionSource
+    {
+        Local,
+        Online
+    }
+
+    public enum LanguageSelectionMode
+    {
+        Inclusive,
+        Exclusive
+    }
+
     public TranslationEngine SelectedTranslationEngine { get; set; } = TranslationEngine.DeepL;
+    public DetectionSource SelectedDetectionSource { get; set; } = DetectionSource.Online;
+    public LanguageSelectionMode SelectedLanguageSelectionMode { get; set; } = LanguageSelectionMode.Inclusive;
 
     public List<string> KnownLanguages { get; set; } = [];
+    public List<string> SelectedSourceLanguages { get; set; } = [];
+
+    public bool ShowedWizard { get; set; } = false;
 
     public string SelectedTargetLanguage { get; set; } = "English";
     public string SelectedMainWindowTargetLanguage { get; set; } = "Japanese";

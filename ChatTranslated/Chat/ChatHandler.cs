@@ -65,36 +65,16 @@ internal partial class ChatHandler
             if (PhraseFilter.TryFilter(chatMessage, out var detectedIso))
                 return;
 
-            string? iso = detectedIso;
+            string? iso = detectedIso ?? await DetectLanguageAsync(chatMessage, type);
 
-            // skip detection when phrase filter already identified the language
-            if (iso == null)
-            {
-                // low reliability: translate and detect in parallel, drops when detected as known language
-                // mid reliability: consult google, then act accordingly
-                // high reliability: act accordingly
-                bool hasEnTokens = PhraseFilter.HasEnToken(chatMessage.CleanedContent);
-                var (reliability, linguaIso) = await LanguageDetector.ComputeReliabilityAsync(chatMessage.CleanedContent, type, hasEnTokens);
-                iso = linguaIso;
+            bool shouldTranslate = iso != null
+                && LanguageDetector.ValidIsoCodes.Contains(iso)
+                && !LanguageDetector.IsTargetIsoCode(iso)
+                && (Service.configuration.SelectedLanguageSelectionMode == Configuration.LanguageSelectionMode.Inclusive
+                    ? LanguageDetector.IsSourceLanguageIsoCode(iso)
+                    : !LanguageDetector.IsKnownIsoCode(iso));
 
-                if (reliability < 0.25)
-                {
-                    chatMessage.Context = GetChatMessageContext();
-                    var t = TranslationHandler.TranslateMessage(chatMessage);
-                    var d = LanguageDetector.DetectIsoAsync(chatMessage);
-                    await Task.WhenAll(t, d);
-                    iso = d.Result ?? linguaIso;
-                }
-                else if (reliability < 0.40)
-                {
-                    iso = await LanguageDetector.DetectIsoAsync(chatMessage) ?? linguaIso;
-                }
-            }
-
-            // emoticons usually classified to rare languages in Google translate
-            // if iso not in supported languages, drop the message to avoid mistranslations
-            // also drop if the message is already in the target language
-            if (iso == null || !LanguageDetector.ValidIsoCodes.Contains(iso) || LanguageDetector.IsKnownIsoCode(iso) || LanguageDetector.IsTargetIsoCode(iso))
+            if (!shouldTranslate)
             {
                 Service.mainWindow.PrintToOutput($"{chatMessage.Sender}: {chatMessage.CleanedContent}");
                 return;
@@ -112,6 +92,26 @@ internal partial class ChatHandler
         {
             Service.pluginLog.Error(ex, "Error processing chat message.");
         }
+    }
+
+    private static Task<string?> DetectLanguageAsync(Message message, XivChatType type) =>
+        Service.configuration.SelectedDetectionSource == Configuration.DetectionSource.Online
+            ? DetectOnlineWithFallback(message, type)
+            : DetectLocalAsync(message, type);
+
+    private static async Task<string?> DetectLocalAsync(Message message, XivChatType type)
+    {
+        var (reliability, linguaIso) = await LanguageDetector.ComputeReliabilityAsync(
+            message.CleanedContent, type, PhraseFilter.HasEnToken(message.CleanedContent));
+        return reliability >= 0.40 ? linguaIso : await LanguageDetector.DetectIsoAsync(message) ?? linguaIso;
+    }
+
+    private static async Task<string?> DetectOnlineWithFallback(Message message, XivChatType type)
+    {
+        var iso = await OnlineLanguageDetector.DetectIsoAsync(message.CleanedContent)
+               ?? (await Task.Run(() => LanguageDetector.GetLinguaResult(message.CleanedContent))).Iso;
+        LanguageDetector.UpdateChannelCache(type, iso);
+        return iso;
     }
 
     [GeneratedRegex(@"^<se\.\d+>$")]

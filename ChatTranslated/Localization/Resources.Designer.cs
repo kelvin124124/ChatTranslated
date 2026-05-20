@@ -847,5 +847,329 @@ namespace ChatTranslated.Localization {
                 return ResourceManager.GetString("Yes", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Detection source.
+        /// </summary>
+        internal static string DetectionSource_Label {
+            get {
+                return ResourceManager.GetString("DetectionSource_Label", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Local — on-device (Lingua).
+        /// </summary>
+        internal static string DetectionSource_Local {
+            get {
+                return ResourceManager.GetString("DetectionSource_Local", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Online — Yandex / Google / Bing.
+        /// </summary>
+        internal static string DetectionSource_Online {
+            get {
+                return ResourceManager.GetString("DetectionSource_Online", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Free, fast, runs entirely in-game..
+        /// </summary>
+        internal static string DetectionSource_Local_Help {
+            get {
+                return ResourceManager.GetString("DetectionSource_Local_Help", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to [hl]EVERY chat message is sent to external servers[/hl] (Yandex → Google → Bing)..
+        /// </summary>
+        internal static string DetectionSource_Online_Help {
+            get {
+                return ResourceManager.GetString("DetectionSource_Online_Help", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Selection mode.
+        /// </summary>
+        internal static string SelectionMode_Label {
+            get {
+                return ResourceManager.GetString("SelectionMode_Label", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Inclusive — only translate languages I pick.
+        /// </summary>
+        internal static string SelectionMode_Inclusive {
+            get {
+                return ResourceManager.GetString("SelectionMode_Inclusive", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Exclusive — translate everything except languages I know.
+        /// </summary>
+        internal static string SelectionMode_Exclusive {
+            get {
+                return ResourceManager.GetString("SelectionMode_Exclusive", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to [hl]NOTHING is translated until you add languages to the list below.[/hl].
+        /// </summary>
+        internal static string SelectionMode_Inclusive_Help {
+            get {
+                return ResourceManager.GetString("SelectionMode_Inclusive_Help", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Default is to translate everything..
+        /// </summary>
+        internal static string SelectionMode_Exclusive_Help {
+            get {
+                return ResourceManager.GetString("SelectionMode_Exclusive_Help", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Languages to translate.
+        /// </summary>
+        internal static string SourceLanguages_Header {
+            get {
+                return ResourceManager.GetString("SourceLanguages_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Only messages in these languages will be translated..
+        /// </summary>
+        internal static string SourceLanguages_Explanation {
+            get {
+                return ResourceManager.GetString("SourceLanguages_Explanation", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to ChatTranslated Setup.
+        /// </summary>
+        internal static string Wizard_Title {
+            get {
+                return ResourceManager.GetString("Wizard_Title", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Step {0} of {1}.
+        /// </summary>
+        internal static string Wizard_Step_Format {
+            get {
+                return ResourceManager.GetString("Wizard_Step_Format", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to ChatTranslated!.
+        /// </summary>
+        internal static string Wizard_Welcome_Header {
+            get {
+                return ResourceManager.GetString("Wizard_Welcome_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This short wizard will walk you through the key settings.
+        /// </summary>
+        internal static string Wizard_Welcome_Body {
+            get {
+                return ResourceManager.GetString("Wizard_Welcome_Body", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a target language.
+        /// </summary>
+        internal static string Wizard_TargetLanguage_Header {
+            get {
+                return ResourceManager.GetString("Wizard_TargetLanguage_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Messages will be translated INTO this language..
+        /// </summary>
+        internal static string Wizard_TargetLanguage_Body {
+            get {
+                return ResourceManager.GetString("Wizard_TargetLanguage_Body", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Choose detection &amp; selection behavior.
+        /// </summary>
+        internal static string Wizard_Behavior_Header {
+            get {
+                return ResourceManager.GetString("Wizard_Behavior_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Two independent choices.
+        /// </summary>
+        internal static string Wizard_Behavior_Body {
+            get {
+                return ResourceManager.GetString("Wizard_Behavior_Body", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Pick languages you ALREADY KNOW.
+        /// </summary>
+        internal static string Wizard_Languages_Exclusive_Header {
+            get {
+                return ResourceManager.GetString("Wizard_Languages_Exclusive_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Messages in these languages will NOT be translated..
+        /// </summary>
+        internal static string Wizard_Languages_Exclusive_Body {
+            get {
+                return ResourceManager.GetString("Wizard_Languages_Exclusive_Body", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Pick languages to translate FROM.
+        /// </summary>
+        internal static string Wizard_Languages_Inclusive_Header {
+            get {
+                return ResourceManager.GetString("Wizard_Languages_Inclusive_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Only messages in these languages will be translated..
+        /// </summary>
+        internal static string Wizard_Languages_Inclusive_Body {
+            get {
+                return ResourceManager.GetString("Wizard_Languages_Inclusive_Body", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Pick a translation engine.
+        /// </summary>
+        internal static string Wizard_Engine_Header {
+            get {
+                return ResourceManager.GetString("Wizard_Engine_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to DeepL is great for single-language messages..
+        /// </summary>
+        internal static string Wizard_Engine_Body {
+            get {
+                return ResourceManager.GetString("Wizard_Engine_Body", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to All set!.
+        /// </summary>
+        internal static string Wizard_Finish_Header {
+            get {
+                return ResourceManager.GetString("Wizard_Finish_Header", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Your settings have been saved..
+        /// </summary>
+        internal static string Wizard_Finish_Body {
+            get {
+                return ResourceManager.GetString("Wizard_Finish_Body", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Back.
+        /// </summary>
+        internal static string Wizard_Back {
+            get {
+                return ResourceManager.GetString("Wizard_Back", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Next.
+        /// </summary>
+        internal static string Wizard_Next {
+            get {
+                return ResourceManager.GetString("Wizard_Next", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Skip.
+        /// </summary>
+        internal static string Wizard_Skip {
+            get {
+                return ResourceManager.GetString("Wizard_Skip", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Finish.
+        /// </summary>
+        internal static string Wizard_Finish {
+            get {
+                return ResourceManager.GetString("Wizard_Finish", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to LLM Proxy (no key needed).
+        /// </summary>
+        internal static string Wizard_LLM_Proxy {
+            get {
+                return ResourceManager.GetString("Wizard_LLM_Proxy", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to OpenAI.
+        /// </summary>
+        internal static string Wizard_OpenAI {
+            get {
+                return ResourceManager.GetString("Wizard_OpenAI", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to OpenAI-compatible API.
+        /// </summary>
+        internal static string Wizard_OpenAI_Compatible {
+            get {
+                return ResourceManager.GetString("Wizard_OpenAI_Compatible", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Open the setup wizard..
+        /// </summary>
+        internal static string Command_Wizard_Help {
+            get {
+                return ResourceManager.GetString("Command_Wizard_Help", resourceCulture);
+            }
+        }
     }
 }

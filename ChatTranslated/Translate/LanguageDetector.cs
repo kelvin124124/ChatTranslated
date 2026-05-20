@@ -89,16 +89,19 @@ internal static class LanguageDetector
         return (top.Value, iso);
     }
 
-    private static readonly Dictionary<string, List<string>> IsoToNames =
+    internal static readonly Dictionary<string, List<string>> IsoToNames =
         LanguageTable.GroupBy(e => e.Iso).ToDictionary(g => g.Key, g => g.Select(e => e.Name).ToList());
 
-    // Returns true if the ISO 639-1 code corresponds to one of the user's known languages.
     internal static bool IsKnownIsoCode(string? isoCode) =>
         isoCode != null
         && IsoToNames.TryGetValue(isoCode, out var names)
         && names.Exists(Service.configuration.KnownLanguages.Contains);
 
-    // Returns true if the ISO 639-1 code matches the current target language.
+    internal static bool IsSourceLanguageIsoCode(string? isoCode) =>
+        isoCode != null
+        && IsoToNames.TryGetValue(isoCode, out var names)
+        && names.Exists(Service.configuration.SelectedSourceLanguages.Contains);
+
     internal static bool IsTargetIsoCode(string? isoCode) =>
         isoCode != null
         && NameToIsoCode.TryGetValue(Service.configuration.EffectiveTargetLanguage, out var targetIso)
