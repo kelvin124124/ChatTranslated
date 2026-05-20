@@ -15,7 +15,7 @@ public class SetupWizard : Window
 {
     private const int TotalSteps = 6;
 
-private int step;
+    private int step;
     private bool knownLanguagesChanged;
     private bool showSkipConfirm;
 
@@ -27,11 +27,11 @@ private int step;
         SizeCondition = ImGuiCond.FirstUseEver;
     }
 
-public override void OnOpen()
+    public override void OnOpen()
     {
-        step = 1;
-        knownLanguagesChanged = false;
-        showSkipConfirm = false;
+            step = 1;
+            knownLanguagesChanged = false;
+            showSkipConfirm = false;
     }
 
     public override void Draw()
