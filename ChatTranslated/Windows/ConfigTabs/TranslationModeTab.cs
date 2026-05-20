@@ -33,7 +33,7 @@ public class TranslationModeTab
         }
     }
 
-    private static void DrawEngineSelection(Configuration configuration)
+    internal static void DrawEngineSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted(Resources.TranslationEngine);
@@ -50,7 +50,7 @@ public class TranslationModeTab
         }
     }
 
-    private static void DrawLLMConfiguration(Configuration configuration)
+    internal static void DrawLLMConfiguration(Configuration configuration)
     {
         LLMSettings.DrawContextSettings(configuration);
 

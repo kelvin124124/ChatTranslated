@@ -2,6 +2,7 @@ using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using ChatTranslated.Windows.ConfigTabs;
+using ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Windowing;
 using System;
@@ -58,7 +59,7 @@ public class SetupWizard : Window
 
     private static void DrawWelcome()
     {
-        ImGui.TextUnformatted(Resources.Wizard_Welcome_Header);
+        ImGui.TextWrapped(Resources.Wizard_Welcome_Header);
         ImGui.Spacing();
         ImGui.TextWrapped(Resources.Wizard_Welcome_Body);
     }
@@ -172,19 +173,8 @@ public class SetupWizard : Window
     private static void DrawEngine(Configuration configuration)
     {
         ImGui.TextUnformatted(Resources.Wizard_Engine_Header);
-        ImGui.Spacing();
-        ImGui.TextWrapped(Resources.Wizard_Engine_Body);
-        ImGui.Spacing();
 
-        int selectedEngine = (int)configuration.SelectedTranslationEngine;
-        string[] engineNames = Enum.GetNames<Configuration.TranslationEngine>();
-        ImGui.SetNextItemWidth(220);
-        if (ImGui.Combo("##wizardEngine", ref selectedEngine, engineNames, engineNames.Length))
-        {
-            configuration.SelectedTranslationEngine = (Configuration.TranslationEngine)selectedEngine;
-            TranslationHandler.ClearTranslationCache();
-            configuration.Save();
-        }
+        TranslationModeTab.DrawEngineSelection(configuration);
 
         ImGui.Spacing();
         ImGui.Separator();
@@ -193,86 +183,16 @@ public class SetupWizard : Window
         switch (configuration.SelectedTranslationEngine)
         {
             case Configuration.TranslationEngine.DeepL:
-                DrawDeepLOptions(configuration);
+                ImGui.TextWrapped(Resources.DeepLExplanation);
+                ImGui.Separator();
+                ImGui.Spacing();
+                DeepLSettings.Draw(configuration);
                 break;
             case Configuration.TranslationEngine.LLM:
-                DrawLLMOptions(configuration);
-                break;
-        }
-    }
-
-    private static void DrawDeepLOptions(Configuration configuration)
-    {
-        ImGui.TextWrapped(Resources.DeepLExplanation);
-        ImGui.Spacing();
-        ImGui.TextUnformatted(Resources.DeepLAPIKey);
-        var key = configuration.DeepL_API_Key;
-        ImGui.SetNextItemWidth(-1);
-        if (ImGui.InputText("##wizardDeepLKey", ref key, 100, ImGuiInputTextFlags.Password))
-        {
-            configuration.DeepL_API_Key = key;
-            configuration.Save();
-        }
-    }
-
-    private static void DrawLLMOptions(Configuration configuration)
-    {
-        int provider = configuration.LLM_Provider;
-        if (ImGui.RadioButton(Resources.Wizard_LLM_Proxy + "##wizardProxy", provider == 0))
-        {
-            configuration.LLM_Provider = 0;
-            configuration.Save();
-        }
-        if (ImGui.RadioButton(Resources.Wizard_OpenAI + "##wizardOpenAI", provider == 1))
-        {
-            configuration.LLM_Provider = 1;
-            configuration.Save();
-        }
-        if (ImGui.RadioButton(Resources.Wizard_OpenAI_Compatible + "##wizardOpenAICompat", provider == 2))
-        {
-            configuration.LLM_Provider = 2;
-            configuration.Save();
-        }
-
-        ImGui.Spacing();
-
-        switch (configuration.LLM_Provider)
-        {
-            case 1:
-                ImGui.TextUnformatted(Resources.OpenAIAPIKey);
-                var openAIKey = configuration.OpenAI_API_Key;
-                ImGui.SetNextItemWidth(-1);
-                if (ImGui.InputText("##wizardOpenAIKey", ref openAIKey, 200, ImGuiInputTextFlags.Password))
-                {
-                    configuration.OpenAI_API_Key = openAIKey;
-                    configuration.Save();
-                }
-                break;
-            case 2:
-                ImGui.TextUnformatted(Resources.LLMApiEndpoint);
-                var endpoint = configuration.LLM_API_endpoint;
-                ImGui.SetNextItemWidth(-1);
-                if (ImGui.InputText("##wizardLLMEndpoint", ref endpoint, 200))
-                {
-                    configuration.LLM_API_endpoint = endpoint;
-                    configuration.Save();
-                }
-                ImGui.TextUnformatted(Resources.LLMAPIKey);
-                var llmKey = configuration.LLM_API_Key;
-                ImGui.SetNextItemWidth(-1);
-                if (ImGui.InputText("##wizardLLMKey", ref llmKey, 200, ImGuiInputTextFlags.Password))
-                {
-                    configuration.LLM_API_Key = llmKey;
-                    configuration.Save();
-                }
-                ImGui.TextUnformatted(Resources.LLMModel);
-                var llmModel = configuration.LLM_Model;
-                ImGui.SetNextItemWidth(-1);
-                if (ImGui.InputText("##wizardLLMModel", ref llmModel, 200))
-                {
-                    configuration.LLM_Model = llmModel;
-                    configuration.Save();
-                }
+                ImGui.TextWrapped(Resources.LLM_Explanation);
+                ImGui.Separator();
+                ImGui.Spacing();
+                TranslationModeTab.DrawLLMConfiguration(configuration);
                 break;
         }
     }
