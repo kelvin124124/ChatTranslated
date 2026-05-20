@@ -249,9 +249,6 @@ If DeepL API key is provided below, it will be used as backup instead.</value>
   <data name="OpenAIAPIKey" xml:space="preserve">
     <value>OpenAI API Key</value>
   </data>
-  <data name="OpenAIPriceEstimation" xml:space="preserve">
-    <value>Price estimation: $2.0 /month</value>
-  </data>
   <data name="Party" xml:space="preserve">
     <value>Party</value>
   </data>
@@ -390,34 +387,42 @@ This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
     <value>Failed to translate.</value>
   </data>
   <data name="DetectionSource_Label" xml:space="preserve">
-    <value>Detection source</value>
+    <value>Detection endpoint</value>
   </data>
   <data name="DetectionSource_Local" xml:space="preserve">
-    <value>Local — on-device (Lingua)</value>
+    <value>Local</value>
   </data>
   <data name="DetectionSource_Online" xml:space="preserve">
-    <value>Online — Yandex / Google / Bing</value>
+    <value>Online</value>
   </data>
   <data name="DetectionSource_Local_Help" xml:space="preserve">
-    <value>Free, fast, runs entirely in-game. Less accurate on very short messages.</value>
+    <value>Run locally. [hl]Lower accuracy.[/hl]</value>
   </data>
   <data name="DetectionSource_Online_Help" xml:space="preserve">
-    <value>[hl]EVERY chat message is sent to external servers[/hl] (Yandex → Google → Bing). More accurate, but adds a network call per message. Falls back to local detection if all online services fail.</value>
+    <value>Calls [hl]Yandex[/hl] for language detection.
+Uses Google and Bing as backup.
+
+May hit rate limits.</value>
   </data>
   <data name="SelectionMode_Label" xml:space="preserve">
     <value>Selection mode</value>
   </data>
   <data name="SelectionMode_Inclusive" xml:space="preserve">
-    <value>Inclusive — only translate languages I pick</value>
+    <value>Inclusive — translate selected languages</value>
   </data>
   <data name="SelectionMode_Exclusive" xml:space="preserve">
-    <value>Exclusive — translate everything except languages I know</value>
+    <value>Exclusive — skip selected languages</value>
   </data>
   <data name="SelectionMode_Inclusive_Help" xml:space="preserve">
-    <value>[hl]NOTHING is translated until you add languages to the list below.[/hl] You explicitly list which source languages get translated. Good for "I only want JP translated."</value>
+    <value>Selected language get [hl]translated.[/hl]
+
+May miss translations.</value>
   </data>
   <data name="SelectionMode_Exclusive_Help" xml:space="preserve">
-    <value>Default is to translate everything. You list languages you already understand so they get skipped. Good for "I know EN and JP, translate the rest."</value>
+    <value>Selected language get [hl]skipped.[/hl] 
+
+[hl]May translate slangs unexpectedly.[/hl]
+Only use this when inclusive mode doesn't work.</value>
   </data>
   <data name="SourceLanguages_Header" xml:space="preserve">
     <value>Languages to translate</value>
@@ -432,10 +437,10 @@ This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
     <value>Step {0} of {1}</value>
   </data>
   <data name="Wizard_Welcome_Header" xml:space="preserve">
-    <value>Welcome to ChatTranslated!</value>
+    <value>Thanks for using the plugin. Since some changes have been made to plugin behaviors, you need to review certain settings before using the plugin.</value>
   </data>
   <data name="Wizard_Welcome_Body" xml:space="preserve">
-    <value>This short wizard will walk you through the key settings: target language, how messages are detected, which translation engine to use, and API keys (if needed). You can re-run it any time with /pchat wizard.</value>
+    <value>This short wizard will walk you through the key settings.</value>
   </data>
   <data name="Wizard_TargetLanguage_Header" xml:space="preserve">
     <value>Pick a target language</value>
@@ -444,10 +449,10 @@ This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
     <value>Messages will be translated INTO this language.</value>
   </data>
   <data name="Wizard_Behavior_Header" xml:space="preserve">
-    <value>Choose detection &amp; selection behavior</value>
+    <value>Choose language detection &amp; subsequent behavior</value>
   </data>
   <data name="Wizard_Behavior_Body" xml:space="preserve">
-    <value>Two independent choices: where to run language detection, and how to interpret your language list.</value>
+    <value>Two independent choices: whether to run language detection locally, and how to interpret your language list.</value>
   </data>
   <data name="Wizard_Languages_Exclusive_Header" xml:space="preserve">
     <value>Pick languages you ALREADY KNOW</value>
@@ -464,9 +469,6 @@ This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
   <data name="Wizard_Engine_Header" xml:space="preserve">
     <value>Pick a translation engine</value>
   </data>
-  <data name="Wizard_Engine_Body" xml:space="preserve">
-    <value>DeepL is great for single-language messages. LLM is better for long or mixed-language messages.</value>
-  </data>
   <data name="Wizard_Finish_Header" xml:space="preserve">
     <value>All set!</value>
   </data>
@@ -480,13 +482,13 @@ This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
     <value>Next</value>
   </data>
   <data name="Wizard_Skip" xml:space="preserve">
-    <value>Skip</value>
+    <value>I don't care.</value>
   </data>
   <data name="Wizard_Finish" xml:space="preserve">
     <value>Finish</value>
   </data>
   <data name="Wizard_LLM_Proxy" xml:space="preserve">
-    <value>LLM Proxy (no key needed)</value>
+    <value>LLM Proxy</value>
   </data>
   <data name="Wizard_OpenAI" xml:space="preserve">
     <value>OpenAI</value>
