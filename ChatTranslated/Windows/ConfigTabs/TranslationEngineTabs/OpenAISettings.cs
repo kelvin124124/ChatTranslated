@@ -66,8 +66,6 @@ public static class OpenAISettings
         }
 
         ImGui.Spacing();
-        ImGui.TextUnformatted(Resources.OpenAIPriceEstimation);
-        ImGui.Spacing();
         ImGui.TextColored(new Vector4(1, 0, 0, 1), Resources.APIKeyWarn);
 
         ImGui.Spacing();
