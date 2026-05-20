@@ -29,9 +29,9 @@ public class SetupWizard : Window
 
     public override void OnOpen()
     {
-            step = 1;
-            knownLanguagesChanged = false;
-            showSkipConfirm = false;
+        step = 1;
+        knownLanguagesChanged = false;
+        showSkipConfirm = false;
     }
 
     public override void Draw()
