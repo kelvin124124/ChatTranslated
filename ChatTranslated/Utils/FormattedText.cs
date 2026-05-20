@@ -47,8 +47,16 @@ internal static partial class FormattedText
                 ImGui.TextUnformatted(token);
                 ImGui.PopStyleColor();
 
-                x += w;
-                firstOnLine = false;
+                if (token.Contains('\n'))
+                {
+                    x = 0;
+                    firstOnLine = true;
+                }
+                else
+                {
+                    x += w;
+                    firstOnLine = false;
+                }
             }
         }
     }
