@@ -59,7 +59,7 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
@@ -385,5 +385,123 @@ Ce prompt est partagé entre l'API OpenAI et les API compatibles OpenAI.</value>
   </data>
   <data name="Main_Window_Translation_Failed" xml:space="preserve">
     <value>Échec de la traduction.</value>
+  </data>
+  <data name="DetectionSource_Label" xml:space="preserve">
+    <value>Detection endpoint</value>
+  </data>
+  <data name="DetectionSource_Local" xml:space="preserve">
+    <value>Local</value>
+  </data>
+  <data name="DetectionSource_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="DetectionSource_Local_Help" xml:space="preserve">
+    <value>Run locally. [hl]Lower accuracy.[/hl]</value>
+  </data>
+  <data name="DetectionSource_Online_Help" xml:space="preserve">
+    <value>Calls [hl]Yandex[/hl] for language detection.
+Uses Google and Bing as backup.
+
+May hit rate limits.</value>
+  </data>
+  <data name="SelectionMode_Label" xml:space="preserve">
+    <value>Selection mode</value>
+  </data>
+  <data name="SelectionMode_Inclusive" xml:space="preserve">
+    <value>Inclusive — translate selected languages</value>
+  </data>
+  <data name="SelectionMode_Exclusive" xml:space="preserve">
+    <value>Exclusive — skip selected languages</value>
+  </data>
+  <data name="SelectionMode_Inclusive_Help" xml:space="preserve">
+    <value>Selected language get [hl]translated.[/hl]
+
+May miss translations.</value>
+  </data>
+  <data name="SelectionMode_Exclusive_Help" xml:space="preserve">
+    <value>Selected language get [hl]skipped.[/hl] 
+
+[hl]May translate slangs unexpectedly.[/hl]
+Only use this when inclusive mode doesn't work.</value>
+  </data>
+  <data name="SourceLanguages_Header" xml:space="preserve">
+    <value>Languages to translate</value>
+  </data>
+  <data name="SourceLanguages_Explanation" xml:space="preserve">
+    <value>Only messages in these languages will be translated.</value>
+  </data>
+  <data name="Wizard_Title" xml:space="preserve">
+    <value>ChatTranslated Setup</value>
+  </data>
+  <data name="Wizard_Step_Format" xml:space="preserve">
+    <value>Step {0} of {1}</value>
+  </data>
+  <data name="Wizard_Welcome_Header" xml:space="preserve">
+    <value>Thanks for using the plugin. Since some changes have been made to plugin behaviors, you need to review certain settings before using the plugin.</value>
+  </data>
+  <data name="Wizard_Welcome_Body" xml:space="preserve">
+    <value>This short wizard will walk you through the key settings.</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Header" xml:space="preserve">
+    <value>Pick a target language</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Body" xml:space="preserve">
+    <value>Messages will be translated INTO this language.</value>
+  </data>
+  <data name="Wizard_Behavior_Header" xml:space="preserve">
+    <value>Choose language detection &amp; subsequent behavior</value>
+  </data>
+  <data name="Wizard_Behavior_Body" xml:space="preserve">
+    <value>Two independent choices: whether to run language detection locally, and how to interpret your language list.</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Header" xml:space="preserve">
+    <value>Pick languages you ALREADY KNOW</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Body" xml:space="preserve">
+    <value>Messages in these languages will NOT be translated.</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Header" xml:space="preserve">
+    <value>Pick languages to translate FROM</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Body" xml:space="preserve">
+    <value>Only messages in these languages will be translated.</value>
+  </data>
+  <data name="Wizard_Engine_Header" xml:space="preserve">
+    <value>Pick a translation engine</value>
+  </data>
+  <data name="Wizard_Finish_Header" xml:space="preserve">
+    <value>All set!</value>
+  </data>
+  <data name="Wizard_Finish_Body" xml:space="preserve">
+    <value>Your settings have been saved. You can adjust them any time from the config window, or re-run this wizard with /pchat wizard.</value>
+  </data>
+  <data name="Wizard_Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Wizard_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Wizard_Skip" xml:space="preserve">
+    <value>I don't care.</value>
+  </data>
+  <data name="Wizard_Finish" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="Wizard_LLM_Proxy" xml:space="preserve">
+    <value>LLM Proxy</value>
+  </data>
+  <data name="Wizard_OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
+  </data>
+  <data name="Wizard_OpenAI_Compatible" xml:space="preserve">
+    <value>OpenAI-compatible API</value>
+  </data>
+  <data name="Command_Wizard_Help" xml:space="preserve">
+    <value>Open the setup wizard.</value>
+  </data>
+  <data name="Wizard_Skip_Confirm" xml:space="preserve">
+    <value>The plugin may not work as expected if you leave now.
+
+If you want to open this window again, you can use '/pchat wizard'.</value>
   </data>
 </root>
