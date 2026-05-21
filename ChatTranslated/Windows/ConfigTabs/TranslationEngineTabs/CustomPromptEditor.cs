@@ -21,21 +21,15 @@ public static class CustomPromptEditor
         }
 
         if (configuration.UseCustomPrompt)
-        {
             DrawEditor(configuration);
-        }
     }
 
     private static void DrawEditor(Configuration configuration)
     {
         ImGui.TextUnformatted(Resources.CustomSystemPrompt);
-
         ImGui.SameLine();
         ImGui.TextDisabled("?");
-        if (ImGui.IsItemHovered())
-        {
-            ImGui.SetTooltip(Resources.CustomPromptTooltip);
-        }
+        if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.CustomPromptTooltip);
 
         ImGui.InputTextMultiline("##CustomPrompt", ref CustomPromptInput, 10000, new Vector2(-1, 200));
 
@@ -43,7 +37,6 @@ public static class CustomPromptEditor
         {
             configuration.LLM_CustomPrompt = CustomPromptInput;
             configuration.Save();
-
             TranslationHandler.ClearTranslationCache();
             Plugin.OutputChatLine("Custom prompt saved successfully.");
         }
@@ -51,11 +44,9 @@ public static class CustomPromptEditor
         ImGui.SameLine();
         if (ImGui.Button("Reset to Default##CustomPromptReset"))
         {
-            configuration.LLM_CustomPrompt = OpenAITranslate.BuildPrompt("{targetLanguage}", null);
-            configuration.Save();
-
+            configuration.LLM_CustomPrompt = OpenAITranslate.DefaultPrompt;
             CustomPromptInput = configuration.LLM_CustomPrompt;
-
+            configuration.Save();
             TranslationHandler.ClearTranslationCache();
             Plugin.OutputChatLine("Prompt reset to default.");
         }
@@ -63,6 +54,6 @@ public static class CustomPromptEditor
 
     private static string GetCustomPromptInput() =>
         string.IsNullOrWhiteSpace(Service.configuration.LLM_CustomPrompt)
-            ? OpenAITranslate.BuildPrompt("{targetLanguage}", null)
+            ? OpenAITranslate.DefaultPrompt
             : Service.configuration.LLM_CustomPrompt;
 }

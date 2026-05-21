@@ -26,7 +26,7 @@ internal static partial class OpenAITranslate
 
         var prompt = Service.configuration.UseCustomPrompt
             ? BuildCustomPrompt(targetLanguage, message.Context)
-            : BuildPrompt(targetLanguage, message.Context);
+            : BuildPrompt(message.Context);
 
         var userMsg = $"Translate to: {targetLanguage}\n#### Original Text\n{message.OriginalText}";
         var requestData = new
@@ -87,31 +87,29 @@ internal static partial class OpenAITranslate
         }
     }
 
-    public static string BuildPrompt(string targetLanguage, string? context)
-    {
-        var prompt = """
-            You are a precise translator for FFXIV game content.
+    // Target language is communicated via the user message ("Translate to: ..."), not the system prompt.
+    public const string DefaultPrompt = """
+        You are a precise translator for FFXIV game content.
 
-            TRANSLATION RULES:
-            1. Be mindful of FFXIV-specific terms, but translate all content appropriately
-            2. Preserve all formatting and tone.
+        TRANSLATION RULES:
+        1. Be mindful of FFXIV-specific terms, but translate all content appropriately
+        2. Preserve all formatting and tone.
 
-            OUTPUT RULES:
-            1. First, in a "#### Reasoning" section, BRIEFLY identify FFXIV-specific terms and their meanings
-            2. Your response must then include "#### Translation"
-            3. Write only the translated text after this header
-            4. If the original text is already in target language, return it WITHOUT modification. Do not expand abbreviations or slang. Ignore typos.
+        OUTPUT RULES:
+        1. First, in a "#### Reasoning" section, BRIEFLY identify FFXIV-specific terms and their meanings
+        2. Your response must then include "#### Translation"
+        3. Write only the translated text after this header
+        4. If the original text is already in target language, return it WITHOUT modification. Do not expand abbreviations or slang. Ignore typos.
 
-            Example response format:
-            #### Reasoning
-            [BRIEF analysis and translation process]
+        Example response format:
+        #### Reasoning
+        [BRIEF analysis and translation process]
 
-            #### Translation
-            [Only the translated text goes here]
-            """;
+        #### Translation
+        [Only the translated text goes here]
+        """;
 
-        return AppendContext(prompt, context);
-    }
+    public static string BuildPrompt(string? context) => AppendContext(DefaultPrompt, context);
 
     public static string BuildCustomPrompt(string targetLanguage, string? context)
     {
