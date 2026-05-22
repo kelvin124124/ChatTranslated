@@ -95,14 +95,19 @@ internal static class TranslationHandler
     {
         targetLanguage ??= Service.configuration.EffectiveTargetLanguage;
 
-        lock (TranslationCacheLock)
+        var cacheEnabled = Service.configuration.EnableTranslationCache;
+
+        if (cacheEnabled)
         {
-            if (TranslationCacheIndex.TryGetValue(message.OriginalText, out var cachedNode))
+            lock (TranslationCacheLock)
             {
-                TranslationCache.Remove(cachedNode);
-                TranslationCache.AddLast(cachedNode);
-                message.TranslatedContent = cachedNode.Value.Value;
-                return message;
+                if (TranslationCacheIndex.TryGetValue(message.OriginalText, out var cachedNode))
+                {
+                    TranslationCache.Remove(cachedNode);
+                    TranslationCache.AddLast(cachedNode);
+                    message.TranslatedContent = cachedNode.Value.Value;
+                    return message;
+                }
             }
         }
 
@@ -124,7 +129,8 @@ internal static class TranslationHandler
         message.TranslatedContent = translatedText;
         message.TranslationMode = mode;
 
-        if (message.Source != MessageSource.MainWindow
+        if (cacheEnabled
+            && message.Source != MessageSource.MainWindow
             && message.TranslationMode != Configuration.TranslationMode.MachineTranslate)
         {
             bool added;

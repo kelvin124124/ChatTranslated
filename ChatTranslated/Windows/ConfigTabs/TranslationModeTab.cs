@@ -11,6 +11,7 @@ public class TranslationModeTab
     public void Draw(Configuration configuration)
     {
         DrawEngineSelection(configuration);
+        DrawCacheToggle(configuration);
 
         ImGui.Separator();
         ImGui.Spacing();
@@ -48,6 +49,21 @@ public class TranslationModeTab
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
         }
+    }
+
+    internal static void DrawCacheToggle(Configuration configuration)
+    {
+        var enableCache = configuration.EnableTranslationCache;
+        if (ImGui.Checkbox("Cache translations", ref enableCache))
+        {
+            configuration.EnableTranslationCache = enableCache;
+            configuration.Save();
+            if (!enableCache)
+                TranslationHandler.ClearTranslationCache();
+        }
+
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Reuse previous translations for identical messages (up to 120 entries, persisted to disk).\nDisable to always re-translate.");
     }
 
     internal static void DrawLLMConfiguration(Configuration configuration)
