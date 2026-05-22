@@ -2,6 +2,7 @@ using ChatTranslated.Chat;
 using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
+using ChatTranslated.Windows.ConfigTabs;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Windowing;
@@ -19,7 +20,7 @@ public partial class MainWindow : Window
 {
     private static readonly StringBuilder sb = new();
     private static readonly Lock sbLock = new();
-    private readonly string[] languages = ["Japanese", "English", "German", "French"];
+    private static readonly string[] languages = LanguagesTab.SupportedLanguages;
 
     internal string outputText = "";
     internal string inputText = "";
@@ -86,9 +87,15 @@ public partial class MainWindow : Window
 
     private void DrawInputField(float scale)
     {
-        int langIndex = Math.Max(0, Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage));
+        int langIndex = Array.IndexOf(languages, Service.configuration.SelectedMainWindowTargetLanguage);
+        if (langIndex < 0)
+        {
+            langIndex = 0;
+            Service.configuration.SelectedMainWindowTargetLanguage = languages[0];
+            Service.configuration.Save();
+        }
         string[] localizedLangs = [.. languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l)];
-        ImGui.SetNextItemWidth(80 * scale);
+        ImGui.SetNextItemWidth(140 * scale);
         if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
         {
             Service.configuration.SelectedMainWindowTargetLanguage = languages[langIndex];
@@ -104,7 +111,7 @@ public partial class MainWindow : Window
             if (!string.IsNullOrWhiteSpace(inputText))
             {
                 var message = new Message(null!, MessageSource.MainWindow, inputText) { Context = "null" };
-                Task.Run(() => ProcessInputAsync(message));
+                _ = ProcessInputAsync(message);
                 inputText = "";
             }
         }
@@ -126,21 +133,30 @@ public partial class MainWindow : Window
         ImGui.TextUnformatted(reverseTranslatedText);
     }
 
-    private async void ProcessInputAsync(Message message)
+    private async Task ProcessInputAsync(Message message)
     {
-        var translatedMessage = await TranslationHandler.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
-
-        if (translatedMessage.TranslatedContent == null)
+        try
         {
+            var translatedMessage = await TranslationHandler.TranslateMessage(message, Service.configuration.SelectedMainWindowTargetLanguage);
+
+            if (translatedMessage.TranslatedContent == null)
+            {
+                translatedText = Resources.Main_Window_Translation_Failed;
+                reverseTranslatedText = "";
+                return;
+            }
+
+            translatedText = translatedMessage.TranslatedContent;
+
+            var (reverseText, _) = await MachineTranslate.Translate(translatedMessage.TranslatedContent, Service.configuration.SelectedPluginLanguage);
+            reverseTranslatedText = reverseText;
+        }
+        catch (Exception ex)
+        {
+            Service.pluginLog.Warning($"[MainWindow] Translation failed: {ex.Message}");
             translatedText = Resources.Main_Window_Translation_Failed;
             reverseTranslatedText = "";
-            return;
         }
-
-        translatedText = translatedMessage.TranslatedContent;
-
-        var (reverseText, _) = await MachineTranslate.Translate(translatedMessage.TranslatedContent, Service.configuration.SelectedPluginLanguage);
-        reverseTranslatedText = reverseText;
     }
 
     public void PrintToOutput(string message)
