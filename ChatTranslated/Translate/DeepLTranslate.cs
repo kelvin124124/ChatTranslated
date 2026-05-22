@@ -3,7 +3,6 @@ using Dalamud.Utility;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -64,8 +63,8 @@ internal static class DeepLTranslate
 // Based on DeepLX: https://github.com/OwO-Network/DeepLX
 internal static class DeeplsTranslate
 {
-    private static readonly Random Random = new();
-    private const string BaseUrl = "https://www2.deepl.com/jsonrpc";
+    private const string BaseUrl = "https://oneshot-free.www.deepl.com/v1/translate";
+    private static readonly string InstanceId = Guid.NewGuid().ToString();
 
     public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
     {
@@ -74,63 +73,31 @@ internal static class DeeplsTranslate
             return ("Target language not supported by DeepL.", null);
         }
 
-        var id = ((ulong)Random.Next(8300000, 8400000) * 1000) + 1;
-        var timestamp = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
-        var iCount = message.Count(c => c == 'i');
-        var adjustedTimestamp = iCount == 0 ? timestamp : timestamp - (timestamp % (iCount + 1)) + iCount + 1;
+        var targetLang = targetLanguage switch
+        {
+            "Chinese (Simplified)" => "ZH-HANS",
+            "Chinese (Traditional)" => "ZH-HANT",
+            _ => langCode!
+        };
 
         var requestBody = new
         {
-            jsonrpc = "2.0",
-            method = "LMT_handle_jobs",
-            @params = new
+            text = new[] { message },
+            target_lang = targetLang,
+            usage_type = "Translate",
+            app_information = new
             {
-                commonJobParams = new
-                {
-                    mode = "translate",
-                    formality = "undefined",
-                    transcribe_as = "romanize",
-                    advancedMode = false,
-                    textType = "plaintext",
-                    wasSpoken = false,
-                    regionalVariant = targetLanguage switch
-                    {
-                        "Chinese (Simplified)" => "ZH-HANS",
-                        "Chinese (Traditional)" => "ZH-HANT",
-                        _ => default
-                    }
-                },
-                lang = new
-                {
-                    source_lang_user_selected = "auto",
-                    target_lang = langCode,
-                    source_lang_computed = "AUTO",
-                },
-                jobs = new[]
-                {
-                    new
-                    {
-                        kind = "default",
-                        preferred_num_beams = 4,
-                        raw_en_context_before = (string[])[],
-                        raw_en_context_after = (string[])[],
-                        sentences = new[]
-                        {
-                            new { prefix = "", text = message, id = 0 }
-                        }
-                    }
-                },
-                timestamp = adjustedTimestamp
-            },
-            id
+                os = "brex_macOS",
+                os_version = "brex_chrome_120.0.0.0",
+                app_version = "1.86.0",
+                app_build = "chrome_web_store",
+                instance_id = InstanceId
+            }
         };
-
-        var postDataJson = JsonSerializer.Serialize(requestBody);
-        postDataJson = postDataJson.Replace("\"method\":\"", (id + 5) % 29 == 0 || (id + 3) % 13 == 0 ? "\"method\" : \"" : "\"method\": \"");
 
         using var request = new HttpRequestMessage(HttpMethod.Post, BaseUrl)
         {
-            Content = new StringContent(postDataJson, Encoding.UTF8, "application/json")
+            Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json")
         };
 
         SetHeaders(request);
@@ -142,10 +109,7 @@ internal static class DeeplsTranslate
 
             using var jsonDoc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
             var translated = jsonDoc.RootElement
-                .GetProperty("result")
                 .GetProperty("translations")[0]
-                .GetProperty("beams")[0]
-                .GetProperty("sentences")[0]
                 .GetProperty("text")
                 .GetString();
 
@@ -169,15 +133,14 @@ internal static class DeeplsTranslate
 
     private static readonly KeyValuePair<string, string>[] StaticHeaders =
     [
+        new("Authorization", "None"),
         new("Accept-Language", "en-US,en;q=0.9"),
-        new("Accept-Encoding", "gzip, deflate"),
-        new("Origin", "https://www.deepl.com"),
-        new("Referer", "https://www.deepl.com/"),
+        new("Accept-Encoding", "gzip, deflate, br"),
+        new("Origin", "chrome-extension://cofdbpoegempjloogbagkncekinflcnj"),
         new("Sec-Fetch-Dest", "empty"),
         new("Sec-Fetch-Mode", "cors"),
-        new("Sec-Fetch-Site", "same-site"),
-        new("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36 Edg/141.0.0.0"),
-        new("Content-Type", "application/json"),
+        new("Sec-Fetch-Site", "cross-site"),
+        new("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"),
     ];
 
     private static void SetHeaders(HttpRequestMessage request)
