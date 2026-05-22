@@ -81,6 +81,8 @@ public class Configuration : IPluginConfiguration
     public bool UseCustomPrompt { get; set; } = false;
     public string LLM_CustomPrompt { get; set; } = "";
 
+    public bool EnableTranslationCache { get; set; } = true;
+
     public string MagicString { get; set; } = "";
 
     public void Save()
