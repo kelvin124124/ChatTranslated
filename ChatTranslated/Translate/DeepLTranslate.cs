@@ -66,19 +66,24 @@ internal static class DeeplsTranslate
     private const string BaseUrl = "https://oneshot-free.www.deepl.com/v1/translate";
     private static readonly string InstanceId = Guid.NewGuid().ToString();
 
+    private static readonly Dictionary<string, string> NameToOneshotLang = BuildNameToOneshotLang();
+
+    private static Dictionary<string, string> BuildNameToOneshotLang()
+    {
+        var dict = new Dictionary<string, string>();
+        foreach (var (name, _, iso) in LanguageDetector.LanguageTable)
+            dict[name] = iso;
+        dict["English"] = "en-US";
+        dict["Portuguese"] = "pt-BR";
+        dict["Chinese (Simplified)"] = "zh-Hans";
+        dict["Chinese (Traditional)"] = "zh-Hant";
+        return dict;
+    }
+
     public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
     {
-        if (!DeepLTranslate.TryGetLanguageCode(targetLanguage, out string? langCode))
-        {
+        if (!NameToOneshotLang.TryGetValue(targetLanguage, out var targetLang))
             return ("Target language not supported by DeepL.", null);
-        }
-
-        var targetLang = targetLanguage switch
-        {
-            "Chinese (Simplified)" => "ZH-HANS",
-            "Chinese (Traditional)" => "ZH-HANT",
-            _ => langCode!
-        };
 
         var requestBody = new
         {
