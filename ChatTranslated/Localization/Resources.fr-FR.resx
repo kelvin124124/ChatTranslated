@@ -121,20 +121,20 @@
     <value>Alliance</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>Warning: API key will be stored as plain text in plugin configuration,
-any malware or third party plugins may have access to the key.</value>
+    <value>Attention : la clé API sera stockée sous forme de texte brut dans la configuration du plugin,
+tout logiciel malveillant ou plugin tiers peut avoir accès à la clé.</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>Apply</value>
+    <value>Appliquer</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>Chat Integration</value>
+    <value>Intégration du chat</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>Chinese (Simplified)</value>
+    <value>Chinois (Simplifié)</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>Chinese (Traditional)</value>
+    <value>Chinois (Traditionnel)</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
     <value>CrossLinkShell1</value>
@@ -164,344 +164,344 @@ any malware or third party plugins may have access to the key.</value>
     <value>CrossParty</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>You will be forced to use Google translate if you use custom languages.</value>
+    <value>Vous serez obligé(e) d'utiliser Google Traduction si vous utilisez des langues personnalisées.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
-    <value>Custom target language</value>
+    <value>Langue cible personnalisée</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API Key (Optional)</value>
+    <value>Clé API DeepL (Facultatif)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL will be used to translate chat messages. 
-Google and Bing translate will be used as backup.
-If DeepL API key is provided below, it will be used as backup instead.</value>
+    <value>DeepL sera utilisé pour traduire les messages de chat. 
+Google et Bing Traduction seront utilisés en tant que sauvegarde.
+Si une clé API DeepL est fournie ci-dessous, elle sera utilisée en tant que sauvegarde à la place.</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>It's okay!</value>
+    <value>Ce n'est pas grave!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>Enable in duties</value>
+    <value>Activer en mission</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
-    <value>Enable plugin</value>
+    <value>Activer le plugin</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>English</value>
+    <value>Anglais</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
     <value>FreeCompany</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>French</value>
+    <value>Français</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>Generic</value>
+    <value>Générique</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>German</value>
+    <value>Allemand</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>Good game!</value>
+    <value>Bon jeu !</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>Japanese</value>
+    <value>Japonais</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>Korean</value>
+    <value>Coréen</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>LLMProvider</value>
+    <value>Fournisseur LLM</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>Self-hosted Gemini proxy</value>
+    <value>Proxy Gemini auto-hébergé</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>Ls1</value>
+    <value>LS1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>Ls2</value>
+    <value>LS2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>Ls3</value>
+    <value>LS3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>Ls4</value>
+    <value>LS4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>Ls5</value>
+    <value>LS5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>Ls6</value>
+    <value>LS6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>Ls7</value>
+    <value>LS7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>Ls8</value>
+    <value>LS8</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
+    <value>Non</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
     <value>NoviceNetwork</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
-    <value>OpenAI API Key</value>
+    <value>Clé API OpenAI</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>Party</value>
+    <value>Groupe</value>
   </data>
   <data name="PluginUILanguage" xml:space="preserve">
-    <value>Plugin UI Language</value>
+    <value>Langue du plugin</value>
   </data>
   <data name="CustomEmote" xml:space="preserve">
-    <value>Custom Emote</value>
+    <value>Émote</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>PvPTeam</value>
+    <value>Équipe PvP</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>Say</value>
+    <value>Dire</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
-    <value>See language list</value>
+    <value>Voir la liste des langues</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>Shout</value>
+    <value>Crier</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>Spanish</value>
+    <value>Espagnol</value>
   </data>
   <data name="TargetLang" xml:space="preserve">
-    <value>Translate to</value>
+    <value>Traduire en</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>TellIncoming</value>
+    <value>Message entrant</value>
   </data>
   <data name="Translate" xml:space="preserve">
-    <value>Translate</value>
+    <value>Traduire</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>Translation Engine</value>
+    <value>Moteur de traduction</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
-    <value>Use Custom Language</value>
+    <value>Utiliser une langue personnalisée</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
-    <value>Let's do it!</value>
+    <value>Allons-y!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>Yell</value>
+    <value>Hurler</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+    <value>Oui</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>Hide original message when outputting translated message</value>
+    <value>Masquer le message original lors de l’affichage du message traduit</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Général</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>Languages</value>
+    <value>Langues</value>
   </data>
   <data name="ChatChannels" xml:space="preserve">
-    <value>Chat Channels</value>
+    <value>Canaux de chat</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
-    <value>Translation Mode</value>
+    <value>Mode de traduction</value>
   </data>
   <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
-    <value>Show colored text when outputting translated message</value>
+    <value>Afficher du texte coloré lors de la sortie du message traduit</value>
   </data>
   <data name="ChatIntegration_UseEchoChannel" xml:space="preserve">
-    <value>Output translated message to Echo channel</value>
+    <value>Envoyer le message traduit au canal Echo</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>Copy</value>
+    <value>Copier</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>May be restricted if you live in unsupported region.</value>
+    <value>Peut être restreint si vous vivez dans une région non prise en charge.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
-    <value>Any custom providers with OpenAI-compatible API.</value>
+    <value>Tout fournisseur personnalisé avec API compatible OpenAI.</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>Models without system role are not supported.</value>
+    <value>Les modèles sans rôle système ne sont pas pris en charge.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
-    <value>Api key</value>
+    <value>Clé API</value>
   </data>
   <data name="LLMModel" xml:space="preserve">
-    <value>Model</value>
+    <value>Modèle</value>
   </data>
   <data name="LLMApiEndpoint" xml:space="preserve">
-    <value>Endpoint URL</value>
+    <value>URL de point d'accès</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>Note: 
-DeepL have better accuracy in single-language translation. 
-LLM is better only if message is long or contain multiple languages.</value>
+    <value>Remarque : 
+DeepL offre une meilleure précision dans la traduction monolingue. 
+LLM est meilleur uniquement si le message est long ou contient plusieurs langues.</value>
   </data>
   <data name="UseContext" xml:space="preserve">
-    <value>Use context</value>
+    <value>Utiliser le contexte</value>
   </data>
   <data name="ChatContextExplanation" xml:space="preserve">
-    <value>Include messages in current chat tab in LLM prompt.</value>
+    <value>Inclure les messages de l'onglet de chat actuel dans l'invite LLM.</value>
   </data>
   <data name="LLMApiEndpointExample" xml:space="preserve">
-    <value>Example:
+    <value>Exemple:
 https://api.openai.com/v1/chat/completions
 https://openrouter.ai/api/v1/chat/completions
 https://api.deepseek.com/chat/completions</value>
   </data>
   <data name="UseCustomPrompt" xml:space="preserve">
-    <value>Use custom prompt</value>
+    <value>Utiliser un prompt personnalisé</value>
   </data>
   <data name="CustomSystemPrompt" xml:space="preserve">
-    <value>Custom system prompt</value>
+    <value>Prompt système personnalisé</value>
   </data>
   <data name="CustomPromptTooltip" xml:space="preserve">
-    <value>Customize the system prompt for translation.
+    <value>Personnalisez le prompt système pour la traduction.
 
-The text below shows the current prompt.
-Use {targetLanguage} as a placeholder for the target language.
-Context (if enabled) will be appended automatically.
+Le texte ci-dessous affiche le prompt actuel.
+Utilisez {targetLanguage} comme espace réservé pour la langue cible.
+Le contexte (si activé) sera ajouté automatiquement.
 
-This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
+Ce prompt est partagé entre l'API OpenAI et les API compatibles OpenAI.</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
-    <value>My Languages</value>
+    <value>Mes langues</value>
   </data>
   <data name="My_Languages_Explanation" xml:space="preserve">
-    <value>Messages in these languages will not be translated.</value>
+    <value>Les messages dans ces langues ne seront pas traduits.</value>
   </data>
   <data name="Main_Window_Reverse_translation" xml:space="preserve">
-    <value>Reverse translation</value>
+    <value>Traduction inversée</value>
   </data>
   <data name="Main_Window_Translated_text" xml:space="preserve">
-    <value>Translated text</value>
+    <value>Texte traduit</value>
   </data>
   <data name="Main_Window_Translation_Failed" xml:space="preserve">
-    <value>Failed to translate.</value>
+    <value>Échec de la traduction.</value>
   </data>
   <data name="DetectionSource_Label" xml:space="preserve">
-    <value>Detection endpoint</value>
+    <value>Point de détection</value>
   </data>
   <data name="DetectionSource_Local" xml:space="preserve">
     <value>Local</value>
   </data>
   <data name="DetectionSource_Online" xml:space="preserve">
-    <value>Online</value>
+    <value>En ligne</value>
   </data>
   <data name="DetectionSource_Local_Help" xml:space="preserve">
-    <value>Run locally. [hl]Lower accuracy.[/hl]</value>
+    <value>Exécution locale. [hl]Précision réduite.[/hl]</value>
   </data>
   <data name="DetectionSource_Online_Help" xml:space="preserve">
-    <value>Calls [hl]Yandex[/hl] for language detection.
-Uses Google and Bing as backup.
+    <value>Appelle [hl]Yandex[/hl] pour la détection de langue.
+Utilise Google et Bing comme solutions de secours.
 
-May hit rate limits.</value>
+Peut atteindre les limites de débit.</value>
   </data>
   <data name="SelectionMode_Label" xml:space="preserve">
-    <value>Selection mode</value>
+    <value>Mode de sélection</value>
   </data>
   <data name="SelectionMode_Inclusive" xml:space="preserve">
-    <value>Inclusive — translate selected languages</value>
+    <value>Inclusif — traduire les langues sélectionnées</value>
   </data>
   <data name="SelectionMode_Exclusive" xml:space="preserve">
-    <value>Exclusive — skip selected languages</value>
+    <value>Exclusif — ignorer les langues sélectionnées</value>
   </data>
   <data name="SelectionMode_Inclusive_Help" xml:space="preserve">
-    <value>Selected language get [hl]translated.[/hl]
+    <value>Les langues sélectionnées sont [hl]traduites.[/hl]
 
-May miss translations.</value>
+Peut manquer des traductions.</value>
   </data>
   <data name="SelectionMode_Exclusive_Help" xml:space="preserve">
-    <value>Selected language get [hl]skipped.[/hl] 
+    <value>Les langues sélectionnées sont [hl]ignorées.[/hl]
 
-[hl]May translate slangs unexpectedly.[/hl]
-Only use this when inclusive mode doesn't work.</value>
+[hl]Peut traduire l’argot de manière inattendue.[/hl]
+À n’utiliser que si le mode inclusif ne fonctionne pas.</value>
   </data>
   <data name="SourceLanguages_Header" xml:space="preserve">
-    <value>Languages to translate</value>
+    <value>Langues à traduire</value>
   </data>
   <data name="SourceLanguages_Explanation" xml:space="preserve">
-    <value>Only messages in these languages will be translated.</value>
+    <value>Seuls les messages dans ces langues seront traduits.</value>
   </data>
   <data name="Wizard_Title" xml:space="preserve">
-    <value>ChatTranslated Setup</value>
+    <value>Configuration de ChatTranslated</value>
   </data>
   <data name="Wizard_Step_Format" xml:space="preserve">
-    <value>Step {0} of {1}</value>
+    <value>Étape {0} sur {1}</value>
   </data>
   <data name="Wizard_Welcome_Header" xml:space="preserve">
-    <value>Thanks for using the plugin. Since some changes have been made to plugin behaviors, you need to review certain settings before using the plugin.</value>
+    <value>Merci d'utiliser le plugin. Comme des modifications ont été apportées au comportement du plugin, vous devez vérifier certains paramètres avant de l'utiliser.</value>
   </data>
   <data name="Wizard_Welcome_Body" xml:space="preserve">
-    <value>This short wizard will walk you through the key settings.</value>
+    <value>Cet assistant rapide vous guidera à travers les paramètres clés.</value>
   </data>
   <data name="Wizard_TargetLanguage_Header" xml:space="preserve">
-    <value>Pick a target language</value>
+    <value>Choisissez une langue cible</value>
   </data>
   <data name="Wizard_TargetLanguage_Body" xml:space="preserve">
-    <value>Messages will be translated INTO this language.</value>
+    <value>Les messages seront traduits en cette langue.</value>
   </data>
   <data name="Wizard_Behavior_Header" xml:space="preserve">
-    <value>Choose language detection &amp; subsequent behavior</value>
+    <value>Choisissez la détection de la langue et le comportement ultérieur</value>
   </data>
   <data name="Wizard_Behavior_Body" xml:space="preserve">
-    <value>Two independent choices: whether to run language detection locally, and how to interpret your language list.</value>
+    <value>Deux choix indépendants : exécuter la détection de langue localement ou non, et comment interpréter votre liste de langues.</value>
   </data>
   <data name="Wizard_Languages_Exclusive_Header" xml:space="preserve">
-    <value>Pick languages you ALREADY KNOW</value>
+    <value>Choisissez les langues que vous connaissez DÉJÀ</value>
   </data>
   <data name="Wizard_Languages_Exclusive_Body" xml:space="preserve">
-    <value>Messages in these languages will NOT be translated.</value>
+    <value>Les messages dans ces langues ne seront pas traduits.</value>
   </data>
   <data name="Wizard_Languages_Inclusive_Header" xml:space="preserve">
-    <value>Pick languages to translate FROM</value>
+    <value>Choisissez les langues à traduire</value>
   </data>
   <data name="Wizard_Languages_Inclusive_Body" xml:space="preserve">
-    <value>Only messages in these languages will be translated.</value>
+    <value>Seuls les messages dans ces langues seront traduits.</value>
   </data>
   <data name="Wizard_Engine_Header" xml:space="preserve">
-    <value>Pick a translation engine</value>
+    <value>Choisissez un moteur de traduction</value>
   </data>
   <data name="Wizard_Finish_Header" xml:space="preserve">
-    <value>All set!</value>
+    <value>Tout est prêt !</value>
   </data>
   <data name="Wizard_Finish_Body" xml:space="preserve">
-    <value>Your settings have been saved. You can adjust them any time from the config window, or re-run this wizard with /pchat wizard.</value>
+    <value>Vos paramètres ont été enregistrés. Vous pouvez les modifier à tout moment depuis la fenêtre de configuration, ou relancer cet assistant avec /pchat wizard.</value>
   </data>
   <data name="Wizard_Back" xml:space="preserve">
-    <value>Back</value>
+    <value>Précédent</value>
   </data>
   <data name="Wizard_Next" xml:space="preserve">
-    <value>Next</value>
+    <value>Suivant</value>
   </data>
   <data name="Wizard_Skip" xml:space="preserve">
-    <value>I don't care.</value>
+    <value>Peu importe.</value>
   </data>
   <data name="Wizard_Skip_Confirm" xml:space="preserve">
-    <value>The plugin may not work as expected if you leave now.
+    <value>Le plugin pourrait ne pas fonctionner comme prévu si vous quittez maintenant.
 
-If you want to open this window again, you can use '/pchat wizard'.</value>
+Si vous voulez rouvrir cette fenêtre, vous pouvez utiliser '/pchat wizard'.</value>
   </data>
   <data name="Wizard_Finish" xml:space="preserve">
-    <value>Finish</value>
+    <value>Terminer</value>
   </data>
   <data name="Wizard_LLM_Proxy" xml:space="preserve">
-    <value>LLM Proxy</value>
+    <value>Proxy LLM</value>
   </data>
   <data name="Wizard_OpenAI" xml:space="preserve">
     <value>OpenAI</value>
   </data>
   <data name="Wizard_OpenAI_Compatible" xml:space="preserve">
-    <value>OpenAI-compatible API</value>
+    <value>API compatible OpenAI</value>
   </data>
   <data name="Command_Wizard_Help" xml:space="preserve">
-    <value>Open the setup wizard.</value>
+    <value>Ouvrir l'assistant de configuration.</value>
   </data>
 </root>
