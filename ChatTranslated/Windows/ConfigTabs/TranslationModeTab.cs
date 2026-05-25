@@ -64,6 +64,13 @@ public class TranslationModeTab
 
         if (ImGui.IsItemHovered())
             ImGui.SetTooltip("Reuse previous translations for identical messages (up to 120 entries, persisted to disk).\nDisable to always re-translate.");
+
+        ImGui.SameLine();
+        if (ImGui.Button("Clear cache"))
+            TranslationHandler.ClearTranslationCache();
+
+        if (ImGui.IsItemHovered())
+            ImGui.SetTooltip("Remove all cached translations.");
     }
 
     internal static void DrawLLMConfiguration(Configuration configuration)
