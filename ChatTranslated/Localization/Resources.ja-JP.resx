@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -181,7 +181,7 @@
     <value>大丈夫です！</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>コンテンツ中に有効にする</value>
+    <value>戦闘コンテンツ内で有効にする</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
     <value>プラグインを有効にする</value>
@@ -385,5 +385,123 @@ https://api.deepseek.com/chat/completions</value>
   </data>
   <data name="Main_Window_Translation_Failed" xml:space="preserve">
     <value>翻訳に失敗しました。</value>
+  </data>
+  <data name="DetectionSource_Label" xml:space="preserve">
+    <value>検出方法</value>
+  </data>
+  <data name="DetectionSource_Local" xml:space="preserve">
+    <value>ローカル</value>
+  </data>
+  <data name="DetectionSource_Online" xml:space="preserve">
+    <value>オンライン</value>
+  </data>
+  <data name="DetectionSource_Local_Help" xml:space="preserve">
+    <value>ローカルで実行。[hl]精度は低下します。[/hl]</value>
+  </data>
+  <data name="DetectionSource_Online_Help" xml:space="preserve">
+    <value>[hl]Yandex[/hl]を呼び出して言語検出を行います。
+バックアップとしてGoogleとBingを使用します。
+
+レート制限に達する場合があります。</value>
+  </data>
+  <data name="SelectionMode_Label" xml:space="preserve">
+    <value>選択モード</value>
+  </data>
+  <data name="SelectionMode_Inclusive" xml:space="preserve">
+    <value>包含 — 選択した言語を翻訳</value>
+  </data>
+  <data name="SelectionMode_Exclusive" xml:space="preserve">
+    <value>除外 — 選択した言語をスキップ</value>
+  </data>
+  <data name="SelectionMode_Inclusive_Help" xml:space="preserve">
+    <value>選択した言語が[hl]翻訳されます。[/hl]
+
+翻訳が漏れることがあります。</value>
+  </data>
+  <data name="SelectionMode_Exclusive_Help" xml:space="preserve">
+    <value>選択した言語は[hl]スキップ[/hl]されます。
+
+[hl]スラングが予期せず翻訳される可能性があります。[/hl]
+このモードは、包括モードが機能しない場合にのみ使用してください。</value>
+  </data>
+  <data name="SourceLanguages_Header" xml:space="preserve">
+    <value>翻訳する言語</value>
+  </data>
+  <data name="SourceLanguages_Explanation" xml:space="preserve">
+    <value>これらの言語のメッセージのみ翻訳されます。</value>
+  </data>
+  <data name="Wizard_Title" xml:space="preserve">
+    <value>ChatTranslated セットアップ</value>
+  </data>
+  <data name="Wizard_Step_Format" xml:space="preserve">
+    <value>ステップ {0} / {1}</value>
+  </data>
+  <data name="Wizard_Welcome_Header" xml:space="preserve">
+    <value>プラグインをご利用いただきありがとうございます。プラグインの動作に変更が加えられたため、ご利用前にいくつかの設定を確認する必要があります。</value>
+  </data>
+  <data name="Wizard_Welcome_Body" xml:space="preserve">
+    <value>この短いウィザードで主要な設定を行います。</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Header" xml:space="preserve">
+    <value>ターゲット言語を選択</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Body" xml:space="preserve">
+    <value>メッセージはこの言語に翻訳されます。</value>
+  </data>
+  <data name="Wizard_Behavior_Header" xml:space="preserve">
+    <value>言語検出とその後の動作を選択</value>
+  </data>
+  <data name="Wizard_Behavior_Body" xml:space="preserve">
+    <value>二つの独立した選択：言語検出をローカルで実行するかどうか、および言語リストの解釈方法。</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Header" xml:space="preserve">
+    <value>既に知っている言語を選択</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Body" xml:space="preserve">
+    <value>これらの言語でのメッセージは翻訳されません。</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Header" xml:space="preserve">
+    <value>翻訳元の言語を選択</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Body" xml:space="preserve">
+    <value>これらの言語でのメッセージのみ翻訳されます。</value>
+  </data>
+  <data name="Wizard_Engine_Header" xml:space="preserve">
+    <value>翻訳エンジンを選択</value>
+  </data>
+  <data name="Wizard_Finish_Header" xml:space="preserve">
+    <value>準備完了！</value>
+  </data>
+  <data name="Wizard_Finish_Body" xml:space="preserve">
+    <value>設定は保存されました。いつでも設定ウィンドウから調整するか、/pchat wizard でこのウィザードを再実行できます。</value>
+  </data>
+  <data name="Wizard_Back" xml:space="preserve">
+    <value>戻る</value>
+  </data>
+  <data name="Wizard_Next" xml:space="preserve">
+    <value>次へ</value>
+  </data>
+  <data name="Wizard_Skip" xml:space="preserve">
+    <value>気にしない。</value>
+  </data>
+  <data name="Wizard_Skip_Confirm" xml:space="preserve">
+    <value>今閉じると、プラグインが正常に動作しない可能性があります。
+
+このウィンドウを再度開くには、'/pchat wizard' を使用してください。</value>
+  </data>
+  <data name="Wizard_Finish" xml:space="preserve">
+    <value>完了</value>
+  </data>
+  <data name="Wizard_LLM_Proxy" xml:space="preserve">
+    <value>LLM プロキシ</value>
+  </data>
+  <data name="Wizard_OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
+  </data>
+  <data name="Wizard_OpenAI_Compatible" xml:space="preserve">
+    <value>OpenAI 互換 API</value>
+  </data>
+  <data name="Command_Wizard_Help" xml:space="preserve">
+    <value>セットアップウィザードを開く。</value>
   </data>
 </root>

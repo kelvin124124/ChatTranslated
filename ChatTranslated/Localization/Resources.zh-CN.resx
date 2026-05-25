@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -385,5 +385,123 @@ https://api.deepseek.com/chat/completions</value>
   </data>
   <data name="Main_Window_Translation_Failed" xml:space="preserve">
     <value>翻译失败。</value>
+  </data>
+  <data name="DetectionSource_Label" xml:space="preserve">
+    <value>检测端点</value>
+  </data>
+  <data name="DetectionSource_Local" xml:space="preserve">
+    <value>本地</value>
+  </data>
+  <data name="DetectionSource_Online" xml:space="preserve">
+    <value>在线</value>
+  </data>
+  <data name="DetectionSource_Local_Help" xml:space="preserve">
+    <value>本地运行。[hl]准确率较低。[/hl]</value>
+  </data>
+  <data name="DetectionSource_Online_Help" xml:space="preserve">
+    <value>调用 [hl]Yandex[/hl] 进行语言检测。
+使用 Google 和 Bing 作为备份。
+
+可能会触及速率限制。</value>
+  </data>
+  <data name="SelectionMode_Label" xml:space="preserve">
+    <value>选择模式</value>
+  </data>
+  <data name="SelectionMode_Inclusive" xml:space="preserve">
+    <value>包含 — 翻译所选语言</value>
+  </data>
+  <data name="SelectionMode_Exclusive" xml:space="preserve">
+    <value>排除 — 跳过所选语言</value>
+  </data>
+  <data name="SelectionMode_Inclusive_Help" xml:space="preserve">
+    <value>所选语言将被[hl]翻译。[/hl]
+
+可能会遗漏翻译。</value>
+  </data>
+  <data name="SelectionMode_Exclusive_Help" xml:space="preserve">
+    <value>所选语言将被[hl]跳过。[/hl] 
+
+[hl]可能会意外翻译俚语。[/hl]
+仅在包含模式无效时使用此模式。</value>
+  </data>
+  <data name="SourceLanguages_Header" xml:space="preserve">
+    <value>待翻译语言</value>
+  </data>
+  <data name="SourceLanguages_Explanation" xml:space="preserve">
+    <value>仅翻译这些语言的消息。</value>
+  </data>
+  <data name="Wizard_Title" xml:space="preserve">
+    <value>ChatTranslated 设置</value>
+  </data>
+  <data name="Wizard_Step_Format" xml:space="preserve">
+    <value>第{0}步，共{1}步</value>
+  </data>
+  <data name="Wizard_Welcome_Header" xml:space="preserve">
+    <value>感谢使用本插件。由于插件行为发生了一些变化，您需要在使用前检查某些设置。</value>
+  </data>
+  <data name="Wizard_Welcome_Body" xml:space="preserve">
+    <value>这个简短的向导将引导您完成关键设置。</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Header" xml:space="preserve">
+    <value>选择目标语言</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Body" xml:space="preserve">
+    <value>消息将被翻译成这种语言。</value>
+  </data>
+  <data name="Wizard_Behavior_Header" xml:space="preserve">
+    <value>选择语言检测及后续行为</value>
+  </data>
+  <data name="Wizard_Behavior_Body" xml:space="preserve">
+    <value>两个独立选择：是否在本地运行语言检测，以及如何解释您的语言列表。</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Header" xml:space="preserve">
+    <value>选择您已掌握的语言</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Body" xml:space="preserve">
+    <value>这些语言的消息将不会被翻译。</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Header" xml:space="preserve">
+    <value>选择翻译的源语言</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Body" xml:space="preserve">
+    <value>只有这些语言的消息会被翻译。</value>
+  </data>
+  <data name="Wizard_Engine_Header" xml:space="preserve">
+    <value>选择翻译引擎</value>
+  </data>
+  <data name="Wizard_Finish_Header" xml:space="preserve">
+    <value>全部设置完毕！</value>
+  </data>
+  <data name="Wizard_Finish_Body" xml:space="preserve">
+    <value>您的设置已保存。您可以随时从配置窗口进行调整，或使用 /pchat wizard 重新运行此向导。</value>
+  </data>
+  <data name="Wizard_Back" xml:space="preserve">
+    <value>返回</value>
+  </data>
+  <data name="Wizard_Next" xml:space="preserve">
+    <value>下一步</value>
+  </data>
+  <data name="Wizard_Skip" xml:space="preserve">
+    <value>我不在乎。</value>
+  </data>
+  <data name="Wizard_Skip_Confirm" xml:space="preserve">
+    <value>如果您现在离开，插件可能无法按预期工作。
+
+如果您想再次打开此窗口，可以使用 '/pchat wizard'。</value>
+  </data>
+  <data name="Wizard_Finish" xml:space="preserve">
+    <value>完成</value>
+  </data>
+  <data name="Wizard_LLM_Proxy" xml:space="preserve">
+    <value>LLM 代理</value>
+  </data>
+  <data name="Wizard_OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
+  </data>
+  <data name="Wizard_OpenAI_Compatible" xml:space="preserve">
+    <value>OpenAI 兼容 API</value>
+  </data>
+  <data name="Command_Wizard_Help" xml:space="preserve">
+    <value>打开设置向导。</value>
   </data>
 </root>

@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -128,7 +128,7 @@ jede Malware oder Drittanbieter-Plugins können auf den Schlüssel zugreifen.</v
     <value>Anwenden</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>Chat Integration</value>
+    <value>Chat-Integration</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
     <value>Chinesisch (vereinfacht)</value>
@@ -385,5 +385,122 @@ Dieser Prompt wird zwischen OpenAI und OpenAI-kompatiblen APIs geteilt.</value>
   </data>
   <data name="Main_Window_Translation_Failed" xml:space="preserve">
     <value>Übersetzung fehlgeschlagen.</value>
+  </data>
+  <data name="DetectionSource_Label" xml:space="preserve">
+    <value>Erkennungs-Endpunkt</value>
+  </data>
+  <data name="DetectionSource_Local" xml:space="preserve">
+    <value>Lokal</value>
+  </data>
+  <data name="DetectionSource_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="DetectionSource_Local_Help" xml:space="preserve">
+    <value>Lokal ausführen. [hl]Geringere Genauigkeit.[/hl]</value>
+  </data>
+  <data name="DetectionSource_Online_Help" xml:space="preserve">
+    <value>Ruft [hl]Yandex[/hl] zur Spracherkennung auf.
+Verwendet Google und Bing als Backup.
+
+Kann Ratenlimits erreichen.</value>
+  </data>
+  <data name="SelectionMode_Label" xml:space="preserve">
+    <value>Auswahlmodus</value>
+  </data>
+  <data name="SelectionMode_Inclusive" xml:space="preserve">
+    <value>Inklusiv — ausgewählte Sprachen übersetzen</value>
+  </data>
+  <data name="SelectionMode_Exclusive" xml:space="preserve">
+    <value>Exklusiv — ausgewählte Sprachen überspringen</value>
+  </data>
+  <data name="SelectionMode_Inclusive_Help" xml:space="preserve">
+    <value>Ausgewählte Sprache wird [hl]übersetzt.[/hl]
+Kann Übersetzungen verpassen.</value>
+  </data>
+  <data name="SelectionMode_Exclusive_Help" xml:space="preserve">
+    <value>Ausgewählte Sprache wird [hl]übersprungen.[/hl] 
+
+[hl]Kann Slangs unerwartet übersetzen.[/hl]
+Nur verwenden, wenn der inklusive Modus nicht funktioniert.</value>
+  </data>
+  <data name="SourceLanguages_Header" xml:space="preserve">
+    <value>Zu übersetzende Sprachen</value>
+  </data>
+  <data name="SourceLanguages_Explanation" xml:space="preserve">
+    <value>Nur Nachrichten in diesen Sprachen werden übersetzt.</value>
+  </data>
+  <data name="Wizard_Title" xml:space="preserve">
+    <value>ChatTranslated Einrichtung</value>
+  </data>
+  <data name="Wizard_Step_Format" xml:space="preserve">
+    <value>Schritt {0} von {1}</value>
+  </data>
+  <data name="Wizard_Welcome_Header" xml:space="preserve">
+    <value>Danke, dass du das Plugin verwendest. Da sich einige Verhaltensweisen des Plugins geändert haben, musst du bestimmte Einstellungen überprüfen, bevor du es verwendest.</value>
+  </data>
+  <data name="Wizard_Welcome_Body" xml:space="preserve">
+    <value>Dieser kurze Assistent führt dich durch die wichtigsten Einstellungen.</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Header" xml:space="preserve">
+    <value>Zielsprache auswählen</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Body" xml:space="preserve">
+    <value>Nachrichten werden in diese Sprache übersetzt.</value>
+  </data>
+  <data name="Wizard_Behavior_Header" xml:space="preserve">
+    <value>Spracherkennung und anschließendes Verhalten wählen</value>
+  </data>
+  <data name="Wizard_Behavior_Body" xml:space="preserve">
+    <value>Zwei unabhängige Entscheidungen: ob die Spracherkennung lokal ausgeführt werden soll und wie deine Sprachliste interpretiert wird.</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Header" xml:space="preserve">
+    <value>Wähle Sprachen, die du BEREITS KENNST</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Body" xml:space="preserve">
+    <value>Nachrichten in diesen Sprachen werden NICHT übersetzt.</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Header" xml:space="preserve">
+    <value>Wähle Sprachen, AUS denen übersetzt wird</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Body" xml:space="preserve">
+    <value>Nur Nachrichten in diesen Sprachen werden übersetzt.</value>
+  </data>
+  <data name="Wizard_Engine_Header" xml:space="preserve">
+    <value>Wähle eine Übersetzungsmaschine</value>
+  </data>
+  <data name="Wizard_Finish_Header" xml:space="preserve">
+    <value>Fertig!</value>
+  </data>
+  <data name="Wizard_Finish_Body" xml:space="preserve">
+    <value>Ihre Einstellungen wurden gespeichert. Sie können sie jederzeit im Konfigurationsfenster anpassen oder diesen Assistenten mit /pchat wizard erneut ausführen.</value>
+  </data>
+  <data name="Wizard_Back" xml:space="preserve">
+    <value>Zurück</value>
+  </data>
+  <data name="Wizard_Next" xml:space="preserve">
+    <value>Weiter</value>
+  </data>
+  <data name="Wizard_Skip" xml:space="preserve">
+    <value>Das ist mir egal.</value>
+  </data>
+  <data name="Wizard_Skip_Confirm" xml:space="preserve">
+    <value>Das Plugin funktioniert möglicherweise nicht wie erwartet, wenn Sie jetzt abbrechen.
+
+Wenn Sie dieses Fenster erneut öffnen möchten, können Sie '/pchat wizard' verwenden.</value>
+  </data>
+  <data name="Wizard_Finish" xml:space="preserve">
+    <value>Fertigstellen</value>
+  </data>
+  <data name="Wizard_LLM_Proxy" xml:space="preserve">
+    <value>LLM-Proxy</value>
+  </data>
+  <data name="Wizard_OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
+  </data>
+  <data name="Wizard_OpenAI_Compatible" xml:space="preserve">
+    <value>OpenAI-kompatible API</value>
+  </data>
+  <data name="Command_Wizard_Help" xml:space="preserve">
+    <value>Öffnet den Einrichtungsassistenten.</value>
   </data>
 </root>
