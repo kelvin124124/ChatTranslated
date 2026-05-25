@@ -96,7 +96,7 @@ public partial class MainWindow : Window
         }
         string[] localizedLangs = [.. languages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l)];
         ImGui.SetNextItemWidth(140 * scale);
-        if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, languages.Length))
+        if (ImGui.Combo("##LanguageCombo", ref langIndex, localizedLangs, 7))
         {
             Service.configuration.SelectedMainWindowTargetLanguage = languages[langIndex];
             TranslationHandler.ClearTranslationCache();

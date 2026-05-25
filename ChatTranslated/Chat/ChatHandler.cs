@@ -133,13 +133,13 @@ internal partial class ChatHandler
         if (trimmed.Length < 2)
         {
             Service.pluginLog.Debug("Filtered: short/empty.");
-        return true;
-    }
+            return true;
+        }
         if (!HasTranslatableContentRegex().IsMatch(trimmed))
-    {
+        {
             Service.pluginLog.Debug("Filtered: no translatable content.");
             return true;
-    }
+        }
         if (PureLinkRegex().IsMatch(trimmed))
         {
             Service.pluginLog.Debug("Filtered: pure link.");

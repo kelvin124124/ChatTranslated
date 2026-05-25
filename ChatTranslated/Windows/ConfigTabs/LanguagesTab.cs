@@ -5,6 +5,7 @@ using Dalamud.Bindings.ImGui;
 using GTranslate;
 using System;
 using System.Linq;
+using System.Numerics;
 
 namespace ChatTranslated.Windows.ConfigTabs;
 
@@ -82,6 +83,7 @@ public class LanguagesTab
 
         if (ImGui.CollapsingHeader(header + idSuffix, ImGuiTreeNodeFlags.DefaultOpen))
         {
+            ImGui.BeginChild("languageList" + idSuffix, new Vector2(0, 7 * ImGui.GetFrameHeightWithSpacing()), true);
             foreach (string language in SupportedLanguages)
             {
                 bool isSelected = bound.Contains(language);
@@ -96,6 +98,7 @@ public class LanguagesTab
                         _ = LanguageDetector.RebuildDetectorAsync();
                 }
             }
+            ImGui.EndChild();
         }
 
         ImGui.TextDisabled(explanation);
@@ -113,7 +116,7 @@ public class LanguagesTab
         string[] localizedLanguages = [.. SupportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang)];
 
         if (configuration.UseCustomLanguage) ImGui.BeginDisabled();
-        if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedLanguages, SupportedLanguages.Length))
+        if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedLanguages, 7))
         {
             configuration.SelectedTargetLanguage = SupportedLanguages[currentIndex];
             TranslationHandler.ClearTranslationCache();
