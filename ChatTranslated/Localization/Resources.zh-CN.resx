@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -118,272 +118,390 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="gp" xml:space="preserve">
-    <value>团队</value>
+    <value>Alliance</value>
   </data>
   <data name="APIKeyWarn" xml:space="preserve">
-    <value>警告：API 密钥将以纯文本形式存储在插件配置中，
-任何恶意软件或第三方插件都可以访问该密钥。</value>
+    <value>Warning: API key will be stored as plain text in plugin configuration,
+any malware or third party plugins may have access to the key.</value>
   </data>
   <data name="Apply" xml:space="preserve">
-    <value>应用</value>
+    <value>Apply</value>
   </data>
   <data name="ChatIntegration" xml:space="preserve">
-    <value>聊天集成</value>
+    <value>Chat Integration</value>
   </data>
   <data name="Chinese (Simplified)" xml:space="preserve">
-    <value>简体中文</value>
+    <value>Chinese (Simplified)</value>
   </data>
   <data name="Chinese (Traditional)" xml:space="preserve">
-    <value>繁体中文</value>
+    <value>Chinese (Traditional)</value>
   </data>
   <data name="CrossLinkShell1" xml:space="preserve">
-    <value>跨服通讯贝1</value>
+    <value>CrossLinkShell1</value>
   </data>
   <data name="CrossLinkShell2" xml:space="preserve">
-    <value>跨服通讯贝2</value>
+    <value>CrossLinkShell2</value>
   </data>
   <data name="CrossLinkShell3" xml:space="preserve">
-    <value>跨服通讯贝3</value>
+    <value>CrossLinkShell3</value>
   </data>
   <data name="CrossLinkShell4" xml:space="preserve">
-    <value>跨服通讯贝4</value>
+    <value>CrossLinkShell4</value>
   </data>
   <data name="CrossLinkShell5" xml:space="preserve">
-    <value>跨服通讯贝5</value>
+    <value>CrossLinkShell5</value>
   </data>
   <data name="CrossLinkShell6" xml:space="preserve">
-    <value>跨服通讯贝6</value>
+    <value>CrossLinkShell6</value>
   </data>
   <data name="CrossLinkShell7" xml:space="preserve">
-    <value>跨服通讯贝7</value>
+    <value>CrossLinkShell7</value>
   </data>
   <data name="CrossLinkShell8" xml:space="preserve">
-    <value>跨服通讯贝8</value>
+    <value>CrossLinkShell8</value>
   </data>
   <data name="CrossParty" xml:space="preserve">
-    <value>跨服小队</value>
+    <value>CrossParty</value>
   </data>
   <data name="CustomTargetLanguageExplanation" xml:space="preserve">
-    <value>如果您使用自定义语言，将强制使用Google翻译。</value>
+    <value>You will be forced to use Google translate if you use custom languages.</value>
   </data>
   <data name="CustomTargetLanguageHeader" xml:space="preserve">
-    <value>自定义目标语言</value>
+    <value>Custom target language</value>
   </data>
   <data name="DeepLAPIKey" xml:space="preserve">
-    <value>DeepL API密钥（非必要）</value>
+    <value>DeepL API Key (Optional)</value>
   </data>
   <data name="DeepLExplanation" xml:space="preserve">
-    <value>DeepL 将用于翻译聊天讯息。
-Google 和 Bing 翻译将被用作备用。
-如果提供了下面的 DeepL API 密钥，将用作备用。</value>
+    <value>DeepL will be used to translate chat messages. 
+Google and Bing translate will be used as backup.
+If DeepL API key is provided below, it will be used as backup instead.</value>
   </data>
   <data name="DomaStr" xml:space="preserve">
-    <value>别在意。</value>
+    <value>It's okay!</value>
   </data>
   <data name="EnableInDuties" xml:space="preserve">
-    <value>在任务中启用</value>
+    <value>Enable in duties</value>
   </data>
   <data name="EnablePlugin" xml:space="preserve">
-    <value>启用插件</value>
+    <value>Enable plugin</value>
   </data>
   <data name="English" xml:space="preserve">
-    <value>英语</value>
+    <value>English</value>
   </data>
   <data name="FreeCompany" xml:space="preserve">
-    <value>部队</value>
+    <value>FreeCompany</value>
   </data>
   <data name="French" xml:space="preserve">
-    <value>法语</value>
+    <value>French</value>
   </data>
   <data name="GenericChannels" xml:space="preserve">
-    <value>通用</value>
+    <value>Generic</value>
   </data>
   <data name="German" xml:space="preserve">
-    <value>德语</value>
+    <value>German</value>
   </data>
   <data name="GGstr" xml:space="preserve">
-    <value>打得好！辛苦了！</value>
+    <value>Good game!</value>
   </data>
   <data name="Japanese" xml:space="preserve">
-    <value>日语</value>
+    <value>Japanese</value>
   </data>
   <data name="Korean" xml:space="preserve">
-    <value>韩语</value>
+    <value>Korean</value>
   </data>
   <data name="LLMProvider" xml:space="preserve">
-    <value>LLM提供者</value>
+    <value>LLMProvider</value>
   </data>
   <data name="LLM_Proxy_Explanation" xml:space="preserve">
-    <value>自托管 Gemini 代理</value>
+    <value>Self-hosted Gemini proxy</value>
   </data>
   <data name="Ls1" xml:space="preserve">
-    <value>通讯贝1</value>
+    <value>Ls1</value>
   </data>
   <data name="Ls2" xml:space="preserve">
-    <value>通讯贝2</value>
+    <value>Ls2</value>
   </data>
   <data name="Ls3" xml:space="preserve">
-    <value>通讯贝3</value>
+    <value>Ls3</value>
   </data>
   <data name="Ls4" xml:space="preserve">
-    <value>通讯贝4</value>
+    <value>Ls4</value>
   </data>
   <data name="Ls5" xml:space="preserve">
-    <value>通讯贝5</value>
+    <value>Ls5</value>
   </data>
   <data name="Ls6" xml:space="preserve">
-    <value>通讯贝6</value>
+    <value>Ls6</value>
   </data>
   <data name="Ls7" xml:space="preserve">
-    <value>通讯贝7</value>
+    <value>Ls7</value>
   </data>
   <data name="Ls8" xml:space="preserve">
-    <value>通讯贝8</value>
+    <value>Ls8</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>否</value>
+    <value>No</value>
   </data>
   <data name="NoviceNetwork" xml:space="preserve">
-    <value>新人频道</value>
+    <value>NoviceNetwork</value>
   </data>
   <data name="OpenAIAPIKey" xml:space="preserve">
-    <value>OpenAI API 密钥</value>
+    <value>OpenAI API Key</value>
   </data>
   <data name="Party" xml:space="preserve">
-    <value>小队</value>
+    <value>Party</value>
   </data>
   <data name="PluginUILanguage" xml:space="preserve">
-    <value>插件语言</value>
+    <value>Plugin UI Language</value>
   </data>
   <data name="CustomEmote" xml:space="preserve">
-    <value>表情</value>
+    <value>Custom Emote</value>
   </data>
   <data name="PvPTeam" xml:space="preserve">
-    <value>战队</value>
+    <value>PvPTeam</value>
   </data>
   <data name="Say" xml:space="preserve">
-    <value>说话</value>
+    <value>Say</value>
   </data>
   <data name="SeeLanguageList" xml:space="preserve">
-    <value>查看语言列表</value>
+    <value>See language list</value>
   </data>
   <data name="Shout" xml:space="preserve">
-    <value>喊话</value>
+    <value>Shout</value>
   </data>
   <data name="Spanish" xml:space="preserve">
-    <value>西班牙语</value>
+    <value>Spanish</value>
   </data>
   <data name="TargetLang" xml:space="preserve">
-    <value>翻译至</value>
+    <value>Translate to</value>
   </data>
   <data name="TellIncoming" xml:space="preserve">
-    <value>悄悄话</value>
+    <value>TellIncoming</value>
   </data>
   <data name="Translate" xml:space="preserve">
-    <value>翻译</value>
+    <value>Translate</value>
   </data>
   <data name="TranslationEngine" xml:space="preserve">
-    <value>翻译引擎</value>
+    <value>Translation Engine</value>
   </data>
   <data name="UseCustomTargetLanguage" xml:space="preserve">
-    <value>使用自定义语言</value>
+    <value>Use Custom Language</value>
   </data>
   <data name="WelcomeStr" xml:space="preserve">
-    <value>请多指教！</value>
+    <value>Let's do it!</value>
   </data>
   <data name="Yell" xml:space="preserve">
-    <value>呼喊</value>
+    <value>Yell</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>是</value>
+    <value>Yes</value>
   </data>
   <data name="ChatIntegration_HideOriginal" xml:space="preserve">
-    <value>输出翻译讯息时隐藏原始讯息</value>
+    <value>Hide original message when outputting translated message</value>
   </data>
   <data name="General" xml:space="preserve">
-    <value>通用</value>
+    <value>General</value>
   </data>
   <data name="Languages" xml:space="preserve">
-    <value>语言</value>
+    <value>Languages</value>
   </data>
   <data name="ChatChannels" xml:space="preserve">
-    <value>聊天频道</value>
+    <value>Chat Channels</value>
   </data>
   <data name="Translation Mode" xml:space="preserve">
-    <value>翻译模式</value>
+    <value>Translation Mode</value>
   </data>
   <data name="ChatIntegration_ShowColoredText" xml:space="preserve">
-    <value>输出翻译讯息时显示彩色文本</value>
+    <value>Show colored text when outputting translated message</value>
   </data>
   <data name="ChatIntegration_UseEchoChannel" xml:space="preserve">
-    <value>将翻译的信息输出到Echo频道</value>
+    <value>Output translated message to Echo channel</value>
   </data>
   <data name="Copy" xml:space="preserve">
-    <value>复制</value>
+    <value>Copy</value>
   </data>
   <data name="OpenAIAPIExplanation" xml:space="preserve">
-    <value>如果你居住在不支持的地区，可能会受到限制。</value>
+    <value>May be restricted if you live in unsupported region.</value>
   </data>
   <data name="OpenAICompatibleExplanation" xml:space="preserve">
-    <value>任何具有OpenAI兼容API的自定义提供商。</value>
+    <value>Any custom providers with OpenAI-compatible API.</value>
   </data>
   <data name="OpenAICompatibleInfo" xml:space="preserve">
-    <value>不支持没有系统角色的模型。</value>
+    <value>Models without system role are not supported.</value>
   </data>
   <data name="LLMAPIKey" xml:space="preserve">
-    <value>API 密钥</value>
+    <value>Api key</value>
   </data>
   <data name="LLMModel" xml:space="preserve">
-    <value>模型</value>
+    <value>Model</value>
   </data>
   <data name="LLMApiEndpoint" xml:space="preserve">
-    <value>端点URL</value>
+    <value>Endpoint URL</value>
   </data>
   <data name="LLM_Explanation" xml:space="preserve">
-    <value>注意：
-DeepL 在单语言翻译中的准确性更高。
-仅当消息较长或包含多种语言时，LLM 才会有更好表现。</value>
+    <value>Note: 
+DeepL have better accuracy in single-language translation. 
+LLM is better only if message is long or contain multiple languages.</value>
   </data>
   <data name="UseContext" xml:space="preserve">
-    <value>使用上下文</value>
+    <value>Use context</value>
   </data>
   <data name="ChatContextExplanation" xml:space="preserve">
-    <value>在LLM指令中加入当前聊天标签页中的消息。</value>
+    <value>Include messages in current chat tab in LLM prompt.</value>
   </data>
   <data name="LLMApiEndpointExample" xml:space="preserve">
-    <value>范例:
+    <value>Example:
 https://api.openai.com/v1/chat/completions
 https://openrouter.ai/api/v1/chat/completions
 https://api.deepseek.com/chat/completions</value>
   </data>
   <data name="UseCustomPrompt" xml:space="preserve">
-    <value>使用自定义提示词</value>
+    <value>Use custom prompt</value>
   </data>
   <data name="CustomSystemPrompt" xml:space="preserve">
-    <value>自定义系统提示词</value>
+    <value>Custom system prompt</value>
   </data>
   <data name="CustomPromptTooltip" xml:space="preserve">
-    <value>自定义翻译的系统提示词。
+    <value>Customize the system prompt for translation.
 
-下方文本显示当前提示词。
-使用 {targetLanguage} 作为目标语言的占位符。
-上下文（如果启用）将自动附加。
+The text below shows the current prompt.
+Use {targetLanguage} as a placeholder for the target language.
+Context (if enabled) will be appended automatically.
 
-此提示词在OpenAI和OpenAI兼容API之间共享。</value>
+This prompt is shared between OpenAI and OpenAI-compatible APIs.</value>
   </data>
   <data name="My_Languages" xml:space="preserve">
-    <value>我的语言</value>
+    <value>My Languages</value>
   </data>
   <data name="My_Languages_Explanation" xml:space="preserve">
-    <value>这些语言将不会被翻译。</value>
+    <value>Messages in these languages will not be translated.</value>
   </data>
   <data name="Main_Window_Reverse_translation" xml:space="preserve">
-    <value>反向翻译</value>
+    <value>Reverse translation</value>
   </data>
   <data name="Main_Window_Translated_text" xml:space="preserve">
-    <value>翻译后文本</value>
+    <value>Translated text</value>
   </data>
   <data name="Main_Window_Translation_Failed" xml:space="preserve">
-    <value>翻译失败。</value>
+    <value>Failed to translate.</value>
+  </data>
+  <data name="DetectionSource_Label" xml:space="preserve">
+    <value>Detection endpoint</value>
+  </data>
+  <data name="DetectionSource_Local" xml:space="preserve">
+    <value>Local</value>
+  </data>
+  <data name="DetectionSource_Online" xml:space="preserve">
+    <value>Online</value>
+  </data>
+  <data name="DetectionSource_Local_Help" xml:space="preserve">
+    <value>Run locally. [hl]Lower accuracy.[/hl]</value>
+  </data>
+  <data name="DetectionSource_Online_Help" xml:space="preserve">
+    <value>Calls [hl]Yandex[/hl] for language detection.
+Uses Google and Bing as backup.
+
+May hit rate limits.</value>
+  </data>
+  <data name="SelectionMode_Label" xml:space="preserve">
+    <value>Selection mode</value>
+  </data>
+  <data name="SelectionMode_Inclusive" xml:space="preserve">
+    <value>Inclusive — translate selected languages</value>
+  </data>
+  <data name="SelectionMode_Exclusive" xml:space="preserve">
+    <value>Exclusive — skip selected languages</value>
+  </data>
+  <data name="SelectionMode_Inclusive_Help" xml:space="preserve">
+    <value>Selected language get [hl]translated.[/hl]
+
+May miss translations.</value>
+  </data>
+  <data name="SelectionMode_Exclusive_Help" xml:space="preserve">
+    <value>Selected language get [hl]skipped.[/hl] 
+
+[hl]May translate slangs unexpectedly.[/hl]
+Only use this when inclusive mode doesn't work.</value>
+  </data>
+  <data name="SourceLanguages_Header" xml:space="preserve">
+    <value>Languages to translate</value>
+  </data>
+  <data name="SourceLanguages_Explanation" xml:space="preserve">
+    <value>Only messages in these languages will be translated.</value>
+  </data>
+  <data name="Wizard_Title" xml:space="preserve">
+    <value>ChatTranslated Setup</value>
+  </data>
+  <data name="Wizard_Step_Format" xml:space="preserve">
+    <value>Step {0} of {1}</value>
+  </data>
+  <data name="Wizard_Welcome_Header" xml:space="preserve">
+    <value>Thanks for using the plugin. Since some changes have been made to plugin behaviors, you need to review certain settings before using the plugin.</value>
+  </data>
+  <data name="Wizard_Welcome_Body" xml:space="preserve">
+    <value>This short wizard will walk you through the key settings.</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Header" xml:space="preserve">
+    <value>Pick a target language</value>
+  </data>
+  <data name="Wizard_TargetLanguage_Body" xml:space="preserve">
+    <value>Messages will be translated INTO this language.</value>
+  </data>
+  <data name="Wizard_Behavior_Header" xml:space="preserve">
+    <value>Choose language detection &amp; subsequent behavior</value>
+  </data>
+  <data name="Wizard_Behavior_Body" xml:space="preserve">
+    <value>Two independent choices: whether to run language detection locally, and how to interpret your language list.</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Header" xml:space="preserve">
+    <value>Pick languages you ALREADY KNOW</value>
+  </data>
+  <data name="Wizard_Languages_Exclusive_Body" xml:space="preserve">
+    <value>Messages in these languages will NOT be translated.</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Header" xml:space="preserve">
+    <value>Pick languages to translate FROM</value>
+  </data>
+  <data name="Wizard_Languages_Inclusive_Body" xml:space="preserve">
+    <value>Only messages in these languages will be translated.</value>
+  </data>
+  <data name="Wizard_Engine_Header" xml:space="preserve">
+    <value>Pick a translation engine</value>
+  </data>
+  <data name="Wizard_Finish_Header" xml:space="preserve">
+    <value>All set!</value>
+  </data>
+  <data name="Wizard_Finish_Body" xml:space="preserve">
+    <value>Your settings have been saved. You can adjust them any time from the config window, or re-run this wizard with /pchat wizard.</value>
+  </data>
+  <data name="Wizard_Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Wizard_Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="Wizard_Skip" xml:space="preserve">
+    <value>I don't care.</value>
+  </data>
+  <data name="Wizard_Skip_Confirm" xml:space="preserve">
+    <value>The plugin may not work as expected if you leave now.
+
+If you want to open this window again, you can use '/pchat wizard'.</value>
+  </data>
+  <data name="Wizard_Finish" xml:space="preserve">
+    <value>Finish</value>
+  </data>
+  <data name="Wizard_LLM_Proxy" xml:space="preserve">
+    <value>LLM Proxy</value>
+  </data>
+  <data name="Wizard_OpenAI" xml:space="preserve">
+    <value>OpenAI</value>
+  </data>
+  <data name="Wizard_OpenAI_Compatible" xml:space="preserve">
+    <value>OpenAI-compatible API</value>
+  </data>
+  <data name="Command_Wizard_Help" xml:space="preserve">
+    <value>Open the setup wizard.</value>
   </data>
 </root>
