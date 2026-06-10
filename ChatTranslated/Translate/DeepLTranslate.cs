@@ -17,7 +17,10 @@ internal static class DeepLTranslate
     public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
     {
         if (!TryGetLanguageCode(targetLanguage, out var languageCode))
-            return ("Target language not supported by DeepL.", null);
+        {
+            Service.pluginLog.Warning("Target language not supported by DeepL API.");
+            return (text, null);
+        }
 
         var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
         using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
@@ -43,8 +46,8 @@ internal static class DeepLTranslate
         }
         catch (Exception ex)
         {
-            Service.pluginLog.Warning($"DeepL Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
-            return await MachineTranslate.Translate(text, targetLanguage);
+            Service.pluginLog.Warning($"DeepL Translate failed to translate.\n{ex.Message}");
+            return (text, null);
         }
     }
 
@@ -83,7 +86,10 @@ internal static class DeeplsTranslate
     public static async Task<(string, TranslationMode?)> Translate(string message, string targetLanguage)
     {
         if (!NameToOneshotLang.TryGetValue(targetLanguage, out var targetLang))
-            return ("Target language not supported by DeepL.", null);
+        {
+            Service.pluginLog.Warning("Target language not supported by DeepL.");
+            return (message, null);
+        }
 
         var requestBody = new
         {
@@ -128,11 +134,8 @@ internal static class DeeplsTranslate
         }
         catch (Exception ex)
         {
-            Service.pluginLog.Warning($"DeeplsTranslate failed to translate. Falling back to DeepL API / machine translation.\n{ex.Message}");
-            if (Service.configuration.DeepL_API_Key != "YOUR-API-KEY:fx")
-                return await DeepLTranslate.Translate(message, targetLanguage);
-            else
-                return await MachineTranslate.Translate(message, targetLanguage);
+            Service.pluginLog.Warning($"DeeplsTranslate failed to translate.\n{ex.Message}");
+            return (message, null);
         }
     }
 

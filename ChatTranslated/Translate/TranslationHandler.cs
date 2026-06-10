@@ -111,20 +111,7 @@ internal static class TranslationHandler
             }
         }
 
-        var (translatedText, mode) = Service.configuration.UseCustomLanguage
-            ? await MachineTranslate.Translate(message.OriginalText, targetLanguage)
-            : Service.configuration.SelectedTranslationEngine switch
-            {
-                Configuration.TranslationEngine.DeepL => await DeeplsTranslate.Translate(message.OriginalText, targetLanguage),
-                Configuration.TranslationEngine.LLM => Service.configuration.LLM_Provider switch
-                {
-                    0 => await LLMProxyTranslate.Translate(message, targetLanguage),
-                    1 => await OpenAITranslate.Translate(message, targetLanguage, model: Service.configuration.OpenAI_Model),
-                    2 => await OpenAICompatible.Translate(message, targetLanguage),
-                    _ => (message.OriginalText, null)
-                },
-                _ => (message.OriginalText, null)
-            };
+        var (translatedText, mode) = await RunTranslationChain(message, targetLanguage);
 
         message.TranslatedContent = translatedText;
         message.TranslationMode = mode;
@@ -163,6 +150,76 @@ internal static class TranslationHandler
 
         return message;
     }
+
+    private static async Task<(string, Configuration.TranslationMode?)> RunTranslationChain(Message message, string targetLanguage)
+    {
+        var configuration = Service.configuration;
+
+        // Custom target languages are only reliably supported by machine translators.
+        if (configuration.UseCustomLanguage)
+            return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
+
+        var chain = new List<Configuration.TranslationProvider> { GetPrimaryProvider(configuration) };
+        foreach (var provider in configuration.FallbackProviders)
+        {
+            if (!chain.Contains(provider))
+                chain.Add(provider);
+        }
+
+        foreach (var provider in chain)
+        {
+            if (!IsProviderConfigured(provider))
+            {
+                Service.pluginLog.Debug($"[TranslationHandler] Skipping {provider}: no API key configured.");
+                continue;
+            }
+
+            var (translated, mode) = await TranslateWith(provider, message, targetLanguage).ConfigureAwait(false);
+            if (mode != null)
+                return (translated, mode);
+
+            Service.pluginLog.Warning($"[TranslationHandler] {provider} failed, trying next provider in the fallback chain.");
+        }
+
+        return (message.OriginalText, null);
+    }
+
+    private static Task<(string, Configuration.TranslationMode?)> TranslateWith(
+        Configuration.TranslationProvider provider, Message message, string targetLanguage) => provider switch
+    {
+        Configuration.TranslationProvider.DeepL => DeeplsTranslate.Translate(message.OriginalText, targetLanguage),
+        Configuration.TranslationProvider.DeepL_API => DeepLTranslate.Translate(message.OriginalText, targetLanguage),
+        Configuration.TranslationProvider.LLMProxy => LLMProxyTranslate.Translate(message, targetLanguage),
+        Configuration.TranslationProvider.OpenAI => OpenAITranslate.Translate(message, targetLanguage, model: Service.configuration.OpenAI_Model),
+        Configuration.TranslationProvider.OpenAICompatible => OpenAICompatible.Translate(message, targetLanguage),
+        Configuration.TranslationProvider.GoogleTranslate => MachineTranslate.TranslateWith(MachineTranslate.GTranslator, message.OriginalText, targetLanguage),
+        Configuration.TranslationProvider.BingTranslate => MachineTranslate.TranslateWith(MachineTranslate.BingTranslator, message.OriginalText, targetLanguage),
+        Configuration.TranslationProvider.YandexTranslate => MachineTranslate.TranslateWith(MachineTranslate.YTranslator, message.OriginalText, targetLanguage),
+        _ => Task.FromResult((message.OriginalText, (Configuration.TranslationMode?)null))
+    };
+
+    internal static Configuration.TranslationProvider GetPrimaryProvider(Configuration configuration) =>
+        configuration.SelectedTranslationEngine switch
+        {
+            Configuration.TranslationEngine.LLM => configuration.LLM_Provider switch
+            {
+                1 => Configuration.TranslationProvider.OpenAI,
+                2 => Configuration.TranslationProvider.OpenAICompatible,
+                _ => Configuration.TranslationProvider.LLMProxy
+            },
+            _ => Configuration.TranslationProvider.DeepL
+        };
+
+    internal static bool IsProviderConfigured(Configuration.TranslationProvider provider) => provider switch
+    {
+        Configuration.TranslationProvider.DeepL_API =>
+            !string.IsNullOrWhiteSpace(Service.configuration.DeepL_API_Key) && Service.configuration.DeepL_API_Key != "YOUR-API-KEY:fx",
+        Configuration.TranslationProvider.OpenAI =>
+            !string.IsNullOrWhiteSpace(Service.configuration.OpenAI_API_Key) && Service.configuration.OpenAI_API_Key != "sk-YOUR-API-KEY",
+        Configuration.TranslationProvider.OpenAICompatible =>
+            !string.IsNullOrWhiteSpace(Service.configuration.LLM_API_Key) && Service.configuration.LLM_API_Key != "YOUR-API-KEY",
+        _ => true
+    };
 
     public static void ClearTranslationCache()
     {

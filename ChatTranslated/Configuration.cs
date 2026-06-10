@@ -26,6 +26,18 @@ public class Configuration : IPluginConfiguration
         LLM
     }
 
+    public enum TranslationProvider
+    {
+        DeepL,
+        DeepL_API,
+        LLMProxy,
+        OpenAI,
+        OpenAICompatible,
+        GoogleTranslate,
+        BingTranslate,
+        YandexTranslate
+    }
+
     public enum DetectionSource
     {
         Local,
@@ -38,7 +50,13 @@ public class Configuration : IPluginConfiguration
         Exclusive
     }
 
+    public static readonly TranslationProvider[] DefaultFallbackProviders =
+        [TranslationProvider.DeepL_API, TranslationProvider.GoogleTranslate, TranslationProvider.BingTranslate];
+
     public TranslationEngine SelectedTranslationEngine { get; set; } = TranslationEngine.DeepL;
+
+    // Providers tried in order when the selected engine fails. Providers without an API key are skipped.
+    public List<TranslationProvider> FallbackProviders { get; set; } = [.. DefaultFallbackProviders];
     public DetectionSource SelectedDetectionSource { get; set; } = DetectionSource.Online;
     public LanguageSelectionMode SelectedLanguageSelectionMode { get; set; } = LanguageSelectionMode.Inclusive;
 

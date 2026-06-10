@@ -63,8 +63,8 @@ internal static partial class OpenAITranslate
 
             if (translated == message.OriginalText)
             {
-                Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
-                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
+                Service.pluginLog.Warning("Message was not translated.");
+                return (message.OriginalText, null);
             }
 
             var translationMatch = TranslationSectionRegex().Match(translated);
@@ -82,8 +82,8 @@ internal static partial class OpenAITranslate
         }
         catch (Exception ex)
         {
-            Service.pluginLog.Warning($"OpenAI Translate failed to translate. Falling back to machine translation.\n{ex.Message}");
-            return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
+            Service.pluginLog.Warning($"OpenAI Translate failed to translate.\n{ex.Message}");
+            return (message.OriginalText, null);
         }
     }
 
@@ -156,8 +156,8 @@ internal static class LLMProxyTranslate
 #else
         if (string.IsNullOrEmpty(Cfv5))
         {
-            Service.pluginLog.Warning("LLMProxy API key not found. Falling back to machine translate.");
-            return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
+            Service.pluginLog.Warning("LLMProxy API key not found.");
+            return (message.OriginalText, null);
         }
 #endif
 
@@ -183,8 +183,8 @@ internal static class LLMProxyTranslate
 
             if (translated == message.OriginalText)
             {
-                Service.pluginLog.Warning("Message was not translated. Falling back to machine translate.");
-                return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
+                Service.pluginLog.Warning("Message was not translated.");
+                return (message.OriginalText, null);
             }
 
             if (jsonDoc.RootElement.TryGetProperty("responseTime", out var responseTime))
@@ -194,8 +194,8 @@ internal static class LLMProxyTranslate
         }
         catch (Exception ex)
         {
-            Service.pluginLog.Warning($"LLMProxy Translate failed to translate. Falling back to machine translate.\n{ex.Message}");
-            return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
+            Service.pluginLog.Warning($"LLMProxy Translate failed to translate.\n{ex.Message}");
+            return (message.OriginalText, null);
         }
     }
 }
