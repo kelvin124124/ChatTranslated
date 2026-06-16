@@ -107,8 +107,9 @@ internal static class LanguageDetector
         && NameToIsoCode.TryGetValue(Service.configuration.EffectiveTargetLanguage, out var targetIso)
         && targetIso == isoCode;
 
+#if DEBUG
     // Returns true if the text is detected as one of the user's known languages.
-    // Returns true for undetectable text (emoji, numbers).
+    // Returns true for undetectable text (emoji, numbers). Debug-only diagnostic.
     public static bool IsKnownLanguageOrMeaningless(string text)
     {
         var detector = _detector;
@@ -131,6 +132,7 @@ internal static class LanguageDetector
         Service.pluginLog.Debug($"{text}\n → Lingua: {top}, known: {isKnown}");
         return isKnown;
     }
+#endif
 
     internal static async Task<(double Reliability, string? Iso)> ComputeReliabilityAsync(string text, XivChatType channel, bool hasEnTokens = false)
     {

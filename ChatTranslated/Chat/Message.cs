@@ -2,10 +2,11 @@ using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace ChatTranslated.Chat;
 
-public class Message(string sender, MessageSource source, SeString originalContent, XivChatType type)
+public partial class Message(string sender, MessageSource source, SeString originalContent, XivChatType type)
 {
     public string Sender { get; } = sender;
     public MessageSource Source { get; } = source;
@@ -57,7 +58,10 @@ public class Message(string sender, MessageSource source, SeString originalConte
         return sb.ToString();
     }
 
-    private static string Sanitize(string input) => ChatRegex.SpecialCharacterRegex().Replace(input, "\uFFFD");
+    private static string Sanitize(string input) => SpecialCharacterRegex().Replace(input, "\uFFFD");
+
+    [GeneratedRegex(@"[\uE000-\uF8FF]+")]
+    private static partial Regex SpecialCharacterRegex();
 }
 
 public enum MessageSource

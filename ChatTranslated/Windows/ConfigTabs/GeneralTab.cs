@@ -13,6 +13,10 @@ public class GeneralTab
     private readonly string[] supportedDisplayLanguages =
     ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
 
+#if DEBUG
+    private static string testInput = "";
+#endif
+
     public void Draw(Configuration configuration)
     {
         DrawPluginToggles(configuration);
@@ -25,18 +29,11 @@ public class GeneralTab
         ImGui.Separator();
 
         // input field for test text
-        string TestString = configuration.MagicString;
-        if (ImGui.InputText("##TestInput", ref TestString))
-        {
-            configuration.MagicString = TestString;
-            configuration.Save();
-        }
+        ImGui.InputText("##TestInput", ref testInput);
 
         // send for language detection
         if (ImGui.Button("Magic button"))
-        {
-            Service.pluginLog.Info($"IsKnownLanguage returned: {LanguageDetector.IsKnownLanguageOrMeaningless(TestString)} for input: {TestString}");
-        }
+            Service.pluginLog.Info($"IsKnownLanguage returned: {LanguageDetector.IsKnownLanguageOrMeaningless(testInput)} for input: {testInput}");
 #endif
     }
 

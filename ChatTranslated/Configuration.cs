@@ -22,8 +22,7 @@ public class Configuration : IPluginConfiguration
         MachineTranslate,
         DeepL,
         OpenAI,
-        LLMProxy,
-        LLM
+        LLMProxy
     }
 
     public enum DetectionSource
@@ -82,8 +81,6 @@ public class Configuration : IPluginConfiguration
     public string LLM_CustomPrompt { get; set; } = "";
 
     public bool EnableTranslationCache { get; set; } = true;
-
-    public string MagicString { get; set; } = "";
 
     public void Save()
     {
