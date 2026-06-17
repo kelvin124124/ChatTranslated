@@ -1,4 +1,4 @@
-# Chat Translated [![Download count](https://img.shields.io/endpoint?url=https://qzysathwfhebdai6xgauhz4q7m0mzmrf.lambda-url.us-east-1.on.aws/ChatTranslated)](https://github.com/kelvin124124/ChatTranslated) [![Crowdin](https://badges.crowdin.net/chattranslated/localized.svg)](https://crowdin.com/project/chattranslated)
+# Chat Translated [![Crowdin](https://badges.crowdin.net/chattranslated/localized.svg)](https://crowdin.com/project/chattranslated)
 A Dalamud plugin for the game FFXIV that allows users to translate in-game chat messages.
 
 ## Translation services
