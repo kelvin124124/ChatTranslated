@@ -203,97 +203,78 @@ internal partial class ChatHandler
 
     public unsafe string GetChatMessageContext()
     {
-        var x = GetActiveChatLogPanel();
         try
         {
-            var chatLogPanelPtr = Service.gameGui.GetAddonByName($"ChatLogPanel_{x}");
-            if (chatLogPanelPtr == 0) return string.Empty;
+            var panel = Service.gameGui.GetAddonByName($"ChatLogPanel_{GetActiveChatLogPanel()}");
+            if (panel == 0) return string.Empty;
 
-            var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)chatLogPanelPtr.Address)->ChatText->GetText()).Payloads;
+            var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)panel.Address)->ChatText->GetText()).Payloads;
             var sb = new StringBuilder();
             bool inLink = false;
-            // ChatLogPanel re-emits the name+world as plain text after the link; strip the echoed name.
-            string? pendingName = null;
+            string? pendingName = null;  // player name duplicate as text after a player link
 
             for (int i = Math.Max(0, payloads.Count - 300); i < payloads.Count; i++)
             {
                 switch (payloads[i])
                 {
-                    case TextPayload textPayload when !inLink:
-                        var text = textPayload.Text ?? string.Empty;
-                        if (pendingName != null)
-                        {
-                            if (text.StartsWith(pendingName)) text = text[pendingName.Length..];
-                            pendingName = null;
-                        }
+                    case TextPayload p when !inLink:
+                        var text = p.Text ?? string.Empty;
+                        if (pendingName != null && text.StartsWith(pendingName)) text = text[pendingName.Length..];
+                        pendingName = null;
                         sb.Append(text);
                         break;
-
-                    case PlayerPayload playerPayload:
-                        sb.Append($"[{playerPayload.PlayerName}]");
+                    case PlayerPayload p:
+                        sb.Append($"[{p.PlayerName}]");
                         inLink = true;
-                        pendingName = playerPayload.PlayerName;
+                        pendingName = p.PlayerName;
                         break;
-
-                    case ItemPayload itemPayload:
-                        sb.Append($"[Item] {itemPayload.DisplayName}");
+                    case ItemPayload p:
+                        sb.Append($"[Item] {p.DisplayName}");
                         inLink = true;
                         pendingName = null;
                         break;
-
-                    case QuestPayload questPayload:
-                        sb.Append($"[Quest] {questPayload.Quest.ToString()}");
+                    case QuestPayload p:
+                        sb.Append($"[Quest] {p.Quest}");
                         inLink = true;
                         pendingName = null;
                         break;
-
-                    case MapLinkPayload mapLinkPayload:
-                        sb.Append($"[Map] {mapLinkPayload.ToString()}");
+                    case MapLinkPayload p:
+                        sb.Append($"[Map] {p}");
                         inLink = true;
                         pendingName = null;
                         break;
-
-                    case StatusPayload statusPayload:
-                        sb.Append($"[Status] {statusPayload.ToString()}");
+                    case StatusPayload p:
+                        sb.Append($"[Status] {p}");
                         inLink = true;
                         pendingName = null;
                         break;
-
-                    case PartyFinderPayload: // does not need to be tagged
+                    case PartyFinderPayload:
                         inLink = true;
                         pendingName = null;
                         break;
-
-                    case RawPayload when inLink: // link terminator (0x27 0x03); keep pendingName
+                    case RawPayload when inLink:  // link terminator (0x27 0x03); keep pendingName
                         inLink = false;
                         break;
-
                     case AutoTranslatePayload:
-                        i += 2; // self-contained, no link terminator
+                        i += 2;
                         pendingName = null;
-                        break;
+                        break;  // self-contained, no link terminator
                 }
             }
 
             var lines = sb.ToString().Split('\r');
             sb.Clear();
-
-            for (int j = Math.Max(0, lines.Length - 10); j < lines.Length; j++)  // Max ctx lines: 10
+            foreach (var rawLine in lines[Math.Max(0, lines.Length - 10)..])  // max 10 ctx lines
             {
-                var line = lines[j].Trim();
-
-                // Our "[CT]" echo lines repeat the original ("orig || translated"); keep only the translation.
-                if (line.Contains("[CT]"))
+                var line = rawLine.Trim();
+                // For [CT] messages, drop the original if any, keep "[CT] Sender:".
+                int sep;
+                if (line.Contains("[CT]") && (sep = line.IndexOf(" || ")) >= 0)
                 {
-                    var sep = line.IndexOf(" || ");
-                    if (sep >= 0)
-                    {
-                        var tagEnd = line.IndexOf(']');
-                        var tag = tagEnd >= 0 ? line[..(tagEnd + 1)] : "[CT]";
-                        line = $"{tag}: {line[(sep + 4)..].Trim()}";
-                    }
+                    int nameEnd = line.IndexOf(':');  // first ':' closes the "[CT] Sender:" prefix
+                    string prefix = nameEnd >= 0 && nameEnd < sep ? line[..(nameEnd + 1)] : "[CT]:";
+                    line = $"{prefix} {line[(sep + 4)..].Trim()}";
                 }
-
                 if (sb.Length > 0) sb.Append('\n');
                 sb.Append(line);
             }

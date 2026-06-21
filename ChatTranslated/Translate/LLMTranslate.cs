@@ -122,7 +122,7 @@ internal static partial class OpenAITranslate
         if (!Service.configuration.UseContext || context == null) return prompt;
         return prompt + $"""
 
-            CONTEXT (Use if relevant):
+            CONTEXT (Use if relevant; "[CT]" lines are this tool's prior translations, not original messages):
             <context>
             {context}
             </context>
