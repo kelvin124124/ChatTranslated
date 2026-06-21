@@ -211,7 +211,7 @@ internal partial class ChatHandler
             var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)panel.Address)->ChatText->GetText()).Payloads;
             var sb = new StringBuilder();
             bool inLink = false;
-            string? pendingName = null;  // name the panel re-emits as text after a player link
+            string? pendingName = null;  // player name duplicate as text after a player link
 
             for (int i = Math.Max(0, payloads.Count - 300); i < payloads.Count; i++)
             {
@@ -224,21 +224,41 @@ internal partial class ChatHandler
                         sb.Append(text);
                         break;
                     case PlayerPayload p:
-                        sb.Append($"[{p.PlayerName}]"); inLink = true; pendingName = p.PlayerName; break;
+                        sb.Append($"[{p.PlayerName}]");
+                        inLink = true;
+                        pendingName = p.PlayerName;
+                        break;
                     case ItemPayload p:
-                        sb.Append($"[Item] {p.DisplayName}"); inLink = true; pendingName = null; break;
+                        sb.Append($"[Item] {p.DisplayName}");
+                        inLink = true;
+                        pendingName = null;
+                        break;
                     case QuestPayload p:
-                        sb.Append($"[Quest] {p.Quest}"); inLink = true; pendingName = null; break;
+                        sb.Append($"[Quest] {p.Quest}");
+                        inLink = true;
+                        pendingName = null;
+                        break;
                     case MapLinkPayload p:
-                        sb.Append($"[Map] {p}"); inLink = true; pendingName = null; break;
+                        sb.Append($"[Map] {p}");
+                        inLink = true;
+                        pendingName = null;
+                        break;
                     case StatusPayload p:
-                        sb.Append($"[Status] {p}"); inLink = true; pendingName = null; break;
+                        sb.Append($"[Status] {p}");
+                        inLink = true;
+                        pendingName = null;
+                        break;
                     case PartyFinderPayload:
-                        inLink = true; pendingName = null; break;
+                        inLink = true;
+                        pendingName = null;
+                        break;
                     case RawPayload when inLink:  // link terminator (0x27 0x03); keep pendingName
-                        inLink = false; break;
+                        inLink = false;
+                        break;
                     case AutoTranslatePayload:
-                        i += 2; pendingName = null; break;  // self-contained, no link terminator
+                        i += 2;
+                        pendingName = null;
+                        break;  // self-contained, no link terminator
                 }
             }
 
@@ -247,7 +267,7 @@ internal partial class ChatHandler
             foreach (var rawLine in lines[Math.Max(0, lines.Length - 10)..])  // max 10 ctx lines
             {
                 var line = rawLine.Trim();
-                // Our "[CT]" echoes carry "original || translated"; drop the original, keep "[CT] Sender:".
+                // For [CT] messages, drop the original if any, keep "[CT] Sender:".
                 int sep;
                 if (line.Contains("[CT]") && (sep = line.IndexOf(" || ")) >= 0)
                 {
