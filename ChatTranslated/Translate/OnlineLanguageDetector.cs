@@ -12,8 +12,8 @@ internal static class OnlineLanguageDetector
         Func<Task<Language>>[] detectors =
         [
             () => MachineTranslate.YTranslator.DetectLanguageAsync(text),
-            () => MachineTranslate.GTranslator.DetectLanguageAsync(text),
-            () => MachineTranslate.BingTranslator.DetectLanguageAsync(text),
+            () => MachineTranslate.G2Translator.DetectLanguageAsync(text),
+            () => MachineTranslate.MicrosoftTranslator.DetectLanguageAsync(text),
         ];
 
         foreach (var detect in detectors)

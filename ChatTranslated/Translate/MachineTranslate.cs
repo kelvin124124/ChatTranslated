@@ -8,38 +8,38 @@ namespace ChatTranslated.Translate;
 
 internal static class MachineTranslate
 {
-    private static readonly Lazy<GoogleTranslator> LazyGTranslator = new(() => new GoogleTranslator(TranslationHandler.HttpClient));
-    private static readonly Lazy<BingTranslator> LazyBingTranslator = new(() => new BingTranslator(TranslationHandler.HttpClient));
+    private static readonly Lazy<GoogleTranslator2> LazyG2Translator = new(() => new GoogleTranslator2(TranslationHandler.HttpClient));
+    private static readonly Lazy<MicrosoftTranslator> LazyMicrosoftTranslator = new(() => new MicrosoftTranslator(TranslationHandler.HttpClient));
     private static readonly Lazy<YandexTranslator> LazyYTranslator = new(() => new YandexTranslator(TranslationHandler.HttpClient));
-    public static GoogleTranslator GTranslator => LazyGTranslator.Value;
-    public static BingTranslator BingTranslator => LazyBingTranslator.Value;
+    public static GoogleTranslator2 G2Translator => LazyG2Translator.Value;
+    public static MicrosoftTranslator MicrosoftTranslator => LazyMicrosoftTranslator.Value;
     public static YandexTranslator YTranslator => LazyYTranslator.Value;
 
     public static async Task<(string, TranslationMode?)> Translate(string text, string targetLanguage)
     {
-        // Try Google first, then Bing as fallback
+        // Try Microsoft first, then Google2 as fallback
         try
         {
-            var result = await GTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
+            var result = await MicrosoftTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
             if (!string.IsNullOrWhiteSpace(result.Translation) && result.Translation != text)
                 return (result.Translation, TranslationMode.MachineTranslate);
-            Service.pluginLog.Warning("Google Translate returned an invalid translation.");
+            Service.pluginLog.Warning("Microsoft Translate returned an invalid translation.");
         }
         catch (Exception ex)
         {
-            Service.pluginLog.Warning($"Google failed.\n{ex.Message}");
+            Service.pluginLog.Warning($"Microsoft failed.\n{ex.Message}");
         }
 
         try
         {
-            var result = await BingTranslator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
+            var result = await G2Translator.TranslateAsync(text, targetLanguage).ConfigureAwait(false);
             if (!string.IsNullOrWhiteSpace(result.Translation) && result.Translation != text)
                 return (result.Translation, TranslationMode.MachineTranslate);
-            Service.pluginLog.Warning("Bing Translate returned an invalid translation.");
+            Service.pluginLog.Warning("Google2 Translate returned an invalid translation.");
         }
         catch (Exception ex)
         {
-            Service.pluginLog.Warning($"Bing failed.\n{ex.Message}");
+            Service.pluginLog.Warning($"Google2 failed.\n{ex.Message}");
         }
 
         return (text, null);
