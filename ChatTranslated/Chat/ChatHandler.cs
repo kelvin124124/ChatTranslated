@@ -203,99 +203,19 @@ internal partial class ChatHandler
 
     public unsafe string GetChatMessageContext()
     {
-        var x = GetActiveChatLogPanel();
         try
         {
-            var chatLogPanelPtr = Service.gameGui.GetAddonByName($"ChatLogPanel_{x}");
-            if (chatLogPanelPtr == 0) return string.Empty;
+            var panel = Service.gameGui.GetAddonByName($"ChatLogPanel_{GetActiveChatLogPanel()}");
+            if (panel == 0) return string.Empty;
 
-            var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)chatLogPanelPtr.Address)->ChatText->GetText()).Payloads;
+            var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)panel.Address)->ChatText->GetText()).Payloads;
+            var lines = RenderPayloads(payloads).Split('\r');
+
             var sb = new StringBuilder();
-            bool inLink = false;
-            // ChatLogPanel re-emits the name+world as plain text after the link; strip the echoed name.
-            string? pendingName = null;
-
-            for (int i = Math.Max(0, payloads.Count - 300); i < payloads.Count; i++)
+            foreach (var rawLine in lines[Math.Max(0, lines.Length - 10)..])  // Max ctx lines: 10
             {
-                switch (payloads[i])
-                {
-                    case TextPayload textPayload when !inLink:
-                        var text = textPayload.Text ?? string.Empty;
-                        if (pendingName != null)
-                        {
-                            if (text.StartsWith(pendingName)) text = text[pendingName.Length..];
-                            pendingName = null;
-                        }
-                        sb.Append(text);
-                        break;
-
-                    case PlayerPayload playerPayload:
-                        sb.Append($"[{playerPayload.PlayerName}]");
-                        inLink = true;
-                        pendingName = playerPayload.PlayerName;
-                        break;
-
-                    case ItemPayload itemPayload:
-                        sb.Append($"[Item] {itemPayload.DisplayName}");
-                        inLink = true;
-                        pendingName = null;
-                        break;
-
-                    case QuestPayload questPayload:
-                        sb.Append($"[Quest] {questPayload.Quest.ToString()}");
-                        inLink = true;
-                        pendingName = null;
-                        break;
-
-                    case MapLinkPayload mapLinkPayload:
-                        sb.Append($"[Map] {mapLinkPayload.ToString()}");
-                        inLink = true;
-                        pendingName = null;
-                        break;
-
-                    case StatusPayload statusPayload:
-                        sb.Append($"[Status] {statusPayload.ToString()}");
-                        inLink = true;
-                        pendingName = null;
-                        break;
-
-                    case PartyFinderPayload: // does not need to be tagged
-                        inLink = true;
-                        pendingName = null;
-                        break;
-
-                    case RawPayload when inLink: // link terminator (0x27 0x03); keep pendingName
-                        inLink = false;
-                        break;
-
-                    case AutoTranslatePayload:
-                        i += 2; // self-contained, no link terminator
-                        pendingName = null;
-                        break;
-                }
-            }
-
-            var lines = sb.ToString().Split('\r');
-            sb.Clear();
-
-            for (int j = Math.Max(0, lines.Length - 10); j < lines.Length; j++)  // Max ctx lines: 10
-            {
-                var line = lines[j].Trim();
-
-                // Our "[CT]" echo lines repeat the original ("orig || translated"); keep only the translation.
-                if (line.Contains("[CT]"))
-                {
-                    var sep = line.IndexOf(" || ");
-                    if (sep >= 0)
-                    {
-                        var tagEnd = line.IndexOf(']');
-                        var tag = tagEnd >= 0 ? line[..(tagEnd + 1)] : "[CT]";
-                        line = $"{tag}: {line[(sep + 4)..].Trim()}";
-                    }
-                }
-
                 if (sb.Length > 0) sb.Append('\n');
-                sb.Append(line);
+                sb.Append(CleanContextLine(rawLine.Trim()));
             }
 
             if (Service.condition[ConditionFlag.BoundByDuty])
@@ -310,6 +230,90 @@ internal partial class ChatHandler
             Service.pluginLog.Error(ex, "Failed to read chat panel.");
             return string.Empty;
         }
+    }
+
+    // Flatten the panel's SeString into text: tag link payloads and strip the player
+    // name the panel re-emits as plain text right after each player link.
+    private static string RenderPayloads(IReadOnlyList<Payload> payloads)
+    {
+        var sb = new StringBuilder();
+        bool inLink = false;
+        string? pendingName = null;
+
+        for (int i = Math.Max(0, payloads.Count - 300); i < payloads.Count; i++)
+        {
+            switch (payloads[i])
+            {
+                case TextPayload textPayload when !inLink:
+                    var text = textPayload.Text ?? string.Empty;
+                    if (pendingName != null)
+                    {
+                        if (text.StartsWith(pendingName)) text = text[pendingName.Length..];
+                        pendingName = null;
+                    }
+                    sb.Append(text);
+                    break;
+
+                case PlayerPayload playerPayload:
+                    sb.Append($"[{playerPayload.PlayerName}]");
+                    inLink = true;
+                    pendingName = playerPayload.PlayerName;
+                    break;
+
+                case ItemPayload itemPayload:
+                    sb.Append($"[Item] {itemPayload.DisplayName}");
+                    inLink = true;
+                    pendingName = null;
+                    break;
+
+                case QuestPayload questPayload:
+                    sb.Append($"[Quest] {questPayload.Quest}");
+                    inLink = true;
+                    pendingName = null;
+                    break;
+
+                case MapLinkPayload mapLinkPayload:
+                    sb.Append($"[Map] {mapLinkPayload}");
+                    inLink = true;
+                    pendingName = null;
+                    break;
+
+                case StatusPayload statusPayload:
+                    sb.Append($"[Status] {statusPayload}");
+                    inLink = true;
+                    pendingName = null;
+                    break;
+
+                case PartyFinderPayload: // does not need to be tagged
+                    inLink = true;
+                    pendingName = null;
+                    break;
+
+                case RawPayload when inLink: // link terminator (0x27 0x03); keep pendingName
+                    inLink = false;
+                    break;
+
+                case AutoTranslatePayload:
+                    i += 2; // self-contained, no link terminator
+                    pendingName = null;
+                    break;
+            }
+        }
+        return sb.ToString();
+    }
+
+    // Our own "[CT]" echo lines carry "original || translated". Drop the original,
+    // keeping the "[CT] Sender:" prefix so the speaker stays attached to the text.
+    private static string CleanContextLine(string line)
+    {
+        if (!line.Contains("[CT]")) return line;
+
+        int sep = line.IndexOf(" || ");
+        if (sep < 0) return line;
+
+        int nameEnd = line.IndexOf(':');  // first ':' closes the "[CT] Sender:" prefix
+        string prefix = nameEnd >= 0 && nameEnd < sep ? line[..(nameEnd + 1)] : "[CT]:";
+        return $"{prefix} {line[(sep + 4)..].Trim()}";
     }
 
     public unsafe nint GetActiveChatLogPanel()
