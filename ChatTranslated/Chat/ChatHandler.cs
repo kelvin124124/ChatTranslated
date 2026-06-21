@@ -201,6 +201,8 @@ internal partial class ChatHandler
         }
     }
 
+    private const int MaxContextLines = 10;
+
     public unsafe string GetChatMessageContext()
     {
         try
@@ -209,82 +211,47 @@ internal partial class ChatHandler
             if (panel == 0) return string.Empty;
 
             var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)panel.Address)->ChatText->GetText()).Payloads;
+
+            // The panel renders each message as plain text — sender names and links already
+            // appear once as TextPayloads. Messages are separated by '\r'; long ones are
+            // soft-wrapped with a NewLinePayload followed by indent padding to strip.
             var sb = new StringBuilder();
-            bool inLink = false;
-            string? pendingName = null;  // player name duplicate as text after a player link
-
-            for (int i = Math.Max(0, payloads.Count - 300); i < payloads.Count; i++)
+            bool afterWrap = false;
+            foreach (var payload in payloads)
             {
-                switch (payloads[i])
+                switch (payload)
                 {
-                    case TextPayload p when !inLink:
-                        var text = p.Text ?? string.Empty;
-                        if (pendingName != null && text.StartsWith(pendingName)) text = text[pendingName.Length..];
-                        pendingName = null;
-                        sb.Append(text);
+                    case NewLinePayload:
+                        afterWrap = true;
                         break;
-                    case PlayerPayload p:
-                        sb.Append($"[{p.PlayerName}]");
-                        inLink = true;
-                        pendingName = p.PlayerName;
+                    // Tag interactive links; their display name/coords follow as the next TextPayload.
+                    case ItemPayload:
+                        sb.Append("[Item] ");
                         break;
-                    case ItemPayload p:
-                        sb.Append($"[Item] {p.DisplayName}");
-                        inLink = true;
-                        pendingName = null;
+                    case MapLinkPayload:
+                        sb.Append("[Map] ");
                         break;
-                    case QuestPayload p:
-                        sb.Append($"[Quest] {p.Quest}");
-                        inLink = true;
-                        pendingName = null;
+                    case QuestPayload:
+                        sb.Append("[Quest] ");
                         break;
-                    case MapLinkPayload p:
-                        sb.Append($"[Map] {p}");
-                        inLink = true;
-                        pendingName = null;
+                    case StatusPayload:
+                        sb.Append("[Status] ");
                         break;
-                    case StatusPayload p:
-                        sb.Append($"[Status] {p}");
-                        inLink = true;
-                        pendingName = null;
+                    case TextPayload { Text: { } text }:
+                        sb.Append(afterWrap ? text.TrimStart() : text);
+                        afterWrap = false;
                         break;
-                    case PartyFinderPayload:
-                        inLink = true;
-                        pendingName = null;
-                        break;
-                    case RawPayload when inLink:  // link terminator (0x27 0x03); keep pendingName
-                        inLink = false;
-                        break;
-                    case AutoTranslatePayload:
-                        i += 2;
-                        pendingName = null;
-                        break;  // self-contained, no link terminator
                 }
             }
 
-            var lines = sb.ToString().Split('\r');
-            sb.Clear();
-            foreach (var rawLine in lines[Math.Max(0, lines.Length - 10)..])  // max 10 ctx lines
-            {
-                var line = rawLine.Trim();
-                // For [CT] messages, drop the original if any, keep "[CT] Sender:".
-                int sep;
-                if (line.Contains("[CT]") && (sep = line.IndexOf(" || ")) >= 0)
-                {
-                    int nameEnd = line.IndexOf(':');  // first ':' closes the "[CT] Sender:" prefix
-                    string prefix = nameEnd >= 0 && nameEnd < sep ? line[..(nameEnd + 1)] : "[CT]:";
-                    line = $"{prefix} {line[(sep + 4)..].Trim()}";
-                }
-                if (sb.Length > 0) sb.Append('\n');
-                sb.Append(line);
-            }
+            var lines = PrivateUseRegex().Replace(sb.ToString(), string.Empty)
+                .Split('\r', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+            var context = string.Join('\n', lines.TakeLast(MaxContextLines).Select(CollapseOwnEcho));
 
-            if (Service.condition[ConditionFlag.BoundByDuty])
-                sb.Append("\nIn instanced area: true");
-            if (Service.condition[ConditionFlag.InCombat])
-                sb.Append("\nIn combat: true");
+            if (Service.condition[ConditionFlag.BoundByDuty]) context += "\nIn instanced area: true";
+            if (Service.condition[ConditionFlag.InCombat]) context += "\nIn combat: true";
 
-            return sb.ToString();
+            return context;
         }
         catch (Exception ex)
         {
@@ -292,6 +259,19 @@ internal partial class ChatHandler
             return string.Empty;
         }
     }
+
+    // Our own translations are echoed back as "[CT] Sender: original || translated";
+    // keep only the translation so context isn't bloated with duplicated originals.
+    private static string CollapseOwnEcho(string line)
+    {
+        if (!line.StartsWith("[CT] ", StringComparison.Ordinal)) return line;
+        var colon = line.IndexOf(':');
+        var sep = line.IndexOf(" || ", StringComparison.Ordinal);
+        return colon >= 0 && sep > colon ? $"{line[..colon]}: {line[(sep + 4)..]}" : line;
+    }
+
+    [GeneratedRegex(@"[\uE000-\uF8FF]+")]
+    private static partial Regex PrivateUseRegex();
 
     public unsafe nint GetActiveChatLogPanel()
     {
