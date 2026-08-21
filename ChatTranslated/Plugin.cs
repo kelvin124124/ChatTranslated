@@ -39,6 +39,7 @@ public sealed class Plugin : IDalamudPlugin
         Service.plugin = this;
 
         IpcManager.Register(pluginInterface);
+        ChatTwoDetector.Register();
 
         Service.configWindow = new ConfigWindow(this);
         Service.mainWindow = new MainWindow(this);
@@ -110,6 +111,7 @@ public sealed class Plugin : IDalamudPlugin
         }
 
         _ = LanguageDetector.RebuildDetectorAsync();
+        _ = Task.Run(GlyphFolder.Warmup);
         TranslationHandler.LoadCache();
 
         if (!Service.configuration.ShowedWizard)
@@ -159,12 +161,16 @@ public sealed class Plugin : IDalamudPlugin
         ChatHandler.OutputMessage(message);
     }
 
+    // leave the text alone when Chat 2 can draw it, fold it when nothing else will
+    private static string ForChatLog(string message) =>
+        ChatTwoDetector.HasGlyphCoverage ? message : GlyphFolder.Fold(message);
+
     public static void OutputChatLine(XivChatType type, string sender, string message)
     {
         var sb = new SeStringBuilder();
         if (!Service.configuration.ChatIntegration_ShowColoredText)
             sb.AddUiForegroundOff();
-        sb.Append(message);
+        sb.Append(ForChatLog(message));
 
         Service.chatGui.Print(new XivChatEntry
         {
@@ -177,7 +183,7 @@ public sealed class Plugin : IDalamudPlugin
     public static void OutputChatLine(string message)
     {
         SeStringBuilder sb = new();
-        sb.AddUiForeground("[CT] ", 58).Append(message);
+        sb.AddUiForeground("[CT] ", 58).Append(ForChatLog(message));
 
         Service.chatGui.Print(new XivChatEntry { Message = sb.BuiltString });
     }
@@ -185,6 +191,7 @@ public sealed class Plugin : IDalamudPlugin
     public void Dispose()
     {
         IpcManager.Unregister();
+        ChatTwoDetector.Unregister();
         Translate.LanguageDetector.Dispose();
         Translate.TranslationHandler.SaveCache();
         Translate.TranslationHandler.HttpClient.Dispose();
