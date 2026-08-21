@@ -172,7 +172,9 @@ public class LanguagesTab
         if (ImGui.IsItemHovered())
         {
             ImGui.SetTooltip("Unsupported characters can be rendered if Dalamud font is switch to anything except the default game font " +
-                "\nThis only fixes texts in plugin windows, unsupported characters in chat UI will still be rendered as  =");
+                "\nThis only fixes texts in plugin windows." +
+                "\nIn the chat log they are rewritten to their closest supported form (ş becomes s)," +
+                "\nunless Chat 2 is running, which can draw them as they are.");
         }
     }
 }
