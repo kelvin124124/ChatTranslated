@@ -1,4 +1,4 @@
-using Dalamud.Interface.GameFonts;
+﻿using Dalamud.Interface.GameFonts;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
@@ -8,20 +8,9 @@ using System.Text;
 namespace ChatTranslated.Utils;
 
 // The game draws anything missing from AXIS as '=', so swap those letters for the closest match.
-internal static class GlyphFolder
+internal static partial class GlyphFolder
 {
     private const string AxisPath = "common/font/axis_12.fdt";
-
-    // no useful decomposition, mapped by hand
-    private static readonly FrozenDictionary<char, string> Replacements = new Dictionary<char, string>
-    {
-        ['ß'] = "ss", ['æ'] = "ae", ['Æ'] = "AE", ['œ'] = "oe", ['Œ'] = "OE",
-        ['ø'] = "o",  ['Ø'] = "O",  ['đ'] = "d",  ['Đ'] = "D",  ['ð'] = "d",
-        ['Ð'] = "D",  ['þ'] = "th", ['Þ'] = "Th", ['ł'] = "l",  ['Ł'] = "L",
-        ['ı'] = "i",  ['İ'] = "I",  ['ħ'] = "h",  ['Ħ'] = "H",  ['ŋ'] = "n",
-        ['Ŋ'] = "N",  ['ŧ'] = "t",  ['Ŧ'] = "T",  ['ĸ'] = "k",  ['ſ'] = "s",
-        ['ƒ'] = "f",
-    }.ToFrozenDictionary();
 
     private static readonly Lazy<FrozenSet<char>> SupportedChars = new(LoadAxisGlyphs);
 
@@ -70,15 +59,23 @@ internal static class GlyphFolder
                 continue;
             }
 
-            var replacement = Substitute(c);
-            if (replacement == null)
+            // a lookalike the font does carry, if one exists
+            if (TryLookalike(c, out var lookalike) && IsRenderable(lookalike))
+            {
+                sb ??= new StringBuilder(text.Length + 8).Append(text, 0, i);
+                sb.Append(lookalike);
+                continue;
+            }
+
+            var stripped = StripDiacritics(c);
+            if (stripped == null)
             {
                 sb?.Append(c);
                 continue;
             }
 
             sb ??= new StringBuilder(text.Length + 8).Append(text, 0, i);
-            sb.Append(replacement);
+            sb.Append(stripped);
         }
 
         return sb?.ToString() ?? text;
@@ -88,12 +85,14 @@ internal static class GlyphFolder
     private static bool IsRenderable(char c) =>
         c < 0x80 || char.IsWhiteSpace(c) || c is >= '\uE000' and <= '\uF8FF' || SupportedChars.Value.Contains(c);
 
-    private static string? Substitute(char c)
+    // drop the accent, keep the base letter
+    private static string? StripDiacritics(char c)
     {
-        if (Replacements.TryGetValue(c, out var mapped))
-            return IsRenderable(mapped) ? mapped : null;
+        // Normalize rejects anything that is not a valid character on its own: half of a
+        // surrogate pair, or an unassigned code point. Neither has a decomposition anyway.
+        if (CharUnicodeInfo.GetUnicodeCategory(c) is UnicodeCategory.Surrogate or UnicodeCategory.OtherNotAssigned)
+            return null;
 
-        // drop the accent, keep the base letter
         var sb = new StringBuilder(4);
         foreach (var d in c.ToString().Normalize(NormalizationForm.FormD))
             if (CharUnicodeInfo.GetUnicodeCategory(d) != UnicodeCategory.NonSpacingMark)
