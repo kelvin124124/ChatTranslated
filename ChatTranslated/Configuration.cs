@@ -70,7 +70,7 @@ public class Configuration : IPluginConfiguration
 
     public short LLM_Provider { get; set; } = 0;
     public string OpenAI_API_Key { get; set; } = "sk-YOUR-API-KEY";
-    public string OpenAI_Model { get; set; } = "gpt-5-mini";
+    public string OpenAI_Model { get; set; } = "gpt-6-luna";
     public string DeepL_API_Key { get; set; } = "YOUR-API-KEY:fx";
     public string Proxy_Url { get; set; } = "https://cfv6.kelpcc.com";
     public string Proxy_API_Key { get; set; } = "YOUR-API-KEY";

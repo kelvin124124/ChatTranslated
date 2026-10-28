@@ -19,7 +19,7 @@ internal static partial class OpenAITranslate
     private const string OpenAIUrl = "https://api.openai.com/v1/chat/completions";
 
     public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
-        , string baseUrl = OpenAIUrl, string model = "gpt-5-mini", string? apiKey = null)
+        , string baseUrl = OpenAIUrl, string model = "gpt-6-luna", string? apiKey = null)
     {
         apiKey ??= Service.configuration.OpenAI_API_Key;
 
@@ -27,10 +27,11 @@ internal static partial class OpenAITranslate
             ? BuildCustomPrompt(targetLanguage, message.Context)
             : BuildPrompt(message.Context);
 
-        // OpenAI rejects max_tokens on current models, and gpt-5 models reject any temperature but the
-        // default. gpt-5 also spends part of its token budget on hidden reasoning, so give it headroom.
+        // OpenAI rejects max_tokens on current models, and its reasoning models (everything after gpt-4)
+        // reject any temperature but the default. They also spend part of the token budget on hidden
+        // reasoning, so give them headroom.
         var isOpenAI = baseUrl == OpenAIUrl;
-        var isReasoningModel = isOpenAI && model.StartsWith("gpt-5", StringComparison.Ordinal);
+        var isReasoningModel = isOpenAI && !model.StartsWith("gpt-4", StringComparison.Ordinal);
         var maxTokens = Math.Max(prompt.Length, 80) + (isReasoningModel ? 1024 : 0);
 
         var userMsg = $"Translate to: {targetLanguage}\n#### Original Text\n{message.OriginalText}";
