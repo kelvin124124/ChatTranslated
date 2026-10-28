@@ -1,6 +1,8 @@
 using ChatTranslated.Localization;
+using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
 using Dalamud.Game.Text;
+using Dalamud.Interface.Utility.Raii;
 using System;
 using System.Collections.Generic;
 
@@ -49,27 +51,18 @@ public class ChatChannelsTab
 
     public void Draw(Configuration configuration)
     {
-        ImGui.BeginTabBar("ChatChannelTabs");
+        using var tabBar = ImRaii.TabBar("ChatChannelTabs");
+        if (!tabBar) return;
 
-        if (ImGui.BeginTabItem(Resources.GenericChannels))
-        {
-            DrawChatTypesColumns(genericChatTypes, configuration);
-            ImGui.EndTabItem();
-        }
+        DrawTab(Resources.GenericChannels, genericChatTypes, configuration);
+        DrawTab("LS", lsChatTypes, configuration);
+        DrawTab("CWLS", cwlsChatTypes, configuration);
+    }
 
-        if (ImGui.BeginTabItem("LS"))
-        {
-            DrawChatTypesColumns(lsChatTypes, configuration);
-            ImGui.EndTabItem();
-        }
-
-        if (ImGui.BeginTabItem("CWLS"))
-        {
-            DrawChatTypesColumns(cwlsChatTypes, configuration);
-            ImGui.EndTabItem();
-        }
-
-        ImGui.EndTabBar();
+    private static void DrawTab(string label, List<XivChatType> chatTypes, Configuration configuration)
+    {
+        using var tab = ImRaii.TabItem(label);
+        if (tab) DrawChatTypesColumns(chatTypes, configuration);
     }
 
     private static void DrawChatTypesColumns(List<XivChatType> chatTypes, Configuration configuration)
@@ -88,7 +81,7 @@ public class ChatChannelsTab
     private static void DrawChatTypeCheckbox(XivChatType type, Configuration configuration)
     {
         var typeEnabled = configuration.SelectedChatTypes.Contains(type);
-        if (ImGui.Checkbox(Resources.ResourceManager.GetString(type.ToString(), Resources.Culture) ?? type.ToString(), ref typeEnabled))
+        if (ImGui.Checkbox(Loc.Get(type.ToString()), ref typeEnabled))
         {
             if (typeEnabled && !configuration.SelectedChatTypes.Contains(type))
                 configuration.SelectedChatTypes.Add(type);

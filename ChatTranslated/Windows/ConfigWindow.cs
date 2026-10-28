@@ -2,6 +2,7 @@ using ChatTranslated.Localization;
 using ChatTranslated.Utils;
 using ChatTranslated.Windows.ConfigTabs;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
 using System.Numerics;
 
@@ -9,23 +10,18 @@ namespace ChatTranslated.Windows;
 
 public class ConfigWindow : Window
 {
-    private static short CurrentTab = 0;
+    private static int CurrentTab = 0;
 
-    private readonly GeneralTab generalTab;
-    private readonly LanguagesTab languagesTab;
-    private readonly ChatChannelsTab chatChannelsTab;
-    private readonly TranslationModeTab translationModeTab;
+    private readonly GeneralTab generalTab = new();
+    private readonly LanguagesTab languagesTab = new();
+    private readonly ChatChannelsTab chatChannelsTab = new();
+    private readonly TranslationModeTab translationModeTab = new();
 
-    public ConfigWindow(Plugin plugin) : base(
+    public ConfigWindow() : base(
         "ChatTranslated config window",
         ImGuiWindowFlags.AlwaysAutoResize)
     {
         Size = new Vector2(700, 340);
-
-        generalTab = new GeneralTab();
-        languagesTab = new LanguagesTab();
-        chatChannelsTab = new ChatChannelsTab();
-        translationModeTab = new TranslationModeTab();
     }
 
     public override void Draw()
@@ -36,31 +32,33 @@ public class ConfigWindow : Window
         ImGui.Columns(2, "ConfigColumns", false);
         ImGui.SetColumnWidth(0, 200);
 
-        if (ImGui.BeginChild("TabsBox", new Vector2(190, 300), true))
+        using (var tabsBox = ImRaii.Child("TabsBox", new Vector2(190, 300), true))
         {
-            for (short i = 0; i < tabs.Length; i++)
+            if (tabsBox)
             {
-                if (ImGui.Selectable(tabs[i], CurrentTab == i))
+                for (var i = 0; i < tabs.Length; i++)
                 {
-                    CurrentTab = i;
+                    if (ImGui.Selectable(tabs[i], CurrentTab == i))
+                        CurrentTab = i;
                 }
             }
         }
-        ImGui.EndChild();
 
         ImGui.NextColumn();
 
-        if (ImGui.BeginChild("ConfigBox", new Vector2(0, 300), true))
+        using (var configBox = ImRaii.Child("ConfigBox", new Vector2(0, 300), true))
         {
-            switch (CurrentTab)
+            if (configBox)
             {
-                case 0: generalTab.Draw(configuration); break;
-                case 1: languagesTab.Draw(configuration); break;
-                case 2: chatChannelsTab.Draw(configuration); break;
-                case 3: translationModeTab.Draw(configuration); break;
+                switch (CurrentTab)
+                {
+                    case 0: generalTab.Draw(configuration); break;
+                    case 1: languagesTab.Draw(configuration); break;
+                    case 2: chatChannelsTab.Draw(configuration); break;
+                    case 3: translationModeTab.Draw(configuration); break;
+                }
             }
         }
-        ImGui.EndChild();
 
         ImGui.Columns(1);
     }

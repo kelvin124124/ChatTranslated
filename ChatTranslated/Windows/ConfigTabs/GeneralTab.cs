@@ -2,6 +2,7 @@ using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface.Utility.Raii;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -10,8 +11,18 @@ namespace ChatTranslated.Windows.ConfigTabs;
 
 public class GeneralTab
 {
-    private readonly string[] supportedDisplayLanguages =
-    ["English", "Japanese", "German", "French", "Chinese (Simplified)", "Chinese (Traditional)", "Korean", "Spanish"];
+    // plugin UI languages and their resource cultures
+    private static readonly (string Name, string Culture)[] DisplayLanguages =
+    [
+        ("English", "en-US"),
+        ("Japanese", "ja-JP"),
+        ("German", "de-DE"),
+        ("French", "fr-FR"),
+        ("Chinese (Simplified)", "zh-CN"),
+        ("Chinese (Traditional)", "zh-TW"),
+        ("Korean", "ko-KR"),
+        ("Spanish", "es-ES"),
+    ];
 
 #if DEBUG
     private static string testInput = "";
@@ -39,99 +50,55 @@ public class GeneralTab
 
     private static void DrawPluginToggles(Configuration configuration)
     {
-        bool _Enabled = configuration.Enabled;
-        bool _EnabledInDuty = configuration.EnabledInDuty;
-
-        if (ImGui.Checkbox(Resources.EnablePlugin, ref _Enabled))
-        {
-            configuration.Enabled = _Enabled;
+        if (ImGui.Checkbox(Resources.EnablePlugin, ref configuration.Enabled))
             configuration.Save();
-        }
 
-        if (ImGui.Checkbox(Resources.EnableInDuties, ref _EnabledInDuty))
-        {
-            configuration.EnabledInDuty = _EnabledInDuty;
+        if (ImGui.Checkbox(Resources.EnableInDuties, ref configuration.EnabledInDuty))
             configuration.Save();
-        }
     }
 
     private static void DrawChatIntegrationSettings(Configuration configuration)
     {
-        bool _ChatIntegration = configuration.ChatIntegration;
-        bool _ChatIntegration_HideOriginal = configuration.ChatIntegration_HideOriginal;
-        bool _ChatIntegration_ShowColoredText = configuration.ChatIntegration_ShowColoredText;
-        bool _ChatIntegration_UseEchoChannel = configuration.ChatIntegration_UseEchoChannel;
-
-        if (ImGui.Checkbox(Resources.ChatIntegration, ref _ChatIntegration))
-        {
-            configuration.ChatIntegration = _ChatIntegration;
+        if (ImGui.Checkbox(Resources.ChatIntegration, ref configuration.ChatIntegration))
             configuration.Save();
-        }
 
-        if (configuration.ChatIntegration)
-        {
-            ImGui.Indent(20);
+        if (!configuration.ChatIntegration)
+            return;
 
-            if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref _ChatIntegration_HideOriginal))
-            {
-                configuration.ChatIntegration_HideOriginal = _ChatIntegration_HideOriginal;
-                configuration.Save();
-            }
+        using var indent = ImRaii.PushIndent(20f, scaled: false);
 
-            if (ImGui.Checkbox(Resources.ChatIntegration_ShowColoredText, ref _ChatIntegration_ShowColoredText))
-            {
-                configuration.ChatIntegration_ShowColoredText = _ChatIntegration_ShowColoredText;
-                configuration.Save();
-            }
+        if (ImGui.Checkbox(Resources.ChatIntegration_HideOriginal, ref configuration.ChatIntegration_HideOriginal))
+            configuration.Save();
 
-            if (ImGui.Checkbox(Resources.ChatIntegration_UseEchoChannel, ref _ChatIntegration_UseEchoChannel))
-            {
-                configuration.ChatIntegration_UseEchoChannel = _ChatIntegration_UseEchoChannel;
-                configuration.Save();
-            }
+        if (ImGui.Checkbox(Resources.ChatIntegration_ShowColoredText, ref configuration.ChatIntegration_ShowColoredText))
+            configuration.Save();
 
-            ImGui.Unindent(20);
-        }
+        if (ImGui.Checkbox(Resources.ChatIntegration_UseEchoChannel, ref configuration.ChatIntegration_UseEchoChannel))
+            configuration.Save();
     }
 
-    private void DrawPluginLangSelection(Configuration configuration)
+    private static void DrawPluginLangSelection(Configuration configuration)
     {
         ImGui.AlignTextToFramePadding();
         ImGui.TextUnformatted(Resources.PluginUILanguage);
 
-        string currentSelection = configuration.SelectedPluginLanguage;
+        int currentIndex = Math.Max(Array.FindIndex(DisplayLanguages, l => l.Name == configuration.SelectedPluginLanguage), 0);
+        string[] localizedNames = [.. DisplayLanguages.Select(l => Loc.Get(l.Name))];
 
-        int currentIndex = Array.IndexOf(supportedDisplayLanguages, currentSelection);
-        if (currentIndex == -1) currentIndex = 0;
-
-        string[] localizedSupportedDisplayLanguages = [.. supportedDisplayLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang)];
-        if (ImGui.Combo("##pluginLanguage", ref currentIndex, localizedSupportedDisplayLanguages, supportedDisplayLanguages.Length))
+        if (ImGui.Combo("##pluginLanguage", ref currentIndex, localizedNames, localizedNames.Length))
         {
-            configuration.SelectedPluginLanguage = supportedDisplayLanguages[currentIndex];
+            configuration.SelectedPluginLanguage = DisplayLanguages[currentIndex].Name;
             configuration.Save();
             SetLanguageCulture(configuration.SelectedPluginLanguage);
         }
 
         if (ImGui.Button("Help with localization!"))
-        {
             Dalamud.Utility.Util.OpenLink("https://hosted.weblate.org/projects/chattranslated/");
-        }
     }
 
     internal static void SetLanguageCulture(string langName)
     {
-        string langCode = langName switch
-        {
-            "English" => "en-US",
-            "German" => "de-DE",
-            "Spanish" => "es-ES",
-            "French" => "fr-FR",
-            "Japanese" => "ja-JP",
-            "Chinese (Simplified)" => "zh-CN",
-            "Chinese (Traditional)" => "zh-TW",
-            "Korean" => "ko-KR",
-            _ => "en-US"
-        };
-        Resources.Culture = new CultureInfo(langCode);
+        var culture = Array.Find(DisplayLanguages, l => l.Name == langName).Culture ?? "en-US";
+        Resources.Culture = new CultureInfo(culture);
     }
 }

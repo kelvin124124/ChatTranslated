@@ -67,14 +67,10 @@ internal static partial class PhraseFilter
         };
     }
 
-    private static bool IsCJK(char c) =>
-        c >= '\u2E80' && c <= '\u9FFF' || c >= '\uAC00' && c <= '\uD7AF' || c >= '\uFF65' && c <= '\uFF9F';
-
     // Returns true when the text contains at least one known English token
     internal static bool HasEnToken(string text)
     {
-        foreach (var c in text)
-            if (IsCJK(c)) return false;
+        if (text.Any(LanguageDetector.IsCJK)) return false;
 
         foreach (var word in TokenSplitRegex().Split(text.ToLowerInvariant()))
         {

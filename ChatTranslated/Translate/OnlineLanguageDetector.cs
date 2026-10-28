@@ -1,5 +1,5 @@
 using ChatTranslated.Utils;
-using GTranslate;
+using GTranslate.Translators;
 using System;
 using System.Threading.Tasks;
 
@@ -7,20 +7,17 @@ namespace ChatTranslated.Translate;
 
 internal static class OnlineLanguageDetector
 {
+    // tried in order until one answers
+    private static readonly ITranslator[] Detectors =
+        [MachineTranslate.YTranslator, MachineTranslate.G2Translator, MachineTranslate.MicrosoftTranslator];
+
     public static async Task<string?> DetectIsoAsync(string text)
     {
-        Func<Task<Language>>[] detectors =
-        [
-            () => MachineTranslate.YTranslator.DetectLanguageAsync(text),
-            () => MachineTranslate.G2Translator.DetectLanguageAsync(text),
-            () => MachineTranslate.MicrosoftTranslator.DetectLanguageAsync(text),
-        ];
-
-        foreach (var detect in detectors)
+        foreach (var detector in Detectors)
         {
             try
             {
-                var iso = (await detect().ConfigureAwait(false))?.ISO6391?.Split('-')[0].ToLowerInvariant();
+                var iso = (await detector.DetectLanguageAsync(text).ConfigureAwait(false))?.ISO6391?.Split('-')[0].ToLowerInvariant();
                 if (!string.IsNullOrEmpty(iso))
                 {
                     Service.pluginLog.Debug($"Online detect → {iso}");

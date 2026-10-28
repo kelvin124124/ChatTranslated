@@ -3,7 +3,6 @@ using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
 using System;
-using System.Net.Http;
 using System.Numerics;
 using System.Threading.Tasks;
 
@@ -30,16 +29,10 @@ public static class OpenAISettings
 
         // API Configuration
         ImGui.TextUnformatted(Resources.OpenAIAPIKey);
-        if (OpenAIApiKeyValid.HasValue)
-        {
-            ImGui.SameLine();
-            ImGui.TextColored(OpenAIApiKeyValid.Value ? new Vector4(0, 1, 0, 1) : new Vector4(1, 0, 0, 1),
-                             OpenAIApiKeyValid.Value ? "✓ valid" : "✗ invalid");
-        }
+        if (OpenAIApiKeyValid is { } valid)
+            LLMSettings.DrawKeyStatus(valid);
         else
-        {
             _ = ValidateApiKey(OpenAIApiKeyInput);
-        }
 
         ImGui.InputText("##APIKey", ref OpenAIApiKeyInput, 200);
         ImGui.SameLine();
@@ -47,7 +40,7 @@ public static class OpenAISettings
         {
             configuration.OpenAI_API_Key = OpenAIApiKeyInput;
             configuration.Save();
-            Plugin.OutputChatLine($"OpenAI API Key {configuration.OpenAI_API_Key[..12]}... saved successfully.");
+            Plugin.OutputChatLine($"OpenAI API Key {configuration.OpenAI_API_Key[..Math.Min(configuration.OpenAI_API_Key.Length, 12)]}... saved successfully.");
             _ = ValidateApiKey(OpenAIApiKeyInput);
         }
 
@@ -75,28 +68,12 @@ public static class OpenAISettings
         CustomPromptEditor.DrawSettings(configuration);
     }
 
-    private static async Task ValidateApiKey(string apiKey, string endpoint = "https://api.openai.com/v1/models")
+    private static async Task ValidateApiKey(string apiKey)
     {
         OpenAIApiKeyValid = false;
 
         if (string.IsNullOrWhiteSpace(apiKey) || apiKey == "sk-YOUR-API-KEY") return;
 
-        try
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, endpoint)
-            {
-                Headers = { { "Authorization", $"Bearer {apiKey}" } }
-            };
-
-            var response = await TranslationHandler.HttpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-
-            OpenAIApiKeyValid = true;
-            Service.pluginLog.Information($"API Key validation successful.");
-        }
-        catch
-        {
-            Service.pluginLog.Warning($"API Key validation failed.");
-        }
+        OpenAIApiKeyValid = await LLMSettings.IsApiKeyValid(apiKey, "https://api.openai.com/v1/models");
     }
 }

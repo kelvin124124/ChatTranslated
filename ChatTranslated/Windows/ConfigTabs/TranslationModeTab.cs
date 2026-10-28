@@ -53,12 +53,10 @@ public class TranslationModeTab
 
     internal static void DrawCacheToggle(Configuration configuration)
     {
-        var enableCache = configuration.EnableTranslationCache;
-        if (ImGui.Checkbox("Cache translations", ref enableCache))
+        if (ImGui.Checkbox("Cache translations", ref configuration.EnableTranslationCache))
         {
-            configuration.EnableTranslationCache = enableCache;
             configuration.Save();
-            if (!enableCache)
+            if (!configuration.EnableTranslationCache)
                 TranslationHandler.ClearTranslationCache();
         }
 

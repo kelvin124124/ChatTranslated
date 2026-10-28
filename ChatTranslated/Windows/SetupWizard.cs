@@ -4,6 +4,7 @@ using ChatTranslated.Utils;
 using ChatTranslated.Windows.ConfigTabs;
 using ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
 using System;
 using System.Linq;
@@ -19,7 +20,7 @@ public class SetupWizard : Window
     private bool knownLanguagesChanged;
     private bool showSkipConfirm;
 
-    public SetupWizard(Plugin plugin) : base(
+    public SetupWizard() : base(
         Resources.Wizard_Title + "##ChatTranslatedSetupWizard",
         ImGuiWindowFlags.NoCollapse | ImGuiWindowFlags.NoDocking)
     {
@@ -41,19 +42,21 @@ public class SetupWizard : Window
         ImGui.TextDisabled(string.Format(Resources.Wizard_Step_Format, step, TotalSteps));
         ImGui.Separator();
 
-        if (ImGui.BeginChild("WizardBody", new Vector2(-1, -36), true))
+        using (var body = ImRaii.Child("WizardBody", new Vector2(-1, -36), true))
         {
-            switch (step)
+            if (body)
             {
-                case 1: DrawWelcome(); break;
-                case 2: DrawTargetLanguage(configuration); break;
-                case 3: DrawDetectionConfig(configuration); break;
-                case 4: DrawLanguagesList(configuration); break;
-                case 5: DrawEngine(configuration); break;
-                case 6: DrawFinish(); break;
+                switch (step)
+                {
+                    case 1: DrawWelcome(); break;
+                    case 2: DrawTargetLanguage(configuration); break;
+                    case 3: DrawDetectionConfig(configuration); break;
+                    case 4: DrawLanguagesList(configuration); break;
+                    case 5: DrawEngine(configuration); break;
+                    case 6: DrawFinish(); break;
+                }
             }
         }
-        ImGui.EndChild();
 
         ImGui.Separator();
         DrawFooter(configuration);
@@ -73,9 +76,8 @@ public class SetupWizard : Window
         ImGui.TextWrapped(Resources.Wizard_TargetLanguage_Body);
         ImGui.Spacing();
 
-        int currentIndex = Array.IndexOf(LanguagesTab.SupportedLanguages, configuration.SelectedTargetLanguage);
-        if (currentIndex == -1) currentIndex = 0;
-        string[] localized = [.. LanguagesTab.SupportedLanguages.Select(l => Resources.ResourceManager.GetString(l, Resources.Culture) ?? l)];
+        int currentIndex = Math.Max(Array.IndexOf(LanguagesTab.SupportedLanguages, configuration.SelectedTargetLanguage), 0);
+        string[] localized = [.. LanguagesTab.SupportedLanguages.Select(Loc.Get)];
 
         ImGui.SetNextItemWidth(280);
         if (ImGui.Combo("##wizardTargetLang", ref currentIndex, localized, LanguagesTab.SupportedLanguages.Length))
@@ -102,11 +104,12 @@ public class SetupWizard : Window
             configuration.SelectedDetectionSource = (Configuration.DetectionSource)source;
             configuration.Save();
         }
-        ImGui.Indent(20);
-        FormattedText.Draw(configuration.SelectedDetectionSource == Configuration.DetectionSource.Online
-            ? Resources.DetectionSource_Online_Help
-            : Resources.DetectionSource_Local_Help);
-        ImGui.Unindent(20);
+        using (ImRaii.PushIndent(20f, scaled: false))
+        {
+            FormattedText.Draw(configuration.SelectedDetectionSource == Configuration.DetectionSource.Online
+                ? Resources.DetectionSource_Online_Help
+                : Resources.DetectionSource_Local_Help);
+        }
 
         ImGui.Spacing();
         ImGui.Separator();
@@ -119,11 +122,12 @@ public class SetupWizard : Window
             configuration.SelectedLanguageSelectionMode = (Configuration.LanguageSelectionMode)mode;
             configuration.Save();
         }
-        ImGui.Indent(20);
-        FormattedText.Draw(configuration.SelectedLanguageSelectionMode == Configuration.LanguageSelectionMode.Inclusive
-            ? Resources.SelectionMode_Inclusive_Help
-            : Resources.SelectionMode_Exclusive_Help);
-        ImGui.Unindent(20);
+        using (ImRaii.PushIndent(20f, scaled: false))
+        {
+            FormattedText.Draw(configuration.SelectedLanguageSelectionMode == Configuration.LanguageSelectionMode.Inclusive
+                ? Resources.SelectionMode_Inclusive_Help
+                : Resources.SelectionMode_Exclusive_Help);
+        }
     }
 
     private static bool DrawLabeledCombo(string label, string id, string[] options, ref int selected)
@@ -148,14 +152,14 @@ public class SetupWizard : Window
         ImGui.TextWrapped(body);
         ImGui.Spacing();
 
-        if (ImGui.BeginChild("WizardLanguageList", new Vector2(-1, 0), true))
+        using var list = ImRaii.Child("WizardLanguageList", new Vector2(-1, 0), true);
+        if (list)
         {
             ImGui.Columns(2, "WizardLangCols", false);
             foreach (var language in LanguagesTab.SupportedLanguages)
             {
                 bool isSelected = bound.Contains(language);
-                string label = Resources.ResourceManager.GetString(language, Resources.Culture) ?? language;
-                if (ImGui.Checkbox(label + idSuffix + language, ref isSelected))
+                if (ImGui.Checkbox(Loc.Get(language) + idSuffix + language, ref isSelected))
                 {
                     if (isSelected && !bound.Contains(language))
                         bound.Add(language);
@@ -169,7 +173,6 @@ public class SetupWizard : Window
             }
             ImGui.Columns(1);
         }
-        ImGui.EndChild();
     }
 
     private static void DrawEngine(Configuration configuration)
@@ -225,22 +228,23 @@ public class SetupWizard : Window
             ImGui.SameLine();
         }
 
-        var popupFlags = ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoMove;
-        if (ImGui.BeginPopupModal("##wizardSkipConfirm", ref showSkipConfirm, popupFlags))
+        using (var popup = ImRaii.PopupModal("##wizardSkipConfirm", ref showSkipConfirm, ImGuiWindowFlags.AlwaysAutoResize | ImGuiWindowFlags.NoMove))
         {
-            ImGui.TextUnformatted(Resources.Wizard_Skip_Confirm);
-            ImGui.Spacing();
-            ImGui.Separator();
-            ImGui.Spacing();
-            if (ImGui.Button(Resources.Wizard_Back + "##confirmBack", new Vector2(120, 0)))
-                ImGui.CloseCurrentPopup();
-            ImGui.SameLine();
-            if (ImGui.Button("OK##confirmOk", new Vector2(120, 0)))
+            if (popup)
             {
-                ImGui.CloseCurrentPopup();
-                Complete(configuration);
+                ImGui.TextUnformatted(Resources.Wizard_Skip_Confirm);
+                ImGui.Spacing();
+                ImGui.Separator();
+                ImGui.Spacing();
+                if (ImGui.Button(Resources.Wizard_Back + "##confirmBack", new Vector2(120, 0)))
+                    ImGui.CloseCurrentPopup();
+                ImGui.SameLine();
+                if (ImGui.Button("OK##confirmOk", new Vector2(120, 0)))
+                {
+                    ImGui.CloseCurrentPopup();
+                    Complete(configuration);
+                }
             }
-            ImGui.EndPopup();
         }
 
         string rightLabel = step < TotalSteps ? Resources.Wizard_Next : Resources.Wizard_Finish;

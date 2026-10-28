@@ -3,6 +3,7 @@ using ChatTranslated.Utils;
 using Dalamud.Game.Text;
 using Lingua;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -74,7 +75,8 @@ internal static class LanguageDetector
 
     internal static readonly HashSet<string> ValidIsoCodes = new(LanguageTable.Select(e => e.Iso));
 
-    private static readonly Dictionary<XivChatType, (int Tick, string? Iso)> _lastChannelDetection = [];
+    // written from whichever thread finishes a detection
+    private static readonly ConcurrentDictionary<XivChatType, (int Tick, string? Iso)> _lastChannelDetection = new();
 
     // Returns Lingua's top detected language as (confidence score, ISO 639-1 code).
     // Returns (0.0, null) for undetectable text (emoji, numbers, Language.Unknown).
@@ -150,8 +152,7 @@ internal static class LanguageDetector
         return (reliability, linguaIso);
     }
 
-    private static bool IsCJK(char c) =>
-        c >= '\u2E80' && c <= '\u9FFF' || c >= '\uAC00' && c <= '\uD7AF' || c >= '\uFF65' && c <= '\uFF9F';
+    internal static bool IsCJK(char c) => c is >= '\u2E80' and <= '\u9FFF' or >= '\uAC00' and <= '\uD7AF' or >= '\uFF65' and <= '\uFF9F';
 
     private static double GetChannelBoost(XivChatType channel, string? linguaIso, double lengthFactor)
     {

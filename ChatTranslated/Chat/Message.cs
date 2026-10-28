@@ -24,6 +24,7 @@ public partial class Message(string sender, MessageSource source, SeString origi
     public string? TranslatedContent { get; set; }
     public Configuration.TranslationMode? TranslationMode { get; set; }
     public string? Context { get; set; }
+    public ushort? DutyId { get; set; } // ContentFinderCondition row of a Party Finder listing
 
     public Message(string sender, MessageSource source, string input)
         : this(sender, source, new SeString(new TextPayload(input)), XivChatType.Say) { }

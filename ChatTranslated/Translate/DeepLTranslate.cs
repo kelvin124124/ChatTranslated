@@ -3,10 +3,7 @@ using Dalamud.Utility;
 
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using static ChatTranslated.Configuration;
 
@@ -20,18 +17,12 @@ internal static class DeepLTranslate
             return ("Target language not supported by DeepL.", null);
 
         var requestBody = new { text = new[] { text }, target_lang = languageCode, context = "FFXIV, MMORPG" };
-        using var requestMessage = new HttpRequestMessage(HttpMethod.Post, "https://api-free.deepl.com/v2/translate")
-        {
-            Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json"),
-            Headers = { { "Authorization", $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}" } }
-        };
 
         try
         {
-            var response = await TranslationHandler.HttpClient.SendAsync(requestMessage).ConfigureAwait(false);
-            response.EnsureSuccessStatusCode();
-            using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
-            var translated = doc.RootElement
+            var json = await TranslationHandler.PostJsonAsync("https://api-free.deepl.com/v2/translate", requestBody,
+                headers => headers.Add("Authorization", $"DeepL-Auth-Key {Service.configuration.DeepL_API_Key}")).ConfigureAwait(false);
+            var translated = json
                 .GetProperty("translations")[0]
                 .GetProperty("text")
                 .GetString()?.Trim();
@@ -100,20 +91,10 @@ internal static class DeeplsTranslate
             }
         };
 
-        using var request = new HttpRequestMessage(HttpMethod.Post, BaseUrl)
-        {
-            Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json")
-        };
-
-        SetHeaders(request);
-
         try
         {
-            var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
-            response.EnsureSuccessStatusCode();
-
-            using var jsonDoc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
-            var translated = jsonDoc.RootElement
+            var json = await TranslationHandler.PostJsonAsync(BaseUrl, requestBody, SetHeaders).ConfigureAwait(false);
+            var translated = json
                 .GetProperty("translations")[0]
                 .GetProperty("text")
                 .GetString();
@@ -148,12 +129,11 @@ internal static class DeeplsTranslate
         new("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"),
     ];
 
-    private static void SetHeaders(HttpRequestMessage request)
+    private static void SetHeaders(HttpRequestHeaders headers)
     {
-        request.Headers.Accept.Clear();
-        request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
+        headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
 
         foreach (var header in StaticHeaders)
-            request.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            headers.TryAddWithoutValidation(header.Key, header.Value);
     }
 }

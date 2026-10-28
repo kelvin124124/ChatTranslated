@@ -4,10 +4,7 @@ using Dalamud.Utility;
 
 using System;
 using System.IO;
-using System.Net.Http;
 using System.Reflection;
-using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static ChatTranslated.Configuration;
@@ -19,8 +16,10 @@ internal static partial class OpenAITranslate
     [GeneratedRegex(@"#### Translation\s*\n(.+)$", RegexOptions.Singleline)]
     private static partial Regex TranslationSectionRegex();
 
+    private const string OpenAIUrl = "https://api.openai.com/v1/chat/completions";
+
     public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
-        , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-5-mini", string? apiKey = null)
+        , string baseUrl = OpenAIUrl, string model = "gpt-5-mini", string? apiKey = null)
     {
         apiKey ??= Service.configuration.OpenAI_API_Key;
 
@@ -28,12 +27,20 @@ internal static partial class OpenAITranslate
             ? BuildCustomPrompt(targetLanguage, message.Context)
             : BuildPrompt(message.Context);
 
+        // OpenAI rejects max_tokens on current models, and gpt-5 models reject any temperature but the
+        // default. gpt-5 also spends part of its token budget on hidden reasoning, so give it headroom.
+        var isOpenAI = baseUrl == OpenAIUrl;
+        var isReasoningModel = isOpenAI && model.StartsWith("gpt-5", StringComparison.Ordinal);
+        var maxTokens = Math.Max(prompt.Length, 80) + (isReasoningModel ? 1024 : 0);
+
         var userMsg = $"Translate to: {targetLanguage}\n#### Original Text\n{message.OriginalText}";
         var requestData = new
         {
             model,
-            temperature = 0.6,
-            max_tokens = Math.Max(prompt.Length, 80),
+            temperature = isReasoningModel ? (double?)null : 0.6,
+            reasoning_effort = isReasoningModel ? "low" : null,
+            max_tokens = isOpenAI ? (int?)null : maxTokens,
+            max_completion_tokens = isOpenAI ? maxTokens : (int?)null,
             messages = new[]
             {
                 new { role = "system", content = prompt },
@@ -41,18 +48,11 @@ internal static partial class OpenAITranslate
             }
         };
 
-        using var request = new HttpRequestMessage(HttpMethod.Post, baseUrl)
-        {
-            Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json"),
-            Headers = { { "Authorization", $"Bearer {apiKey}" } }
-        };
-
         try
         {
-            var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
-            response.EnsureSuccessStatusCode();
-            using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
-            var translated = doc.RootElement
+            var json = await TranslationHandler.PostJsonAsync(baseUrl, requestData,
+                headers => headers.Add("Authorization", $"Bearer {apiKey}")).ConfigureAwait(false);
+            var translated = json
                 .GetProperty("choices")[0]
                 .GetProperty("message")
                 .GetProperty("content")
@@ -117,9 +117,10 @@ internal static partial class OpenAITranslate
         return AppendContext(prompt, context);
     }
 
+    // chat messages only carry context when UseContext is on; Party Finder and IPC bring their own
     private static string AppendContext(string prompt, string? context)
     {
-        if (!Service.configuration.UseContext || context == null) return prompt;
+        if (string.IsNullOrEmpty(context) || context == "null") return prompt;
         return prompt + $"""
 
             CONTEXT (Use if relevant):
@@ -162,22 +163,22 @@ internal static class LLMProxyTranslate
         }
 #endif
 
-        if (!Service.configuration.UseContext) message.Context = "null";
-
-        var requestData = new { targetLanguage, message = message.OriginalText, context = message.Context };
-        using var request = new HttpRequestMessage(HttpMethod.Post, Service.configuration.Proxy_Url)
+        var requestData = new
         {
-            Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json")
+            targetLanguage,
+            message = message.OriginalText,
+            // the proxy requires a context string; "null" means none
+            context = message.Context ?? "null",
+            // lets the proxy pick the Party Finder glossary for the listing's duty
+            dutyId = message.DutyId
         };
-        request.Headers.Add("x-api-key", Cfv5);
 
         try
         {
-            var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
-            response.EnsureSuccessStatusCode();
-            using var jsonDoc = JsonDocument.Parse(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+            var json = await TranslationHandler.PostJsonAsync(Service.configuration.Proxy_Url, requestData,
+                headers => headers.Add("x-api-key", Cfv5)).ConfigureAwait(false);
 
-            var translated = jsonDoc.RootElement.GetProperty("translated").GetString()?.Trim();
+            var translated = json.GetProperty("translated").GetString()?.Trim();
 
             if (translated.IsNullOrWhitespace())
                 throw new Exception("Translation not found in the expected structure.");
@@ -188,7 +189,7 @@ internal static class LLMProxyTranslate
                 return await MachineTranslate.Translate(message.OriginalText, targetLanguage);
             }
 
-            if (jsonDoc.RootElement.TryGetProperty("responseTime", out var responseTime))
+            if (json.TryGetProperty("responseTime", out var responseTime))
                 Service.pluginLog.Info($"Request processed in: {responseTime}");
 
             return (translated.Replace("\n", string.Empty), TranslationMode.LLMProxy);

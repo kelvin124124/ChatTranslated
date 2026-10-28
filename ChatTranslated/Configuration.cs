@@ -50,12 +50,13 @@ public class Configuration : IPluginConfiguration
     public string SelectedMainWindowTargetLanguage { get; set; } = "Japanese";
     public string SelectedPluginLanguage { get; set; } = "English";
 
-    public bool Enabled { get; set; } = true;
-    public bool ChatIntegration { get; set; } = true;
-    public bool ChatIntegration_HideOriginal { get; set; } = false;
-    public bool ChatIntegration_ShowColoredText { get; set; } = false;
-    public bool ChatIntegration_UseEchoChannel { get; set; } = false;
-    public bool EnabledInDuty { get; set; } = false;
+    // toggles are fields so the config UI can bind them by ref
+    public bool Enabled = true;
+    public bool ChatIntegration = true;
+    public bool ChatIntegration_HideOriginal = false;
+    public bool ChatIntegration_ShowColoredText = false;
+    public bool ChatIntegration_UseEchoChannel = false;
+    public bool EnabledInDuty = false;
 
     public string CustomTargetLanguage = "";
     public bool UseCustomLanguage = false;
@@ -76,11 +77,11 @@ public class Configuration : IPluginConfiguration
     public string LLM_API_Key { get; set; } = "YOUR-API-KEY";
     public string LLM_API_endpoint { get; set; } = "https://openrouter.ai/api/v1/chat/completions";
     public string LLM_Model { get; set; } = "google/gemini-2.0-flash-001";
-    public bool UseContext { get; set; } = true;
-    public bool UseCustomPrompt { get; set; } = false;
+    public bool UseContext = true;
+    public bool UseCustomPrompt = false;
     public string LLM_CustomPrompt { get; set; } = "";
 
-    public bool EnableTranslationCache { get; set; } = true;
+    public bool EnableTranslationCache = true;
 
     public void Save()
     {

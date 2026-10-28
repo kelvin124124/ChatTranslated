@@ -1,9 +1,8 @@
 using ChatTranslated.Localization;
-using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
-using System.Net.Http;
-using System.Numerics;
+using Dalamud.Interface.Components;
+using System;
 using System.Threading.Tasks;
 
 namespace ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
@@ -22,12 +21,7 @@ public static class OpenAICompatibleSettings
 
         // API Endpoint
         ImGui.TextUnformatted(Resources.LLMApiEndpoint);
-        ImGui.SameLine();
-        ImGui.TextDisabled("?");
-        if (ImGui.IsItemHovered())
-        {
-            ImGui.SetTooltip(Resources.LLMApiEndpointExample);
-        }
+        ImGuiComponents.HelpMarker(Resources.LLMApiEndpointExample);
 
         ImGui.InputText("##APIEndpoint", ref LLMApiEndpointInput, 200);
         ImGui.SameLine();
@@ -43,23 +37,17 @@ public static class OpenAICompatibleSettings
 
         // API Key
         ImGui.TextUnformatted(Resources.LLMAPIKey);
-        if (LLMApiKeyValid.HasValue)
-        {
-            ImGui.SameLine();
-            ImGui.TextColored(LLMApiKeyValid.Value ? new Vector4(0, 1, 0, 1) : new Vector4(1, 0, 0, 1),
-                             LLMApiKeyValid.Value ? "✓ valid" : "✗ invalid");
-        }
+        if (LLMApiKeyValid is { } valid)
+            LLMSettings.DrawKeyStatus(valid);
         else
-        {
             _ = ValidateApiKey(LLMApiKeyInput, LLMApiEndpointInput);
-        }
 
         ImGui.InputText("##APIKey", ref LLMApiKeyInput, 200);
         ImGui.SameLine();
         if (ImGui.Button(Resources.Apply + "###LLM_API_Key"))
         {
             configuration.LLM_API_Key = LLMApiKeyInput;
-            Plugin.OutputChatLine($"LLM API Key {configuration.LLM_API_Key[..12]}... saved successfully.");
+            Plugin.OutputChatLine($"LLM API Key {configuration.LLM_API_Key[..Math.Min(configuration.LLM_API_Key.Length, 12)]}... saved successfully.");
             configuration.Save();
             _ = ValidateApiKey(LLMApiKeyInput, LLMApiEndpointInput);
         }
@@ -99,22 +87,6 @@ public static class OpenAICompatibleSettings
         else
             endpoint = endpoint.TrimEnd('/').Replace("/chat/completions", "/models");
 
-        try
-        {
-            var request = new HttpRequestMessage(HttpMethod.Get, endpoint)
-            {
-                Headers = { { "Authorization", $"Bearer {apiKey}" } }
-            };
-
-            var response = await TranslationHandler.HttpClient.SendAsync(request);
-            response.EnsureSuccessStatusCode();
-
-            LLMApiKeyValid = true;
-            Service.pluginLog.Information("API Key validation successful.");
-        }
-        catch
-        {
-            Service.pluginLog.Warning("API Key validation failed.");
-        }
+        LLMApiKeyValid = await LLMSettings.IsApiKeyValid(apiKey, endpoint);
     }
 }

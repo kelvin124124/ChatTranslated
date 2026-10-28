@@ -2,6 +2,8 @@ using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface.Components;
+using Dalamud.Interface.Utility.Raii;
 using GTranslate;
 using System;
 using System.Linq;
@@ -11,15 +13,7 @@ namespace ChatTranslated.Windows.ConfigTabs;
 
 public class LanguagesTab
 {
-    internal static readonly string[] SupportedLanguages =
-    ["English", "Japanese", "German", "French",
-        "Chinese (Simplified)", "Chinese (Traditional)",
-        "Korean", "Spanish", "Arabic", "Bulgarian",
-        "Czech", "Danish", "Dutch", "Estonian",
-        "Finnish", "Greek", "Hungarian", "Indonesian",
-        "Italian", "Latvian", "Lithuanian", "Norwegian Bokmal",
-        "Polish", "Portuguese", "Romanian", "Russian", "Slovak",
-        "Slovenian", "Swedish", "Turkish", "Ukrainian"];
+    internal static readonly string[] SupportedLanguages = [.. LanguageDetector.LanguageTable.Select(e => e.Name)];
 
     public void Draw(Configuration configuration)
     {
@@ -83,7 +77,7 @@ public class LanguagesTab
 
         if (ImGui.CollapsingHeader(header + idSuffix, ImGuiTreeNodeFlags.DefaultOpen))
         {
-            ImGui.BeginChild("languageList" + idSuffix, new Vector2(0, 7 * ImGui.GetFrameHeightWithSpacing()), true);
+            using var child = ImRaii.Child("languageList" + idSuffix, new Vector2(0, 7 * ImGui.GetFrameHeightWithSpacing()), true);
             foreach (string language in SupportedLanguages)
             {
                 bool isSelected = bound.Contains(language);
@@ -98,7 +92,6 @@ public class LanguagesTab
                         _ = LanguageDetector.RebuildDetectorAsync();
                 }
             }
-            ImGui.EndChild();
         }
 
         ImGui.TextDisabled(explanation);
@@ -110,19 +103,18 @@ public class LanguagesTab
         ImGui.TextUnformatted(Resources.TargetLang);
         ImGui.SameLine();
 
-        int currentIndex = Array.IndexOf(SupportedLanguages, configuration.SelectedTargetLanguage);
-        if (currentIndex == -1) currentIndex = 0;
+        int currentIndex = Math.Max(Array.IndexOf(SupportedLanguages, configuration.SelectedTargetLanguage), 0);
+        string[] localizedLanguages = [.. SupportedLanguages.Select(Loc.Get)];
 
-        string[] localizedLanguages = [.. SupportedLanguages.Select(lang => Resources.ResourceManager.GetString(lang, Resources.Culture) ?? lang)];
-
-        if (configuration.UseCustomLanguage) ImGui.BeginDisabled();
-        if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedLanguages, 7))
+        using (ImRaii.Disabled(configuration.UseCustomLanguage))
         {
-            configuration.SelectedTargetLanguage = SupportedLanguages[currentIndex];
-            TranslationHandler.ClearTranslationCache();
-            configuration.Save();
+            if (ImGui.Combo("##targetLanguage", ref currentIndex, localizedLanguages, 7))
+            {
+                configuration.SelectedTargetLanguage = SupportedLanguages[currentIndex];
+                TranslationHandler.ClearTranslationCache();
+                configuration.Save();
+            }
         }
-        if (configuration.UseCustomLanguage) ImGui.EndDisabled();
 
         if (ImGui.CollapsingHeader(Resources.CustomTargetLanguageHeader, ImGuiTreeNodeFlags.None))
         {
@@ -134,13 +126,13 @@ public class LanguagesTab
 
             if (configuration.UseCustomLanguage)
             {
-                ImGui.Indent(20);
+                using var indent = ImRaii.PushIndent(20f, scaled: false);
 
                 ImGui.InputText("##targetLanguageInput", ref configuration.CustomTargetLanguage, 50);
                 ImGui.SameLine();
                 if (ImGui.Button(Resources.Apply + "###ApplyCustomLanguage"))
                 {
-                    if (Language.TryGetLanguage(configuration.CustomTargetLanguage, out var lang))
+                    if (Language.TryGetLanguage(configuration.CustomTargetLanguage, out _))
                     {
                         Plugin.OutputChatLine("Language applied successfully.");
                         TranslationHandler.ClearTranslationCache();
@@ -152,19 +144,10 @@ public class LanguagesTab
                         Plugin.OutputChatLine("Invalid language.");
                     }
                 }
-                ImGui.SameLine();
-                ImGui.TextDisabled("?");
-                if (ImGui.IsItemHovered())
-                {
-                    ImGui.SetTooltip(Resources.CustomTargetLanguageExplanation);
-                }
+                ImGuiComponents.HelpMarker(Resources.CustomTargetLanguageExplanation);
 
                 if (ImGui.Button(Resources.SeeLanguageList))
-                {
                     Dalamud.Utility.Util.OpenLink("https://github.com/d4n3436/GTranslate/blob/master/src/GTranslate/LanguageDictionary.cs#L164");
-                }
-
-                ImGui.Unindent(20);
             }
         }
 

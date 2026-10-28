@@ -1,6 +1,7 @@
 using ChatTranslated.Localization;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
+using System;
 
 namespace ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
 
@@ -19,7 +20,7 @@ public static class DeepLSettings
             configuration.DeepL_API_Key = DeepLApiKeyInput;
             configuration.Save();
 
-            Plugin.OutputChatLine($"DeepL API Key {configuration.DeepL_API_Key[..12]}... saved successfully.");
+            Plugin.OutputChatLine($"DeepL API Key {configuration.DeepL_API_Key[..Math.Min(configuration.DeepL_API_Key.Length, 12)]}... saved successfully.");
         }
     }
 }

@@ -2,16 +2,17 @@ using ChatTranslated.Chat;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using ChatTranslated.Windows;
+using ChatTranslated.Windows.ConfigTabs;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui.ContextMenu;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
 using Dalamud.Interface.Windowing;
-using Dalamud.Memory;
 using Dalamud.Plugin;
-using Dalamud.Plugin.Services;
+using Dalamud.Utility;
 using FFXIVClientStructs.FFXIV.Client.UI;
+using FFXIVClientStructs.FFXIV.Client.UI.Agent;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -27,29 +28,24 @@ public sealed class Plugin : IDalamudPlugin
 
     public WindowSystem WindowSystem { get; } = new("ChatTranslated");
 
-    public Plugin(IDalamudPluginInterface pluginInterface, ICommandManager commandManager)
+    public Plugin(IDalamudPluginInterface pluginInterface)
     {
-        _ = pluginInterface.Create<Service>();
+        pluginInterface.Create<Service>();
 
-        Service.pluginInterface = pluginInterface;
-        Service.commandManager = commandManager;
-
-        Service.configuration = pluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
-
-        Service.plugin = this;
+        var configuration = Service.configuration = pluginInterface.GetPluginConfig() as Configuration ?? new Configuration();
 
         IpcManager.Register(pluginInterface);
         ChatTwoDetector.Register();
 
-        Service.configWindow = new ConfigWindow(this);
-        Service.mainWindow = new MainWindow(this);
-        Service.setupWizard = new SetupWizard(this);
+        Service.configWindow = new ConfigWindow();
+        Service.mainWindow = new MainWindow();
+        Service.setupWizard = new SetupWizard();
 
         WindowSystem.AddWindow(Service.configWindow);
         WindowSystem.AddWindow(Service.mainWindow);
         WindowSystem.AddWindow(Service.setupWizard);
 
-        pluginInterface.UiBuilder.Draw += DrawUI;
+        pluginInterface.UiBuilder.Draw += WindowSystem.Draw;
         pluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
         pluginInterface.UiBuilder.OpenMainUi += DrawMainUI;
 
@@ -68,53 +64,34 @@ public sealed class Plugin : IDalamudPlugin
             HelpMessage = "Open Chat Translated main window."
         });
 
-        Windows.ConfigTabs.GeneralTab.SetLanguageCulture(Service.configuration.SelectedPluginLanguage);
+        GeneralTab.SetLanguageCulture(configuration.SelectedPluginLanguage);
 
         // initialize chat channels
-        Service.configuration.SelectedChatTypes ??= [.. Windows.ConfigTabs.ChatChannelsTab.genericChatTypes];
+        configuration.SelectedChatTypes ??= [.. ChatChannelsTab.genericChatTypes];
 
         // settings migration
-        if (Service.configuration.Version < 5)
+        if (configuration.Version < 8)
         {
-            // migrate channel settings
-            var _ChatTypes = Service.configuration.SelectedChatTypes;
-            Service.configuration.SelectedChatTypes = [];
-            _ChatTypes.ForEach(type => Service.configuration.SelectedChatTypes.Add(type));
-            Service.configuration.Version = 5;
-            Service.configuration.Save();
+            if (configuration.Version < 6)
+                configuration.SelectedChatTypes.Add(XivChatType.CustomEmote);
+            if (configuration.Version < 7)
+                configuration.KnownLanguages = [configuration.SelectedTargetLanguage];
+
+            configuration.Version = 8;
+            configuration.Save();
         }
 
-        if (Service.configuration.Version < 6)
+        if (configuration.Proxy_Url != "https://cfv5.kelpcc.com")
         {
-            Service.configuration.SelectedChatTypes.Add(XivChatType.CustomEmote);
-            Service.configuration.Version = 6;
-            Service.configuration.Save();
-        }
-
-        if (Service.configuration.Version < 7)
-        {
-            Service.configuration.KnownLanguages = [Service.configuration.SelectedTargetLanguage];
-            Service.configuration.Version = 7;
-            Service.configuration.Save();
-        }
-
-        if (Service.configuration.Version < 8)
-        {
-            Service.configuration.Version = 8;
-            Service.configuration.Save();
-        }
-
-        if (Service.configuration.Proxy_Url != "https://cfv5.kelpcc.com")
-        {
-            Service.configuration.Proxy_Url = "https://cfv5.kelpcc.com";
-            Service.configuration.Save();
+            configuration.Proxy_Url = "https://cfv5.kelpcc.com";
+            configuration.Save();
         }
 
         _ = LanguageDetector.RebuildDetectorAsync();
         _ = Task.Run(GlyphFolder.Warmup);
         TranslationHandler.LoadCache();
 
-        if (!Service.configuration.ShowedWizard)
+        if (!configuration.ShowedWizard)
             Service.setupWizard.IsOpen = true;
     }
 
@@ -126,33 +103,33 @@ public sealed class Plugin : IDalamudPlugin
 
     private unsafe void TranslatePF(IMenuItemClickedArgs args)
     {
-        AddonLookingForGroupDetail* PfAddonPtr = (AddonLookingForGroupDetail*)args.AddonPtr;
-        string description = PfAddonPtr->DescriptionString.ToString();
+        var addon = (AddonLookingForGroupDetail*)args.AddonPtr;
 
         // fix weird characters in pf description
-        description = description
-            .Replace("\u0002\u0012\u0002\u0037\u0003", " \uE040 ")
-            .Replace("\u0002\u0012\u0002\u0038\u0003", " \uE041 ");
+        var description = addon->DescriptionString.ToString()
+            .Replace("\u0002\u0012\u00027\u0003", "  ")
+            .Replace("\u0002\u0012\u00028\u0003", "  ");
 
-        byte* partyLeaderText = PfAddonPtr->PartyLeaderTextNode->GetText();
-        string recruiterName = MemoryHelper.ReadSeStringNullTerminated((nint)partyLeaderText).TextValue;
+        var recruiterName = addon->PartyLeaderTextNode->GetText().ExtractText();
         if (string.IsNullOrWhiteSpace(recruiterName))
             recruiterName = "PF";
 
-        Message PFmessage = new(recruiterName, MessageSource.PartyFinder, description);
-
-        string category = string.Join(" ", Regex.Matches(PfAddonPtr->CategoriesString.ToString(), @"\[[^\]]+\]")
-                                                 .Select(m => m.Value));
+        var category = string.Join(" ", Regex.Matches(addon->CategoriesString.ToString(), @"\[[^\]]+\]").Select(m => m.Value));
         if (string.IsNullOrWhiteSpace(category)) category = "null";
 
-        byte* dutyText = PfAddonPtr->DutyNameTextNode->GetText();
-        string duty = MemoryHelper.ReadSeStringNullTerminated((nint)dutyText).TextValue;
+        var duty = addon->DutyNameTextNode->GetText().ExtractText();
         if (string.IsNullOrWhiteSpace(duty)) duty = "null";
 
-        string context = $"Tags: {category}, Duty: {duty}";
-        PFmessage.Context = context;
+        // the detail window shows the listing the agent opened last
+        var dutyId = AgentLookingForGroup.Instance()->LastViewedListing.DutyId;
 
-        Task.Run(() => TranslatePFAsync(PFmessage));
+        var message = new Message(recruiterName, MessageSource.PartyFinder, description)
+        {
+            Context = $"Tags: {category}, Duty: {duty}",
+            DutyId = dutyId == 0 ? null : dutyId
+        };
+
+        Task.Run(() => TranslatePFAsync(message));
     }
 
     private static async Task TranslatePFAsync(Message message)
@@ -172,7 +149,7 @@ public sealed class Plugin : IDalamudPlugin
             sb.AddUiForegroundOff();
         sb.Append(ForChatLog(message));
 
-        Service.chatGui.Print(new XivChatEntry
+        Print(new XivChatEntry
         {
             Type = type,
             Name = new SeString(new PlayerPayload("[CT] " + sender, 0)), // use player payload to fake chat bubbles
@@ -185,17 +162,25 @@ public sealed class Plugin : IDalamudPlugin
         SeStringBuilder sb = new();
         sb.AddUiForeground("[CT] ", 58).Append(ForChatLog(message));
 
-        Service.chatGui.Print(new XivChatEntry { Message = sb.BuiltString });
+        Print(new XivChatEntry { Message = sb.BuiltString });
     }
+
+    // translations finish on the thread pool, but ChatGui's queue is only safe to use from the framework thread
+    private static void Print(XivChatEntry entry) =>
+        _ = Service.framework.RunOnFrameworkThread(() => Service.chatGui.Print(entry));
 
     public void Dispose()
     {
         IpcManager.Unregister();
         ChatTwoDetector.Unregister();
-        Translate.LanguageDetector.Dispose();
-        Translate.TranslationHandler.SaveCache();
-        Translate.TranslationHandler.HttpClient.Dispose();
+        LanguageDetector.Dispose();
+        TranslationHandler.SaveCache();
+        TranslationHandler.HttpClient.Dispose();
 
+        Service.contextMenu.OnMenuOpened -= OnContextMenuOpened;
+        Service.pluginInterface.UiBuilder.Draw -= WindowSystem.Draw;
+        Service.pluginInterface.UiBuilder.OpenConfigUi -= DrawConfigUI;
+        Service.pluginInterface.UiBuilder.OpenMainUi -= DrawMainUI;
         WindowSystem.RemoveAllWindows();
 
         Service.chatHandler?.Dispose();
@@ -232,15 +217,7 @@ public sealed class Plugin : IDalamudPlugin
         Service.mainWindow.IsOpen = true;
     }
 
-    private void DrawUI() => WindowSystem.Draw();
+    public static void DrawConfigUI() => Service.configWindow.IsOpen = true;
 
-    public static void DrawConfigUI()
-    {
-        Service.configWindow.IsOpen = true;
-    }
-
-    public static void DrawMainUI()
-    {
-        Service.mainWindow.IsOpen = true;
-    }
+    public static void DrawMainUI() => Service.mainWindow.IsOpen = true;
 }

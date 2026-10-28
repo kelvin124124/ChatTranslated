@@ -4,9 +4,14 @@ using Dalamud.Networking.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,10 +30,27 @@ internal static class TranslationHandler
         Timeout = TimeSpan.FromSeconds(20)
     };
 
+    // optional request fields are left out instead of sent as null
+    private static readonly JsonSerializerOptions RequestJsonOptions = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
+
+    // POSTs a JSON body and returns the parsed JSON response; throws on a non-success status.
+    internal static async Task<JsonElement> PostJsonAsync(string url, object body, Action<HttpRequestHeaders>? setHeaders = null)
+    {
+        using var request = new HttpRequestMessage(HttpMethod.Post, url)
+        {
+            Content = new StringContent(JsonSerializer.Serialize(body, RequestJsonOptions), Encoding.UTF8, "application/json")
+        };
+        setHeaders?.Invoke(request.Headers);
+
+        using var response = await HttpClient.SendAsync(request).ConfigureAwait(false);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<JsonElement>().ConfigureAwait(false);
+    }
+
     private const int MAX_CACHE_SIZE = 120;
 
-    private static readonly LinkedList<KeyValuePair<string, string>> TranslationCache = new();
-    private static readonly Dictionary<string, LinkedListNode<KeyValuePair<string, string>>> TranslationCacheIndex = [];
+    // insertion order doubles as recency: a hit moves its entry to the end, eviction takes the front
+    private static readonly OrderedDictionary<string, string> TranslationCache = [];
     private static readonly Lock TranslationCacheLock = new();
 
     private static string CacheFilePath =>
@@ -41,27 +63,21 @@ internal static class TranslationHandler
             var path = CacheFilePath;
             if (!File.Exists(path)) return;
 
-            var json = File.ReadAllText(path);
-            var entries = JsonSerializer.Deserialize<List<string[]>>(json);
+            var entries = JsonSerializer.Deserialize<List<string[]>>(File.ReadAllText(path));
             if (entries == null) return;
-
-            // Only keep the most recent MAX_CACHE_SIZE entries
-            if (entries.Count > MAX_CACHE_SIZE)
-                entries = entries.GetRange(entries.Count - MAX_CACHE_SIZE, MAX_CACHE_SIZE);
 
             lock (TranslationCacheLock)
             {
                 TranslationCache.Clear();
-                TranslationCacheIndex.Clear();
-                foreach (var pair in entries)
+                // only keep the most recent MAX_CACHE_SIZE entries
+                foreach (var pair in entries.TakeLast(MAX_CACHE_SIZE))
                 {
-                    if (pair.Length != 2 || TranslationCacheIndex.ContainsKey(pair[0])) continue;
-                    var node = TranslationCache.AddLast(new KeyValuePair<string, string>(pair[0], pair[1]));
-                    TranslationCacheIndex[pair[0]] = node;
+                    if (pair.Length == 2)
+                        TranslationCache.TryAdd(pair[0], pair[1]);
                 }
             }
 
-            Service.pluginLog.Information($"[TranslationHandler] Loaded {TranslationCacheIndex.Count} cache entries.");
+            Service.pluginLog.Information($"[TranslationHandler] Loaded {TranslationCache.Count} cache entries.");
         }
         catch (Exception ex)
         {
@@ -75,11 +91,7 @@ internal static class TranslationHandler
         {
             List<string[]> snapshot;
             lock (TranslationCacheLock)
-            {
-                snapshot = new List<string[]>(TranslationCache.Count);
-                foreach (var kv in TranslationCache)
-                    snapshot.Add([kv.Key, kv.Value]);
-            }
+                snapshot = [.. TranslationCache.Select(kv => new[] { kv.Key, kv.Value })];
 
             var path = CacheFilePath;
             Directory.CreateDirectory(Path.GetDirectoryName(path)!);
@@ -91,21 +103,24 @@ internal static class TranslationHandler
         }
     }
 
-    public static async Task<Message> TranslateMessage(Message message, string targetLanguage = null!)
+    public static async Task<Message> TranslateMessage(Message message, string? targetLanguage = null)
     {
         targetLanguage ??= Service.configuration.EffectiveTargetLanguage;
 
-        var cacheEnabled = Service.configuration.EnableTranslationCache;
+        // entries are keyed by text alone and the cache is cleared whenever the target language changes,
+        // so only translations into the configured language may read or write it
+        var cacheEnabled = Service.configuration.EnableTranslationCache
+            && message.Source != MessageSource.MainWindow
+            && targetLanguage == Service.configuration.EffectiveTargetLanguage;
 
         if (cacheEnabled)
         {
             lock (TranslationCacheLock)
             {
-                if (TranslationCacheIndex.TryGetValue(message.OriginalText, out var cachedNode))
+                if (TranslationCache.Remove(message.OriginalText, out var cached))
                 {
-                    TranslationCache.Remove(cachedNode);
-                    TranslationCache.AddLast(cachedNode);
-                    message.TranslatedContent = cachedNode.Value.Value;
+                    TranslationCache.Add(message.OriginalText, cached);
+                    message.TranslatedContent = cached;
                     return message;
                 }
             }
@@ -129,32 +144,15 @@ internal static class TranslationHandler
         message.TranslatedContent = translatedText;
         message.TranslationMode = mode;
 
-        if (cacheEnabled
-            && message.Source != MessageSource.MainWindow
-            && message.TranslationMode != Configuration.TranslationMode.MachineTranslate)
+        // a null mode means every translator failed; don't remember that
+        if (cacheEnabled && mode is not (null or Configuration.TranslationMode.MachineTranslate))
         {
             bool added;
             lock (TranslationCacheLock)
             {
-                if (TranslationCacheIndex.TryGetValue(message.OriginalText, out var existingNode))
-                {
-                    TranslationCache.Remove(existingNode);
-                    TranslationCache.AddLast(existingNode);
-                    added = false;
-                }
-                else
-                {
-                    if (TranslationCacheIndex.Count >= MAX_CACHE_SIZE)
-                    {
-                        var oldest = TranslationCache.First!;
-                        TranslationCache.RemoveFirst();
-                        TranslationCacheIndex.Remove(oldest.Value.Key);
-                    }
-
-                    var node = TranslationCache.AddLast(new KeyValuePair<string, string>(message.OriginalText, translatedText));
-                    TranslationCacheIndex[message.OriginalText] = node;
-                    added = true;
-                }
+                added = TranslationCache.TryAdd(message.OriginalText, translatedText);
+                if (added && TranslationCache.Count > MAX_CACHE_SIZE)
+                    TranslationCache.RemoveAt(0);
             }
 
             if (added)
@@ -167,10 +165,7 @@ internal static class TranslationHandler
     public static void ClearTranslationCache()
     {
         lock (TranslationCacheLock)
-        {
             TranslationCache.Clear();
-            TranslationCacheIndex.Clear();
-        }
 
         _ = Task.Run(SaveCache);
     }

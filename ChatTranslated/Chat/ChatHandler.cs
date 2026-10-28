@@ -5,6 +5,7 @@ using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.Text;
 using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Game.Text.SeStringHandling.Payloads;
+using Dalamud.Utility;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using System;
 using System.Collections.Generic;
@@ -82,7 +83,9 @@ internal partial class ChatHandler
 
             if (chatMessage.TranslatedContent == null)
             {
-                chatMessage.Context = GetChatMessageContext();
+                // language detection resumes on the thread pool; the chat panel belongs to the game thread
+                if (Service.configuration.UseContext)
+                    chatMessage.Context = await Service.framework.RunOnFrameworkThread(GetChatMessageContext);
                 await TranslationHandler.TranslateMessage(chatMessage);
             }
 
@@ -203,14 +206,15 @@ internal partial class ChatHandler
 
     private const int MaxContextLines = 10;
 
-    public unsafe string GetChatMessageContext()
+    private static unsafe string GetChatMessageContext()
     {
         try
         {
-            var panel = Service.gameGui.GetAddonByName($"ChatLogPanel_{GetActiveChatLogPanel()}");
-            if (panel == 0) return string.Empty;
+            var chatLog = Service.gameGui.GetAddonByName<AddonChatLog>("ChatLog");
+            var panel = Service.gameGui.GetAddonByName<AddonChatLogPanel>($"ChatLogPanel_{(chatLog == null ? 0 : chatLog->TabIndex)}");
+            if (panel == null) return string.Empty;
 
-            var payloads = SeString.Parse((byte*)((AddonChatLogPanel*)panel.Address)->ChatText->GetText()).Payloads;
+            var payloads = panel->ChatText->GetText().AsDalamudSeString().Payloads;
 
             // The panel renders each message as plain text — sender names and links already
             // appear once as TextPayloads. Messages are separated by '\r'; long ones are
@@ -272,10 +276,4 @@ internal partial class ChatHandler
 
     [GeneratedRegex(@"[\uE000-\uF8FF]+")]
     private static partial Regex PrivateUseRegex();
-
-    public unsafe nint GetActiveChatLogPanel()
-    {
-        var addon = (AddonChatLog*)Service.gameGui.GetAddonByName("ChatLog").Address;
-        return addon == null ? 0 : addon->TabIndex;
-    }
 }

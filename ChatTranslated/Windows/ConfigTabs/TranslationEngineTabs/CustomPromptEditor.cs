@@ -2,6 +2,7 @@ using ChatTranslated.Localization;
 using ChatTranslated.Translate;
 using ChatTranslated.Utils;
 using Dalamud.Bindings.ImGui;
+using Dalamud.Interface.Components;
 using System.Numerics;
 
 namespace ChatTranslated.Windows.ConfigTabs.TranslationEngineTabs;
@@ -12,13 +13,8 @@ public static class CustomPromptEditor
 
     public static void DrawSettings(Configuration configuration)
     {
-        bool _UseCustomPrompt = configuration.UseCustomPrompt;
-
-        if (ImGui.Checkbox(Resources.UseCustomPrompt + "##UseCustomPromptCheckbox", ref _UseCustomPrompt))
-        {
-            configuration.UseCustomPrompt = _UseCustomPrompt;
+        if (ImGui.Checkbox(Resources.UseCustomPrompt + "##UseCustomPromptCheckbox", ref configuration.UseCustomPrompt))
             configuration.Save();
-        }
 
         if (configuration.UseCustomPrompt)
             DrawEditor(configuration);
@@ -27,9 +23,7 @@ public static class CustomPromptEditor
     private static void DrawEditor(Configuration configuration)
     {
         ImGui.TextUnformatted(Resources.CustomSystemPrompt);
-        ImGui.SameLine();
-        ImGui.TextDisabled("?");
-        if (ImGui.IsItemHovered()) ImGui.SetTooltip(Resources.CustomPromptTooltip);
+        ImGuiComponents.HelpMarker(Resources.CustomPromptTooltip);
 
         ImGui.InputTextMultiline("##CustomPrompt", ref CustomPromptInput, 10000, new Vector2(-1, 200));
 
