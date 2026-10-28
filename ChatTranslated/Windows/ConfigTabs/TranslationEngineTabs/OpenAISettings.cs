@@ -14,12 +14,8 @@ public static class OpenAISettings
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
     private static bool? OpenAIApiKeyValid = null;
 
-    // current Chat Completions models, most capable first; luna is the cheap high-volume tier
-    private static readonly string[] OpenAIModels =
-    [
-        "gpt-6-astra", "gpt-6.1-sol", "gpt-6.1-terra", "gpt-6-luna",
-        "gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"
-    ];
+    // filled from the API key's own model list when the key is validated
+    private static string[] OpenAIModels = [];
 
     public static void Draw(Configuration configuration)
     {
@@ -47,8 +43,9 @@ public static class OpenAISettings
 
         // Model Selection
         ImGui.TextUnformatted("Model");
-        // a model saved before the list changed stays selectable, so the combo shows what is really used
-        string[] models = OpenAIModels.Contains(configuration.OpenAI_Model) ? OpenAIModels : [configuration.OpenAI_Model, .. OpenAIModels];
+        // the saved model stays selectable even when the key can't use it, so the combo shows what is really used
+        bool modelAvailable = OpenAIModels.Contains(configuration.OpenAI_Model);
+        string[] models = modelAvailable ? OpenAIModels : [configuration.OpenAI_Model, .. OpenAIModels];
         int currentModelIndex = Array.IndexOf(models, configuration.OpenAI_Model);
 
         if (ImGui.Combo("##OpenAIModel", ref currentModelIndex, models, models.Length))
@@ -56,6 +53,12 @@ public static class OpenAISettings
             configuration.OpenAI_Model = models[currentModelIndex];
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
+        }
+
+        if (!modelAvailable && OpenAIModels.Length > 0)
+        {
+            ImGui.SameLine();
+            ImGui.TextColored(new Vector4(1, 0, 0, 1), "not available for this key");
         }
 
         ImGui.Spacing();
@@ -74,6 +77,9 @@ public static class OpenAISettings
 
         if (string.IsNullOrWhiteSpace(apiKey) || apiKey == "sk-YOUR-API-KEY") return;
 
-        OpenAIApiKeyValid = await LLMSettings.IsApiKeyValid(apiKey, "https://api.openai.com/v1/models");
+        // listing the models doubles as the key check
+        var models = await OpenAITranslate.FetchModelsAsync(apiKey);
+        OpenAIApiKeyValid = models != null;
+        OpenAIModels = models ?? [];
     }
 }

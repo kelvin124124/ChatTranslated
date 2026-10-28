@@ -4,7 +4,11 @@ using Dalamud.Utility;
 
 using System;
 using System.IO;
+using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Json;
 using System.Reflection;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static ChatTranslated.Configuration;
@@ -17,6 +21,38 @@ internal static partial class OpenAITranslate
     private static partial Regex TranslationSectionRegex();
 
     private const string OpenAIUrl = "https://api.openai.com/v1/chat/completions";
+
+    // /v1/models lists everything the key can reach: image, audio and realtime models, dated snapshots and
+    // Responses-only pro models. Keep plain chat model names, "gpt-<version>" plus at most one tier word.
+    [GeneratedRegex(@"^gpt-\d+(\.\d+)?o?(-(?!(pro|codex|cyber|preview|audio|realtime|search|transcribe|tts|image)$)[a-z]+)?$")]
+    private static partial Regex ChatModelRegex();
+
+    // Chat models this key can use, newest first; null when the key is rejected or the request fails.
+    // Retired models drop out of /v1/models, so the list never needs maintaining by hand.
+    public static async Task<string[]?> FetchModelsAsync(string apiKey)
+    {
+        try
+        {
+            using var request = new HttpRequestMessage(HttpMethod.Get, "https://api.openai.com/v1/models")
+            {
+                Headers = { { "Authorization", $"Bearer {apiKey}" } }
+            };
+            using var response = await TranslationHandler.HttpClient.SendAsync(request).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
+
+            var json = await response.Content.ReadFromJsonAsync<JsonElement>().ConfigureAwait(false);
+            return [.. json.GetProperty("data").EnumerateArray()
+                .Select(model => (Id: model.GetProperty("id").GetString() ?? "", Created: model.TryGetProperty("created", out var created) ? created.GetInt64() : 0))
+                .Where(model => ChatModelRegex().IsMatch(model.Id))
+                .OrderByDescending(model => model.Created)
+                .Select(model => model.Id)];
+        }
+        catch (Exception ex)
+        {
+            Service.pluginLog.Warning($"Failed to fetch OpenAI models: {ex.Message}");
+            return null;
+        }
+    }
 
     public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
         , string baseUrl = OpenAIUrl, string model = "gpt-6-luna", string? apiKey = null)
