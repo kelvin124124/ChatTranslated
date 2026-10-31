@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using static ChatTranslated.Configuration;
@@ -19,8 +20,23 @@ internal static partial class OpenAITranslate
     [GeneratedRegex(@"#### Translation\s*\n(.+)$", RegexOptions.Singleline)]
     private static partial Regex TranslationSectionRegex();
 
+    private const string OpenAIUrl = "https://api.openai.com/v1/chat/completions";
+
+    // Chat Completions reasoning_effort values. "low" is the default.
+    internal static readonly string[] ReasoningEfforts = ["minimal", "low", "medium", "high"];
+
+    // optional request fields are left out instead of sent as null
+    private static readonly JsonSerializerOptions RequestJsonOptions = new()
+    {
+        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+    };
+
+    // gpt-4* still accepts temperature. Later OpenAI chat models (gpt-5, gpt-6, ...) reject it.
+    internal static bool IsReasoningModel(string? model) =>
+        model?.StartsWith("gpt-4", StringComparison.Ordinal) != true;
+
     public static async Task<(string, TranslationMode?)> Translate(Message message, string targetLanguage
-        , string baseUrl = "https://api.openai.com/v1/chat/completions", string model = "gpt-5-mini", string? apiKey = null)
+        , string baseUrl = OpenAIUrl, string model = "gpt-6-luna", string? apiKey = null)
     {
         apiKey ??= Service.configuration.OpenAI_API_Key;
 
@@ -28,12 +44,23 @@ internal static partial class OpenAITranslate
             ? BuildCustomPrompt(targetLanguage, message.Context)
             : BuildPrompt(message.Context);
 
+        // Official OpenAI rejects max_tokens. Reasoning models also reject any temperature but the
+        // default, and they spend part of the token budget on hidden reasoning.
+        var isOpenAI = baseUrl == OpenAIUrl;
+        var isReasoningModel = isOpenAI && IsReasoningModel(model);
+        var maxTokens = Math.Max(prompt.Length, 80) + (isReasoningModel ? 1024 : 0);
+        var reasoningEffort = Service.configuration.OpenAI_ReasoningEffort;
+        if (Array.IndexOf(ReasoningEfforts, reasoningEffort) < 0)
+            reasoningEffort = "low";
+
         var userMsg = $"Translate to: {targetLanguage}\n#### Original Text\n{message.OriginalText}";
         var requestData = new
         {
             model,
-            temperature = 0.6,
-            max_tokens = Math.Max(prompt.Length, 80),
+            temperature = isReasoningModel ? (double?)null : 0.6,
+            reasoning_effort = isReasoningModel ? reasoningEffort : null,
+            max_tokens = isOpenAI ? (int?)null : maxTokens,
+            max_completion_tokens = isOpenAI ? maxTokens : (int?)null,
             messages = new[]
             {
                 new { role = "system", content = prompt },
@@ -43,7 +70,7 @@ internal static partial class OpenAITranslate
 
         using var request = new HttpRequestMessage(HttpMethod.Post, baseUrl)
         {
-            Content = new StringContent(JsonSerializer.Serialize(requestData), Encoding.UTF8, "application/json"),
+            Content = new StringContent(JsonSerializer.Serialize(requestData, RequestJsonOptions), Encoding.UTF8, "application/json"),
             Headers = { { "Authorization", $"Bearer {apiKey}" } }
         };
 

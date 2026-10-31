@@ -129,8 +129,10 @@ internal static class TranslationHandler
         message.TranslatedContent = translatedText;
         message.TranslationMode = mode;
 
+        // a null mode means every translator failed; don't remember that
         if (cacheEnabled
             && message.Source != MessageSource.MainWindow
+            && message.TranslationMode != null
             && message.TranslationMode != Configuration.TranslationMode.MachineTranslate)
         {
             bool added;
