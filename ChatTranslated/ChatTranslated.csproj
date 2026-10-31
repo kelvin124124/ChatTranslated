@@ -26,9 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Include="Chat\phrases.json">
-          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </EmbeddedResource>
+        <EmbeddedResource Include="Chat\phrases.json" />
     </ItemGroup>
 
     <ItemGroup>

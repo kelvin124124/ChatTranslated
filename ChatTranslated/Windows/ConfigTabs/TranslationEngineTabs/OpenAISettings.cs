@@ -14,14 +14,12 @@ public static class OpenAISettings
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
     private static bool? OpenAIApiKeyValid = null;
 
+    // current Chat Completions models, most capable first; luna is the cheap high-volume tier
     private static readonly string[] OpenAIModels =
     [
-        "gpt-5.5", "gpt-5.5-mini", "gpt-5.5-nano",
-        "gpt-5.4", "gpt-5.4-mini", "gpt-5.4-nano",
-        "gpt-5", "gpt-5-mini", "gpt-5-nano",
-        "gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano",
-        "gpt-4o", "gpt-4o-mini"
-    ];  // why so many???
+        "gpt-6-astra", "gpt-6.1-sol", "gpt-6.1-terra", "gpt-6-luna",
+        "gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"
+    ];
 
     public static void Draw(Configuration configuration)
     {
@@ -55,14 +53,35 @@ public static class OpenAISettings
 
         // Model Selection
         ImGui.TextUnformatted("Model");
-        int currentModelIndex = Array.IndexOf(OpenAIModels, configuration.OpenAI_Model);
-        if (currentModelIndex == -1) currentModelIndex = 0;
+        // a model saved before the list changed stays selectable, so the combo shows what is really used
+        string[] models = Array.IndexOf(OpenAIModels, configuration.OpenAI_Model) >= 0
+            ? OpenAIModels
+            : [configuration.OpenAI_Model, .. OpenAIModels];
+        int currentModelIndex = Array.IndexOf(models, configuration.OpenAI_Model);
 
-        if (ImGui.Combo("##OpenAIModel", ref currentModelIndex, OpenAIModels, OpenAIModels.Length))
+        if (ImGui.Combo("##OpenAIModel", ref currentModelIndex, models, models.Length))
         {
-            configuration.OpenAI_Model = OpenAIModels[currentModelIndex];
+            configuration.OpenAI_Model = models[currentModelIndex];
             TranslationHandler.ClearTranslationCache();
             configuration.Save();
+        }
+
+        if (OpenAITranslate.IsReasoningModel(configuration.OpenAI_Model))
+        {
+            ImGui.TextUnformatted("Reasoning effort");
+            int effort = Array.IndexOf(OpenAITranslate.ReasoningEfforts, configuration.OpenAI_ReasoningEffort);
+            if (effort < 0)
+                effort = Array.IndexOf(OpenAITranslate.ReasoningEfforts, "low");
+
+            if (ImGui.SliderInt("##OpenAIReasoningEffort", ref effort, 0, OpenAITranslate.ReasoningEfforts.Length - 1,
+                    OpenAITranslate.ReasoningEfforts[effort]))
+                configuration.OpenAI_ReasoningEffort = OpenAITranslate.ReasoningEfforts[effort];
+
+            if (ImGui.IsItemDeactivatedAfterEdit())
+            {
+                TranslationHandler.ClearTranslationCache();
+                configuration.Save();
+            }
         }
 
         ImGui.Spacing();
