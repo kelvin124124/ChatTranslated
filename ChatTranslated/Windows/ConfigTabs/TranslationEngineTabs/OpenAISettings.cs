@@ -14,11 +14,13 @@ public static class OpenAISettings
     private static string OpenAIApiKeyInput = Service.configuration.OpenAI_API_Key;
     private static bool? OpenAIApiKeyValid = null;
 
-    // current Chat Completions models, most capable first; luna is the cheap high-volume tier
+    // current Chat Completions models, most capable first; luna is the cheap high-volume tier.
+    // gpt-4.1 / gpt-4o are still available but deprecated, with shutdown on 2027-01-14.
     private static readonly string[] OpenAIModels =
     [
         "gpt-6-astra", "gpt-6.1-sol", "gpt-6.1-terra", "gpt-6-luna",
-        "gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"
+        "gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna",
+        "gpt-4.1", "gpt-4.1-mini", "gpt-4o", "gpt-4o-mini"
     ];
 
     public static void Draw(Configuration configuration)
